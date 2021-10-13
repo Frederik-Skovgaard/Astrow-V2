@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Astrow_2._0.Model;
 using Astrow_2._0.DataLayer;
+using Astrow_2._0.CustomExceptions;
 
 namespace Astrow_2._0.Repository
 {
@@ -14,6 +15,8 @@ namespace Astrow_2._0.Repository
         List<Users> userList = new List<Users>();
 
         Users user = new Users();
+
+        LogedUser loged = new LogedUser();
 
         /// <summary>
         /// Create User
@@ -67,6 +70,26 @@ namespace Astrow_2._0.Repository
         {
             user = Stored.FindByID(id, user);
             return user;
+        }
+
+
+
+        public LogedUser Login(string username, string password)
+        {
+            user = userList.SingleOrDefault(x => x.UserName == username && x.Password == password);
+
+            if (user != null)
+            {
+                return loged = new LogedUser
+                {
+                    UserName = user.UserName,
+                    Status = user.Status,
+                    User_ID = user.User_ID
+                };
+            }
+
+
+            throw new LoginException("Username or password does not match...");
         }
     }
 }

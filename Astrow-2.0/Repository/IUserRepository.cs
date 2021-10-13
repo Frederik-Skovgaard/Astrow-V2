@@ -6,7 +6,7 @@ using Astrow_2._0.Model;
 
 namespace Astrow_2._0.Repository
 {
-    interface IUserRepository
+    public interface IUserRepository
     {
         void CreateUser(Users user);
 
@@ -18,5 +18,6 @@ namespace Astrow_2._0.Repository
 
         Users FindUser(int id);
 
+        LogedUser Login(string username, string password);
     }
 }
