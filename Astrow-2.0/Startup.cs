@@ -12,6 +12,7 @@ using Astrow_2._0.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Net;
 using Microsoft.AspNetCore.Http;
+using Astrow_2._0.Repository;
 
 namespace Astrow_2._0
 {
@@ -29,6 +30,8 @@ namespace Astrow_2._0
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IFeatures, Features>();
+
+            services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddRazorPages().AddRazorPagesOptions(options =>
             {
