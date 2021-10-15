@@ -1,0 +1,41 @@
+﻿@page
+@model Astrow_2._0.Pages.LoginModel
+@{
+    Layout = "~/Pages/Shared/Login.cshtml";
+}
+
+
+<div class="Login-Page">
+    <div class="container form-group">
+        <div class="top">
+            <img src="~/Img/loginAstrowBranding.png" class="login-logo" />
+            <p style="user-select:none; -moz-user-select:none;" class="logo-version">v9.4.0</p>
+        </div>
+
+        <form method="post" >
+            <div class="middle">
+                <input type="text" class="form-control" asp-for="UserName" id="username" placeholder="Username" />
+                <input type="password" class="form-control" asp-for="Password" placeholder="Password" />
+
+                <div class="CheckBox">
+                    <input type="checkbox" class="form-check" />
+                    <p>Remember me</p>
+                </div>
+            </div>
+            <div class="bottom">
+                <input type="submit" asp-page-handler="/HomePage" class="btn btn-danger" value="Login" />
+                <div class="bottom-link">
+                    <a href="/Error" style=" text-decoration: none; color: white;">Reset password</a><br />
+                    <div style="margin-left: 2.5rem; text-decoration: none; color: white;" class="tooltip">
+                        Need help?
+                        <span class="tooltiptext"><b style="color: #f4b41a; font-weight: 700; ">Me cuz</b><br /> Tlf. 00 00 00 00</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <div class="copy">
+        <p>Copyright © 2021 Amano Europe</p>
+    </div>
+</div>

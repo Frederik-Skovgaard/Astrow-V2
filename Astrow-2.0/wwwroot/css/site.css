@@ -1,0 +1,208 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+body {
+    /*background: url(/Img/Background.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 122rem;*/
+    background: linear-gradient( 130deg, rgb(222 234 238) 0%,rgb(35 118 144) 100%);
+    font-family: sans-serif;
+}
+
+img {
+    user-select: none;
+    -moz-user-select: none;
+}
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+    background-color:white;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+}
+
+
+
+/* Login-Page
+------------------------------------------------------*/
+
+
+.Login-Page {
+    color: white;
+    margin: 0 auto;
+    width: 25rem;
+}
+    .Login-Page .copy {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        text-align: center;
+    }
+
+    .Login-Page .container {
+        margin: 0 auto;
+        height: 27rem;
+        margin-top: 10rem;
+        background: url(../Img/LoginBG.png);
+        background-repeat: no-repeat;
+        padding: 1rem;
+        background-size: 28rem;
+        background-position: center;
+        border-radius: 10px;
+    }
+    .Login-Page .top .logo-version {
+        float: right;
+    }
+
+    .Login-Page .middle {
+        margin-top: 4rem;
+    }
+        .Login-Page .middle .form-control {
+            width: 80%;
+            margin: 0 auto;
+            border-radius: 0px;
+            border: none;
+        }
+        .Login-Page .middle #username {
+            margin-bottom: 1rem;
+        }
+        .Login-Page .middle .CheckBox {
+            display: flex;
+            justify-content: flex-end;
+            margin-right: 1rem;
+            margin-top: 1rem;
+        }
+        .Login-Page .middle .form-control:focus {
+            border: none;
+            box-shadow:none;
+        }
+        .Login-Page .middle .form-control:hover {
+            border: none;
+            box-shadow: none;
+        }
+        .Login-Page .middle .form-check {
+            margin-right: 10px;
+            margin-top: 1px;
+            width: 15px;
+        }
+    .Login-Page .bottom {
+        margin: 0 auto;
+        width: 80%;
+        margin-top: 2rem;
+    }
+        .Login-Page .bottom .btn {
+            font-weight: 100;
+            background: #f4b41a !important;
+            border: none;
+            width: 18.33rem;
+            border-radius: 0px;
+            font-size: 20px;
+            padding: 0;
+            transition: box-shadow 0.5s, background 0.5s;
+        }
+            .Login-Page .bottom .btn:hover {
+                background: #f4b41a !important;
+                box-shadow: 0px 0px 0px 1px #f4b41a !important;
+            }
+            .Login-Page .bottom .btn:focus {
+                outline: none !important;
+                box-shadow: none !important;
+            }
+
+        .Login-Page .bottom .bottom-link {
+            float: right;
+            text-decoration: none;
+            color: white;
+            margin-top: 0.5rem;
+        }
+            .Login-Page .bottom .bottom-link .tooltip {
+                position: relative;
+                display: inline-block;
+                opacity: 1;
+            }
+                .Login-Page .bottom .bottom-link .tooltip .tooltiptext {
+                    visibility: hidden;
+                    opacity: 0;
+                    width: 130px;
+                    margin-left: 1rem;
+                    background-color: #ffffff;
+                    color: #000;
+                    text-align: center;
+                    border: 3px solid #f4b41a;
+                    padding: 5px 0;
+                    border-radius: 6px;
+                    position: absolute;
+                    z-index: 1;
+                    transition: opacity 0.3s, visibility 0.3s;
+                }
+                .Login-Page .bottom .bottom-link .tooltip:hover .tooltiptext {
+                    visibility:visible;
+                    opacity: 1;
+                }
+            
+
