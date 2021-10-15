@@ -37,16 +37,27 @@ namespace Astrow_2._0.DataLayer
             {
                 sql.Open();
 
+                SqlCommand createName = new SqlCommand("", sql);
+
+            }
+
+            //Create user then update user insert user id to foregin keys
+            using (sql)
+            {
+                sql.Open();
+
                 SqlCommand createUser = new SqlCommand("CreateUser", sql);
                 createUser.CommandType = CommandType.StoredProcedure;
 
                 createUser.Parameters.AddWithValue("@UserName", user.UserName);
                 createUser.Parameters.AddWithValue("@Password", user.Password);
                 createUser.Parameters.AddWithValue("@Status", user.Status);
+                createUser.Parameters.AddWithValue("@salt", user.Salt);
 
                 createUser.ExecuteNonQuery();
             }
         }
+
 
         /// <summary>
         /// Method for updating users values in database
@@ -113,7 +124,7 @@ namespace Astrow_2._0.DataLayer
                         {
                             User_ID = read.GetInt32(0),
                             UserName = read.GetString(1),
-                            Password = read.GetString(2),
+                            Password = (byte[])read[2],
                             Name_ID = read.GetInt32(3),
                             Inbox_ID = read.GetInt32(4),
                             TimeCard_ID = read.GetInt32(5),
@@ -150,11 +161,11 @@ namespace Astrow_2._0.DataLayer
 
                 using (SqlDataReader read = find.ExecuteReader())
                 {
-                    user = new Users
+                    return user = new Users
                     {
                         User_ID = read.GetInt32(0),
                         UserName = read.GetString(1),
-                        Password = read.GetString(2),
+                        Password = (byte[])read[2],
                         Name_ID = read.GetInt32(3),
                         Inbox_ID = read.GetInt32(4),
                         TimeCard_ID = read.GetInt32(5),
@@ -164,8 +175,34 @@ namespace Astrow_2._0.DataLayer
                     };
                 }
             }
+        }
 
-            return user;
+
+        /// <summary>
+        /// Method for getting salt
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public Users FindByUserName(string username, Users user)
+        {
+            using (sql)
+            {
+                sql.Open();
+
+                SqlCommand find = new SqlCommand("GetByUserName", sql);
+                find.CommandType = CommandType.StoredProcedure;
+
+                find.Parameters.AddWithValue("@UserName", username);
+
+                using (SqlDataReader read = find.ExecuteReader())
+                {
+                    return user = new Users
+                    {
+                        Salt = read.GetString(0)
+                    };
+                }
+            }
         }
     }
 }

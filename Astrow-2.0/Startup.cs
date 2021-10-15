@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Net;
 using Microsoft.AspNetCore.Http;
 using Astrow_2._0.Repository;
+using Astrow_2._0.DataLayer;
 
 namespace Astrow_2._0
 {
@@ -29,6 +30,9 @@ namespace Astrow_2._0
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            StoredProcedure.SetConnectionString();
+
             services.AddScoped<IFeatures, Features>();
 
             services.AddScoped<IUserRepository, UserRepository>();

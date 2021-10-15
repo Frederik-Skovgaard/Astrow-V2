@@ -5,18 +5,25 @@ using System.Threading.Tasks;
 using Astrow_2._0.Model;
 using Astrow_2._0.DataLayer;
 using Astrow_2._0.CustomExceptions;
+using System.Security.Cryptography;
 
 namespace Astrow_2._0.Repository
 {
     public class UserRepository : IUserRepository
     {
+
+        //-------------------Class-------------------------
+
         StoredProcedure Stored = new StoredProcedure();
 
         List<Users> userList = new List<Users>();
 
         Users user = new Users();
 
-        LogedUser loged = new LogedUser();
+        LogedUser logedUser = new LogedUser();
+
+        //-------------------Methods-----------------------
+
 
         /// <summary>
         /// Create User
@@ -72,15 +79,30 @@ namespace Astrow_2._0.Repository
             return user;
         }
 
+        /// <summary>
+        /// Find salt by username
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public Users FindByUserName(string username)
+        {
+            user = Stored.FindByUserName(username, user);
+            return user;
+        }
 
-
-        public LogedUser Login(string username, string password)
+        /// <summary>
+        /// Method for loggin in
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public LogedUser Login(string username, byte[] password)
         {
             user = userList.SingleOrDefault(x => x.UserName == username && x.Password == password);
 
             if (user != null)
             {
-                return loged = new LogedUser
+                return logedUser = new LogedUser
                 {
                     UserName = user.UserName,
                     Status = user.Status,
@@ -90,6 +112,31 @@ namespace Astrow_2._0.Repository
 
 
             throw new LoginException("Username or password does not match...");
+        }
+
+
+        /// <summary>
+        /// Encryptor
+        /// </summary>
+        /// <param name="plainText"></param>
+        /// <param name="salt"></param>
+        /// <returns></returns>
+        public byte[] GenerateSaltedHash(byte[] plainText, byte[] salt)
+        {
+            HashAlgorithm algorithm = new SHA256Managed();
+
+            byte[] plainTextWithSaltBytes = new byte[plainText.Length + salt.Length];
+
+            for (int i = 0; i < plainText.Length; i++)
+            {
+                plainTextWithSaltBytes[i] = plainText[i];
+            }
+            for (int i = 0; i < salt.Length; i++)
+            {
+                plainTextWithSaltBytes[plainText.Length + i] = salt[i];
+            }
+
+            return algorithm.ComputeHash(plainTextWithSaltBytes);
         }
     }
 }

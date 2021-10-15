@@ -18,6 +18,10 @@ namespace Astrow_2._0.Repository
 
         Users FindUser(int id);
 
-        LogedUser Login(string username, string password);
+        Users FindByUserName(string username);
+
+        LogedUser Login(string username, byte[] password);
+
+        byte[] GenerateSaltedHash(byte[] plainText, byte[] salt);
     }
 }

@@ -11,7 +11,7 @@ namespace Astrow_2._0.Model
         {
 
         }
-        public Users(int userID, string userName, string password, int nameID, int inboxID, int timeCardID, int filesID, string status, bool isDeleted)
+        public Users(int userID, string userName, byte[] password, int nameID, int inboxID, int timeCardID, int filesID, string status, bool isDeleted, string salt)
         {
             this.User_ID = userID;
             this.UserName = userName;
@@ -22,16 +22,18 @@ namespace Astrow_2._0.Model
             this.Files_ID = filesID;
             this.Status = status;
             this.IsDeleted = isDeleted;
+            this.Salt = salt;
         }
 
         public int User_ID { get; set; }
         public string UserName { get; set; }
-        public string Password { get; set; }
+        public byte[] Password { get; set; }
         public int Name_ID { get; set; }
         public int Inbox_ID { get; set; }
         public int TimeCard_ID { get; set; }
         public int Files_ID { get; set; }
         public string Status { get; set; }
         public bool IsDeleted { get; set; }
+        public string Salt { get; set; }
     }
 }

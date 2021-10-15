@@ -33,7 +33,7 @@ namespace Astrow_2._0.Authentication
             CookieExpiration = config.GetValue<double>("ExpireTimeSpan");
         }
 
-        public LogedUser ValidateUser(string username, string password)
+        public LogedUser ValidateUser(string username, byte[] password)
         {
             try
             {
