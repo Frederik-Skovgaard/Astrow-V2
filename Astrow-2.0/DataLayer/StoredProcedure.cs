@@ -13,8 +13,6 @@ namespace Astrow_2._0.DataLayer
 
     public class StoredProcedure
     {
-        string message = "Hej ny elev";
-
         internal static IConfigurationRoot configuration { get; set; }
         static string connectionString;
 
@@ -33,8 +31,9 @@ namespace Astrow_2._0.DataLayer
         /// Method for inserting users into databases
         /// </summary>
         /// <param name="user"></param>
-        public void CreateUser(Users user, UserPersonalInfo info)
+        public void CreateUser(Users user, UserPersonalInfo info, Message mess, Days day)
         {
+            //Create a day 
             using (sql)
             {
                 sql.Open();
@@ -42,7 +41,15 @@ namespace Astrow_2._0.DataLayer
                 SqlCommand createDay = new SqlCommand("CreateDay", sql);
                 createDay.CommandType = CommandType.StoredProcedure;
 
-                createDay.Parameters.AddWithValue("@date", );
+                createDay.Parameters.AddWithValue("@date", day.Date);
+                createDay.Parameters.AddWithValue("@absence", day.Absence);
+                createDay.Parameters.AddWithValue("@registry", day.Registry);
+                createDay.Parameters.AddWithValue("@saldo", day.Saldo);
+                createDay.Parameters.AddWithValue("@flex", day.Flex);
+
+                createDay.ExecuteNonQuery();
+
+                //make a for later
             }
 
             //Create new user message
@@ -53,7 +60,7 @@ namespace Astrow_2._0.DataLayer
                 SqlCommand createMessage = new SqlCommand("CreateMessage", sql);
                 createMessage.CommandType = CommandType.StoredProcedure;
 
-                createMessage.Parameters.AddWithValue("@message", message);
+                createMessage.Parameters.AddWithValue("@message", mess._Message);
                 createMessage.Parameters.AddWithValue("@sender", "Auto-Message");
 
                 createMessage.ExecuteNonQuery();
