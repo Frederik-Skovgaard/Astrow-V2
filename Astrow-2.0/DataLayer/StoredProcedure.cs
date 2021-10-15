@@ -13,6 +13,8 @@ namespace Astrow_2._0.DataLayer
 
     public class StoredProcedure
     {
+        string message = "Hej ny elev";
+
         internal static IConfigurationRoot configuration { get; set; }
         static string connectionString;
 
@@ -31,17 +33,50 @@ namespace Astrow_2._0.DataLayer
         /// Method for inserting users into databases
         /// </summary>
         /// <param name="user"></param>
-        public void CreateUser(Users user)
+        public void CreateUser(Users user, UserPersonalInfo info)
         {
             using (sql)
             {
                 sql.Open();
 
-                SqlCommand createName = new SqlCommand("", sql);
+                SqlCommand createDay = new SqlCommand("CreateDay", sql);
+                createDay.CommandType = CommandType.StoredProcedure;
+
+                createDay.Parameters.AddWithValue("@date", );
+            }
+
+            //Create new user message
+            using (sql)
+            {
+                sql.Open();
+
+                SqlCommand createMessage = new SqlCommand("CreateMessage", sql);
+                createMessage.CommandType = CommandType.StoredProcedure;
+
+                createMessage.Parameters.AddWithValue("@message", message);
+                createMessage.Parameters.AddWithValue("@sender", "Auto-Message");
+
+                createMessage.ExecuteNonQuery();
 
             }
 
-            //Create user then update user insert user id to foregin keys
+            //Create personal info
+            using (sql)
+            {
+                sql.Open();
+
+                SqlCommand createName = new SqlCommand("CreateName", sql);
+                createName.CommandType = CommandType.StoredProcedure;
+
+                createName.Parameters.AddWithValue("@firstName", info.FirstName);
+                createName.Parameters.AddWithValue("@middleName", info.MiddleName);
+                createName.Parameters.AddWithValue("@lastName", info.LastName);
+                createName.Parameters.AddWithValue("@fullName", info.FullName);
+
+                createName.ExecuteNonQuery();
+            }
+
+            //Create user
             using (sql)
             {
                 sql.Open();

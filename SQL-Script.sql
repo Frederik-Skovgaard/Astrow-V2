@@ -209,6 +209,7 @@ VALUES (@firstName, @middleName, @lastName, @firstName + ' ' + @lastName)
 GO
 
 
+
 -- Update
 CREATE PROCEDURE [UpdateUser]
 @id INT,
@@ -220,6 +221,18 @@ UPDATE [User]
 SET UserName = @UserName,
 Password = @Password,
 Status = @Status
+WHERE User_ID = @id
+GO
+
+-- Update user
+CREATE PROCEDURE [UpdateForgienkeys]
+@id INT
+AS
+UPDATE [User]
+SET Name_ID = @id,
+Inbox_ID = @id,
+TimeCard_ID = @id,
+Files_ID = @id
 WHERE User_ID = @id
 GO
 
