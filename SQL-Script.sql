@@ -39,18 +39,6 @@ PRIMARY KEY(Message_ID)
 )
 GO
 
-CREATE TABLE [InBox] (
-[Inbox_ID] INT IDENTITY(1,1) NOT NULL,
-[Message_ID] INT
-
-
-PRIMARY KEY(Inbox_ID)
-
-FOREIGN KEY (Message_ID) REFERENCES [Message](Message_ID)
-)
-GO
-
-
 CREATE TABLE [Days] (
 [Days_ID] INT IDENTITY(1,1) NOT NULL,
 [Date] DATETIME NOT NULL,
@@ -62,17 +50,6 @@ CREATE TABLE [Days] (
 PRIMARY KEY(Days_ID)
 )
 GO
-
-CREATE TABLE [TimeCard] (
-[TimeCard_ID] INT IDENTITY(1,1) NOT NULL,
-[Days_ID] INT
-
-PRIMARY KEY(TimeCard_ID)
-
-FOREIGN KEY (Days_ID) REFERENCES [Days](Days_ID)
-)
-GO
-
 
 CREATE TABLE [File] (
 [File_ID] INT IDENTITY(1,1) NOT NULL,
@@ -87,6 +64,31 @@ PRIMARY KEY(File_ID)
 )
 GO
 
+
+
+
+CREATE TABLE [InBox] (
+[Inbox_ID] INT IDENTITY(1,1) NOT NULL,
+[Message_ID] INT
+
+
+PRIMARY KEY(Inbox_ID)
+
+FOREIGN KEY (Message_ID) REFERENCES [Message](Message_ID)
+)
+GO
+
+
+CREATE TABLE [TimeCard] (
+[TimeCard_ID] INT IDENTITY(1,1) NOT NULL,
+[Days_ID] INT
+
+PRIMARY KEY(TimeCard_ID)
+
+FOREIGN KEY (Days_ID) REFERENCES [Days](Days_ID)
+)
+GO
+
 CREATE TABLE [Files] (
 [Files_ID] INT IDENTITY(1,1) NOT NULL,
 [File_ID] INT
@@ -96,7 +98,6 @@ PRIMARY KEY(Files_ID)
 FOREIGN KEY (File_ID) REFERENCES [File](File_ID)
 )
 GO
-
 
 CREATE TABLE [User] (
 [User_ID] INT IDENTITY(1,1) NOT NULL,
@@ -108,7 +109,9 @@ CREATE TABLE [User] (
 [Files_ID] INT NOT NULL,
 [Status] NVARCHAR(25) NOT NULL,
 [IsDeleted] BIT NOT NULL,
-[Salt] NVARCHAR(6) NOT NULL
+[Salt] NVARCHAR(6) NOT NULL,
+[StartDate] DATETIME NOT NULL,
+[EndDate] DATETIME NOT NULL
 
 PRIMARY KEY(User_ID)
 
@@ -119,8 +122,11 @@ FOREIGN KEY (Files_ID) REFERENCES [Files](Files_ID)
 )
 GO
 
------------------ Stored Procedure -----------------
+---------------------------------- Stored Procedure ----------------------------------
 
+
+
+-------------- Create-Container --------------
 
 -- Create User
 CREATE PROCEDURE [CreateUser]
@@ -128,10 +134,12 @@ CREATE PROCEDURE [CreateUser]
 @Password TINYINT,
 @id INT,
 @Status NVARCHAR(25),
-@salt NVARCHAR(6)
+@salt NVARCHAR(6),
+@startDate DATETIME,
+@endDate DATETIME
 AS
-INSERT INTO [User] (UserName, Password, Status, IsDeleted, Salt)
-VALUES (@UserName, @Password, @Status, 0, @salt)
+INSERT INTO [User] (UserName, Password, Status, IsDeleted, Salt, StartDate, EndDate)
+VALUES (@UserName, @Password, @Status, 0, @salt, @startDate, @endDate)
 GO
 
 
@@ -155,11 +163,12 @@ GO
 CREATE PROCEDURE [CreateFiles]
 @file_ID INT
 AS
-INSERT INTO [Files] (Files_ID)
+INSERT INTO [Files] (File_ID)
 VALUES (@file_ID)
 GO
 
 
+---------------------------- Create-Items ----------------------------
 
 
 -- Create File
@@ -209,6 +218,8 @@ VALUES (@firstName, @middleName, @lastName, @firstName + ' ' + @lastName)
 GO
 
 
+-------------- Update-Data --------------
+
 
 -- Update
 CREATE PROCEDURE [UpdateUser]
@@ -236,6 +247,12 @@ Files_ID = @id
 WHERE User_ID = @id
 GO
 
+
+
+
+-------------- Delete-Data --------------
+
+
 -- Delete
 CREATE PROCEDURE [DeleteUser]
 @id INT
@@ -244,6 +261,12 @@ UPDATE [User]
 SET IsDeleted = 1
 WHERE User_ID = @id
 GO
+
+
+
+-------------- Fetch-Data --------------
+
+
 
 -- Read All
 CREATE PROCEDURE [ReadAllUsers]

@@ -8,11 +8,13 @@ using Astrow_2._0.Repository;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
 using System.Text;
-using Astrow_2._0.Model;
+using Astrow_2._0.Model.Items;
+using Astrow_2._0.Model.Containers;
 using Astrow_2._0.CustomExceptions;
 
 namespace Astrow_2._0.Pages
 {
+    //TODO: Login that works with cookie
     public class LoginModel : PageModel
     {
         private readonly IUserRepository _userRepository;
@@ -25,7 +27,7 @@ namespace Astrow_2._0.Pages
         //-------------------Class-------------------------
 
         [BindProperty]
-        public Users User { get; set; }
+        public Users Users { get; set; }
 
         [BindProperty]
         public LogedUser LogedUser { get; set; }
@@ -56,7 +58,7 @@ namespace Astrow_2._0.Pages
         {
             byte[] s = Encoding.ASCII.GetBytes("Admin");
 
-            User = new Users
+            Users = new Users
             {
                 UserName = "Admin",
                 Password = s,
@@ -65,14 +67,14 @@ namespace Astrow_2._0.Pages
                 Salt = "Astrow"
             };
 
-            _userRepository.CreateUser(User);
+            _userRepository.CreateUser(Users);
 
             //Find salt
-            User = _userRepository.FindByUserName(UserName);
+            Users = _userRepository.FindByUserName(UserName);
 
             //Turn password and salt to byte
             byte[] password = Encoding.ASCII.GetBytes(Password);
-            byte[] salt = Encoding.ASCII.GetBytes(User.Salt);
+            byte[] salt = Encoding.ASCII.GetBytes(Users.Salt);
 
             //Use salt to hash the password
             byte[] hashPass = _userRepository.GenerateSaltedHash(password, salt);

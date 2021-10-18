@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Astrow_2._0.Model
+namespace Astrow_2._0.Model.Containers
 {
     public class Users
     {
@@ -11,7 +11,7 @@ namespace Astrow_2._0.Model
         {
 
         }
-        public Users(int userID, string userName, byte[] password, int nameID, int inboxID, int timeCardID, int filesID, string status, bool isDeleted, string salt)
+        public Users(int userID, string userName, byte[] password, int nameID, int inboxID, int timeCardID, int filesID, string status, bool isDeleted, string salt, DateTime startDate, DateTime endDate)
         {
             this.User_ID = userID;
             this.UserName = userName;
@@ -23,6 +23,9 @@ namespace Astrow_2._0.Model
             this.Status = status;
             this.IsDeleted = isDeleted;
             this.Salt = salt;
+            this.StartDate = startDate;
+            this.EndDate = endDate;
+
         }
 
         public int User_ID { get; set; }
@@ -35,5 +38,7 @@ namespace Astrow_2._0.Model
         public string Status { get; set; }
         public bool IsDeleted { get; set; }
         public string Salt { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
     }
 }
