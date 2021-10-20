@@ -4,7 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Astrow_2._0.Repository;
 using Microsoft.Extensions.Configuration;
-using Astrow_2._0.Model;
+using Astrow_2._0.Model.Containers;
+using Astrow_2._0.Model.Items;
 using Astrow_2._0.CustomExceptions;
 
 namespace Astrow_2._0.Authentication
@@ -33,7 +34,7 @@ namespace Astrow_2._0.Authentication
             CookieExpiration = config.GetValue<double>("ExpireTimeSpan");
         }
 
-        public LogedUser ValidateUser(string username, byte[] password)
+        public LogedUser ValidateUser(string username, string password)
         {
             try
             {

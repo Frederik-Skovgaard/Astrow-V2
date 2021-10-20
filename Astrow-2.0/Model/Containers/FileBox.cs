@@ -11,13 +11,15 @@ namespace Astrow_2._0.Model.Containers
         {
 
         }
-        public FileBox(int id, int fileID)
+        public FileBox(int id, int fileID, int userID)
         {
             this.Files_ID = id;
             this.File_ID = fileID;
+            this.User_ID = userID;
         }
 
         public int Files_ID { get; set; }
         public int File_ID { get; set; }
+        public int User_ID { get; set; }
     }
 }

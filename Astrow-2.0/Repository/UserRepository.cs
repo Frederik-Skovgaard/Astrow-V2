@@ -7,6 +7,7 @@ using Astrow_2._0.Model.Containers;
 using Astrow_2._0.DataLayer;
 using Astrow_2._0.CustomExceptions;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace Astrow_2._0.Repository
 {
@@ -30,9 +31,9 @@ namespace Astrow_2._0.Repository
         /// Create User
         /// </summary>
         /// <param name="user"></param>
-        public void CreateUser(Users user)
+        public void CreateUser(Users user, Days day, UserPersonalInfo info)
         {
-            Stored.CreateUser(user);
+            Stored.CreateUsers(user, day, info);
         }
 
         /// <summary>
@@ -97,7 +98,7 @@ namespace Astrow_2._0.Repository
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public LogedUser Login(string username, byte[] password)
+        public LogedUser Login(string username, string password)
         {
             user = userList.SingleOrDefault(x => x.UserName == username && x.Password == password);
 
@@ -122,7 +123,7 @@ namespace Astrow_2._0.Repository
         /// <param name="plainText"></param>
         /// <param name="salt"></param>
         /// <returns></returns>
-        public byte[] GenerateSaltedHash(byte[] plainText, byte[] salt)
+        public string GenerateSaltedHash(byte[] plainText, byte[] salt)
         {
             HashAlgorithm algorithm = new SHA256Managed();
 
@@ -137,7 +138,14 @@ namespace Astrow_2._0.Repository
                 plainTextWithSaltBytes[plainText.Length + i] = salt[i];
             }
 
-            return algorithm.ComputeHash(plainTextWithSaltBytes);
+            StringBuilder sb = new StringBuilder();
+            foreach (byte b in algorithm.ComputeHash(plainTextWithSaltBytes))
+            {
+                sb.Append(b.ToString("X2"));
+            }
+
+
+            return sb.ToString();
         }
     }
 }

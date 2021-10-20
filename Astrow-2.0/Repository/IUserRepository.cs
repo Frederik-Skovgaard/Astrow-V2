@@ -9,7 +9,7 @@ namespace Astrow_2._0.Repository
 {
     public interface IUserRepository
     {
-        void CreateUser(Users user);
+        void CreateUser(Users user, Days day, UserPersonalInfo info);
 
         void DeleteUser(Users user);
 
@@ -21,8 +21,8 @@ namespace Astrow_2._0.Repository
 
         Users FindByUserName(string username);
 
-        LogedUser Login(string username, byte[] password);
+        LogedUser Login(string username, string password);
 
-        byte[] GenerateSaltedHash(byte[] plainText, byte[] salt);
+        string GenerateSaltedHash(byte[] plainText, byte[] salt);
     }
 }

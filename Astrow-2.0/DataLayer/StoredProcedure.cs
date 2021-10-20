@@ -20,7 +20,7 @@ namespace Astrow_2._0.DataLayer
         internal static IConfigurationRoot configuration { get; set; }
         static string connectionString;
 
-        SqlConnection sql = new SqlConnection(connectionString);
+        SqlConnection sql;
 
         /// <summary>
         /// SQL Connection
@@ -33,6 +33,7 @@ namespace Astrow_2._0.DataLayer
         }
         #endregion
 
+        public List<Days> DaysList { get; set; }
 
 
 
@@ -41,24 +42,18 @@ namespace Astrow_2._0.DataLayer
 
 
         /// <summary>
-        /// Method for inserting users into databases
+        /// Creates 
         /// </summary>
         /// <param name="user"></param>
-        public void CreateUsers(Users user, Days day, UserPersonalInfo info, InBox inbox, FileBox fileBox, TimeCard timeCard)
+        public void CreateUsers(Users user, Days day, UserPersonalInfo info)
         {
+            info = CreateUserInfo(info);
+
+            user = CreateUser(user, info);
+
             CreateDay(day, user);
 
-            CreateUserInfo(info);
-
-            CreateInBox(inbox);
-
-            CreateFile(fileBox);
-
-            CreateTimeCard(timeCard);
-
-            CreateUser(user);
-
-            UpdateForgeignKey(user);
+            CreateTimeCard(day, user);
         }
 
         //--------- Container ---------
@@ -67,9 +62,9 @@ namespace Astrow_2._0.DataLayer
         /// Create user
         /// </summary>
         /// <param name="user"></param>
-        public void CreateUser(Users user)
+        public Users CreateUser(Users user, UserPersonalInfo info)
         {
-            using (sql)
+            using (sql = new SqlConnection(connectionString))
             {
                 sql.Open();
 
@@ -78,6 +73,7 @@ namespace Astrow_2._0.DataLayer
 
                 createUser.Parameters.AddWithValue("@UserName", user.UserName);
                 createUser.Parameters.AddWithValue("@Password", user.Password);
+                createUser.Parameters.AddWithValue("@id", info.Name_ID);
                 createUser.Parameters.AddWithValue("@Status", user.Status);
                 createUser.Parameters.AddWithValue("@salt", user.Salt);
                 createUser.Parameters.AddWithValue("@startDate", user.StartDate);
@@ -85,24 +81,64 @@ namespace Astrow_2._0.DataLayer
 
                 createUser.ExecuteNonQuery();
             }
+
+            //Find ID
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand findUser = new SqlCommand("GetUser", sql);
+                findUser.CommandType = CommandType.StoredProcedure;
+
+                findUser.Parameters.AddWithValue("@userName", user.UserName);
+                findUser.Parameters.AddWithValue("@password", user.Password);
+
+                using (SqlDataReader read = findUser.ExecuteReader())
+                {
+                    while (read.Read())
+                    {
+                        user = new Users
+                        {
+                            User_ID = read.GetInt32(0),
+                            UserName = read.GetString(1),
+                            Password = read.GetString(2),
+                            Name_ID = read.GetInt32(3),
+                            Status = read.GetString(4),
+                            IsDeleted = read.GetBoolean(5),
+                            Salt = read.GetString(6),
+                            StartDate = read.GetDateTime(7),
+                            EndDate = read.GetDateTime(8)
+                        };
+                    }
+                    return user;
+                }
+            }
         }
 
         /// <summary>
         /// Create Time Card
         /// </summary>
         /// <param name="time"></param>
-        public void CreateTimeCard(TimeCard time)
+        public void CreateTimeCard(Days day, Users user)
         {
-            using (sql)
+
+            DaysList = GetUserDays(day, user);
+
+
+            using (sql = new SqlConnection(connectionString))
             {
                 sql.Open();
 
-                SqlCommand createTime = new SqlCommand("CreateTimeCard", sql);
-                createTime.CommandType = CommandType.StoredProcedure;
+                foreach (Days item in DaysList)
+                {
+                    SqlCommand createTime = new SqlCommand("CreateTimeCard", sql);
+                    createTime.CommandType = CommandType.StoredProcedure;
 
-                createTime.Parameters.AddWithValue("@days", time.Days_ID);
+                    createTime.Parameters.AddWithValue("@days", item.Days_ID);
+                    createTime.Parameters.AddWithValue("@userID", user.User_ID);
 
-                createTime.ExecuteNonQuery();
+                    createTime.ExecuteNonQuery();
+                }  
             }
         }
 
@@ -110,16 +146,17 @@ namespace Astrow_2._0.DataLayer
         /// Create Inbox
         /// </summary>
         /// <param name="inbox"></param>
-        public void CreateInBox(InBox inbox)
+        public void CreateInBox(Message mes, Users user)
         {
-            using (sql)
+            using (sql = new SqlConnection(connectionString))
             {
                 sql.Open();
 
                 SqlCommand createInbox = new SqlCommand("CreateInBox", sql);
                 createInbox.CommandType = CommandType.StoredProcedure;
 
-                createInbox.Parameters.AddWithValue("@messageID", inbox.Message_ID);
+                createInbox.Parameters.AddWithValue("@messageID", mes.Message_ID);
+                createInbox.Parameters.AddWithValue("@userID", user.User_ID);
 
                 createInbox.ExecuteNonQuery();
 
@@ -130,16 +167,17 @@ namespace Astrow_2._0.DataLayer
         /// Create File Box
         /// </summary>
         /// <param name="filebox"></param>
-        public void CreateFile(FileBox filebox)
+        public void CreateFile(Files files, Users user)
         {
-            using (sql)
+            using (sql = new SqlConnection(connectionString))
             {
                 sql.Open();
 
                 SqlCommand createFileBox = new SqlCommand("CreateFiles", sql);
                 createFileBox.CommandType = CommandType.StoredProcedure;
 
-                createFileBox.Parameters.AddWithValue("@file_ID", filebox.File_ID);
+                createFileBox.Parameters.AddWithValue("@file_ID", files.File_ID);
+                createFileBox.Parameters.AddWithValue("@userID", user.User_ID);
 
                 createFileBox.ExecuteNonQuery();
             }
@@ -154,7 +192,7 @@ namespace Astrow_2._0.DataLayer
         /// <param name="user"></param>
         public void CreateDay(Days day, Users user)
         {
-            using (sql)
+            using (sql = new SqlConnection(connectionString))
             {
                 sql.Open();
 
@@ -165,9 +203,13 @@ namespace Astrow_2._0.DataLayer
 
                     createDay.CommandType = CommandType.StoredProcedure;
 
+                    //If no date is given defualt date to 1944, 06, 06, 0, 0, 0 
                     createDay.Parameters.AddWithValue("@date", date.Date);
-                    createDay.Parameters.AddWithValue("@absence", day.Absence);
-                    createDay.Parameters.AddWithValue("@registry", day.Registry);
+                    createDay.Parameters.AddWithValue("@userID", user.User_ID);
+                    createDay.Parameters.AddWithValue("@abscenceDate", day.AbsenceDate);
+                    createDay.Parameters.AddWithValue("@abscenceText", day.AbscenceText);
+                    createDay.Parameters.AddWithValue("@startDay", day.StartDay);
+                    createDay.Parameters.AddWithValue("@endDay", day.EndDay);
                     createDay.Parameters.AddWithValue("@saldo", day.Saldo);
                     createDay.Parameters.AddWithValue("@flex", day.Flex);
 
@@ -182,7 +224,7 @@ namespace Astrow_2._0.DataLayer
         /// <param name="file"></param>
         public void CreateFiles(Files file)
         {
-            using (sql)
+            using (sql = new SqlConnection(connectionString))
             {
                 sql.Open();
 
@@ -206,7 +248,7 @@ namespace Astrow_2._0.DataLayer
         /// <param name="mess"></param>
         public void CreateMessage(Message mess)
         {
-            using (sql)
+            using (sql = new SqlConnection(connectionString))
             {
                 sql.Open();
 
@@ -221,9 +263,9 @@ namespace Astrow_2._0.DataLayer
             }
         }
 
-        public void CreateUserInfo(UserPersonalInfo info)
+        public UserPersonalInfo CreateUserInfo(UserPersonalInfo info)
         {
-            using (sql)
+            using (sql = new SqlConnection(connectionString))
             {
                 sql.Open();
 
@@ -237,12 +279,35 @@ namespace Astrow_2._0.DataLayer
 
                 createName.ExecuteNonQuery();
             }
+
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand find = new SqlCommand("GetUserInfo", sql);
+                find.CommandType = CommandType.StoredProcedure;
+
+                find.Parameters.AddWithValue("@fullName", info.FullName);
+
+
+                using (SqlDataReader read = find.ExecuteReader())
+                {
+                    while (read.Read())
+                    {
+                        info = new UserPersonalInfo
+                        {
+                            Name_ID = read.GetInt32(0)
+                        };
+                    }
+                    return info;
+                }
+            }
         }
 
         #endregion
 
         //Update Procedures
-        #region Update
+         #region Update
 
         /// <summary>
         /// Method for updating users values in database
@@ -250,7 +315,7 @@ namespace Astrow_2._0.DataLayer
         /// <param name="user"></param>
         public void UpdateUser(Users user)
         {
-            using (sql)
+            using (sql = new SqlConnection(connectionString))
             {
                 sql.Open();
 
@@ -273,7 +338,7 @@ namespace Astrow_2._0.DataLayer
         /// <param name="user"></param>
         public void UpdateForgeignKey(Users user)
         {
-            using (sql)
+            using (sql = new SqlConnection(connectionString))
             {
                 sql.Open();
 
@@ -283,6 +348,70 @@ namespace Astrow_2._0.DataLayer
                 updateForgeinKeys.Parameters.AddWithValue("@id", user.User_ID);
 
                 updateForgeinKeys.ExecuteNonQuery();
+            }
+        }
+
+        
+        /// <summary>
+        /// Set abscens
+        /// </summary>
+        /// <param name="day"></param>
+        public void UpdateAbscence(Days day)
+        {
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand UpdateAbscence = new SqlCommand("UpdateAbscence", sql);
+                UpdateAbscence.CommandType = CommandType.StoredProcedure;
+                UpdateAbscence.Parameters.AddWithValue("@id", day.Days_ID);
+
+                UpdateAbscence.Parameters.AddWithValue("@AbscenceDate", day.AbsenceDate);
+                UpdateAbscence.Parameters.AddWithValue("@AbscenceText", day.AbscenceText);
+
+                UpdateAbscence.ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// Scan in date
+        /// </summary>
+        /// <param name="day"></param>
+        public void UpdateStartDay(Days day)
+        {
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand scanIn = new SqlCommand("UpdateStart", sql);
+                scanIn.CommandType = CommandType.StoredProcedure;
+
+                scanIn.Parameters.AddWithValue("@id", day.Days_ID);
+
+                scanIn.Parameters.AddWithValue("@StartDay", day.StartDay);
+
+                scanIn.ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// Scan out date
+        /// </summary>
+        /// <param name="day"></param>
+        public void UpdateEndtDay(Days day)
+        {
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand scanIn = new SqlCommand("UpdateEnd", sql);
+                scanIn.CommandType = CommandType.StoredProcedure;
+
+                scanIn.Parameters.AddWithValue("@id", day.Days_ID);
+
+                scanIn.Parameters.AddWithValue("@EndDay", day.EndDay);
+
+                scanIn.ExecuteNonQuery();
             }
         }
 
@@ -297,7 +426,7 @@ namespace Astrow_2._0.DataLayer
         /// <param name="user"></param>
         public void DeleteUser(Users user)
         {
-            using (sql)
+            using (sql = new SqlConnection(connectionString))
             {
                 sql.Open();
 
@@ -324,7 +453,7 @@ namespace Astrow_2._0.DataLayer
         /// <returns></returns>
         public List<Users> ReadAllUsers(List<Users> list, Users users)
         {
-            using (sql)
+            using (sql = new SqlConnection(connectionString))
             {
                 sql.Open();
 
@@ -339,13 +468,13 @@ namespace Astrow_2._0.DataLayer
                         {
                             User_ID = read.GetInt32(0),
                             UserName = read.GetString(1),
-                            Password = (byte[])read[2],
+                            Password = read.GetString(2),
                             Name_ID = read.GetInt32(3),
-                            Inbox_ID = read.GetInt32(4),
-                            TimeCard_ID = read.GetInt32(5),
-                            Files_ID = read.GetInt32(6),
-                            Status = read.GetString(7),
-                            IsDeleted = read.GetBoolean(8)
+                            Status = read.GetString(4),
+                            IsDeleted = read.GetBoolean(5),
+                            Salt = read.GetString(6),
+                            StartDate = read.GetDateTime(7),
+                            EndDate = read.GetDateTime(8)
                         };
 
                         list.Add(users);
@@ -365,7 +494,7 @@ namespace Astrow_2._0.DataLayer
         /// <returns></returns>
         public Users FindByID(int id, Users user)
         {
-            using (sql)
+            using (sql = new SqlConnection(connectionString))
             {
                 sql.Open();
 
@@ -376,18 +505,23 @@ namespace Astrow_2._0.DataLayer
 
                 using (SqlDataReader read = find.ExecuteReader())
                 {
-                    return user = new Users
+                    while (read.Read())
                     {
-                        User_ID = read.GetInt32(0),
-                        UserName = read.GetString(1),
-                        Password = (byte[])read[2],
-                        Name_ID = read.GetInt32(3),
-                        Inbox_ID = read.GetInt32(4),
-                        TimeCard_ID = read.GetInt32(5),
-                        Files_ID = read.GetInt32(6),
-                        Status = read.GetString(7),
-                        IsDeleted = read.GetBoolean(8)
-                    };
+                        user = new Users
+                        {
+                            User_ID = read.GetInt32(0),
+                            UserName = read.GetString(1),
+                            Password = read.GetString(2),
+                            Name_ID = read.GetInt32(3),
+                            Status = read.GetString(4),
+                            IsDeleted = read.GetBoolean(5),
+                            Salt = read.GetString(6),
+                            StartDate = read.GetDateTime(7),
+                            EndDate = read.GetDateTime(8)
+                        };
+                    }
+
+                    return user;
                 }
             }
         }
@@ -401,7 +535,7 @@ namespace Astrow_2._0.DataLayer
         /// <returns></returns>
         public Users FindByUserName(string username, Users user)
         {
-            using (sql)
+            using (sql = new SqlConnection(connectionString))
             {
                 sql.Open();
 
@@ -412,10 +546,56 @@ namespace Astrow_2._0.DataLayer
 
                 using (SqlDataReader read = find.ExecuteReader())
                 {
-                    return user = new Users
+                    while (read.Read())
                     {
-                        Salt = read.GetString(0)
-                    };
+                        user = new Users
+                        {
+                            Salt = read.GetString(6)
+                        };
+                    }
+                    return user;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Fill a list with every day with the same user id as timecard
+        /// </summary>
+        /// <param name="day"></param>
+        /// <param name="time"></param>
+        /// <returns></returns>
+        public List<Days> GetUserDays(Days day, Users user)
+        {
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand getDay = new SqlCommand("FindAllDays", sql);
+                getDay.CommandType = CommandType.StoredProcedure;
+                getDay.Parameters.AddWithValue("@id", user.User_ID);
+
+                DaysList = new List<Days>();
+
+                using (SqlDataReader read = getDay.ExecuteReader())
+                {
+                    while (read.Read())
+                    {
+                        day = new Days
+                        {
+                            Days_ID = read.GetInt32(0),
+                            User_ID = read.GetInt32(1),
+                            Date = read.GetDateTime(2),
+                            AbsenceDate = read.GetDateTime(3),
+                            AbscenceText = read.GetString(4),
+                            StartDay = read.GetDateTime(5),
+                            EndDay = read.GetDateTime(6),
+                            Saldo = read.GetDateTime(7),
+                            Flex = read.GetDateTime(8)
+                        };
+
+                        DaysList.Add(day);
+                    }
+                    return DaysList;
                 }
             }
         }
@@ -437,5 +617,7 @@ namespace Astrow_2._0.DataLayer
                 yield return day;
             }
         }
+
+       
     }
 }

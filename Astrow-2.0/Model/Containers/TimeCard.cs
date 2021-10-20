@@ -11,13 +11,15 @@ namespace Astrow_2._0.Model.Containers
         {
 
         }
-        public TimeCard(int id, int dayID)
+        public TimeCard(int id, int dayID, int userID)
         {
             this.TimeCard_ID = id;
             this.Days_ID = dayID;
+            this.User_ID = userID;
         }
 
         public int TimeCard_ID { get; set; }
         public int Days_ID { get; set; }
+        public int User_ID { get; set; }
     }
 }
