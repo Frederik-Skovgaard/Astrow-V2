@@ -9,7 +9,7 @@ namespace Astrow_2._0.Repository
 {
     public interface IUserRepository
     {
-        void CreateUser(Users user, Days day, UserPersonalInfo info);
+        void CreateUser(Users user, UserPersonalInfo info);
 
         void DeleteUser(Users user);
 

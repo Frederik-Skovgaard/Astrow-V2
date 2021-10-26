@@ -18,11 +18,6 @@ namespace Astrow_2._0.Repository
 
         StoredProcedure Stored = new StoredProcedure();
 
-        List<Users> userList = new List<Users>();
-
-        Users user = new Users();
-
-        LogedUser logedUser = new LogedUser();
 
         //-------------------Methods-----------------------
 
@@ -31,9 +26,9 @@ namespace Astrow_2._0.Repository
         /// Create User
         /// </summary>
         /// <param name="user"></param>
-        public void CreateUser(Users user, Days day, UserPersonalInfo info)
+        public void CreateUser(Users user, UserPersonalInfo info)
         {
-            Stored.CreateUsers(user, day, info);
+            Stored.CreateUsers(user, info);
         }
 
         /// <summary>
@@ -60,12 +55,7 @@ namespace Astrow_2._0.Repository
         /// <returns></returns>
         public List<Users> ReadAllUsers()
         {
-            if (userList.Count != 0)
-            {
-                userList.Clear();
-            }
-
-            userList = Stored.ReadAllUsers(userList, user);
+            List<Users> userList = Stored.ReadAllUsers();
 
             return userList;
         }
@@ -77,7 +67,7 @@ namespace Astrow_2._0.Repository
         /// <returns></returns>
         public Users FindUser(int id)
         {
-            user = Stored.FindByID(id, user);
+            Users user = Stored.FindByID(id);
             return user;
         }
 
@@ -88,7 +78,7 @@ namespace Astrow_2._0.Repository
         /// <returns></returns>
         public Users FindByUserName(string username)
         {
-            user = Stored.FindByUserName(username, user);
+            Users user = Stored.FindByUserName(username);
             return user;
         }
 
@@ -100,7 +90,11 @@ namespace Astrow_2._0.Repository
         /// <returns></returns>
         public LogedUser Login(string username, string password)
         {
-            user = userList.SingleOrDefault(x => x.UserName == username && x.Password == password);
+            List<Users> userList = ReadAllUsers();
+
+            LogedUser logedUser = new LogedUser();
+
+            Users user = userList.SingleOrDefault(x => x.UserName == username && x.Password == password);
 
             if (user != null)
             {
@@ -111,9 +105,10 @@ namespace Astrow_2._0.Repository
                     User_ID = user.User_ID
                 };
             }
-
-
-            throw new LoginException("Username or password does not match...");
+            else
+            {
+                throw new LoginException("Username or password does not match...");
+            }
         }
 
 

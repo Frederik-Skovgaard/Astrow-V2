@@ -30,14 +30,6 @@ namespace Astrow_2._0.Pages
         public Users Users { get; set; }
 
         [BindProperty]
-        public TimeCard TimeCard { get; set; }
-
-        [BindProperty]
-        public Days Days { get; set; }
-
-        public UserPersonalInfo UserInfo { get; set; }
-
-        [BindProperty]
         public LogedUser LogedUser { get; set; }
 
 
@@ -64,47 +56,6 @@ namespace Astrow_2._0.Pages
         /// </summary>
         public void OnPost()
         {
-            
-            byte[] s = Encoding.ASCII.GetBytes("Admin");
-            byte[] v = Encoding.ASCII.GetBytes("Astrow");
-            string p = _userRepository.GenerateSaltedHash(s, v);
-
-            Users = new Users
-            {
-                UserName = "Admin",
-                Password = p,
-                Status = "Instructør",
-                IsDeleted = false,
-                Salt = "Astrow",
-                StartDate = new DateTime(2020, 8, 13),
-                EndDate = new DateTime(2025, 1, 1)
-            };
-
-            UserInfo = new UserPersonalInfo
-            {
-                FirstName = "Adam",
-                MiddleName = "The",
-                LastName = "Admin",
-                FullName = "Adam The Admin"
-            };
-
-            Days = new Days
-            {
-                Date = new DateTime(1944, 6, 6, 0, 0, 0),
-                AbsenceDate = new DateTime(1944, 6, 6, 0, 0, 0),
-                AbscenceText = "",
-                StartDay = new DateTime(1944, 6, 6, 0, 0, 0),
-                EndDay = new DateTime(1944, 6, 6, 0, 0, 0),
-                Saldo = new DateTime(1944, 6, 6, 0, 0, 0),
-                Flex = new DateTime(1944, 6, 6, 0, 0, 0)
-            };
-
-            TimeCard = new TimeCard();
-
-            UserName = Users.UserName;
-
-            _userRepository.CreateUser(Users, Days, UserInfo);
-
             //Find salt
             Users = _userRepository.FindByUserName(UserName);
 
@@ -123,15 +74,11 @@ namespace Astrow_2._0.Pages
             {
                 RedirectToPage("/HomePage");
             }
-
-
-            //Error throw if LogedUser is null which i coulden't be but never too much error handling
-            throw new LoginException("An unexcpeted error happend... Please call for help..");
+            else
+            {
+                //Error throw if LogedUser is null which i coulden't be but never too much error handling
+                throw new LoginException("An unexcpeted error happend... Please call for help..");
+            }
         }
-
-        
-
-
-       
     }
 }

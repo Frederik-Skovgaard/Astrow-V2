@@ -33,10 +33,6 @@ namespace Astrow_2._0.DataLayer
         }
         #endregion
 
-        public List<Days> DaysList { get; set; }
-
-
-
         //Create Procedures
         #region Create
 
@@ -45,15 +41,11 @@ namespace Astrow_2._0.DataLayer
         /// Creates 
         /// </summary>
         /// <param name="user"></param>
-        public void CreateUsers(Users user, Days day, UserPersonalInfo info)
+        public void CreateUsers(Users user, UserPersonalInfo info)
         {
             info = CreateUserInfo(info);
 
-            user = CreateUser(user, info);
-
-            CreateDay(day, user);
-
-            CreateTimeCard(day, user);
+            CreateUser(user, info);
         }
 
         //--------- Container ---------
@@ -121,24 +113,19 @@ namespace Astrow_2._0.DataLayer
         /// <param name="time"></param>
         public void CreateTimeCard(Days day, Users user)
         {
-
-            DaysList = GetUserDays(day, user);
-
-
             using (sql = new SqlConnection(connectionString))
             {
                 sql.Open();
 
-                foreach (Days item in DaysList)
-                {
-                    SqlCommand createTime = new SqlCommand("CreateTimeCard", sql);
-                    createTime.CommandType = CommandType.StoredProcedure;
 
-                    createTime.Parameters.AddWithValue("@days", item.Days_ID);
-                    createTime.Parameters.AddWithValue("@userID", user.User_ID);
+                SqlCommand createTime = new SqlCommand("CreateTimeCard", sql);
+                createTime.CommandType = CommandType.StoredProcedure;
 
-                    createTime.ExecuteNonQuery();
-                }  
+                createTime.Parameters.AddWithValue("@days", day.Days_ID);
+                createTime.Parameters.AddWithValue("@userID", user.User_ID);
+
+                createTime.ExecuteNonQuery();
+
             }
         }
 
@@ -196,25 +183,22 @@ namespace Astrow_2._0.DataLayer
             {
                 sql.Open();
 
+                SqlCommand createDay = new SqlCommand("CreateDay", sql);
 
-                foreach (DateTime date in EachDay(user.StartDate, user.EndDate))
-                {
-                    SqlCommand createDay = new SqlCommand("CreateDay", sql);
+                createDay.CommandType = CommandType.StoredProcedure;
 
-                    createDay.CommandType = CommandType.StoredProcedure;
+                //If no date is given defualt date to 1944, 06, 06, 0, 0, 0 
+                createDay.Parameters.AddWithValue("@date", day.Date);
+                createDay.Parameters.AddWithValue("@userID", user.User_ID);
+                createDay.Parameters.AddWithValue("@abscenceDate", day.AbsenceDate);
+                createDay.Parameters.AddWithValue("@abscenceText", day.AbscenceText);
+                createDay.Parameters.AddWithValue("@startDay", day.StartDay);
+                createDay.Parameters.AddWithValue("@endDay", day.EndDay);
+                createDay.Parameters.AddWithValue("@saldo", day.Saldo);
+                createDay.Parameters.AddWithValue("@flex", day.Flex);
 
-                    //If no date is given defualt date to 1944, 06, 06, 0, 0, 0 
-                    createDay.Parameters.AddWithValue("@date", date.Date);
-                    createDay.Parameters.AddWithValue("@userID", user.User_ID);
-                    createDay.Parameters.AddWithValue("@abscenceDate", day.AbsenceDate);
-                    createDay.Parameters.AddWithValue("@abscenceText", day.AbscenceText);
-                    createDay.Parameters.AddWithValue("@startDay", day.StartDay);
-                    createDay.Parameters.AddWithValue("@endDay", day.EndDay);
-                    createDay.Parameters.AddWithValue("@saldo", day.Saldo);
-                    createDay.Parameters.AddWithValue("@flex", day.Flex);
+                createDay.ExecuteNonQuery();
 
-                    createDay.ExecuteNonQuery();
-                }
             }
         }
 
@@ -307,7 +291,7 @@ namespace Astrow_2._0.DataLayer
         #endregion
 
         //Update Procedures
-         #region Update
+        #region Update
 
         /// <summary>
         /// Method for updating users values in database
@@ -329,9 +313,9 @@ namespace Astrow_2._0.DataLayer
                 updateUser.Parameters.AddWithValue("@Status", user.Status);
 
                 updateUser.ExecuteNonQuery();
-            }  
+            }
         }
-        
+
         /// <summary>
         /// Give user the right foregine keys
         /// </summary>
@@ -351,7 +335,7 @@ namespace Astrow_2._0.DataLayer
             }
         }
 
-        
+
         /// <summary>
         /// Set abscens
         /// </summary>
@@ -436,7 +420,7 @@ namespace Astrow_2._0.DataLayer
                 deleteUser.Parameters.AddWithValue("@id", user.User_ID);
 
                 deleteUser.ExecuteNonQuery();
-            }        
+            }
         }
 
 
@@ -451,14 +435,19 @@ namespace Astrow_2._0.DataLayer
         /// <param name="list"></param>
         /// <param name="users"></param>
         /// <returns></returns>
-        public List<Users> ReadAllUsers(List<Users> list, Users users)
+        public List<Users> ReadAllUsers()
         {
+            List<Users> list = new List<Users>();
+
             using (sql = new SqlConnection(connectionString))
             {
                 sql.Open();
 
                 SqlCommand readAll = new SqlCommand("ReadAllUsers", sql);
                 readAll.CommandType = CommandType.StoredProcedure;
+
+                Users users = new Users();
+                
 
                 using (SqlDataReader read = readAll.ExecuteReader())
                 {
@@ -482,7 +471,7 @@ namespace Astrow_2._0.DataLayer
                 }
             }
 
-                return list;
+            return list;
         }
 
 
@@ -492,7 +481,7 @@ namespace Astrow_2._0.DataLayer
         /// <param name="id"></param>
         /// <param name="user"></param>
         /// <returns></returns>
-        public Users FindByID(int id, Users user)
+        public Users FindByID(int id)
         {
             using (sql = new SqlConnection(connectionString))
             {
@@ -502,6 +491,8 @@ namespace Astrow_2._0.DataLayer
                 find.CommandType = CommandType.StoredProcedure;
 
                 find.Parameters.AddWithValue("@id", id);
+
+                Users user = new Users();
 
                 using (SqlDataReader read = find.ExecuteReader())
                 {
@@ -533,7 +524,7 @@ namespace Astrow_2._0.DataLayer
         /// <param name="username"></param>
         /// <param name="user"></param>
         /// <returns></returns>
-        public Users FindByUserName(string username, Users user)
+        public Users FindByUserName(string username)
         {
             using (sql = new SqlConnection(connectionString))
             {
@@ -544,80 +535,21 @@ namespace Astrow_2._0.DataLayer
 
                 find.Parameters.AddWithValue("@UserName", username);
 
+                Users user = new Users();
+
                 using (SqlDataReader read = find.ExecuteReader())
                 {
                     while (read.Read())
                     {
                         user = new Users
                         {
-                            Salt = read.GetString(6)
+                            Salt = read.GetString(0)
                         };
                     }
                     return user;
                 }
             }
         }
-
-        /// <summary>
-        /// Fill a list with every day with the same user id as timecard
-        /// </summary>
-        /// <param name="day"></param>
-        /// <param name="time"></param>
-        /// <returns></returns>
-        public List<Days> GetUserDays(Days day, Users user)
-        {
-            using (sql = new SqlConnection(connectionString))
-            {
-                sql.Open();
-
-                SqlCommand getDay = new SqlCommand("FindAllDays", sql);
-                getDay.CommandType = CommandType.StoredProcedure;
-                getDay.Parameters.AddWithValue("@id", user.User_ID);
-
-                DaysList = new List<Days>();
-
-                using (SqlDataReader read = getDay.ExecuteReader())
-                {
-                    while (read.Read())
-                    {
-                        day = new Days
-                        {
-                            Days_ID = read.GetInt32(0),
-                            User_ID = read.GetInt32(1),
-                            Date = read.GetDateTime(2),
-                            AbsenceDate = read.GetDateTime(3),
-                            AbscenceText = read.GetString(4),
-                            StartDay = read.GetDateTime(5),
-                            EndDay = read.GetDateTime(6),
-                            Saldo = read.GetDateTime(7),
-                            Flex = read.GetDateTime(8)
-                        };
-
-                        DaysList.Add(day);
-                    }
-                    return DaysList;
-                }
-            }
-        }
-
-        #endregion
-
-
-
-        /// <summary>
-        /// Method for getting days between 
-        /// </summary>
-        /// <param name="from"></param>
-        /// <param name="thru"></param>
-        /// <returns></returns>
-        public IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)
-        {
-            for (var day = from.Date; day.Date <= thru.Date; day = day.AddDays(1))
-            {
-                yield return day;
-            }
-        }
-
-       
+        #endregion       
     }
 }
