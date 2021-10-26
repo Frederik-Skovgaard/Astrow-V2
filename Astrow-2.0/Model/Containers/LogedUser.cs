@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Astrow_2._0.Model
+namespace Astrow_2._0.Model.Containers
 {
     public class LogedUser
     {

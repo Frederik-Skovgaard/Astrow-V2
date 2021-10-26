@@ -8,11 +8,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Astrow_2._0.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Net;
 using Microsoft.AspNetCore.Http;
 using Astrow_2._0.Repository;
+using Astrow_2._0.DataLayer;
 
 namespace Astrow_2._0
 {
@@ -21,7 +21,6 @@ namespace Astrow_2._0
         public Startup(IConfiguration configuration)
         {
             Configuration = (IConfigurationRoot)configuration;
-            Features.Register(Configuration);
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -29,7 +28,8 @@ namespace Astrow_2._0
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IFeatures, Features>();
+
+            StoredProcedure.SetConnectionString();
 
             services.AddScoped<IUserRepository, UserRepository>();
 
@@ -38,28 +38,11 @@ namespace Astrow_2._0
                 options.Conventions.AddPageRoute("/Login", "");
             });
 
-            services.AddAuthentication(auth =>
+            services.AddSession(option =>
             {
-                auth.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                auth.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            })
-                .AddCookie(cookie =>
-                {
-                    cookie.Events = new CookieAuthenticationEvents
-                    {
-                        OnRedirectToAccessDenied = onDenied =>
-                        {
-                            onDenied.Response.StatusCode = (int)HttpStatusCode.Forbidden;
-                            return Task.CompletedTask;
-                        }
-                    };
-
-                    cookie.Cookie.Name = Features.CookieID;
-                    cookie.LoginPath = new PathString(Features.LoginPath);
-                    cookie.ReturnUrlParameter = new PathString(Features.ReturnURLParam);
-                    cookie.AccessDeniedPath = new PathString(Features.AccessDeniedPath);
-                    cookie.ExpireTimeSpan = TimeSpan.FromMinutes(Features.CookieExpiration);
-                });
+                option.IdleTimeout = TimeSpan.FromHours(1);
+                option.Cookie.IsEssential = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -82,6 +65,8 @@ namespace Astrow_2._0
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseSession();
 
             app.UseAuthorization();
 
