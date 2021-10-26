@@ -11,6 +11,7 @@ using System.Text;
 using Astrow_2._0.Model.Items;
 using Astrow_2._0.Model.Containers;
 using Astrow_2._0.CustomExceptions;
+using Microsoft.AspNetCore.Http;
 
 namespace Astrow_2._0.Pages
 {
@@ -18,6 +19,11 @@ namespace Astrow_2._0.Pages
     public class LoginModel : PageModel
     {
         private readonly IUserRepository _userRepository;
+
+        public const string SessionUserID = "_UserID";
+        public const string SessionUserName = "_Username";
+        public const string sessionStatus = "_Status";
+
 
         public LoginModel(IUserRepository userRepository)
         {
@@ -47,14 +53,16 @@ namespace Astrow_2._0.Pages
 
         public void OnGet()
         {
-
+            HttpContext.Session.SetInt32(SessionUserID, 0);
+            HttpContext.Session.SetString(SessionUserName, "");
+            HttpContext.Session.SetString(sessionStatus, "");
         }
 
 
         /// <summary>
         /// Login post
         /// </summary>
-        public void OnPost()
+        public IActionResult OnPost()
         {
             //Find salt
             Users = _userRepository.FindByUserName(UserName);
@@ -72,7 +80,10 @@ namespace Astrow_2._0.Pages
             //If LogedUser isen't null redirect to home page
             if (LogedUser != null)
             {
-                RedirectToPage("/HomePage");
+                HttpContext.Session.SetString(SessionUserName, LogedUser.UserName);
+                HttpContext.Session.SetInt32(SessionUserID, LogedUser.User_ID);
+                HttpContext.Session.SetString(sessionStatus, LogedUser.Status);
+                return RedirectToPage("/HomePage");
             }
             else
             {
