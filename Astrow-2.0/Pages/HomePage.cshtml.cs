@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Astrow_2._0.Pages
 {
-    [Authorize]
+    
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
