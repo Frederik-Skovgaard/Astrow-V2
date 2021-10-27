@@ -16,31 +16,23 @@
 
     }
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">Astrow2.0</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/HomePage">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                        @if (test != null && test.Length != 0)
-                        {
-                            <li class="nav-item">
-                                <button class="btn btn-primary">@System.Text.Encoding.UTF8.GetString(test, 0, test.Length)</button>
-                            </li>
-                        }
-                    </ul>
-                </div>
+        <div id="mySideNav" class="sidenav">
+            <img src="~/Img/PCS_Logo.svg" style="width: 15rem; margin-left: 2rem; margin-top: 1rem; " />
+            <a>Operationer</a>
+            <a>Vis</a>
+            <a>Opsætning</a>
+            <div class="UserNav">
+                <p>@System.Text.Encoding.UTF8.GetString(test, 0, test.Length)</p>
+                <button class="btn btn-primary" type="submit">Log out</button>
             </div>
-        </nav>
+        </div>
+
+        <div id="mySideNav" class="sidenav" hidden>
+            <a href="#">Opret registrering</a>
+            <a href="#">Opret fraværesanmodning</a>
+            <a href="#">Time Kort</a>
+            <a href="#">Godkend periode</a>
+        </div>
     </header>
     <div class="container">
         <main role="main" class="pb-3">
@@ -48,11 +40,6 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - Astrow2.0 - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
-    </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
