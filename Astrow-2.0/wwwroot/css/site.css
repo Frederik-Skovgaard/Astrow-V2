@@ -1,12 +1,29 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+* {
+    list-style: none;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif
+}
 
 body {
-    /*background: url(/Img/Background.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 122rem;*/
-    background-image: linear-gradient( 90deg, rgb(45 115 251 / 50%) 25%, rgb(39 152 224 / 50%) 50%, rgb(35 183 202 / 50%) 75%), url(/Img/BackgroundImage.jpg);
+    background-image: linear-gradient( 35deg, rgb(45 115 251 / 50%) 25%, rgb(39 152 224 / 50%) 50%, rgb(35 183 202 / 50%) 75%), url(/Img/bigbackground.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+
+button {
+    outline: none !important;
+}
+
+a {
+    outline: none !important;
 }
 
 img {
@@ -15,127 +32,139 @@ img {
 }
 
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
 /* Provide sufficient contrast against white background */
 
 a {
-  color: #0366d6;
+    color: #0366d6;
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
+
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
 button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+    font-size: 1rem;
+    line-height: inherit;
 }
+
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
 }
+
 .footer {
-    background-color:white;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+    background-color: white;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
 }
 
 /* Nav-bar
 -------------------------------------------------------*/
-.sidenav {
-    height: 100%;
-    width: 20rem;
+.wrapper .sidebar {
+    background: linear-gradient( 35deg, rgb(45 115 251 / 50%) 25%, rgb(39 152 224 / 50%) 50%, rgb(35 183 202 / 50%) 75%);
     position: fixed;
-    top: 0px;
+    top: 0;
     left: 0;
-    background: linear-gradient( 1deg, rgb(45 115 251 / 50%) 25%, rgb(39 152 224 / 50%) 50%, rgb(35 183 202 / 50%) 75%);
-    -webkit-text-stroke: medium;
+    width: 225px;
+    height: 100%;
+    padding: 20px 0;
+    transition: all 0.5s ease;
 }
-    .sidenav a {
-        text-decoration: none;
-        font-size: 25px;
-        color: #5ce3d657;
-        display: block;
-        transition: 0.3s;
-        padding: 0;
-        padding-top: 3rem;
-        padding-left: 1rem;
-        width: max-content;
+
+    .wrapper .sidebar .Logo {
+        margin-bottom: 30px;
+        text-align: center;
     }
-        .sidenav a:after {
+
+        .wrapper .sidebar .Logo img {
             display: block;
-            content: '';
-            border: solid 2px #32a1ce;
-            transform: scaleX(0);
-            transition: transform 250ms ease-in-out;
+            width: 194px;
+            margin: 0 auto;
         }
-        .sidenav a:hover {
-            color: #2bf5ffe0;
+        .wrapper .sidebar ul {
+            padding:0;    
         }
-        .sidenav a:hover:after {
-            transform: scaleX(1);
+    .wrapper .sidebar ul li a {
+        display: block;
+        padding: 13px 30px;
+        color: rgb(241, 237, 237);
+        position: relative;
+        text-decoration: none;
+        transition: all 0.5s ease-in-out;
+    }
+
+        .wrapper .sidebar ul li a .icon {
+            color: #dee4ec;
+            width: 30px;
+            display: inline-block;
+            transition: all 0.5s ease-in-out;
+            float:right;
+        }
+            .wrapper .sidebar ul li a .icon:hover {
+                color: #00ffdc;
+            }
+
+        .wrapper .sidebar ul li a:hover,
+        .wrapper .sidebar ul li a.active {
+            color: #00ffdc;
+            transform: matrix(1);
+            background: linear-gradient( 35deg, rgb(45 115 251 / 50%) 25%, rgb(39 152 224 / 50%) 50%, rgb(35 183 202 / 50%) 75%);
         }
 
-    .sidenav .UserNav {
-        margin-top: 5rem;
-        text-align: -webkit-center;
-    }
-        .sidenav .UserNav p {
-            color: #eaf5ff !important;
-            font-size: 25px;
-        }
-    .sidenav .UserNav .btn {
-        width: 15rem;
-        background: #2a9dff;
-        height: 30px;
-        line-height: 0px;
-    }
+            .wrapper .sidebar ul li a:hover:before,
+            .wrapper .sidebar ul li a.active:before {
+                display: block;
+            }
+
 /* Login-Page
 ------------------------------------------------------*/
 .Login-Page {
@@ -143,6 +172,7 @@ body {
     margin: 0 auto;
     width: 25rem;
 }
+
     .Login-Page .copy {
         position: fixed;
         bottom: 0;
@@ -155,13 +185,15 @@ body {
         margin: 0 auto;
         height: 27rem;
         margin-top: 10rem;
-        background: url(../Img/LoginBG.png);
+        background: linear-gradient( 35deg, rgb(45 115 251 / 50%) 25%, rgb(39 152 224 / 50%) 50%, rgb(35 183 202 / 50%) 75%);
         background-repeat: no-repeat;
         padding: 1rem;
         background-size: 28rem;
         background-position: center;
         border-radius: 10px;
+        box-shadow: 0px 0px 0px 6px #00ffff26;
     }
+
     .Login-Page .top .logo-version {
         float: right;
     }
@@ -169,39 +201,47 @@ body {
     .Login-Page .middle {
         margin-top: 4rem;
     }
+
         .Login-Page .middle .form-control {
             width: 80%;
             margin: 0 auto;
             border-radius: 0px;
             border: none;
         }
+
         .Login-Page .middle #username {
             margin-bottom: 1rem;
         }
+
         .Login-Page .middle .CheckBox {
             display: flex;
             justify-content: flex-end;
             margin-right: 1rem;
             margin-top: 1rem;
         }
+
         .Login-Page .middle .form-control:focus {
             border: none;
-            box-shadow:none;
+            box-shadow: none;
         }
+
         .Login-Page .middle .form-control:hover {
             border: none;
             box-shadow: none;
         }
+
         .Login-Page .middle .form-check {
             margin-right: 10px;
             margin-top: 1px;
             width: 15px;
         }
+
     .Login-Page .bottom {
         margin: 0 auto;
         width: 80%;
         margin-top: 2rem;
     }
+
         .Login-Page .bottom .btn {
             font-weight: 100;
             background: #f4b41a !important;
@@ -212,10 +252,12 @@ body {
             padding: 0;
             transition: box-shadow 0.5s, background 0.5s;
         }
+
             .Login-Page .bottom .btn:hover {
                 background: #f4b41a !important;
                 box-shadow: 0px 0px 0px 1px #f4b41a !important;
             }
+
             .Login-Page .bottom .btn:focus {
                 outline: none !important;
                 box-shadow: none !important;
@@ -227,11 +269,13 @@ body {
             color: white;
             margin-top: 0.5rem;
         }
+
             .Login-Page .bottom .bottom-link .tooltip {
                 position: relative;
                 display: inline-block;
                 opacity: 1;
             }
+
                 .Login-Page .bottom .bottom-link .tooltip .tooltiptext {
                     visibility: hidden;
                     opacity: 0;
@@ -247,9 +291,8 @@ body {
                     z-index: 1;
                     transition: opacity 0.3s, visibility 0.3s;
                 }
+
                 .Login-Page .bottom .bottom-link .tooltip:hover .tooltiptext {
-                    visibility:visible;
+                    visibility: visible;
                     opacity: 1;
                 }
-            
-
