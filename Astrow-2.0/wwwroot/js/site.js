@@ -4,5 +4,18 @@
 // Write your JavaScript code.
 
 
+//René did this...
+function NormalButtonThings() {
+    var body = document.body;
 
+    if (body.className != "NormalBody") {
+        body.classList.add("NormalBody")
+        body.classList.remove("body");
+    }
+    else {
+        body.classList.add("body");
+        body.classList.remove("NormalBody")
+    }
+
+}
 
