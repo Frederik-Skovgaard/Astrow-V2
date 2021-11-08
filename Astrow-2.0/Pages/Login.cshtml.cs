@@ -47,6 +47,8 @@ namespace Astrow_2._0.Pages
         [BindProperty, Required]
         public string Password { get; set; }
 
+        [BindProperty]
+        public bool LoginMessage { get; set; }
 
         //-------------------Methods-----------------------
 
@@ -67,29 +69,39 @@ namespace Astrow_2._0.Pages
             //Find salt
             Users = _userRepository.FindByUserName(UserName);
 
-            //Turn password and salt to byte
-            byte[] password = Encoding.ASCII.GetBytes(Password);
-            byte[] salt = Encoding.ASCII.GetBytes(Users.Salt);
-
-            //Use salt to hash the password
-            string hashPass = _userRepository.GenerateSaltedHash(password, salt);
-
-            //Login the user and save the necesary data as LogedUser
-            LogedUser = _userRepository.Login(UserName, hashPass);
-
-            //If LogedUser isen't null redirect to home page
-            if (LogedUser != null)
+            if (Users.User_ID != 0)
             {
-                HttpContext.Session.SetString(SessionUserName, LogedUser.UserName);
-                HttpContext.Session.SetInt32(SessionUserID, LogedUser.User_ID);
-                HttpContext.Session.SetString(sessionStatus, LogedUser.Status);
-                return RedirectToPage("/HomePage");
+                //Turn password and salt to byte
+                byte[] password = Encoding.ASCII.GetBytes(Password);
+                byte[] salt = Encoding.ASCII.GetBytes(Users.Salt);
+
+                //Use salt to hash the password
+                string hashPass = _userRepository.GenerateSaltedHash(password, salt);
+
+                //Login the user and save the necesary data as LogedUser
+                LogedUser = _userRepository.Login(UserName, hashPass);
+
+                //If LogedUser isen't null redirect to home page
+                if (LogedUser != null)
+                {
+                    HttpContext.Session.SetString(SessionUserName, LogedUser.UserName);
+                    HttpContext.Session.SetInt32(SessionUserID, LogedUser.User_ID);
+                    HttpContext.Session.SetString(sessionStatus, LogedUser.Status);
+                    return RedirectToPage("/HomePage");
+                }
+                else
+                {
+                    throw new LoginException("Mesa nosa understand why it dosen't worken");
+                }
             }
             else
             {
-                //Error throw if LogedUser is null which i coulden't be but never too much error handling
-                throw new LoginException("An unexcpeted error happend... Please call for help..");
+                LoginMessage = true;
+
+                return Page();
             }
+
+            
         }
     }
 }

@@ -94,7 +94,6 @@ button.accept-policy {
     line-height: inherit;
 }
 
-}
 
 /* Sticky footer styles
 -------------------------------------------------- */
@@ -338,6 +337,9 @@ body {
                     visibility: visible;
                     opacity: 1;
                 }
+
+
+
 
 /* Feature
 ------------------------------------------------------*/
