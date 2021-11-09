@@ -320,7 +320,7 @@ GO
 CREATE PROCEDURE [GetByUserName]
 @UserName NVARCHAR(50)
 AS
-SELECT salt FROM [User]
+SELECT Salt, User_ID FROM [User]
 WHERE UserName = @UserName
 GO
 
