@@ -543,7 +543,8 @@ namespace Astrow_2._0.DataLayer
                     {
                         user = new Users
                         {
-                            Salt = read.GetString(0)
+                            Salt = read.GetString(0),
+                            User_ID = read.GetInt32(1)
                         };
                     }
                     return user;

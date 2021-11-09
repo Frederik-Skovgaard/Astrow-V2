@@ -41,10 +41,10 @@ namespace Astrow_2._0.Pages
 
         //-------------------Login-------------------------
 
-        [BindProperty, Required]
+        [BindProperty, Required(ErrorMessage = "* Username is required")]
         public string UserName { get; set; }
 
-        [BindProperty, Required]
+        [BindProperty, Required(ErrorMessage = "* Password is required")]
         public string Password { get; set; }
 
         [BindProperty]
@@ -82,26 +82,30 @@ namespace Astrow_2._0.Pages
                 LogedUser = _userRepository.Login(UserName, hashPass);
 
                 //If LogedUser isen't null redirect to home page
-                if (LogedUser != null)
+                if (LogedUser.Status != null)
                 {
                     HttpContext.Session.SetString(SessionUserName, LogedUser.UserName);
                     HttpContext.Session.SetInt32(SessionUserID, LogedUser.User_ID);
                     HttpContext.Session.SetString(sessionStatus, LogedUser.Status);
+
                     return RedirectToPage("/HomePage");
                 }
                 else
                 {
-                    throw new LoginException("Mesa nosa understand why it dosen't worken");
+                    LoginMessage = true;
+
+                    return Page();
                 }
             }
             else
             {
+
                 LoginMessage = true;
 
                 return Page();
             }
 
-            
+
         }
     }
 }

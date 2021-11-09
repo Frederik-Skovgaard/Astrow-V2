@@ -8,7 +8,17 @@ for details on configuring this project to bundle and minify static web assets. 
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Open Sans', sans-serif
+    font-family: 'Open Sans', sans-serif;
+    
+    
+}
+
+/*Selection highligter*/
+::selection {
+    background: #00c4ff2e;
+}
+::-moz-selection {
+    background: #00c4ff2e;
 }
 
 body {
@@ -177,6 +187,30 @@ body {
 
 /* Login-Page
 ------------------------------------------------------*/
+.ErrorUsername {
+    color: red;
+    margin-left: 4rem;
+    height: 0;
+    position: absolute;
+    top: 41.5%;
+    text-shadow: 0px 0px #af0000;
+    font-size: 15px;
+    left: 36%;
+}
+
+.Error {
+    color: red;
+    margin-left: 4rem;
+    height: 0;
+    position: absolute;
+    top: 49.5%;
+    text-shadow: 0px 0px #af0000;
+    font-size: 15px;
+    left: 36%;
+}
+
+
+
 .Login-Page {
     color: white;
     margin: 0 auto;
@@ -234,6 +268,7 @@ body {
         margin-top: 2rem;
     }
 
+
         .Login-Page .middle .form-control {
             width: 80%;
             margin: 0 auto;
@@ -241,6 +276,7 @@ body {
             border: 2px solid transparent;
             color: white;
             transition: all 0.3s ease-in-out;
+            margin-top: 2rem;
         }
             .Login-Page .middle .form-control::-webkit-input-placeholder {
                 color: #ffffffb8;
@@ -274,11 +310,12 @@ body {
             margin-right: 10px;
             margin-top: 1px;
             width: 15px;
+            outline: none !important;
         }
 
     .Login-Page .bottom {
         margin: 0 auto;
-        margin-top: 2rem;
+        margin-top: 1rem;
         max-width: min-content;
     }
 

@@ -1,21 +1,40 @@
 ﻿@page
+
 @model Astrow_2._0.Pages.LoginModel
 @{
     Layout = "~/Pages/Shared/_Login.cshtml";
 }
 
+@section scripts{ 
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+
+@if (Model.LoginMessage == true)
+{
+    <script type="text/javascript">
+        alert("Invalid Username or Password!");
+    </script>
+}
 
 
 <div class="Login-Page">
+
     <div class="container form-group">
         <div class="top">
             <img src="~/Img/FORSØG.png" class="login-logo" />
         </div>
         <form method="post">
             <div class="middle">
-                <input type="text" class="form-control" asp-for="UserName" id="username" placeholder="Username" />
-                <input type="password" id="pswd" class="form-control" asp-for="Password" placeholder="Password" />
-
+                <div>
+                    <span asp-validation-for="UserName" class="ErrorUsername"></span>
+                    <input type="text" class="form-control" asp-for="UserName" id="username" autocomplete="off" placeholder="Username" />
+                </div>
+                <div>
+                    <input type="password" id="pswd" class="form-control" asp-for="Password" autocomplete="off" placeholder="Password" />
+                    <span asp-validation-for="Password" class="Error"></span>
+                </div>
                 <div class="CheckBox">
                     <input type="checkbox" class="form-check" />
                     <p>Remember me</p>

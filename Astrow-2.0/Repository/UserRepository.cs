@@ -107,7 +107,7 @@ namespace Astrow_2._0.Repository
             }
             else
             {
-                throw new LoginException("Username or password does not match...");
+                return logedUser;
             }
         }
 
