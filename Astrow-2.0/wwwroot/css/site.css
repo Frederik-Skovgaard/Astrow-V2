@@ -9,14 +9,13 @@ for details on configuring this project to bundle and minify static web assets. 
     padding: 0;
     box-sizing: border-box;
     font-family: 'Open Sans', sans-serif;
-    
-    
 }
 
 /*Selection highligter*/
 ::selection {
     background: #00c4ff2e;
 }
+
 ::-moz-selection {
     background: #00c4ff2e;
 }
@@ -42,10 +41,12 @@ a {
 img {
     -webkit-user-drag: none;
 }
-img::-moz-selection {
-    background-color:transparent;
-    color: #000;
-}
+
+    img::-moz-selection {
+        background-color: transparent;
+        color: #000;
+    }
+
     img::selection {
         background-color: transparent;
         color: #000;
@@ -128,7 +129,8 @@ body {
 
 /* Nav-bar
 -------------------------------------------------------*/
-.wrapper .sidebar {
+.nav {
+    display: block !important;
     background: linear-gradient( 35deg, rgb(45 115 251 / 50%) 25%, rgb(39 152 224 / 50%) 50%, rgb(35 183 202 / 50%) 75%);
     position: fixed;
     top: 0;
@@ -139,51 +141,36 @@ body {
     transition: all 0.5s ease;
 }
 
-    .wrapper .sidebar .Logo {
-        margin-bottom: 30px;
-        text-align: center;
-    }
-
-        .wrapper .sidebar .Logo img {
-            display: block;
-            width: 255px;
-            margin: 0 auto;
-            box-shadow: 0px 0px 4px #0000005e;
-        }
-        .wrapper .sidebar ul {
-            padding:0;    
-        }
-    .wrapper .sidebar ul li a {
-        display: block;
-        padding: 13px 30px;
-        color: rgb(241, 237, 237);
-        position: relative;
+    .nav a {
+        color: black;
         text-decoration: none;
-        transition: all 0.5s ease-in-out;
     }
 
-        .wrapper .sidebar ul li a .icon {
-            color: #dee4ec;
-            width: 30px;
-            display: inline-block;
-            transition: all 0.5s ease-in-out;
-            float:right;
-        }
-            .wrapper .sidebar ul li a .icon:hover {
-                color: #00ffdc;
-            }
+    .nav .Logo {
+        height: max-content;
+        text-align: center;
+        display: block;
+        width: 255px;
+        margin: 0 auto;
+        box-shadow: 0px 0px 4px #0000005e;
+    }
 
-        .wrapper .sidebar ul li a:hover,
-        .wrapper .sidebar ul li a.active {
-            color: #00ffdc;
-            transform: matrix(1);
-            background: linear-gradient( 35deg, rgb(45 115 251 / 50%) 25%, rgb(39 152 224 / 50%) 50%, rgb(35 183 202 / 50%) 75%);
-        }
+    .nav .container {
+        margin-top: 2rem;
+    }
 
-            .wrapper .sidebar ul li a:hover:before,
-            .wrapper .sidebar ul li a.active:before {
-                display: block;
-            }
+nav .container .list-item .list-unstyled {
+    transition: all 0.5s ease-in-out;
+    display: none;
+    opacity: 0;
+}
+
+nav .container .list-item .List-styled {
+    transition: all 0.5s ease-in-out;
+    display: block;
+    opacity: 1;
+}
+
 
 /* Login-Page
 ------------------------------------------------------*/
@@ -223,10 +210,12 @@ body {
         width: -webkit-fill-available;
         font-size: small;
     }
+
         .Login-Page .copy p {
             width: 9rem;
             float: left;
         }
+
         .Login-Page .copy .microBTN {
             background: none;
             border: none;
@@ -256,6 +245,7 @@ body {
         width: min-content;
         margin-top: 1rem;
     }
+
         .Login-Page .top .login-logo {
             width: 20rem;
             border-radius: 5px;
@@ -276,12 +266,14 @@ body {
             transition: all 0.3s ease-in-out;
             margin-top: 2rem;
         }
+
             .Login-Page .middle .form-control::-webkit-input-placeholder {
                 color: #ffffffb8;
                 transition: all 0.5s ease-in-out;
             }
+
             .Login-Page .middle .form-control:hover::-webkit-input-placeholder,
-            .Login-Page .middle .form-control:focus::-webkit-input-placeholder{
+            .Login-Page .middle .form-control:focus::-webkit-input-placeholder {
                 color: white;
             }
 

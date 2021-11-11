@@ -19,3 +19,17 @@ function NormalButtonThings() {
 
 }
 
+function SidebarNav() {
+    var list = document.getElementById('Operationer');
+
+    if (list.className != "List-styled") {
+        list.classList.add("List-styled");
+        list.classList.remove("list-unstyled");
+    }
+    else {
+        list.classList.remove("List-styled");
+        list.classList.add("list-unstyled");
+    }
+
+}
+
