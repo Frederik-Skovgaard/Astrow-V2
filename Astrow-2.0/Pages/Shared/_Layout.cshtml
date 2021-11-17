@@ -6,16 +6,13 @@
     <title>@ViewData["Title"] - Astrow</title>
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/css/fontawesome-free-5.15.4-web/css/all.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
 
 
     <!-- JavaScript -->
-    <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -31,43 +28,54 @@
 
 
 </head>
-<body class="body">
+<body>
     @{
         Context.Session.TryGetValue("_Username", out var test);
 
     }
 
-    <nav role="navigation" class="nav">
-        <img src="~/Img/FORSØG.png" class="Logo"  />
-        <ul class="container">
-            <li class="list-item">
-                <input type="button" onclick="SidebarNav()" class="btn" value="Operationer" />
-
-                <ul class="list-unstyled" id="Operationer">
-                    <li><a href="#" class="list-link">Opret registrering</a></li>
-                    <li><a href="#" class="list-link">Opret fraværsanmodning</a></li>
-                    <li><a href="#" class="list-link">Time kort</a></li>
-                    <li><a href="#" class="list-link">Godkend periode</a></li>
+    <nav class="sidebar">
+        <div class="logo"></div>
+        <ul>
+            <li>
+                <a href="#">Operationer
+                    <span class=""></span>
+                </a>
+                <ul>
+                    <li><a href="#">Opret registrering</a></li>
+                    <li><a href="#">Opret fraværsanmodning</a></li>
+                    <li><a href="#">Time kort</a></li>
+                    <li><a href="#">Godkend periode</a></li>
                 </ul>
             </li>
-            <li class="list-item">
-                <input type="button" onclick="SidebarNav()" class="btn" value="Vis" />
-
-                <ul class="list-unstyled" id="Vis">
-                    <li><a href="#" class="list-link">Terminalresultater</a></li>
-                    <li><a href="#" class="list-link">Mine anmodninger</a></li>
-                    <li><a href="#" class="list-link">Ferie kort</a></li>
-                    <li><a href="#" class="list-link">Årlig oversigt</a></li>
-                    <li><a href="#" class="list-link">Meddelelser</a></li>
-                    <li><a href="#" class="list-link">Mine afvigelser</a></li>
-                    <li><a href="#" class="list-link"></a>Mine filer</li>
+            <li>
+                <a href="#">Vis</a>
+                <ul>
+                    <li><a href="#">Terminalresultater</a></li>
+                    <li><a href="#">Mine anmodninger</a></li>
+                    <li><a href="#">Ferie kort</a></li>
+                    <li><a href="#">Årlig oversigt</a></li>
+                    <li><a href="#">Meddelelser</a></li>
+                    <li><a href="#">Mine afvigelser</a></li>
+                    <li><a href="#">Mine filer</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Opsætning</a>
+                <ul>
+                    <li><a href="#">Indstillinger</a></li>
+                    <li><a href="#">Ændre kodeord</a></li>
                 </ul>
             </li>
         </ul>
     </nav>
 
 
-    @*<p>@System.Text.Encoding.UTF8.GetString(test, 0, test.Length)</p>*@
+
+
+
+
+           @*<p>@System.Text.Encoding.UTF8.GetString(test, 0, test.Length)</p>*@
 
     <div class="container">
         <main role="main" class="pb-3">
@@ -76,14 +84,8 @@
     </div>
 
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/site.js" type="text/javascript"></script>
 
-    <script src="assets/js/util.js"></script>
-    <script src="assets/js/menu-aim.js"></script>
-    <script src="assets/js/main.js"></script>
+
 
     @await RenderSectionAsync("Scripts", required: false)
 

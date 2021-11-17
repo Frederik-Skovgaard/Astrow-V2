@@ -16,9 +16,9 @@
 
 <div class="Login-Page">
 
-    <div class="container form-group">
+    <div id="NormalContainer" class="container form-group">
         <div class="top">
-            <img src="~/Img/FORSØG.png" class="login-logo" />
+            <div id="NormalLogo" class="login-logo"></div>
         </div>
         <form method="post">
             <div class="middle">
@@ -36,12 +36,12 @@
                 </div>
             </div>
             <div class="bottom">
-                <input type="submit" asp-page-handler="/HomePage" class="btn btn-danger" value="Login" />
+                <input type="submit" asp-page-handler="/HomePage" id="NormalBtn" class="btn btn-danger" value="Login" />
                 <div class="bottom-link">
                     <a href="/Error" style=" text-decoration: none; color: white;">Reset password</a><br />
                     <div style="margin-left: 2.5rem; text-decoration: none; color: white;" class="tooltip">
                         Need help?
-                        <span class="tooltiptext"><b style="color: #00ffdc; font-weight: 700; ">John Doe</b><br /> Tlf. 55 55 55 55</span>
+                        <span id="NormalToolTip" class="tooltiptext"><b style="color: #00ffdc; font-weight: 700; ">John Doe</b><br /> Tlf. 55 55 55 55</span>
                     </div>
                 </div>
                 <div class="copy">

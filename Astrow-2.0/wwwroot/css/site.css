@@ -7,8 +7,9 @@ for details on configuring this project to bundle and minify static web assets. 
     text-decoration: none;
     margin: 0;
     padding: 0;
+    user-select: none;
     box-sizing: border-box;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Open Sans';
 }
 
 /*Selection highligter*/
@@ -21,12 +22,13 @@ for details on configuring this project to bundle and minify static web assets. 
 }
 
 body {
+    background: white;
     background-size: cover;
     background-attachment: fixed;
 }
 
 .body {
-    background-image: linear-gradient( 35deg, rgb(45 115 251 / 50%) 25%, rgb(39 152 224 / 50%) 50%, rgb(35 183 202 / 50%) 75%), url(/Img/bigbackground.jpg);
+    background-image: linear-gradient( 35deg, rgb(45 115 251 / 50%) 25%, rgb(39 152 224 / 50%) 50%, rgb(35 183 202 / 50%) 75%), url(/Img/bigbackground.jpg) !important;
 }
 
 
@@ -129,60 +131,72 @@ body {
 
 /* Nav-bar
 -------------------------------------------------------*/
-.nav {
-    display: block !important;
-    background: linear-gradient( 35deg, rgb(45 115 251 / 50%) 25%, rgb(39 152 224 / 50%) 50%, rgb(35 183 202 / 50%) 75%);
+.sidebar {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 280px;
+    width: 336px;
     height: 100%;
-    padding: 20px 0;
-    transition: all 0.5s ease;
+    left: 0;
+    background: #004f75;
+    padding: 1rem;
 }
-
-    .nav a {
-        color: black;
+    .sidebar .logo {
+        background: url("../Img/Logo.jpg");
+        background-size: contain;
+        height: 4.5rem;
+        width: 19rem;
+    }
+nav ul {
+    background: #00405e;
+    height: 100%;
+    width: 100%;
+    list-style: none;
+    padding:0;
+}
+nav ul li {
+    line-height:60px
+}
+nav ul li a {
+    color:white;
+    text-decoration:none;
+    font-size:18px;
+    padding-left:40px;
+    font-weight: 500;
+    display:block;
+    width:100%;
+    transition:all 0.2s ease-in-out;
+}
+    nav ul li a:hover {
+        color: white;
+        border-left: solid #0588c9 3px;
         text-decoration: none;
     }
+nav ul ul{
+    position:static;
+    display:none;
+}
+nav ul ul li{
+    line-height:42px;
+    border-bottom:none;
+}
+nav ul ul li a {
+    font-size: 17px;
+    padding-left: 80px;
 
-    .nav .Logo {
-        height: max-content;
-        text-align: center;
-        display: block;
-        width: 255px;
-        margin: 0 auto;
-        box-shadow: 0px 0px 4px #0000005e;
-    }
-
-    .nav .container {
-        margin-top: 2rem;
-    }
-
-nav .container .list-item .list-unstyled {
-    transition: all 0.5s ease-in-out;
-    display: none;
-    opacity: 0;
 }
 
-nav .container .list-item .List-styled {
-    transition: all 0.5s ease-in-out;
-    display: block;
-    opacity: 1;
-}
 
 
 /* Login-Page
 ------------------------------------------------------*/
-.ErrorUsername {
-    color: #dd0707;
-    text-shadow: 0px 0px #ff0000;
-    font-size: 15px;
-    position: absolute;
-    margin-top: 2.5rem;
-    margin-left: 1rem;
-    transition: all 0.5s ease-in-out;
-}
+            .ErrorUsername {
+                color: #dd0707;
+                text-shadow: 0px 0px #ff0000;
+                font-size: 15px;
+                position: absolute;
+                margin-top: 2.5rem;
+                margin-left: 1rem;
+                transition: all 0.5s ease-in-out;
+            }
 
 .Error {
     color: #dd0707;
@@ -238,7 +252,11 @@ nav .container .list-item .List-styled {
         background-position: center;
         border-radius: 10px;
         box-shadow: 0px 0px 0px 6px #00ffff26;
+        transition: all 0.5s;
     }
+
+
+
 
     .Login-Page .top {
         margin: 0 auto;
@@ -247,6 +265,8 @@ nav .container .list-item .List-styled {
     }
 
         .Login-Page .top .login-logo {
+            background: url("../Img/FORSØG.png");
+            background-size: contain;
             width: 20rem;
             border-radius: 5px;
             height: 4.4rem;
@@ -311,7 +331,7 @@ nav .container .list-item .List-styled {
 
         .Login-Page .bottom .btn {
             font-weight: 100;
-            background: #00adff70 !important;
+            background: #00adff70;
             border: none;
             width: 17rem;
             border-radius: 0px;
@@ -321,7 +341,7 @@ nav .container .list-item .List-styled {
         }
 
             .Login-Page .bottom .btn:hover {
-                background: #00f3ff70 !important;
+                background: #00f3ff70;
                 box-shadow: 0px 0px 0px 4px #00ffff26;
             }
 
@@ -377,9 +397,48 @@ nav .container .list-item .List-styled {
     position: absolute;
     bottom: 0;
     left: 0;
+    outline: none !important;
 }
 
 .NormalBody {
     background-image: linear-gradient( 35deg, rgb(251 188 45 / 50%) 25%, rgb(224 39 39 / 50%) 50%, rgb(0 0 0 / 50%) 75%), url(/Img/NormanBackground.jpg);
     background-position: bottom;
+}
+
+.NormalImg {
+    background: linear-gradient( 35deg, rgb(235 0 0 / 55%) 50%, rgb(235 0 0 / 55%) 50%, rgb(235 0 0 / 55%) 50%),url(../Img/FORSØG.png) !important;
+    background-size: contain !important;
+}
+
+.NormalContainer {
+    background: linear-gradient( 35deg, rgb(251 188 45 / 50%) 25%, rgb(224 39 39 / 50%) 50%, rgb(0 0 0 / 50%) 75%) !important;
+    box-shadow: 0px 0px 0px 6px #ff000026 !important;
+}
+
+.NormalBtn {
+    background: #ff000026 !important;
+}
+
+    .NormalBtn:hover {
+        background: #ff000070 !important;
+        box-shadow: 0px 0px 0px 4px #ff000026 !important;
+    }
+
+.NormalInput {
+    background: #ff00002e !important;
+}
+
+    .NormalInput:hover {
+        background: #ff00002e !important;
+        box-shadow: 0px 0px 0px 4px #ff00005c !important;
+    }
+
+    .NormalInput:focus {
+        background: #ff00002e !important;
+        box-shadow: 0px 0px 0px 4px #ff00005c !important;
+    }
+
+.NormalTooltip {
+    box-shadow: 0px 0px 0px 4px #ff000026 !important;
+    background: #ff000070 !important;
 }
