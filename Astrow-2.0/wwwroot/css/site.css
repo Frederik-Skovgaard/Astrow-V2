@@ -131,6 +131,11 @@ body {
 
 /* Nav-bar
 -------------------------------------------------------*/
+a:hover {
+    text-decoration:none;
+    color:white !important;
+}
+
 .sidebar {
     position: fixed;
     width: 336px;
@@ -139,64 +144,106 @@ body {
     background: #004f75;
     padding: 1rem;
 }
-    .sidebar .logo {
-        background: url("../Img/Logo.jpg");
-        background-size: contain;
-        height: 4.5rem;
-        width: 19rem;
-    }
+
+.sidebar .logo {
+    background: url("../Img/Logo.jpg");
+    background-size: contain;
+    height: 4.5rem;
+    width: 19rem;
+}
+nav .mainUl {
+    margin-top: 1rem;
+}
 nav ul {
     background: #00405e;
     height: 100%;
     width: 100%;
     list-style: none;
-    padding:0;
+    padding: 0
 }
+
 nav ul li {
-    line-height:60px
+    line-height: 60px;
 }
+
+
 nav ul li a {
-    color:white;
-    text-decoration:none;
-    font-size:18px;
-    padding-left:40px;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    padding-left: 40px;
     font-weight: 500;
+    display: block;
+    width: 100%;
+}
+
+nav ul li.active a {
+    color: white;
+    border-left: solid #0588c9 3px;
+    text-decoration: none;
+}
+
+nav ul ul {
+    position: static;
+    display: none;
+}
+
+nav ul .Oper-show.show {
     display:block;
-    width:100%;
-    transition:all 0.2s ease-in-out;
 }
-    nav ul li a:hover {
-        color: white;
-        border-left: solid #0588c9 3px;
-        text-decoration: none;
-    }
-nav ul ul{
-    position:static;
-    display:none;
+nav ul .Vis-show.show1 {
+    display:block;
 }
-nav ul ul li{
-    line-height:42px;
-    border-bottom:none;
+nav ul .Ops-show.show2 {
+    display:block;
 }
+
+nav ul ul li {
+    line-height: 42px;
+    border-bottom: none;
+}
+
 nav ul ul li a {
     font-size: 17px;
     padding-left: 80px;
+}
+nav ul li.active ul li a {
+    color: white;
+    border-left: solid #0588c9 3px;
+    text-decoration: none;
+    border-left-color:transparent;
+}
+nav ul ul li a:hover {
+    background: #004f75;
+    border-left: solid 3px #0588c9 !important;
+}
 
+nav ul li a span {
+    position: absolute;
+    right: 30px;
+    transform: translateY(-50%);
+    font-size: 22px;
+    transition: all 0.3s ease-in-out;
+    margin-top: 2rem;
+}
+
+nav ul li a span.rotate {
+    transform: translateY(-50%) rotate(-180deg);
 }
 
 
 
 /* Login-Page
 ------------------------------------------------------*/
-            .ErrorUsername {
-                color: #dd0707;
-                text-shadow: 0px 0px #ff0000;
-                font-size: 15px;
-                position: absolute;
-                margin-top: 2.5rem;
-                margin-left: 1rem;
-                transition: all 0.5s ease-in-out;
-            }
+.ErrorUsername {
+    color: #dd0707;
+    text-shadow: 0px 0px #ff0000;
+    font-size: 15px;
+    position: absolute;
+    margin-top: 2.5rem;
+    margin-left: 1rem;
+    transition: all 0.5s ease-in-out;
+}
 
 .Error {
     color: #dd0707;

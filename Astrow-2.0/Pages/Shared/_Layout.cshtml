@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-
+    <link src="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/css/fontawesome-free-5.15.4-web/css/all.css" rel="stylesheet" />
 
     <!-- JavaScript -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -36,21 +37,25 @@
 
     <nav class="sidebar">
         <div class="logo"></div>
-        <ul>
-            <li>
-                <a href="#">Operationer
-                    <span class=""></span>
+        <ul class="mainUl">
+            <li id="Oper-li">
+                <a href="#" class="Oper-btn">
+                    Operationer
+                    <span class="fas fa-caret-down first"></span>
                 </a>
-                <ul>
+                <ul id="Oper" class="Oper-show">
                     <li><a href="#">Opret registrering</a></li>
                     <li><a href="#">Opret fraværsanmodning</a></li>
                     <li><a href="#">Time kort</a></li>
                     <li><a href="#">Godkend periode</a></li>
                 </ul>
             </li>
-            <li>
-                <a href="#">Vis</a>
-                <ul>
+            <li id="Vis-li">
+                <a href="#" class="Vis-btn">
+                    Vis
+                    <span class="fas fa-caret-down second"></span>
+                </a>
+                <ul id="vis" class="Vis-show">
                     <li><a href="#">Terminalresultater</a></li>
                     <li><a href="#">Mine anmodninger</a></li>
                     <li><a href="#">Ferie kort</a></li>
@@ -60,9 +65,12 @@
                     <li><a href="#">Mine filer</a></li>
                 </ul>
             </li>
-            <li>
-                <a href="#">Opsætning</a>
-                <ul>
+            <li id="Ops-li">
+                <a href="#" class="Ops-btn">
+                    Opsætning
+                    <span class="fas fa-caret-down third"></span>
+                </a>
+                <ul id="Ops" class="Ops-show">
                     <li><a href="#">Indstillinger</a></li>
                     <li><a href="#">Ændre kodeord</a></li>
                 </ul>
@@ -71,11 +79,128 @@
     </nav>
 
 
+    <script>
+                $('.Oper-btn').click(function() {
+
+                    if (document.getElementById("vis").classList.contains("show1")){
+
+                        $('nav ul .Vis-show').toggleClass("show1");
+                        $('nav ul .second').toggleClass("rotate");
+
+                        $('nav ul .Oper-show').toggleClass("show");
+                        $('nav ul .first').toggleClass("rotate");
+
+                    }
+                    else if (document.getElementById("Ops").classList.contains("show2")) {
+
+                        $('nav ul .Ops-show').toggleClass("show2");
+                        $('nav ul .third').toggleClass("rotate")
+
+                        $('nav ul .Oper-show').toggleClass("show");
+                        $('nav ul .first').toggleClass("rotate");
+                    }
+                    else {
+
+                        $('nav ul .Oper-show').toggleClass("show");
+                        $('nav ul .first').toggleClass("rotate");
+                    }
+
+                });
+
+
+                $('.Vis-btn').click(function() {
+                    if (document.getElementById("Oper").classList.contains("show")) {
+
+                        $('nav ul .Oper-show').toggleClass("show");
+                        $('nav ul .first').toggleClass("rotate");
+
+                        $('nav ul .Vis-show').toggleClass("show1");
+                        $('nav ul .second').toggleClass("rotate");
+                    }
+                    else if (document.getElementById("Ops").classList.contains("show2")) {
+
+                        $('nav ul .Ops-show').toggleClass("show2");
+                        $('nav ul .third').toggleClass("rotate")
+
+                        $('nav ul .Vis-show').toggleClass("show1");
+                        $('nav ul .second').toggleClass("rotate");
+                    }
+                    else {
+                        $('nav ul .Vis-show').toggleClass("show1");
+                        $('nav ul .second').toggleClass("rotate");
+                    }
+                });
+
+
+                $('.Ops-btn').click(function() {
+                    if (document.getElementById("Oper").classList.contains("show")) {
+
+                        $('nav ul .Oper-show').toggleClass("show");
+                        $('nav ul .first').toggleClass("rotate");
+
+                        $('nav ul .Ops-show').toggleClass("show2");
+                        $('nav ul .third').toggleClass("rotate");
+                    }
+                    else if (document.getElementById("vis").classList.contains("show1")) {
+
+                        $('nav ul .Vis-show').toggleClass("show1");
+                        $('nav ul .second').toggleClass("rotate");
+
+                        $('nav ul .Ops-show').toggleClass("show2");
+                        $('nav ul .third').toggleClass("rotate");
+                    }
+                    else {
+
+                        $('nav ul .Ops-show').toggleClass("show2");
+                        $('nav ul .third').toggleClass("rotate");
+                    }
+                });
+
+                $('nav ul #Oper-li').click(function(){
+
+                    if (document.getElementById("Oper-li").classList.contains("active")) {
+
+                        document.getElementById("Oper-li").classList.remove("active")
+                        document.getElementById("Vis-li").classList.remove("active")
+                        document.getElementById("Ops-li").classList.remove("active")
+                    }
+                    else {
+                         $(this).addClass("active").siblings().removeClass("active");
+                    }
+                });
+
+                $('nav ul #Vis-li').click(function(){
+
+                    if (document.getElementById("Vis-li").classList.contains("active")) {
+
+                        document.getElementById("Oper-li").classList.remove("active")
+                        document.getElementById("Vis-li").classList.remove("active")
+                        document.getElementById("Ops-li").classList.remove("active")
+                    }
+                    else {
+                         $(this).addClass("active").siblings().removeClass("active");
+                    }
+                });
+
+                $('nav ul #Ops-li').click(function(){
+
+                    if (document.getElementById("Ops-li").classList.contains("active")) {
+
+                        document.getElementById("Oper-li").classList.remove("active")
+                        document.getElementById("Vis-li").classList.remove("active")
+                        document.getElementById("Ops-li").classList.remove("active")
+                    }
+                    else {
+                         $(this).addClass("active").siblings().removeClass("active");
+                    }
+                });
+    </script>
 
 
 
 
-           @*<p>@System.Text.Encoding.UTF8.GetString(test, 0, test.Length)</p>*@
+
+    @*<p>@System.Text.Encoding.UTF8.GetString(test, 0, test.Length)</p>*@
 
     <div class="container">
         <main role="main" class="pb-3">

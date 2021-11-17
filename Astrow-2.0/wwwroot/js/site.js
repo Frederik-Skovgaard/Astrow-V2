@@ -16,6 +16,7 @@ function NormalButtonThings() {
     var input2 = document.getElementById("pswd");
     var tooltip = document.getElementById("NormalToolTip");
 
+    
     if (body.className != "NormalBody") {
         body.classList.add("NormalBody")
         body.classList.remove("body");
@@ -41,17 +42,5 @@ function NormalButtonThings() {
 
 }
 
-function SidebarNav() {
-    var list = document.getElementById('Operationer');
 
-    if (list.className != "List-styled") {
-        list.classList.add("List-styled");
-        list.classList.remove("list-unstyled");
-    }
-    else {
-        list.classList.remove("List-styled");
-        list.classList.add("list-unstyled");
-    }
-
-}
 
