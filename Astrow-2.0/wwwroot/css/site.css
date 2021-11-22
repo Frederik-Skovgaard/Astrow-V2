@@ -151,6 +151,11 @@ a:hover {
     height: 4.5rem;
     width: 19rem;
 }
+nav svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 1rem;
+}
 nav .mainUl {
     margin-top: 1rem;
 }
@@ -178,12 +183,14 @@ nav .nav-bottom a {
 nav .nav-bottom a svg {
     width:1.5rem;
     height:1.5rem;
+    margin:0;
 }
 nav .nav-bottom a:hover {
-    color:#ff3838   !important;
+    color: #ff3838 !important;
+    border-left: solid transparent 3px !important;
 }
 nav .nav-bottom:hover {
-    border-left: solid #ff3838 3px;
+    border-left: solid #ff3838 3px !important;
 }
 
 
@@ -192,6 +199,7 @@ nav ul li {
     background: #00405e;
     margin-top: 0.5rem;
 }
+
 nav ul li a {
     color: white;
     text-decoration: none;
@@ -204,7 +212,9 @@ nav ul li a {
 
     transition: all 0.1s ease-in-out;
 }
-
+nav ul li:hover a {
+    border-left: solid #0588c9 3px;
+}
 nav ul li.active a {
     color: white;
     border-left: solid #0588c9 3px;
@@ -236,7 +246,7 @@ nav ul ul li {
 
 nav ul ul li a {
     font-size: 17px;
-    padding-left: 80px;
+    padding-left: 15px;
     color: white  !important;
 }
 nav ul li.active ul li a {
