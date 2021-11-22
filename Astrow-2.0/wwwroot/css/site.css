@@ -155,18 +155,43 @@ nav .mainUl {
     margin-top: 1rem;
 }
 nav ul {
-    background: #00405e;
-    height: 100%;
+    height: 90%;
     width: 100%;
     list-style: none;
-    padding: 0
+    padding: 0 ;
+    display: flex;
+    flex-direction: column;
 }
+
+nav .nav-bottom {
+    margin-top: auto;
+    text-align: center;
+    transition: all 0.1s ease-in-out;
+    border-left: solid transparent 3px;
+}
+nav .nav-bottom a {
+    padding:0;
+    font-size: 20px;
+    transition: all 0.1s ease-in-out;
+    color:white !important;
+}
+nav .nav-bottom a svg {
+    width:1.5rem;
+    height:1.5rem;
+}
+nav .nav-bottom a:hover {
+    color:#ff3838   !important;
+}
+nav .nav-bottom:hover {
+    border-left: solid #ff3838 3px;
+}
+
 
 nav ul li {
     line-height: 60px;
+    background: #00405e;
+    margin-top: 0.5rem;
 }
-
-
 nav ul li a {
     color: white;
     text-decoration: none;
@@ -175,6 +200,9 @@ nav ul li a {
     font-weight: 500;
     display: block;
     width: 100%;
+    border-left: solid transparent 3px;
+
+    transition: all 0.1s ease-in-out;
 }
 
 nav ul li.active a {
@@ -201,21 +229,27 @@ nav ul .Ops-show.show2 {
 nav ul ul li {
     line-height: 42px;
     border-bottom: none;
+    background: #2676a585;
+    margin: 0;
+    transition: all 0.3s ease-in-out;
 }
 
 nav ul ul li a {
     font-size: 17px;
     padding-left: 80px;
+    color: white  !important;
 }
 nav ul li.active ul li a {
     color: white;
     border-left: solid #0588c9 3px;
     text-decoration: none;
-    border-left-color:transparent;
+    border-left-color: transparent;
+    transition: all 0.1s ease-in-out;
 }
 nav ul ul li a:hover {
-    background: #004f75;
+    background: #0870a3;
     border-left: solid 3px #0588c9 !important;
+    color: white !important;
 }
 
 nav ul li a span {
@@ -433,6 +467,11 @@ nav ul li a span.rotate {
                 }
 
 
+@media only screen and (max-width: 958px) {
+    .NormalButton {
+        visibility: visible !important;
+    }
+}
 
 
 /* Feature
@@ -445,6 +484,7 @@ nav ul li a span.rotate {
     bottom: 0;
     left: 0;
     outline: none !important;
+    visibility: hidden;
 }
 
 .NormalBody {

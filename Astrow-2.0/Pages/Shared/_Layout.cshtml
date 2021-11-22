@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Astrow</title>
+    <link rel="shortcut icon" href="~/Img/Fav.png" />
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -36,13 +37,14 @@
     }
 
     <nav class="sidebar">
-        <div class="logo"></div>
+        <a href="/HomePage">
+            <div class="logo"></div>
+        </a>
         <ul class="mainUl">
+
+            @*Operatiner sider*@
             <li id="Oper-li">
-                <a href="#" class="Oper-btn">
-                    Operationer
-                    <span class="fas fa-caret-down first"></span>
-                </a>
+                <a href="#" class="Oper-btn">Operationer <span class="fas fa-caret-down first"></span></a>
                 <ul id="Oper" class="Oper-show">
                     <li><a href="#">Opret registrering</a></li>
                     <li><a href="#">Opret fraværsanmodning</a></li>
@@ -50,11 +52,10 @@
                     <li><a href="#">Godkend periode</a></li>
                 </ul>
             </li>
+
+            @*Vis sider*@
             <li id="Vis-li">
-                <a href="#" class="Vis-btn">
-                    Vis
-                    <span class="fas fa-caret-down second"></span>
-                </a>
+                <a href="#" class="Vis-btn">Vis<span class="fas fa-caret-down second"></span></a>
                 <ul id="vis" class="Vis-show">
                     <li><a href="#">Terminalresultater</a></li>
                     <li><a href="#">Mine anmodninger</a></li>
@@ -65,135 +66,152 @@
                     <li><a href="#">Mine filer</a></li>
                 </ul>
             </li>
+
+            @*Opsætning sider*@
             <li id="Ops-li">
-                <a href="#" class="Ops-btn">
-                    Opsætning
-                    <span class="fas fa-caret-down third"></span>
-                </a>
+                <a href="#" class="Ops-btn">Opsætning<span class="fas fa-caret-down third"></span></a>
                 <ul id="Ops" class="Ops-show">
                     <li><a href="#">Indstillinger</a></li>
                     <li><a href="#">Ændre kodeord</a></li>
                 </ul>
+            </li>
+
+            @*Log-Ud knap*@
+            <li class="nav-bottom">
+                <a>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z" />
+                        <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z" />
+                    </svg> Logud
+                </a>
             </li>
         </ul>
     </nav>
 
 
     <script>
-                $('.Oper-btn').click(function() {
+            $('.Oper-btn').click(function() {
 
-                    if (document.getElementById("vis").classList.contains("show1")){
+                if (document.getElementById("vis").classList.contains("show1")){
 
-                        $('nav ul .Vis-show').toggleClass("show1");
-                        $('nav ul .second').toggleClass("rotate");
+                    $('nav ul .Vis-show').toggleClass("show1");
+                    $('nav ul .second').toggleClass("rotate");
 
-                        $('nav ul .Oper-show').toggleClass("show");
-                        $('nav ul .first').toggleClass("rotate");
+                    $('nav ul .Oper-show').toggleClass("show");
+                    $('nav ul .first').toggleClass("rotate");
 
-                    }
-                    else if (document.getElementById("Ops").classList.contains("show2")) {
+                }
+                else if (document.getElementById("Ops").classList.contains("show2")) {
 
-                        $('nav ul .Ops-show').toggleClass("show2");
-                        $('nav ul .third').toggleClass("rotate")
+                    $('nav ul .Ops-show').toggleClass("show2");
+                    $('nav ul .third').toggleClass("rotate")
 
-                        $('nav ul .Oper-show').toggleClass("show");
-                        $('nav ul .first').toggleClass("rotate");
-                    }
-                    else {
+                    $('nav ul .Oper-show').toggleClass("show");
+                    $('nav ul .first').toggleClass("rotate");
+                }
+                else {
 
-                        $('nav ul .Oper-show').toggleClass("show");
-                        $('nav ul .first').toggleClass("rotate");
-                    }
+                    $('nav ul .Oper-show').toggleClass("show");
+                    $('nav ul .first').toggleClass("rotate");
+                }
 
-                });
-
-
-                $('.Vis-btn').click(function() {
-                    if (document.getElementById("Oper").classList.contains("show")) {
-
-                        $('nav ul .Oper-show').toggleClass("show");
-                        $('nav ul .first').toggleClass("rotate");
-
-                        $('nav ul .Vis-show').toggleClass("show1");
-                        $('nav ul .second').toggleClass("rotate");
-                    }
-                    else if (document.getElementById("Ops").classList.contains("show2")) {
-
-                        $('nav ul .Ops-show').toggleClass("show2");
-                        $('nav ul .third').toggleClass("rotate")
-
-                        $('nav ul .Vis-show').toggleClass("show1");
-                        $('nav ul .second').toggleClass("rotate");
-                    }
-                    else {
-                        $('nav ul .Vis-show').toggleClass("show1");
-                        $('nav ul .second').toggleClass("rotate");
-                    }
-                });
+            });
 
 
-                $('.Ops-btn').click(function() {
-                    if (document.getElementById("Oper").classList.contains("show")) {
+            $('.Vis-btn').click(function() {
+                if (document.getElementById("Oper").classList.contains("show")) {
 
-                        $('nav ul .Oper-show').toggleClass("show");
-                        $('nav ul .first').toggleClass("rotate");
+                    $('nav ul .Oper-show').toggleClass("show");
+                    $('nav ul .first').toggleClass("rotate");
 
-                        $('nav ul .Ops-show').toggleClass("show2");
-                        $('nav ul .third').toggleClass("rotate");
-                    }
-                    else if (document.getElementById("vis").classList.contains("show1")) {
+                    $('nav ul .Vis-show').toggleClass("show1");
+                    $('nav ul .second').toggleClass("rotate");
+                }
+                else if (document.getElementById("Ops").classList.contains("show2")) {
 
-                        $('nav ul .Vis-show').toggleClass("show1");
-                        $('nav ul .second').toggleClass("rotate");
+                    $('nav ul .Ops-show').toggleClass("show2");
+                    $('nav ul .third').toggleClass("rotate")
 
-                        $('nav ul .Ops-show').toggleClass("show2");
-                        $('nav ul .third').toggleClass("rotate");
-                    }
-                    else {
+                    $('nav ul .Vis-show').toggleClass("show1");
+                    $('nav ul .second').toggleClass("rotate");
+                }
+                else {
+                    $('nav ul .Vis-show').toggleClass("show1");
+                    $('nav ul .second').toggleClass("rotate");
+                }
+            });
 
-                        $('nav ul .Ops-show').toggleClass("show2");
-                        $('nav ul .third').toggleClass("rotate");
-                    }
-                });
 
-                $('nav ul #Oper-li').click(function(){
+            $('.Ops-btn').click(function() {
+                if (document.getElementById("Oper").classList.contains("show")) {
 
-                    if (document.getElementById("Oper-li").classList.contains("active")) {
+                    $('nav ul .Oper-show').toggleClass("show");
+                    $('nav ul .first').toggleClass("rotate");
 
-                        document.getElementById("Oper-li").classList.remove("active")
-                        document.getElementById("Vis-li").classList.remove("active")
-                        document.getElementById("Ops-li").classList.remove("active")
-                    }
-                    else {
-                         $(this).addClass("active").siblings().removeClass("active");
-                    }
-                });
+                    $('nav ul .Ops-show').toggleClass("show2");
+                    $('nav ul .third').toggleClass("rotate");
+                }
+                else if (document.getElementById("vis").classList.contains("show1")) {
 
-                $('nav ul #Vis-li').click(function(){
+                    $('nav ul .Vis-show').toggleClass("show1");
+                    $('nav ul .second').toggleClass("rotate");
 
-                    if (document.getElementById("Vis-li").classList.contains("active")) {
+                    $('nav ul .Ops-show').toggleClass("show2");
+                    $('nav ul .third').toggleClass("rotate");
+                }
+                else {
 
-                        document.getElementById("Oper-li").classList.remove("active")
-                        document.getElementById("Vis-li").classList.remove("active")
-                        document.getElementById("Ops-li").classList.remove("active")
-                    }
-                    else {
-                         $(this).addClass("active").siblings().removeClass("active");
-                    }
-                });
+                    $('nav ul .Ops-show').toggleClass("show2");
+                    $('nav ul .third').toggleClass("rotate");
+                }
+            });
 
-                $('nav ul #Ops-li').click(function(){
+            $('nav ul #Oper-li').click(function(){
 
-                    if (document.getElementById("Ops-li").classList.contains("active")) {
+                if (document.getElementById("Oper-li").classList.contains("active")) {
 
-                        document.getElementById("Oper-li").classList.remove("active")
-                        document.getElementById("Vis-li").classList.remove("active")
-                        document.getElementById("Ops-li").classList.remove("active")
-                    }
-                    else {
-                         $(this).addClass("active").siblings().removeClass("active");
-                    }
-                });
+                    document.getElementById("Oper-li").classList.remove("active")
+                    document.getElementById("Vis-li").classList.remove("active")
+                    document.getElementById("Ops-li").classList.remove("active")
+                }
+                else {
+                     $(this).addClass("active").siblings().removeClass("active");
+                }
+            });
+
+            $('nav ul #Vis-li').click(function(){
+
+                if (document.getElementById("Vis-li").classList.contains("active")) {
+
+                    document.getElementById("Oper-li").classList.remove("active")
+                    document.getElementById("Vis-li").classList.remove("active")
+                    document.getElementById("Ops-li").classList.remove("active")
+                }
+                else {
+                     $(this).addClass("active").siblings().removeClass("active");
+                }
+            });
+
+            $('nav ul #Ops-li').click(function(){
+
+                if (document.getElementById("Ops-li").classList.contains("active")) {
+
+                    document.getElementById("Oper-li").classList.remove("active")
+                    document.getElementById("Vis-li").classList.remove("active")
+                    document.getElementById("Ops-li").classList.remove("active")
+                }
+                else {
+                     $(this).addClass("active").siblings().removeClass("active");
+                }
+            });
+
+            $('nav ul .nav-bottom').click(function() {
+                if(confirm("Du er igang med at logge ud, er du sikker på det er hvad du vil?")) {
+                    
+                    location.href = '/Login';
+                }
+            });
+
     </script>
 
 
