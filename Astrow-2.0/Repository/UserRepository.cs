@@ -16,7 +16,7 @@ namespace Astrow_2._0.Repository
 
         //-------------------Class-------------------------
 
-        StoredProcedure Stored = new StoredProcedure();
+        StoredProcedure stored = new StoredProcedure();
 
 
         //-------------------Methods-----------------------
@@ -28,7 +28,7 @@ namespace Astrow_2._0.Repository
         /// <param name="user"></param>
         public void CreateUser(Users user, UserPersonalInfo info)
         {
-            Stored.CreateUsers(user, info);
+            stored.CreateUsers(user, info);
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Astrow_2._0.Repository
         /// <param name="user"></param>
         public void DeleteUser(Users user)
         {
-            Stored.DeleteUser(user);
+            stored.DeleteUser(user);
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Astrow_2._0.Repository
         /// <param name="user"></param>
         public  void UpdateUser(Users user)
         {
-            Stored.UpdateUser(user);
+            stored.UpdateUser(user);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Astrow_2._0.Repository
         /// <returns></returns>
         public List<Users> ReadAllUsers()
         {
-            List<Users> userList = Stored.ReadAllUsers();
+            List<Users> userList = stored.ReadAllUsers();
 
             return userList;
         }
@@ -67,7 +67,7 @@ namespace Astrow_2._0.Repository
         /// <returns></returns>
         public Users FindUser(int id)
         {
-            Users user = Stored.FindByID(id);
+            Users user = stored.FindByID(id);
             return user;
         }
 
@@ -78,7 +78,7 @@ namespace Astrow_2._0.Repository
         /// <returns></returns>
         public Users FindByUserName(string username)
         {
-            Users user = Stored.FindByUserName(username);
+            Users user = stored.FindByUserName(username);
             return user;
         }
 

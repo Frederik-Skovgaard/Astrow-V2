@@ -21,6 +21,9 @@ namespace Astrow_2._0.Pages
             _logger = logger;
         }
 
+        
+
+
         public IActionResult OnGet()
         {
             if (HttpContext.Session.GetInt32("_UserID") == 0)

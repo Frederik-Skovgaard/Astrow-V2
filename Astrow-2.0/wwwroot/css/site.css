@@ -192,7 +192,10 @@ nav .nav-bottom a:hover {
 nav .nav-bottom:hover {
     border-left: solid #ff3838 3px !important;
 }
-
+nav ul .nav-bottom:hover a {
+    border-left: solid 3px transparent !important;
+    color: #ff3838 !important;
+}
 
 nav ul li {
     line-height: 60px;
@@ -477,11 +480,30 @@ nav ul li a span.rotate {
                 }
 
 
-@media only screen and (max-width: 958px) {
-    .NormalButton {
-        visibility: visible !important;
-    }
+
+
+/* Home Page
+------------------------------------------------------*/
+
+.TimeCard {
+    width: max-content;
+    margin: 0 auto;
+    text-align: center;
 }
+
+.TimeCard table tr th {
+    background: #004f75;
+    color: white;
+    width: 10rem;
+    border-bottom: solid #00496f 2px;
+}
+
+.TimeCard table tr td {
+    background: #097eb7;
+    border-bottom: solid #005c89 2px;
+    color: white;
+}
+
 
 
 /* Feature
@@ -494,7 +516,6 @@ nav ul li a span.rotate {
     bottom: 0;
     left: 0;
     outline: none !important;
-    visibility: hidden;
 }
 
 .NormalBody {
@@ -503,7 +524,7 @@ nav ul li a span.rotate {
 }
 
 .NormalImg {
-    background: linear-gradient( 35deg, rgb(235 0 0 / 55%) 50%, rgb(235 0 0 / 55%) 50%, rgb(235 0 0 / 55%) 50%),url(../Img/FORSØG.png) !important;
+    background: url(../Img/NormalLogo.png) !important;
     background-size: contain !important;
 }
 
