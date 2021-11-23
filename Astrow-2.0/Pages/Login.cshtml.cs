@@ -41,12 +41,14 @@ namespace Astrow_2._0.Pages
 
         //-------------------Login-------------------------
 
-        [BindProperty, Required]
+        [BindProperty, Required(ErrorMessage = "* Username is required")]
         public string UserName { get; set; }
 
-        [BindProperty, Required]
+        [BindProperty, Required(ErrorMessage = "* Password is required")]
         public string Password { get; set; }
 
+        [BindProperty]
+        public bool LoginMessage { get; set; }
 
         //-------------------Methods-----------------------
 
@@ -67,29 +69,43 @@ namespace Astrow_2._0.Pages
             //Find salt
             Users = _userRepository.FindByUserName(UserName);
 
-            //Turn password and salt to byte
-            byte[] password = Encoding.ASCII.GetBytes(Password);
-            byte[] salt = Encoding.ASCII.GetBytes(Users.Salt);
-
-            //Use salt to hash the password
-            string hashPass = _userRepository.GenerateSaltedHash(password, salt);
-
-            //Login the user and save the necesary data as LogedUser
-            LogedUser = _userRepository.Login(UserName, hashPass);
-
-            //If LogedUser isen't null redirect to home page
-            if (LogedUser != null)
+            if (Users.User_ID != 0)
             {
-                HttpContext.Session.SetString(SessionUserName, LogedUser.UserName);
-                HttpContext.Session.SetInt32(SessionUserID, LogedUser.User_ID);
-                HttpContext.Session.SetString(sessionStatus, LogedUser.Status);
-                return RedirectToPage("/HomePage");
+                //Turn password and salt to byte
+                byte[] password = Encoding.ASCII.GetBytes(Password);
+                byte[] salt = Encoding.ASCII.GetBytes(Users.Salt);
+
+                //Use salt to hash the password
+                string hashPass = _userRepository.GenerateSaltedHash(password, salt);
+
+                //Login the user and save the necesary data as LogedUser
+                LogedUser = _userRepository.Login(UserName, hashPass);
+
+                //If LogedUser isen't null redirect to home page
+                if (LogedUser.Status != null)
+                {
+                    HttpContext.Session.SetString(SessionUserName, LogedUser.UserName);
+                    HttpContext.Session.SetInt32(SessionUserID, LogedUser.User_ID);
+                    HttpContext.Session.SetString(sessionStatus, LogedUser.Status);
+
+                    return RedirectToPage("/HomePage");
+                }
+                else
+                {
+                    LoginMessage = true;
+
+                    return Page();
+                }
             }
             else
             {
-                //Error throw if LogedUser is null which i coulden't be but never too much error handling
-                throw new LoginException("An unexcpeted error happend... Please call for help..");
+
+                LoginMessage = true;
+
+                return Page();
             }
+
+
         }
     }
 }

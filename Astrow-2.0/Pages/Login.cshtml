@@ -1,41 +1,68 @@
 ﻿@page
+
 @model Astrow_2._0.Pages.LoginModel
 @{
     Layout = "~/Pages/Shared/_Login.cshtml";
 }
 
+@section scripts{ 
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+
+
+
 
 <div class="Login-Page">
-    <div class="container form-group">
+
+    <div id="NormalContainer" class="container form-group">
         <div class="top">
-            <img src="~/Img/loginAstrowBranding.png" class="login-logo" />
-            <p style="user-select:none; -moz-user-select:none;" class="logo-version">v9.4.0</p>
+            <div id="NormalLogo" class="login-logo"></div>
         </div>
-
-        <form method="post" >
+        <form method="post">
             <div class="middle">
-                <input type="text" class="form-control" asp-for="UserName" id="username" placeholder="Username" />
-                <input type="password" class="form-control" asp-for="Password" placeholder="Password" />
-
+                <div>
+                    <span asp-validation-for="UserName" class="ErrorUsername"></span>
+                    <input type="text" class="form-control" asp-for="UserName" id="username" autocomplete="off" placeholder="Username" />
+                </div>
+                <div>
+                    <input type="password" id="pswd" class="form-control" asp-for="Password" autocomplete="off" placeholder="Password" />
+                    <span asp-validation-for="Password" class="Error"></span>
+                </div>
                 <div class="CheckBox">
                     <input type="checkbox" class="form-check" />
                     <p>Remember me</p>
                 </div>
             </div>
             <div class="bottom">
-                <input type="submit" asp-page-handler="/HomePage" class="btn btn-danger" value="Login" />
+                <input type="submit" asp-page-handler="/HomePage" id="NormalBtn" class="btn btn-danger" value="Login" />
                 <div class="bottom-link">
                     <a href="/Error" style=" text-decoration: none; color: white;">Reset password</a><br />
                     <div style="margin-left: 2.5rem; text-decoration: none; color: white;" class="tooltip">
                         Need help?
-                        <span class="tooltiptext"><b style="color: #f4b41a; font-weight: 700; ">Me cuz</b><br /> Tlf. 00 00 00 00</span>
+                        <span id="NormalToolTip" class="tooltiptext"><b style="color: #00ffdc; font-weight: 700; ">John Doe</b><br /> Tlf. 55 55 55 55</span>
                     </div>
                 </div>
+                <div class="copy">
+                    <p>© 2016 Microsoft</p>
+                    <a target="_blank" class="microBTN" href="https://pcsyd.dk/">Home</a>
+                    <a target="_blank" class="microBTN" href="https://pcsyd.topdesk.net/">Help</a>
+                </div>
             </div>
+            <input type="button" class="NormalButton" value="Normal" onclick="NormalButtonThings()" />
         </form>
+    </div>
 
-    </div>
-    <div class="copy">
-        <p>Copyright © 2021 Amano Europe</p>
-    </div>
+    <script src="~/js/site.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var x = $("#username").val();
+            var y = $("#pswd").val();
+            $("#submit").on("click", function () {
+                var div = $("#popupdiv").text();
+            });
+        });
+    </script>
 </div>
+

@@ -117,7 +117,6 @@ namespace Astrow_2._0.DataLayer
             {
                 sql.Open();
 
-
                 SqlCommand createTime = new SqlCommand("CreateTimeCard", sql);
                 createTime.CommandType = CommandType.StoredProcedure;
 
@@ -187,7 +186,6 @@ namespace Astrow_2._0.DataLayer
 
                 createDay.CommandType = CommandType.StoredProcedure;
 
-                //If no date is given defualt date to 1944, 06, 06, 0, 0, 0 
                 createDay.Parameters.AddWithValue("@date", day.Date);
                 createDay.Parameters.AddWithValue("@userID", user.User_ID);
                 createDay.Parameters.AddWithValue("@abscenceDate", day.AbsenceDate);
@@ -543,7 +541,8 @@ namespace Astrow_2._0.DataLayer
                     {
                         user = new Users
                         {
-                            Salt = read.GetString(0)
+                            Salt = read.GetString(0),
+                            User_ID = read.GetInt32(1)
                         };
                     }
                     return user;
