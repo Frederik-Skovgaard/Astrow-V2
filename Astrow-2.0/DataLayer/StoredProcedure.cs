@@ -193,7 +193,6 @@ namespace Astrow_2._0.DataLayer
                 createDay.Parameters.AddWithValue("@startDay", day.StartDay);
                 createDay.Parameters.AddWithValue("@endDay", day.EndDay);
                 createDay.Parameters.AddWithValue("@saldo", day.Saldo);
-                createDay.Parameters.AddWithValue("@flex", day.Flex);
 
                 createDay.ExecuteNonQuery();
 
@@ -394,6 +393,26 @@ namespace Astrow_2._0.DataLayer
                 scanIn.Parameters.AddWithValue("@EndDay", day.EndDay);
 
                 scanIn.ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// Update saldo
+        /// </summary>
+        /// <param name="day"></param>
+        public void UpdateSaldo(Days day)
+        {
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand saldo = new SqlCommand("UpdateSaldo", sql);
+                saldo.CommandType = CommandType.StoredProcedure;
+
+                saldo.Parameters.AddWithValue("@id", day.Days_ID);
+                saldo.Parameters.AddWithValue("@Saldo", day.Saldo);
+
+                saldo.ExecuteNonQuery();
             }
         }
 

@@ -32,6 +32,7 @@ namespace Astrow_2._0
             StoredProcedure.SetConnectionString();
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ITimeCard, TimeCard>();
 
             services.AddRazorPages().AddRazorPagesOptions(options =>
             {

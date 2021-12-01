@@ -77,8 +77,7 @@ CREATE TABLE [Days] (
 [AbscenceText] NVARCHAR(100),
 [StartDay] DATETIME,
 [EndDay] DATETIME,
-[Saldo] DATETIME,
-[Flex] DATETIME
+[Saldo] DATETIME
 
 
 PRIMARY KEY(Days_ID)
@@ -196,6 +195,10 @@ INSERT INTO [File] (Name, Type, Details, Description, Date, SensitiveData)
 VALUES (@Name, @Type, @Details, @Description, @Date, @SensitiveDate)
 GO
 
+USE [Astrow-2.0]
+DROP PROCEDURE [CreateDay]
+GO
+
 -- Create Days
 CREATE PROCEDURE [CreateDay]
 @date DATETIME,
@@ -204,11 +207,10 @@ CREATE PROCEDURE [CreateDay]
 @abscenceText NVARCHAR(100),
 @startDay DATETIME,
 @endDay DATETIME,
-@saldo DATETIME,
-@flex DATETIME
+@saldo DATETIME
 AS
-INSERT INTO [Days] (Date, User_ID, AbsenceDate, AbscenceText, StartDay, EndDay, Saldo, Flex)
-VALUES (@date, @userID, @abscenceDate, @abscenceText, @startDay, @endDay, @saldo, @flex)
+INSERT INTO [Days] (Date, User_ID, AbsenceDate, AbscenceText, StartDay, EndDay, Saldo)
+VALUES (@date, @userID, @abscenceDate, @abscenceText, @startDay, @endDay, @saldo)
 GO
 
 -- Create Message
@@ -282,6 +284,13 @@ SET EndDay = @EndDay
 WHERE Days_ID = @id
 GO
 
+-- Update Saldo
+CREATE PROCEDURE [UpdateSaldo]
+@Saldo
+AS
+UPDATE [Days]
+SET felx
+GO
 
 -------------- Delete-Data --------------
 
@@ -320,7 +329,7 @@ GO
 CREATE PROCEDURE [GetByUserName]
 @UserName NVARCHAR(50)
 AS
-SELECT Salt, User_ID FROM [User]
+SELECT salt FROM [User]
 WHERE UserName = @UserName
 GO
 

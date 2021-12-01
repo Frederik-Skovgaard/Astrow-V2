@@ -1,34 +1,137 @@
-﻿@page 
+﻿@page
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<div class="TimeCard">
-    <h4>Time</h4>
-    <hr />
-    <table cellpadding="0" cellspacing="0">
-        <tr>
-            <th></th>
-            <th>Dato</th>
-            <th>Fravær</th>
-            <th>Registreringer</th>
-            <th>TotFrv</th>
-            <th>Saldo</th>
-            <th>Saldo+</th>
-        </tr>
+<form method="post">
+    <div class="TimeCard">
+        <div class="container outer">
+            <div class="row">
+                <p>Dato: </p>
+                <div style="width:max-content;">
 
-        @*Foreach datetime day between*@
-        <tr>
-            <td>Man</td>
-            <td>22-11-2021</td>
-            <td>Dumb</td>
-            <td>8:00 - 15:24</td>
-            <td>0:00</td>
-            <td>0:00</td>
-            <td>1:27</td>
-        </tr>
+                    @*Datepicker*@
+                    <input type="text" readonly autocomplete="off" id="Calendar" value="@Model.CalendarValue" asp-for="Calendar" class="form-control calendar" />
+                    
+                    <div id="calendarBox">
 
-    </table>
-</div>
+                        @foreach (DateTime year in Model.Years)
+                        {
+                            <a onclick="DatePicker(@year.ToString("yyyy"))" href="#">@year.ToString("yyyy")</a>
+                            <div id="@year.ToString("yyyy")" class="HideShow">
+
+                                @*submits*@
+                                <div class="row">
+                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('Jan')" value="Jan" />
+                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('Feb')" value="Feb" />
+                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('Mar')" value="Mar" />
+                                </div>
+
+                                <div class="row">
+                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('Apr')" value="Apr" />
+                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('May')" value="May" />
+                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('Jun')" value="Jun" />
+                                </div>
+
+                                <div class="row">
+                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('Jul')" value="Jul" />
+                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('Aug')" value="Aug" />
+                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('Sep')" value="Sep" />
+                                </div>
+
+                                <div class="row">
+                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('Oct')" value="Oct" />
+                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('Nov')" value="Nov" />
+                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('Dec')" value="Dec" />
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                @*one month back | Now | one month front*@
+                <button type="submit" asp-page-handler="Back">
+                    <i style="font-size: 25px;" class="fas fa-chevron-circle-left"></i>
+                </button>
+                <button type="submit" asp-page-handler="Now">
+                    <i style="font-size: 25px;" class="fas fa-play-circle"></i>
+                </button>
+                <button type="submit" asp-page-handler="Forward">
+                    <i style="font-size: 25px;" class="fas fa-chevron-circle-right"></i>
+                </button>
+            </div>
+
+            @*Date grid*@
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Day</th>
+                        <th scope="col">Dato</th>
+                        <th scope="col">Fravær</th>
+                        <th scope="col">Registreringer</th>
+                        <th scope="col">TotFrv</th>
+                        <th scope="col">Saldo</th>
+                        <th scope="col">Saldo+</th>
+                    </tr>
+                </thead>
+            </table>
+
+            <div class="grid-container">
+                <table class="table table-striped">
+                    <tbody>
+                        @{
+                            foreach (DateTime day in Model.Days)
+                            {
+                                <tr>
+                                    <th scope="row">@day.ToString("dddd")  </th>
+                                    <td>@day.ToString("yyyy-MM-dd")</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        var year;
+        var month;
+
+        //Show date picker years 
+        $('#Calendar').click(function() {
+            $('#calendarBox').toggleClass("show")
+        });
+
+
+        //on click show month of choosen year
+        function DatePicker(id) {
+            if (document.getElementById(id).classList.contains("showDiv")) {
+                document.getElementById(id).classList.remove("showDiv")
+            }
+            else {
+                year = id;
+
+                $(".showDiv").removeClass("showDiv")
+                document.getElementById(id).classList.add("showDiv")
+
+                $("#Calendar").val(id)
+            }
+        }
+
+        //Change input value to new value
+        function MonthPicker(month) {
+            var date = month + " 1" + "," + year;
+            $("#Calendar").val(date)
+        }
+    </script>
+</form>
