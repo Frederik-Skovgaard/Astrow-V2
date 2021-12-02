@@ -69,6 +69,11 @@ FOREIGN KEY (Name_ID) REFERENCES [Name](Name_ID),
 )
 GO
 
+
+USE [Astrow-2.0]
+DROP TABLE [Days]
+GO
+
 CREATE TABLE [Days] (
 [Days_ID] INT IDENTITY(1,1) NOT NULL,
 [User_ID] INT NOT NULL,
@@ -149,8 +154,6 @@ INSERT INTO [User] (UserName, Password, Name_ID, Status, IsDeleted, Salt, StartD
 VALUES (@UserName, @Password, @id, @Status, 0, @salt, @startDate, @endDate)
 GO
 
-
-
 -- Create Inbox
 CREATE PROCEDURE [CreateInBox]
 @messageID INT,
@@ -195,9 +198,6 @@ INSERT INTO [File] (Name, Type, Details, Description, Date, SensitiveData)
 VALUES (@Name, @Type, @Details, @Description, @Date, @SensitiveDate)
 GO
 
-USE [Astrow-2.0]
-DROP PROCEDURE [CreateDay]
-GO
 
 -- Create Days
 CREATE PROCEDURE [CreateDay]
@@ -286,10 +286,12 @@ GO
 
 -- Update Saldo
 CREATE PROCEDURE [UpdateSaldo]
-@Saldo
+@id INT,
+@Saldo DATETIME
 AS
 UPDATE [Days]
-SET felx
+SET Saldo = @Saldo
+WHERE Days_ID = @id
 GO
 
 -------------- Delete-Data --------------
@@ -357,3 +359,7 @@ SELECT * FROM Days
 WHERE User_ID = @id
 GO
 
+CREATE PROCEDURE [GetUserSchoolPeriod]
+@id INT
+AS
+GO

@@ -1,20 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Astrow_2._0.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
-using Astrow_2._0.Repository;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Reflection.Metadata;
-using System.Globalization;
-using System.ComponentModel.DataAnnotations;
+using Astrow_2._0.Model.Containers;
 
 namespace Astrow_2._0.Pages
 {
-    
     public class IndexModel : PageModel
     {
         private readonly ITimeCard _timeCard;
@@ -24,40 +17,42 @@ namespace Astrow_2._0.Pages
             _timeCard = timeCard;
         }
 
-        //Start date 
+
+        //------------------------Start date | End date------------------------ 
         [BindProperty]
         public DateTime StartDate { get; set; }
 
-        //One month after start date
         [BindProperty]
         public DateTime EndDate { get; set; }
 
 
-        //Input filed value
+        //------------------------Input value & current value------------------------
         [BindProperty]
         public string Calendar { get; set; }
 
-        //Value of input filed
+       
         [BindProperty]
         public string CalendarValue { get; set; }
 
 
 
-        //List with all the days between start & end date
+        //----------------------List for render days & years----------------------
         [BindProperty]
         public IEnumerable<DateTime> Days { get; set; }
 
-        //List with all the years between start & end date
         [BindProperty]
         public IEnumerable<DateTime> Years { get; set; }
 
-        
 
-        
+        //------------------------User info------------------------
+        [BindProperty]
+        public LogedUser logged { get; set; }
 
 
-
-
+        /// <summary>
+        /// On load cheack if logged in. If logged render days & years.
+        /// </summary>
+        /// <returns></returns>
         public IActionResult OnGet()
         {
             if (HttpContext.Session.GetInt32("_UserID") == 0)
@@ -66,15 +61,21 @@ namespace Astrow_2._0.Pages
             }
             else
             {
+                //To get start & end date of user
+                logged = GetDate();
+
                 //Change values
                 CalendarValue = DateTime.Now.ToString("MMMM 1, yyyy");
 
                 StartDate = DateTime.Now;
-                EndDate = DateTime.Now.AddMonths(1);
+
+                StartDate = new DateTime(StartDate.Year, StartDate.Month, 1);
+
+                EndDate = StartDate.AddMonths(1);
 
                 //Render days % year/month selector
                 Days = _timeCard.EachDay(StartDate, EndDate.AddDays(-1));
-                Years = _timeCard.EachYear(StartDate, DateTime.Now.AddYears(4));
+                Years = _timeCard.EachYear(logged.StartDate, logged.EndDate);
 
 
                 //Return to page
@@ -87,6 +88,9 @@ namespace Astrow_2._0.Pages
         /// </summary>
         public void OnPostLoad()
         {
+            //To get start & end date of user
+            logged = GetDate();
+
             //Change values
             StartDate = DateTime.Parse(Calendar);
             EndDate = StartDate.AddMonths(1);
@@ -95,21 +99,24 @@ namespace Astrow_2._0.Pages
 
             //Render days % year/month selector
             Days = _timeCard.EachDay(StartDate, EndDate.AddDays(-1));
-            Years = _timeCard.EachYear(DateTime.Now, DateTime.Now.AddYears(4));
+            Years = _timeCard.EachYear(logged.StartDate, logged.EndDate);
         }
 
         /// <summary>
-        /// Go one month back
+        /// Method for rendering last month from currnt
         /// </summary>
         public void OnPostBack()
         {
-            
+            //To get start & end date of user
+            logged = GetDate();
+
+            //Set Start date to input value
             StartDate = DateTime.Parse(Calendar);
 
             StartDate = StartDate.AddMonths(-1);
 
-            //Change 2020 to user startdate & startDate.year to date.
-            if (StartDate.Year != 2020)
+
+            if (StartDate.Year !>= logged.StartDate.Year)
             {
                 //Change values
                 EndDate = StartDate.AddMonths(1);
@@ -118,7 +125,7 @@ namespace Astrow_2._0.Pages
 
                 //Render days % year/month selector
                 Days = _timeCard.EachDay(StartDate, EndDate.AddDays(-1));
-                Years = _timeCard.EachYear(DateTime.Now, DateTime.Now.AddYears(4));
+                Years = _timeCard.EachYear(logged.StartDate, logged.EndDate);
             }
             else
             {
@@ -129,32 +136,49 @@ namespace Astrow_2._0.Pages
 
                 //Render days % year/month selector
                 Days = _timeCard.EachDay(StartDate.AddMonths(1), EndDate.AddDays(-1));
-                Years = _timeCard.EachYear(DateTime.Now, DateTime.Now.AddYears(4));
+                Years = _timeCard.EachYear(logged.StartDate, logged.EndDate);
+
             }
         }
 
+        /// <summary>
+        /// Method for rendering current month
+        /// </summary>
         public void OnPostNow()
         {
+            //To get start & end date of user
+            logged = GetDate();
+
             //Change values
             StartDate = DateTime.Now;
+
+            StartDate = new DateTime(StartDate.Year, StartDate.Month, 1);
+
             EndDate = StartDate.AddMonths(1);
 
             CalendarValue = StartDate.ToString("MMMM 1, yyyy");
 
             //Render days % year/month selector
             Days = _timeCard.EachDay(StartDate, EndDate.AddDays(-1));
-            Years = _timeCard.EachYear(DateTime.Now, DateTime.Now.AddYears(4));
+            Years = _timeCard.EachYear(logged.StartDate, logged.EndDate);
         }
 
+        /// <summary>
+        /// Method for rendering next month from currnt
+        /// </summary>
         public void OnPostForward()
         {
+            //To get start & end date of user
+            logged = GetDate();
+
+            //Set Start date to input value
             StartDate = DateTime.Parse(Calendar);
 
             StartDate = StartDate.AddMonths(1);
 
             //Change 2026 to user enddate & endate.year to date.
-            
-            if (StartDate.Year != 2026)
+
+            if (StartDate.Year !<= logged.EndDate.Year)
             {
                 //Change values
                 EndDate = StartDate.AddMonths(1);
@@ -163,20 +187,39 @@ namespace Astrow_2._0.Pages
 
                 //Render days % year/month selector
                 Days = _timeCard.EachDay(StartDate, EndDate.AddDays(-1));
-                Years = _timeCard.EachYear(DateTime.Now, DateTime.Now.AddYears(4));
+                Years = _timeCard.EachYear(logged.StartDate, logged.EndDate);
             }
             else
             {
                 //Change values
                 EndDate = StartDate;
 
-             
                 CalendarValue = StartDate.AddMonths(-1).ToString("MMMM 1, yyyy");
 
                 //Render days % year/month selector
                 Days = _timeCard.EachDay(StartDate.AddMonths(-1), EndDate.AddDays(-1));
-                Years = _timeCard.EachYear(DateTime.Now, DateTime.Now.AddYears(4));
+                Years = _timeCard.EachYear(logged.StartDate, logged.EndDate);
             }
+        }
+
+
+
+        /// <summary>
+        /// Get Start & End date for rendering years
+        /// </summary>
+        /// <returns></returns>
+        public LogedUser GetDate()
+        {
+            LogedUser logedUser = new LogedUser();
+
+            return logedUser = new LogedUser
+            {
+                UserName = HttpContext.Session.GetString("_Username"),
+                Status = HttpContext.Session.GetString("_Status"),
+                User_ID = (int)HttpContext.Session.GetInt32("_UserID"),
+                StartDate = DateTime.Parse(HttpContext.Session.GetString("_StartDate")),
+                EndDate = DateTime.Parse(HttpContext.Session.GetString("_EndDate"))
+            }; 
         }
     }
 }

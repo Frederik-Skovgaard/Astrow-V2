@@ -102,7 +102,9 @@ namespace Astrow_2._0.Repository
                 {
                     UserName = user.UserName,
                     Status = user.Status,
-                    User_ID = user.User_ID
+                    User_ID = user.User_ID,
+                    StartDate = user.StartDate,
+                    EndDate = user.EndDate
                 };
             }
             else

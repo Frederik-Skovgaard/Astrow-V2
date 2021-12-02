@@ -23,6 +23,8 @@ namespace Astrow_2._0.Pages
         public const string SessionUserID = "_UserID";
         public const string SessionUserName = "_Username";
         public const string sessionStatus = "_Status";
+        public const string sessionStartDate = "_StartDate";
+        public const string sessionEndDate = "_EndDate";
 
 
         public LoginModel(IUserRepository userRepository)
@@ -58,6 +60,8 @@ namespace Astrow_2._0.Pages
             HttpContext.Session.SetInt32(SessionUserID, 0);
             HttpContext.Session.SetString(SessionUserName, "");
             HttpContext.Session.SetString(sessionStatus, "");
+            HttpContext.Session.SetString(sessionStartDate, "");
+            HttpContext.Session.SetString(sessionEndDate, "");
         }
 
 
@@ -87,6 +91,8 @@ namespace Astrow_2._0.Pages
                     HttpContext.Session.SetString(SessionUserName, LogedUser.UserName);
                     HttpContext.Session.SetInt32(SessionUserID, LogedUser.User_ID);
                     HttpContext.Session.SetString(sessionStatus, LogedUser.Status);
+                    HttpContext.Session.SetString(sessionStartDate, LogedUser.StartDate.ToString());
+                    HttpContext.Session.SetString(sessionEndDate, LogedUser.EndDate.ToString());
 
                     return RedirectToPage("/HomePage");
                 }
