@@ -40,6 +40,7 @@ namespace Astrow_2._0.Pages
         [BindProperty]
         public IEnumerable<DateTime> Days { get; set; }
 
+
         [BindProperty]
         public IEnumerable<DateTime> Years { get; set; }
 
@@ -75,6 +76,7 @@ namespace Astrow_2._0.Pages
 
                 //Render days % year/month selector
                 Days = _timeCard.EachDay(StartDate, EndDate.AddDays(-1));
+
                 Years = _timeCard.EachYear(logged.StartDate, logged.EndDate);
 
 
@@ -93,13 +95,41 @@ namespace Astrow_2._0.Pages
 
             //Change values
             StartDate = DateTime.Parse(Calendar);
-            EndDate = StartDate.AddMonths(1);
 
-            CalendarValue = Calendar;
+            if (StartDate < logged.StartDate)
+            {
+                StartDate = DateTime.Parse($"1-{logged.StartDate.Month}-{logged.StartDate.Year}");
 
-            //Render days % year/month selector
-            Days = _timeCard.EachDay(StartDate, EndDate.AddDays(-1));
-            Years = _timeCard.EachYear(logged.StartDate, logged.EndDate);
+                EndDate = StartDate.AddMonths(1);
+
+                CalendarValue = StartDate.ToString("MMMM dd, yyyy");
+
+                //Render days % year/month selector
+                Days = _timeCard.EachDay(StartDate, EndDate.AddDays(-1));
+                Years = _timeCard.EachYear(logged.StartDate, logged.EndDate);
+            }
+            else if (StartDate > logged.EndDate)
+            {
+                StartDate = DateTime.Parse($"1-{logged.EndDate.Month}-{logged.EndDate.Year}");
+
+                EndDate = StartDate.AddMonths(1);
+
+                CalendarValue = StartDate.ToString("MMMM dd, yyyy");
+
+                //Render days % year/month selector
+                Days = _timeCard.EachDay(StartDate, EndDate.AddDays(-1));
+                Years = _timeCard.EachYear(logged.StartDate, logged.EndDate);
+            }
+            else
+            {
+                EndDate = StartDate.AddMonths(1);
+
+                CalendarValue = Calendar;
+
+                //Render days % year/month selector
+                Days = _timeCard.EachDay(StartDate, EndDate.AddDays(-1));
+                Years = _timeCard.EachYear(logged.StartDate, logged.EndDate);
+            }
         }
 
         /// <summary>
@@ -170,7 +200,7 @@ namespace Astrow_2._0.Pages
         {
             //To get start & end date of user
             logged = GetDate();
-
+             
             //Set Start date to input value
             StartDate = DateTime.Parse(Calendar);
 
@@ -210,16 +240,26 @@ namespace Astrow_2._0.Pages
         /// <returns></returns>
         public LogedUser GetDate()
         {
+            string name = HttpContext.Session.GetString("_Username");
+
             LogedUser logedUser = new LogedUser();
 
-            return logedUser = new LogedUser
+            if (name != null)
             {
-                UserName = HttpContext.Session.GetString("_Username"),
-                Status = HttpContext.Session.GetString("_Status"),
-                User_ID = (int)HttpContext.Session.GetInt32("_UserID"),
-                StartDate = DateTime.Parse(HttpContext.Session.GetString("_StartDate")),
-                EndDate = DateTime.Parse(HttpContext.Session.GetString("_EndDate"))
-            }; 
+                return logedUser = new LogedUser
+                {
+                    UserName = name,
+                    Status = HttpContext.Session.GetString("_Status"),
+                    User_ID = (int)HttpContext.Session.GetInt32("_UserID"),
+                    StartDate = DateTime.Parse(HttpContext.Session.GetString("_StartDate")),
+                    EndDate = DateTime.Parse(HttpContext.Session.GetString("_EndDate"))
+                };
+            }
+            else
+            {
+                return null;
+            }
+            
         }
     }
 }

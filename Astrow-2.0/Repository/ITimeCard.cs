@@ -21,5 +21,6 @@ namespace Astrow_2._0.Repository
 
         IEnumerable<DateTime> EachYear(DateTime from, DateTime thru);
 
+
     }
 }

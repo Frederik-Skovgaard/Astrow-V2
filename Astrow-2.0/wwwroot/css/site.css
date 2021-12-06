@@ -280,6 +280,11 @@ nav ul ul li a:hover {
     border-left: solid 3px #0588c9 !important;
     color: white !important;
 }
+nav ul ul li a:focus {
+    background: #0870a3;
+    border-left: solid 3px #0588c9 !important;
+    color: white !important;
+}
 
 nav ul li a span {
     position: absolute;
@@ -619,6 +624,7 @@ nav ul li a span.rotate {
     width:13rem;
     margin-right:1rem;
     background: white;
+    text-transform: capitalize;
 }
 .TimeCard .row .form-control:hover {
     box-shadow:none;
@@ -664,6 +670,7 @@ nav ul li a span.rotate {
     height:100%;
 }
 .TimeCard .outer .row #calendarBox .showDiv input {
+    text-transform: capitalize;
     width: max-content;
     background: white;
     border: none;

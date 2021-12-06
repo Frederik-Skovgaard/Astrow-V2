@@ -71,7 +71,11 @@ namespace Astrow_2._0.Repository
         public IEnumerable<DateTime> EachYear(DateTime from, DateTime thru)
         {
             for (var year = from.Date; year.Year <= thru.Year; year = year.AddYears(1))
+            {
                 yield return year;
+            }
+                
         }
+        
     }
 }

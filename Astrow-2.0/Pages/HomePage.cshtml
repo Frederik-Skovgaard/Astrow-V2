@@ -4,7 +4,6 @@
     ViewData["Title"] = "Home page";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
-
 <form method="post">
     <div class="TimeCard">
         <div class="container outer">
@@ -14,7 +13,7 @@
 
                     @*Datepicker*@
                     <input type="text" readonly autocomplete="off" id="Calendar" value="@Model.CalendarValue" asp-for="Calendar" class="form-control calendar" />
-                    
+
                     <div id="calendarBox">
 
                         @foreach (DateTime year in Model.Years)
@@ -24,28 +23,33 @@
 
                                 @*submits*@
                                 <div class="row">
-                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('januar')" value="Jan" />
-                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('februar')" value="Feb" />
-                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('marts')" value="Mar" />
+                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('Januar')" value="Jan" />
+                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('Februar')" value="Feb" />
+                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('Marts')" value="Mar" />
                                 </div>
 
                                 <div class="row">
-                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('april')" value="Apr" />
-                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('maj')" value="May" />
-                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('juni')" value="Jun" />
+                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('April')" value="Apr" />
+                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('Maj')" value="May" />
+                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('Juni')" value="Jun" />
                                 </div>
 
                                 <div class="row">
-                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('juli')" value="Jul" />
-                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('august')" value="Aug" />
-                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('september')" value="Sep" />
+                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('Juli')" value="Jul" />
+                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('August')" value="Aug" />
+                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('September')" value="Sep" />
                                 </div>
 
                                 <div class="row">
-                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('oktober')" value="Oct" />
-                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('november')" value="Nov" />
-                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('december')" value="Dec" />
+                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('Oktober')" value="Oct" />
+                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('November')" value="Nov" />
+                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('December')" value="Dec" />
                                 </div>
+
+
+
+
+
                             </div>
                         }
                     </div>
@@ -105,7 +109,7 @@
         var year;
         var month;
 
-        //Show date picker years 
+        //Show date picker years
         $('#Calendar').click(function() {
             $('#calendarBox').toggleClass("show")
         });

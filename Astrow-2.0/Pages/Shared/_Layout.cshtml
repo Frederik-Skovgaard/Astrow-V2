@@ -255,8 +255,7 @@
 
         //Add active class and remove from others
 
-        $('nav ul #Oper-li').click(function(){
-
+        $('nav ul .Oper-btn').click(function(){
             if (document.getElementById("Oper-li").classList.contains("active")) {
 
                 document.getElementById("Oper-li").classList.remove("active")
@@ -264,11 +263,11 @@
                 document.getElementById("Ops-li").classList.remove("active")
             }
             else {
-                 $(this).addClass("active").siblings().removeClass("active");
+                 document.getElementById("Oper-li").classList.add("active").siblings().removeClass("active");
             }
         });
 
-        $('nav ul #Vis-li').click(function(){
+        $('nav ul .Vis-btn').click(function(){
 
             if (document.getElementById("Vis-li").classList.contains("active")) {
 
@@ -277,11 +276,11 @@
                 document.getElementById("Ops-li").classList.remove("active")
             }
             else {
-                 $(this).addClass("active").siblings().removeClass("active");
+                document.getElementById("Vis-li").classList.add("active").siblings().removeClass("active");
             }
         });
 
-        $('nav ul #Ops-li').click(function(){
+        $('nav ul .Ops-btn').click(function(){
 
             if (document.getElementById("Ops-li").classList.contains("active")) {
 
@@ -290,7 +289,7 @@
                 document.getElementById("Ops-li").classList.remove("active")
             }
             else {
-                 $(this).addClass("active").siblings().removeClass("active");
+                document.getElementById("Ops-li").classList.add("active").siblings().removeClass("active");
             }
         });
 
@@ -327,13 +326,13 @@
 
 
         //Mouse hover for vis
-         $('nav ul #Vis-li').mouseover(function() {
+        $('nav ul #Vis-li').mouseover(function() {
 
               if (!document.getElementById("Vis-li").classList.contains("active")) {
 
                 document.getElementById("Oper-li").classList.remove("active")
                 document.getElementById("Ops-li").classList.remove("active")
-             }
+              }
         });
 
         $('nav ul #Vis-li').mouseleave(function() {
@@ -349,7 +348,7 @@
         });
 
         //Mouse hover for Opsætning
-         $('nav ul #Ops-li').mouseover(function() {
+        $('nav ul #Ops-li').mouseover(function() {
 
               if (!document.getElementById("Ops-li").classList.contains("active")) {
 
