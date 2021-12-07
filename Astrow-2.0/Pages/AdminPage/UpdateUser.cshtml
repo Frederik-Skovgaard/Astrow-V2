@@ -1,27 +1,28 @@
 ﻿@page
-@model Astrow_2._0.Pages.AdminModel
+@model Astrow_2._0.Pages.AdminPage.UpdateUserModel
 @{
-    ViewData["Title"] = "Admin | Page";
+    ViewData["Title"] = "Updater | Page";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
+
 <form method="post">
-    <div class="AdminPage">
+ <div class="AdminPage">
         <div class="container">
             <div class="row upper-row">
-                <button type="submit" asp-page-handler="OpretBruger" class="btn btn-lg btn-primary">
+                <a href="/AdminPage/CreateUsers" class="btn btn-lg btn-primary">
                     <i class="fas fa-plus-circle"></i> Opret bruger
-                </button>
-                <button type="submit" asp-page-handler="UpdaterBruger" class="btn btn-lg btn-secondary">
+                </a>
+                <a href="/AdminPage/UpdateUser" class="btn btn-lg btn-secondary">
                     <i class="fas fa-user-edit"></i> Updater bruger
-                </button>
-                <button type="submit"asp-page-handler="UpdaterTimekort" class="btn btn-lg btn-secondary">
+                </a>
+                <a href="/AdminPage/UpdateTimeCard" class="btn btn-lg btn-secondary">
                     <i class="fas fa-user-clock"></i> Updater Timekort
-                </button>
-                <button type="submit" asp-page-handler="FjernBruger" class="btn btn-lg btn-danger">
+                </a>
+                <a href="/AdminPage/DeleteUser" class="btn btn-lg btn-danger">
                     <i class="fas fa-minus-circle"></i> Fjern bruger
-                </button>
+                </a>
             </div>
-            <p class="display-3">Opret bruger</p>
+            <p class="display-3">Updater bruger</p>
             <div class="container lower-container">
                 <div class="row col-row">
                     <div class="col-6">
@@ -47,24 +48,24 @@
                     <div class="col-6">
                         <label>Rolle</label> <br />
                         <input asp-for="Role" id="Role" type="text" placeholder="Instruktør/Elev" autocomplete="off" class="form-control" />
-                        <span asp-validation-for="Password" class="CreateUserError"></span>
+                        <span asp-validation-for="Role" class="CreateUserError"></span>
                     </div>
                 </div>
                 <div class="row col-row">
                     <div class="col-6">
                         <label>Start Dato</label> <br />
                         <input asp-for="StartDate" id="StartDate" type="date" autocomplete="off" class="form-control" />
-                        <span asp-validation-for="Password" class="CreateUserError"></span>
+                        <span asp-validation-for="StartDate" class="CreateUserError"></span>
                     </div>
 
                     <div class="col-6">
                         <label>Slut Dato</label> <br />
                         <input asp-for="EndDate" id="EndDate" type="date" autocomplete="off" class="form-control" />
-                        <span asp-validation-for="Password" class="CreateUserError"></span>
+                        <span asp-validation-for="EndDate" class="CreateUserError"></span>
                     </div>
                 </div>
                 <div class="row submit-row">
-                    <button asp-page-handler="Submit" class="btn btn-lg btn-primary">Submit</button>
+                    <button asp-page-handler="Submit" onclick="return confirm('Er du sikker på du vil updater denne bruger?')" class="btn btn-lg btn-primary">Submit</button>
                 </div>
             </div>
         </div>

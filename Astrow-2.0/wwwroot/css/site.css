@@ -712,7 +712,7 @@ nav ul li a span.rotate {
     
 }
 
-.AdminPage .container .row button {
+.AdminPage .container .row a {
     font-family: sans-serif;
 
     width: max-content;
@@ -752,6 +752,7 @@ nav ul li a span.rotate {
     height: 40px;
     width: 97%;
     margin: 0;
+    line-height: 0;
 }
 
 .AdminPage .container .lower-container .col-row {

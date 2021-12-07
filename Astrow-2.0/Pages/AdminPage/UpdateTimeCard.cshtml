@@ -1,0 +1,27 @@
+﻿@page
+@model Astrow_2._0.Pages.AdminPage.UpdateTimeCardModel
+@{
+    ViewData["Title"] = "Timekort | Page";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<form method="post">
+    <div class="AdminPage">
+        <div class="container">
+            <div class="row upper-row">
+                <a href="/AdminPage/CreateUsers" class="btn btn-lg btn-primary">
+                    <i class="fas fa-plus-circle"></i> Opret bruger
+                </a>
+                <a href="/AdminPage/UpdateUser" class="btn btn-lg btn-secondary">
+                    <i class="fas fa-user-edit"></i> Updater bruger
+                </a>
+                <a href="/AdminPage/UpdateTimeCard" class="btn btn-lg btn-secondary">
+                    <i class="fas fa-user-clock"></i> Updater Timekort
+                </a>
+                <a href="/AdminPage/DeleteUser" class="btn btn-lg btn-danger">
+                    <i class="fas fa-minus-circle"></i> Fjern bruger
+                </a>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,89 @@
+﻿@page
+@model Astrow_2._0.Pages.AdminPage.CreateUsersModel
+@{
+    ViewData["Title"] = "Opret | Page";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<form method="post">
+    <div class="AdminPage">
+        <div class="container">
+            <div class="row upper-row">
+                <a href="/AdminPage/CreateUsers" class="btn btn-lg btn-primary">
+                    <i class="fas fa-plus-circle"></i> Opret bruger
+                </a>
+                <a href="/AdminPage/UpdateUser" class="btn btn-lg btn-secondary">
+                    <i class="fas fa-user-edit"></i> Updater bruger
+                </a>
+                <a href="/AdminPage/UpdateTimeCard" class="btn btn-lg btn-secondary">
+                    <i class="fas fa-user-clock"></i> Updater Timekort
+                </a>
+                <a href="/AdminPage/DeleteUser" class="btn btn-lg btn-danger">
+                    <i class="fas fa-minus-circle"></i> Fjern bruger
+                </a>
+            </div>
+            <p class="display-3">Opret bruger</p>
+            <div class="container lower-container">
+                <div class="row col-row">
+                    <div class="col-6">
+                        <label>Fornavn</label> <br />
+
+                        <input asp-for="FirstName" id="FirstName" type="text" placeholder="Nomen I." class="form-control" />
+                        <span asp-validation-for="FirstName" class="CreateUserError"></span>
+                    </div>
+
+                    <div class="col-6">
+                        <label>Efternavn</label> <br />
+
+                        <input asp-for="LastName" id="LastName" type="text" placeholder="Nescio" class="form-control" />
+                        <span asp-validation-for="LastName" class="CreateUserError"></span>
+                    </div>
+                </div>
+
+                <div class="row col-row">
+                    <div class="col-6">
+                        <label>Brugernavn</label> <br />
+
+                        <input asp-for="UserName" id="UserName" type="text" placeholder="Nomen123" class="form-control" />
+                        <span asp-validation-for="UserName" class="CreateUserError"></span>
+                    </div>
+
+                    <div class="col-6">
+                        <label>Kodeord</label> <br />
+
+                        <input asp-for="Password" id="Password" type="password" placeholder="1234" autocomplete="off" class="form-control" />
+                        <span asp-validation-for="Password" class="CreateUserError"></span>
+                    </div>
+                </div>
+                <div class="row col-row">
+                    <div class="col-6">
+                        <label>Start Dato</label> <br />
+
+                        <input asp-for="StartDate" id="StartDate" type="date" autocomplete="off" class="form-control" />
+                        <span asp-validation-for="StartDate" class="CreateUserError"></span>
+                    </div>
+
+                    <div class="col-6">
+                        <label>Slut Dato</label> <br />
+
+                        <input asp-for="EndDate" id="EndDate" type="date" autocomplete="off" class="form-control" />
+                        <span asp-validation-for="EndDate" class="CreateUserError"></span>
+                    </div>
+                    <div class="row col-row">
+                     <div class="col-12">
+                        <label>Rolle</label> <br />
+
+                        <input asp-for="Role" id="Role" type="text" placeholder="Instruktør/Elev" autocomplete="off" class="form-control" />
+                        <span asp-validation-for="Role" class="CreateUserError"></span>
+                    </div>
+                </div>
+                </div>
+                <div class="row submit-row">
+                    <input type="submit" asp-page-handler="/AdminPage/CreateUser" id="SubmitUser" class="btn btn-lg btn-primary" value="Submit" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@*onclick="return confirm('Er du sikker på du vil slette denne bruger?')"*@

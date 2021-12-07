@@ -21,7 +21,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/7eedced0ad.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" type="text/css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" type="text/css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js" type="text/javascript"></script>
 
     <script type="text/javascript">
@@ -35,7 +35,7 @@
 </head>
 <body>
     @{
-        Context.Session.TryGetValue("_Username", out var test);
+        Context.Session.TryGetValue("_Status", out var test);
 
     }
 
@@ -157,6 +157,16 @@
                     </li>
                 </ul>
             </li>
+
+            @{
+                if (System.Text.Encoding.UTF8.GetString(test, 0, test.Length) == "Instructør")
+                {
+                    @*Admin sider*@
+                    <li id="Ad-li">
+                        <a href="/AdminPage/CreateUsers" class="Ad-btn">Admin Side</a>
+                    </li>
+                }
+            }
 
             @*Log-Ud knap*@
             <li id="bottom-li" class="nav-bottom">
@@ -379,6 +389,26 @@
         });
 
         $('nav ul #bottom-li').mouseleave(function() {
+            if(document.getElementById('Oper').classList.contains("show")) {
+                document.getElementById("Oper-li").classList.add("active")
+            }
+            else if (document.getElementById('vis').classList.contains("show1")) {
+                document.getElementById("Vis-li").classList.add("active")
+            }
+            else if (document.getElementById('Ops').classList.contains("show2")) {
+                document.getElementById("Ops-li").classList.add("active")
+            }
+        });
+
+        //Mouse hover for Admin
+        $('nav ul #Ad-li').mouseover(function() {
+
+            document.getElementById("Ops-li").classList.remove("active")
+            document.getElementById("Vis-li").classList.remove("active")
+            document.getElementById("Oper-li").classList.remove("active")
+        });
+
+        $('nav ul #Ad-li').mouseleave(function() {
             if(document.getElementById('Oper').classList.contains("show")) {
                 document.getElementById("Oper-li").classList.add("active")
             }

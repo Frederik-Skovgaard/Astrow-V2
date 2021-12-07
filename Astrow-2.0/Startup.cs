@@ -33,12 +33,18 @@ namespace Astrow_2._0
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITimeCard, TimeCard>();
-            services.AddScoped<IAdmin, Admin>();
 
             services.AddRazorPages().AddRazorPagesOptions(options =>
             {
                 options.Conventions.AddPageRoute("/Login", "");
             });
+
+            services
+                .AddMvc()
+                .AddRazorPagesOptions(options =>
+                {
+                    options.Conventions.AddPageRoute("/Admin", "OpretBruger");
+                });
 
             services.AddSession(option =>
             {

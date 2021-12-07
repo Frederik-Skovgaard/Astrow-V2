@@ -113,6 +113,7 @@ namespace Astrow_2._0.Repository
             }
         }
 
+        #region Encryption
 
         /// <summary>
         /// Encryptor
@@ -144,5 +145,20 @@ namespace Astrow_2._0.Repository
 
             return sb.ToString();
         }
+
+
+        /// <summary>
+        /// Random salt generator
+        /// </summary>
+        /// <returns></returns>
+        public byte[] GenerateSalt()
+        {
+            RNGCryptoServiceProvider rncCsp = new RNGCryptoServiceProvider();
+            byte[] salt = new byte[32];
+            rncCsp.GetBytes(salt);
+
+            return salt;
+        }
+        #endregion
     }
 }

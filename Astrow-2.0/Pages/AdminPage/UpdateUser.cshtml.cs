@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,17 +5,18 @@ using Astrow_2._0.Model.Containers;
 using Astrow_2._0.Repository;
 using System.ComponentModel.DataAnnotations;
 
-namespace Astrow_2._0.Pages
+namespace Astrow_2._0.Pages.AdminPage
 {
-    
-    public class AdminModel : PageModel
+    public class UpdateUserModel : PageModel
     {
-        private readonly IAdmin _admin;
 
-        public AdminModel(IAdmin admin)
+        private readonly IUserRepository _userRepository;
+
+        public UpdateUserModel(IUserRepository userRepository)
         {
-            _admin = admin;
+            _userRepository = userRepository;
         }
+
 
         [BindProperty, Required(ErrorMessage = "* Fornavn skal udfyldes")]
         public string FirstName { get; set; }
@@ -39,7 +35,6 @@ namespace Astrow_2._0.Pages
 
         [BindProperty, Required(ErrorMessage = "* Slut dato skal udfyldes")]
         public string EndDate { get; set; }
-
 
         public IActionResult OnGet()
         {
