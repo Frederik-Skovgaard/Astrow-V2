@@ -68,7 +68,7 @@ Astrow 2.0 remake of Astrow with new quality of life features, like
 
 # Change log
 # [Unreleased]
-## Version 0.3.0 (Admin page's / Time Card )
+## Version 0.3.0
 ### Added
 - [x] TimeCard CRUD
 - [x] Date picker
@@ -77,7 +77,7 @@ Astrow 2.0 remake of Astrow with new quality of life features, like
 - [x] Admin page's CreateUser, DeleteUser, UpdateTimeCard & UpdateUser 
 ### Updated
 - [x] Nav bar btn Admin page if logged user has "Instructor" role
-## Version 0.2.0 (Home Page/Layout Page)
+## Version 0.2.0
 ### Added
 - [x] Layout page & Html/CSS/JavaScript for Layout
 - [x] Home page & Html/CSS/JavaScript (*Time card is on home page*)
@@ -86,7 +86,7 @@ Astrow 2.0 remake of Astrow with new quality of life features, like
 - [x] SQL Script more stored procedure's & change's to table's
 - [x] Html/CSS for Login page
 - [x] StoredProcedure.cs file updated with new procedure's
-## Version 0.1.0 (Login & SQL)
+## Version 0.1.0
 ### Added
 - [x] SQL Database
 - [x] SQL Script for creating database
