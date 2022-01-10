@@ -69,13 +69,17 @@
                         <span asp-validation-for="EndDate" class="CreateUserError"></span>
                     </div>
                     <div class="row col-row">
-                     <div class="col-12">
-                        <label>Rolle</label> <br />
+                        <div class="col-12">
+                            <label>Rolle</label> <br />
 
-                        <input asp-for="Role" id="Role" type="text" placeholder="Instruktør/Elev" autocomplete="off" class="form-control" />
-                        <span asp-validation-for="Role" class="CreateUserError"></span>
+                            <select name="Role" asp-for="Role" id="Role" class="form-control">
+                                <option value="Elev">Elev</option>
+                                <option value="Instruktør">Instruktør</option>
+                            </select>
+                            <span asp-validation-for="Role" class="CreateUserError"></span>
+
+                        </div>
                     </div>
-                </div>
                 </div>
                 <div class="row submit-row">
                     <input type="submit" asp-page-handler="/AdminPage/CreateUser" id="SubmitUser" class="btn btn-lg btn-primary" value="Submit" />

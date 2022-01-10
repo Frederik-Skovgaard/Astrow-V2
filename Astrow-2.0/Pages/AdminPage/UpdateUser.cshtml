@@ -6,7 +6,7 @@
 }
 
 <form method="post">
- <div class="AdminPage">
+    <div class="AdminPage">
         <div class="container">
             <div class="row upper-row">
                 <a href="/AdminPage/CreateUsers" class="btn btn-lg btn-primary">
@@ -25,14 +25,26 @@
             <p class="display-3">Updater bruger</p>
             <div class="container lower-container">
                 <div class="row col-row">
+                    <div class="col-12">
+                        <label>Users</label> <br />
+                        <select class="form-control">
+                            @foreach(Model.Containers.Users user in Model.UserList)
+                            {
+                                <option value="@user.User_ID">@user.UserName</option>
+                            }
+                        </select>
+                    </div>
+
                     <div class="col-6">
                         <label>Fornavn</label> <br />
+
                         <input asp-for="FirstName" id="FirstName" type="text" placeholder="Nomen I." class="form-control" />
                         <span asp-validation-for="FirstName" class="CreateUserError"></span>
                     </div>
 
                     <div class="col-6">
                         <label>Efternavn</label> <br />
+
                         <input asp-for="LastName" id="LastName" type="text" placeholder="Nescio" class="form-control" />
                         <span asp-validation-for="LastName" class="CreateUserError"></span>
                     </div>
@@ -40,32 +52,48 @@
 
                 <div class="row col-row">
                     <div class="col-6">
-                        <label>Kodeord</label> <br />
-                        <input asp-for="Password" id="Password" type="password" placeholder="1234" autocomplete="off" class="form-control" />
-                        <span asp-validation-for="Password" class="CreateUserError"></span>
+                        <label>Brugernavn</label> <br />
+
+                        <input asp-for="UserName" id="UserName" type="text" placeholder="Nomen123" class="form-control" />
+                        <span asp-validation-for="UserName" class="CreateUserError"></span>
                     </div>
 
                     <div class="col-6">
-                        <label>Rolle</label> <br />
-                        <input asp-for="Role" id="Role" type="text" placeholder="Instruktør/Elev" autocomplete="off" class="form-control" />
-                        <span asp-validation-for="Role" class="CreateUserError"></span>
+                        <label>Kodeord</label> <br />
+
+                        <input asp-for="Password" id="Password" type="password" placeholder="1234" autocomplete="off" class="form-control" />
+                        <span asp-validation-for="Password" class="CreateUserError"></span>
                     </div>
                 </div>
                 <div class="row col-row">
                     <div class="col-6">
                         <label>Start Dato</label> <br />
+
                         <input asp-for="StartDate" id="StartDate" type="date" autocomplete="off" class="form-control" />
                         <span asp-validation-for="StartDate" class="CreateUserError"></span>
                     </div>
 
                     <div class="col-6">
                         <label>Slut Dato</label> <br />
+
                         <input asp-for="EndDate" id="EndDate" type="date" autocomplete="off" class="form-control" />
                         <span asp-validation-for="EndDate" class="CreateUserError"></span>
                     </div>
+                    <div class="row col-row">
+                        <div class="col-12">
+                            <label>Rolle</label> <br />
+
+                            <select name="Role" asp-for="Role" id="Role" class="form-control">
+                                <option value="Elev">Elev</option>
+                                <option value="Instruktør">Instruktør</option>
+                            </select>
+                            <span asp-validation-for="Role" class="CreateUserError"></span>
+
+                        </div>
+                    </div>
                 </div>
                 <div class="row submit-row">
-                    <button asp-page-handler="Submit" onclick="return confirm('Er du sikker på du vil updater denne bruger?')" class="btn btn-lg btn-primary">Submit</button>
+                    <input type="submit" asp-page-handler="/AdminPage/CreateUser" id="SubmitUser" class="btn btn-lg btn-primary" value="Submit" />
                 </div>
             </div>
         </div>
