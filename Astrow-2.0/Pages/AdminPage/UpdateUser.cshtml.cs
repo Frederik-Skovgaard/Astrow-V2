@@ -62,22 +62,5 @@ namespace Astrow_2._0.Pages.AdminPage
                 return Page();
             }
         }
-
-        public Users GetUserInfo()
-        {
-            string name = HttpContext.Session.GetString("_Username");
-
-            string status = HttpContext.Session.GetString("_Status");
-
-            Users user = new Users();
-
-
-            return user = new Users
-            {
-
-            };
-
-
-        }
     }
 }

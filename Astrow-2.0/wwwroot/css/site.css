@@ -744,6 +744,7 @@ nav ul li a span.rotate {
     border-bottom-right-radius: 10px;
     align-items: center;
     place-content: center;
+    padding: 0.5rem;
     
 }
 
@@ -757,10 +758,48 @@ nav ul li a span.rotate {
 .AdminPage .container .lower-container .col-row {
     text-align: -webkit-center;
     width:100%;
+    padding-top: 1rem;
 }
 
+.AdminPage .container .lower-container .col-row .col-12 .dropdown .dropdown-toggle {
+    background: white;
+}
+    .AdminPage .container .lower-container .col-row .col-12 .dropdown .dropdown-toggle:hover {
+        border-color: transparent;
+        box-shadow: none;
+    }
+    .AdminPage .container .lower-container .col-row .col-12 .dropdown .dropdown-toggle:focus {
+        box-shadow: none;
+        border-color: transparent;
+    }
+
+.AdminPage .container .lower-container .col-row .col-12 .dropdown .dropdown-menu {
+    width: auto !important;
+    min-width: 5.3rem !important;
+    border-radius: 0 !important;
+    padding: 0;
+}
+
+.AdminPage .container .lower-container .col-row .col-12 .dropdown .dropdown-item {
+    height: auto;
+    width: 100%;
+    line-height: normal;
+    border: none;
+    font-size: medium;
+    border-radius: 0;
+    background: white;
+}
+    .AdminPage .container .lower-container .col-row .col-12 .dropdown .dropdown-item:hover {
+        color: white !important;
+        background: #247bfb;
+    }
+    .AdminPage .container .lower-container .col-row .col-12 .dropdown .dropdown-item:focus {
+        color: black !important;
+        background: transparent;
+    }
+
 .AdminPage .container .lower-container .row label {
-    color:white;
+    color: white;
     font-size: 20px;
     font-weight: 500;
 }

@@ -1,11 +1,12 @@
 ﻿@page
 @model Astrow_2._0.Pages.AdminPage.UpdateUserModel
 @{
-    ViewData["Title"] = "Updater | Page";
+    ViewData["Title"] = "Opdater | Page";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
 <form method="post">
+
     <div class="AdminPage">
         <div class="container">
             <div class="row upper-row">
@@ -13,39 +14,44 @@
                     <i class="fas fa-plus-circle"></i> Opret bruger
                 </a>
                 <a href="/AdminPage/UpdateUser" class="btn btn-lg btn-secondary">
-                    <i class="fas fa-user-edit"></i> Updater bruger
+                    <i class="fas fa-user-edit"></i> Opdater bruger
                 </a>
                 <a href="/AdminPage/UpdateTimeCard" class="btn btn-lg btn-secondary">
-                    <i class="fas fa-user-clock"></i> Updater Timekort
+                    <i class="fas fa-user-clock"></i> Opdater Timekort
                 </a>
                 <a href="/AdminPage/DeleteUser" class="btn btn-lg btn-danger">
                     <i class="fas fa-minus-circle"></i> Fjern bruger
                 </a>
             </div>
-            <p class="display-3">Updater bruger</p>
+            <p class="display-3">Opdater bruger</p>
             <div class="container lower-container">
                 <div class="row col-row">
                     <div class="col-12">
                         <label>Users</label> <br />
-                        <select class="form-control">
-                            @foreach(Model.Containers.Users user in Model.UserList)
-                            {
-                                <option value="@user.User_ID">@user.UserName</option>
-                            }
-                        </select>
+                        <div class="dropdown">
+                            <button class="btn btn-p dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Users
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                @foreach (Model.Containers.Users user in Model.UserList)
+                                {
+                                    <a class="dropdown-item" href="#" onclick="UpdateUser('@user.UserName', '@user.StartDate.ToString("yyyy/MM/dd")', '@user.EndDate.ToString("yyyy/MM/dd")', '@user.Status')" id="usernbtn">@user.UserName</a>
+                                }
+                            </div>
+                        </div>
                     </div>
 
                     <div class="col-6">
                         <label>Fornavn</label> <br />
 
-                        <input asp-for="FirstName" id="FirstName" type="text" placeholder="Nomen I." class="form-control" />
+                        <input autocomplete="off" asp-for="FirstName" id="FirstName" type="text" placeholder="Nomen I." class="form-control" />
                         <span asp-validation-for="FirstName" class="CreateUserError"></span>
                     </div>
 
                     <div class="col-6">
                         <label>Efternavn</label> <br />
 
-                        <input asp-for="LastName" id="LastName" type="text" placeholder="Nescio" class="form-control" />
+                        <input autocomplete="off" asp-for="LastName" id="LastName" type="text" placeholder="Nescio" class="form-control" />
                         <span asp-validation-for="LastName" class="CreateUserError"></span>
                     </div>
                 </div>
@@ -54,14 +60,14 @@
                     <div class="col-6">
                         <label>Brugernavn</label> <br />
 
-                        <input asp-for="UserName" id="UserName" type="text" placeholder="Nomen123" class="form-control" />
+                        <input autocomplete="off" asp-for="UserName" value="" id="UserName" type="text" placeholder="Nomen123" class="form-control" />
                         <span asp-validation-for="UserName" class="CreateUserError"></span>
                     </div>
 
                     <div class="col-6">
                         <label>Kodeord</label> <br />
 
-                        <input asp-for="Password" id="Password" type="password" placeholder="1234" autocomplete="off" class="form-control" />
+                        <input autocomplete="off" asp-for="Password" id="Password" type="password" placeholder="1234" autocomplete="off" class="form-control" />
                         <span asp-validation-for="Password" class="CreateUserError"></span>
                     </div>
                 </div>
@@ -85,7 +91,7 @@
 
                             <select name="Role" asp-for="Role" id="Role" class="form-control">
                                 <option value="Elev">Elev</option>
-                                <option value="Instruktør">Instruktør</option>
+                                <option value="Instructør">Instructør</option>
                             </select>
                             <span asp-validation-for="Role" class="CreateUserError"></span>
 
@@ -98,4 +104,13 @@
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+        function UpdateUser(user, start, end, role) {
+            document.getElementById("UserName").value = user
+            document.getElementById("StartDate").value = start
+            document.getElementById("EndDate").value = end
+            document.getElementById("Role").value  = role
+        };
+    </script>
 </form>
