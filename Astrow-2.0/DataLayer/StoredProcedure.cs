@@ -568,6 +568,37 @@ namespace Astrow_2._0.DataLayer
                 }
             }
         }
+
+        public UserPersonalInfo FindUserInfo(int id)
+        {
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand find = new SqlCommand("FindUserInfo", sql);
+                find.CommandType= CommandType.StoredProcedure;
+
+                find.Parameters.AddWithValue("@id", id);
+
+                UserPersonalInfo person = new UserPersonalInfo();
+
+                using (SqlDataReader read = find.ExecuteReader())
+                {
+                    while (read.Read())
+                    {
+                        person = new UserPersonalInfo
+                        {
+                            FirstName = read.GetString(1),
+                            MiddleName = read.GetString(2),
+                            LastName = read.GetString(3)
+                        };
+                    }
+                }
+
+
+                return person;
+            }
+        }
         #endregion       
     }
 }

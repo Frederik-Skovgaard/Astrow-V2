@@ -82,6 +82,13 @@ namespace Astrow_2._0.Repository
             return user;
         }
 
+        public UserPersonalInfo FindUserInfo(int id)
+        {
+            UserPersonalInfo person = stored.FindUserInfo(id);
+
+            return person;
+        }
+
         /// <summary>
         /// Method for loggin in
         /// </summary>

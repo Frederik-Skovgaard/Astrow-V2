@@ -201,6 +201,8 @@ namespace Astrow_2._0.Pages
             //To get start & end date of user
             logged = GetDate();
              
+            //Bug forward when year only
+
             //Set Start date to input value
             StartDate = DateTime.Parse(Calendar);
 

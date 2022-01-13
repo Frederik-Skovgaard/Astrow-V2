@@ -21,6 +21,8 @@ namespace Astrow_2._0.Repository
 
         Users FindByUserName(string username);
 
+        UserPersonalInfo FindUserInfo(int id);
+
         LogedUser Login(string username, string password);
 
         string GenerateSaltedHash(byte[] plainText, byte[] salt);

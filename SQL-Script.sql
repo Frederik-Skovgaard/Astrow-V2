@@ -359,7 +359,9 @@ SELECT * FROM Days
 WHERE User_ID = @id
 GO
 
-CREATE PROCEDURE [GetUserSchoolPeriod]
+CREATE PROCEDURE [FindUserInfo]
 @id INT
 AS
+SELECT * FROM Name
+WHERE Name_ID = @id
 GO
