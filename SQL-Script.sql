@@ -17,6 +17,35 @@ GO
 
 -------------- Create Table --------------
 
+--USE [Astrow-2.0]
+--GO
+
+--DROP TABLE [InBox]
+--GO
+
+--DROP TABLE [TimeCard]
+--GO
+
+--DROP TABLE [Files]
+--GO
+
+--DROP TABLE [Message]
+--GO
+
+--DROP TABLE [Days]
+--GO
+
+--DROP TABLE [File]
+--GO
+
+--DROP TABLE [User]
+--GO
+
+--DROP TABLE [Name]
+--GO
+
+
+
 CREATE TABLE [Name] (
 [Name_ID] INT IDENTITY(1,1) NOT NULL,
 [FirstName] NVARCHAR(30) NOT NULL,
@@ -58,7 +87,7 @@ CREATE TABLE [User] (
 [Name_ID] INT NOT NULL,
 [Status] NVARCHAR(25) NOT NULL,
 [IsDeleted] BIT NOT NULL,
-[Salt] NVARCHAR(6) NOT NULL,
+[Salt] NVARCHAR(max) NOT NULL,
 [StartDate] DATETIME NOT NULL,
 [EndDate] DATETIME NOT NULL
 
@@ -69,10 +98,6 @@ FOREIGN KEY (Name_ID) REFERENCES [Name](Name_ID),
 )
 GO
 
-
-USE [Astrow-2.0]
-DROP TABLE [Days]
-GO
 
 CREATE TABLE [Days] (
 [Days_ID] INT IDENTITY(1,1) NOT NULL,
@@ -140,13 +165,14 @@ GO
 
 -------------- Create-Container --------------
 
+
 -- Create User
 CREATE PROCEDURE [CreateUser]
 @UserName NVARCHAR(50),
 @Password NVARCHAR(MAX),
 @id INT,
 @Status NVARCHAR(25),
-@salt NVARCHAR(6),
+@salt NVARCHAR(max),
 @startDate DATETIME,
 @endDate DATETIME
 AS
@@ -333,6 +359,8 @@ AS
 SELECT * FROM [User]
 WHERE IsDeleted = 0
 GO
+
+
 
 -- Get by ID
 CREATE PROCEDURE [GetByID]

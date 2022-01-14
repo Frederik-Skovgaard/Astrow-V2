@@ -75,6 +75,8 @@ namespace Astrow_2._0.Pages.AdminPage
 
                 return Page();
             }
+
+
         }
 
         /// <summary>
@@ -116,34 +118,28 @@ namespace Astrow_2._0.Pages.AdminPage
         /// <param name="id"></param>
         public void OnPostUpdateUser(int id)
         {
-            Users user = new Users();
-
-            UserPersonalInfo userPersonalInfo = new UserPersonalInfo();
-
-
             //Get user salt
-            user = _userRepository.FindUser(id);
+            Users user = _userRepository.FindUser(id);
 
-            //Turn password and salt to byte
-            byte[] password = Encoding.ASCII.GetBytes(Password);
-            byte[] salt = Encoding.ASCII.GetBytes(user.Salt);
+            //Generate salt
+            string salt = _userRepository.CreateSalt(32);
 
             //Use salt to hash the password
-            string hasPass = _userRepository.GenerateSaltedHash(password, salt);
+            string hashPass = _userRepository.GenerateHash(Password, salt);
 
             //Fill user with new data
             user = new Users
             {
                 User_ID = id,
                 UserName = UserName,
-                Password = hasPass,
+                Password = hashPass,
                 StartDate = DateTime.Parse(StartDate),
                 EndDate = DateTime.Parse(EndDate),
                 Status = Role
             };
 
             //Fill personal info with new data
-            userPersonalInfo = new UserPersonalInfo
+            UserPersonalInfo userPersonalInfo = new UserPersonalInfo()
             {
                 Name_ID = ID,
                 FirstName = FirstName,

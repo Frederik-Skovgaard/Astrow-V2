@@ -27,8 +27,11 @@ namespace Astrow_2._0.Repository
 
         LogedUser Login(string username, string password);
 
-        string GenerateSaltedHash(byte[] plainText, byte[] salt);
+        string CreateSalt(int size);
 
-        byte[] GenerateSalt();
+        string GenerateHash(string password, string salt);
+
+        bool PasswordAreEqual(string plainTextPassword, string hashedPassword, string salt);
+
     }
 }

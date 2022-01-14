@@ -75,12 +75,11 @@ namespace Astrow_2._0.Pages
 
             if (Users.User_ID != 0)
             {
-                //Turn password and salt to byte
-                byte[] password = Encoding.ASCII.GetBytes(Password);
-                byte[] salt = Encoding.ASCII.GetBytes(Users.Salt);
+                //Generate salt
+                string salt = Users.Salt;
 
                 //Use salt to hash the password
-                string hashPass = _userRepository.GenerateSaltedHash(password, salt);
+                string hashPass = _userRepository.GenerateHash(Password, salt);
 
                 //Login the user and save the necesary data as LogedUser
                 LogedUser = _userRepository.Login(UserName, hashPass);

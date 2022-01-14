@@ -44,7 +44,7 @@ namespace Astrow_2._0.Repository
         /// Update user parameters
         /// </summary>
         /// <param name="user"></param>
-        public  void UpdateUser(Users user)
+        public void UpdateUser(Users user)
         {
             stored.UpdateUser(user);
         }
@@ -129,51 +129,28 @@ namespace Astrow_2._0.Repository
             }
         }
 
+
+
         #region Encryption
 
-        /// <summary>
-        /// Encryptor
-        /// </summary>
-        /// <param name="plainText"></param>
-        /// <param name="salt"></param>
-        /// <returns></returns>
-        public string GenerateSaltedHash(byte[] plainText, byte[] salt)
+        public string CreateSalt(int size)
         {
-            HashAlgorithm algorithm = new SHA256Managed();
-
-            byte[] plainTextWithSaltBytes = new byte[plainText.Length + salt.Length];
-
-            for (int i = 0; i < plainText.Length; i++)
-            {
-                plainTextWithSaltBytes[i] = plainText[i];
-            }
-            for (int i = 0; i < salt.Length; i++)
-            {
-                plainTextWithSaltBytes[plainText.Length + i] = salt[i];
-            }
-
-            StringBuilder sb = new StringBuilder();
-            foreach (byte b in algorithm.ComputeHash(plainTextWithSaltBytes))
-            {
-                sb.Append(b.ToString("X2"));
-            }
-
-
-            return sb.ToString();
+            RNGCryptoServiceProvider rngC = new RNGCryptoServiceProvider();
+            byte[] buff = new byte[size];
+            rngC.GetBytes(buff);
+            return Convert.ToBase64String(buff);
         }
-
-
-        /// <summary>
-        /// Random salt generator
-        /// </summary>
-        /// <returns></returns>
-        public byte[] GenerateSalt()
+        public string GenerateHash(string password, string salt)
         {
-            RNGCryptoServiceProvider rncCsp = new RNGCryptoServiceProvider();
-            byte[] salt = new byte[32];
-            rncCsp.GetBytes(salt);
-
-            return salt;
+            byte[] bytes = Encoding.UTF8.GetBytes(password + salt);
+            SHA256Managed sHA256ManagedString = new SHA256Managed();
+            byte[] hash = sHA256ManagedString.ComputeHash(bytes);
+            return Convert.ToBase64String(hash);
+        }
+        public bool PasswordAreEqual(string plainTextPassword, string hashedPassword, string salt)
+        {
+            string newHashedPin = GenerateHash(plainTextPassword, salt);
+            return newHashedPin.Equals(hashedPassword);
         }
         #endregion
     }
