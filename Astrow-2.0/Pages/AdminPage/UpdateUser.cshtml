@@ -26,9 +26,6 @@
         <div class="container lower-container">
             <div class="row col-row">
 
-               
-
-
                 <div class="col-12">
                     <label>Users</label> <br />
                     <div class="dropdown">
@@ -38,6 +35,7 @@
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             @foreach (Model.Containers.Users user in Model.UserList)
                             {
+                                @*Dropdown with every user*@
                                 <form asp-page-handler="User" method="post">
 
                                     <input asp-for="ID" value="@user.User_ID" hidden />
@@ -50,6 +48,7 @@
                 </div>
             </div>
 
+            @*Update user*@
             <form asp-page-handler="UpdateUser" method="post">
                 <div class="row col-row">
                     <div class="col-4">
@@ -69,7 +68,7 @@
                     <div class="col-4">
                         <label>Efternavn</label> <br />
 
-                        <input autocomplete="off" required asp-for="LastName" id="LastName" type="text" placeholder="Efternavn" class="form-control" oninvalid="this.setCustomValidity('Skriv efternavn her')" oninput="this.setCustomValidity('')"/>
+                        <input autocomplete="off" required asp-for="LastName" id="LastName" type="text" placeholder="Efternavn" class="form-control" oninvalid="this.setCustomValidity('Skriv efternavn her')" oninput="this.setCustomValidity('')" />
                         <span asp-validation-for="LastName" class="CreateUserError"></span>
                     </div>
                 </div>
@@ -85,7 +84,7 @@
                     <div class="col-6">
                         <label>Kodeord</label> <br />
 
-                        <input autocomplete="off" required asp-for="Password" id="Password" type="password" placeholder="Kodeord" autocomplete="off" class="form-control" oninvalid="this.setCustomValidity('Skriv kodeord her')" oninput="this.setCustomValidity('')"/>
+                        <input autocomplete="off" required asp-for="Password" id="Password" type="password" placeholder="Kodeord" autocomplete="off" class="form-control" oninvalid="this.setCustomValidity('Skriv kodeord her')" oninput="this.setCustomValidity('')" />
                         <span asp-validation-for="Password" class="CreateUserError"></span>
                     </div>
                 </div>
@@ -94,14 +93,14 @@
                     <div class="col-6">
                         <label>Start Dato</label> <br />
 
-                        <input asp-for="StartDate" required id="StartDate" type="date" autocomplete="off" class="form-control" oninvalid="this.setCustomValidity('Skriv start dato her')" oninput="this.setCustomValidity('')"/>
+                        <input asp-for="StartDate" required id="StartDate" type="date" autocomplete="off" class="form-control" oninvalid="this.setCustomValidity('Skriv start dato her')" oninput="this.setCustomValidity('')" />
                         <span asp-validation-for="StartDate" class="CreateUserError"></span>
                     </div>
 
                     <div class="col-6">
                         <label>Slut Dato</label> <br />
 
-                        <input asp-for="EndDate" required id="EndDate" type="date" autocomplete="off" class="form-control" oninvalid="this.setCustomValidity('Skriv slut dato her')" oninput="this.setCustomValidity('')"/>
+                        <input asp-for="EndDate" required id="EndDate" type="date" autocomplete="off" class="form-control" oninvalid="this.setCustomValidity('Skriv slut dato her')" oninput="this.setCustomValidity('')" />
                         <span asp-validation-for="EndDate" class="CreateUserError"></span>
                     </div>
 
@@ -120,14 +119,35 @@
                 </div>
 
                 <div class="row submit-row">
-                    <input type="submit" asp-page-handler="UpdateUser" id="SubmitUser" class="btn btn-lg btn-primary" value="Submit" />
+                    <input type="submit" asp-page-handler="UpdateUser" asp-route-id="@Model.ID" id="SubmitUser" class="btn btn-lg btn-primary" value="Submit" />
                 </div>
+
+
+                @*popup message on succesfull update*@
+                @if (ViewData["Message"] != null)
+                {
+                    <script type="text/javascript">
+                        window.onload = function () {
+                            alert("@ViewData["Message"]");
+                        };
+                    </script>
+                }
+
+                @*Endate validator*@
+                <script type="text/javascript">
+                        $("#EndDate").change(function () {
+                        var startDate = document.getElementById("StartDate").value;
+                        var endDate = document.getElementById("EndDate").value;
+
+                        if ((Date.parse(endDate) <= Date.parse(startDate))) {
+                            alert("End date should be greater than Start date");
+                            document.getElementById("EndDate").value = "";
+                        }
+                    });
+                </script>
+
 
             </form>
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-
-</script>

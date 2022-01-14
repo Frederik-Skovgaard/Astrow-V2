@@ -15,6 +15,8 @@ namespace Astrow_2._0.Repository
 
         void UpdateUser(Users user);
 
+        void UpdateUserInfo(UserPersonalInfo person);
+
         List<Users> ReadAllUsers();
 
         Users FindUser(int id);

@@ -1,13 +1,12 @@
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Astrow_2._0.Model.Containers;
 using Astrow_2._0.Model.Items;
 using Astrow_2._0.Repository;
-using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
-using System.Linq;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Astrow_2._0.Pages.AdminPage
 {
@@ -21,6 +20,8 @@ namespace Astrow_2._0.Pages.AdminPage
             _userRepository = userRepository;
         }
 
+
+        #region Properties
         [BindProperty]
         public List<Users> UserList { get; set; }
 
@@ -51,24 +52,34 @@ namespace Astrow_2._0.Pages.AdminPage
         [BindProperty]
         public string EndDate { get; set; }
 
-
         [BindProperty]
         public int ID { get; set; }
+        #endregion
 
+
+        /// <summary>
+        /// On load fill out dropdown with all users
+        /// </summary>
+        /// <returns></returns>
         public IActionResult OnGet()
         {
+            //Check if user has "Instructør" rights
             if (HttpContext.Session.GetString("_Status") != "Instructør")
             {
                 return RedirectToPage("/Login");
             }
             else
             {
+                //Fills dropdown with users 
                 UserList = _userRepository.ReadAllUsers();
 
                 return Page();
             }
         }
 
+        /// <summary>
+        /// When admin clicks on a name in the list, this filles out the fields with the user's info
+        /// </summary>
         public void OnPostUser()
         {
             if (ID != 0)
@@ -77,6 +88,7 @@ namespace Astrow_2._0.Pages.AdminPage
 
                 UserPersonalInfo person = _userRepository.FindUserInfo(ID);
 
+                //Fill fields with user's info
                 FirstName = person.FirstName;
                 MiddleName = person.MiddleName;
                 LastName = person.LastName;
@@ -88,18 +100,63 @@ namespace Astrow_2._0.Pages.AdminPage
 
                 Role = user.Status.ToString();
 
+                //Fills dropdown with users
                 UserList = _userRepository.ReadAllUsers();
-
             }
             else
             {
+                //Fills dropdown with users
                 UserList = _userRepository.ReadAllUsers();
             }
         }
 
-        public void OnPostUpdateUser()
+        /// <summary>
+        /// Update User's infomation
+        /// </summary>
+        /// <param name="id"></param>
+        public void OnPostUpdateUser(int id)
         {
+            Users user = new Users();
 
+            UserPersonalInfo userPersonalInfo = new UserPersonalInfo();
+
+
+            //Get user salt
+            user = _userRepository.FindUser(id);
+
+            //Turn password and salt to byte
+            byte[] password = Encoding.ASCII.GetBytes(Password);
+            byte[] salt = Encoding.ASCII.GetBytes(user.Salt);
+
+            //Use salt to hash the password
+            string hasPass = _userRepository.GenerateSaltedHash(password, salt);
+
+            //Fill user with new data
+            user = new Users
+            {
+                User_ID = id,
+                UserName = UserName,
+                Password = hasPass,
+                StartDate = DateTime.Parse(StartDate),
+                EndDate = DateTime.Parse(EndDate),
+                Status = Role
+            };
+
+            //Fill personal info with new data
+            userPersonalInfo = new UserPersonalInfo
+            {
+                Name_ID = ID,
+                FirstName = FirstName,
+                MiddleName = MiddleName,
+                LastName = LastName
+            };
+
+            //Update users info
+            _userRepository.UpdateUser(user);
+            _userRepository.UpdateUserInfo(userPersonalInfo);
+
+            //Popup message for succes
+            ViewData["Message"] = string.Format("Bruger blev opdateret...");
         }
     }
 }

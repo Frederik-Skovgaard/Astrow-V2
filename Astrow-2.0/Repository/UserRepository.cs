@@ -50,6 +50,15 @@ namespace Astrow_2._0.Repository
         }
 
         /// <summary>
+        /// Update user's infomation
+        /// </summary>
+        /// <param name="person"></param>
+        public void UpdateUserInfo(UserPersonalInfo person)
+        {
+            stored.UpdateUserInfo(person);
+        }
+
+        /// <summary>
         /// Return all users to list
         /// </summary>
         /// <returns></returns>

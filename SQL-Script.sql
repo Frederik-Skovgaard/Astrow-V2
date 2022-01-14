@@ -252,6 +252,21 @@ Status = @Status
 WHERE User_ID = @id
 GO
 
+
+-- Update User info
+CREATE PROCEDURE [UpdateUserInfo]
+@id INT,
+@firstNavn NVARCHAR(30),
+@middleNavn NVARCHAR(30),
+@lastNavn NVARCHAR(30)
+AS
+UPDATE [Name]
+SET FirstName = @firstNavn,
+MiddleName = @middleNavn,
+LastName = @lastNavn
+WHERE Name_ID = @id
+GO
+
 -- Update Abscence
 CREATE PROCEDURE [UpdateAbscence]
 @id INT,

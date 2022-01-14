@@ -314,21 +314,25 @@ namespace Astrow_2._0.DataLayer
         }
 
         /// <summary>
-        /// Give user the right foregine keys
+        /// Method for updating user's personal infomation
         /// </summary>
-        /// <param name="user"></param>
-        public void UpdateForgeignKey(Users user)
+        /// <param name="person"></param>
+        public void UpdateUserInfo(UserPersonalInfo person)
         {
             using (sql = new SqlConnection(connectionString))
             {
                 sql.Open();
 
-                SqlCommand updateForgeinKeys = new SqlCommand("UpdateForgienkeys", sql);
-                updateForgeinKeys.CommandType = CommandType.StoredProcedure;
+                SqlCommand updateUserInfo = new SqlCommand("UpdateUserInfo", sql);
+                updateUserInfo.CommandType = CommandType.StoredProcedure;
 
-                updateForgeinKeys.Parameters.AddWithValue("@id", user.User_ID);
+                updateUserInfo.Parameters.AddWithValue("@id", person.Name_ID);
 
-                updateForgeinKeys.ExecuteNonQuery();
+                updateUserInfo.Parameters.AddWithValue("@firstNavn", person.FirstName);
+                updateUserInfo.Parameters.AddWithValue("@middleNavn", person.MiddleName);
+                updateUserInfo.Parameters.AddWithValue("@lastNavn", person.LastName);
+
+                updateUserInfo.ExecuteNonQuery();
             }
         }
 
