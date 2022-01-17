@@ -35,12 +35,23 @@
                         <div class="col-12 delete">
                             <label class="col-4">@user.UserName</label>
                             <input asp-for="ID" value="@user.User_ID" hidden />
-                            <input type="button" class="btn btn-danger col-4" value="Slet" />
+                            <input type="submit" asp-route-id="@Model.ID" class="btn btn-danger col-4" value="Slet" />
                         </div>
                     </form>
                 }
-
             </div>
+            
+                @*popup message on succesfull update*@
+                @if (ViewData["Message"] != null)
+                {
+                    <script type="text/javascript">
+                        window.onload = function () {
+                            alert("@ViewData["Message"]");
+                        };
+                    </script>
+                }
+
+
         </div>
     </div>
 </div>

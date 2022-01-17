@@ -45,9 +45,26 @@ namespace Astrow_2._0.Pages.AdminPage
             }
         }
 
-        public void OnPost()
+        public IActionResult OnPost(int id)
         {
+            //Get user
+            Users user = _userRepository.FindUser(id);
 
+            //Fill user with new data
+            user = new Users
+            {
+                User_ID = id,
+                IsDeleted = true
+            };
+
+            //Check user of as deleted in database
+            _userRepository.DeleteUser(user);
+
+
+            //Popup message for succes
+            ViewData["Message"] = string.Format("Bruger blev slettet...");
+
+            return RedirectToPage("/AdminPage/DeleteUser");
         }
 
 
