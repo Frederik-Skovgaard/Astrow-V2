@@ -5,37 +5,43 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<form method="post">
-    <div class="AdminPage">
-        <div class="container">
-            <div class="row upper-row">
-                <a href="/AdminPage/CreateUsers" class="btn btn-lg btn-primary">
-                    <i class="fas fa-plus-circle"></i> Opret bruger
-                </a>
-                <a href="/AdminPage/UpdateUser" class="btn btn-lg btn-secondary">
-                    <i class="fas fa-user-edit"></i> Opdater bruger
-                </a>
-                <a href="/AdminPage/UpdateTimeCard" class="btn btn-lg btn-secondary">
-                    <i class="fas fa-user-clock"></i> Opdater Timekort
-                </a>
-                <a href="/AdminPage/DeleteUser" class="btn btn-lg btn-danger">
-                    <i class="fas fa-minus-circle"></i> Fjern bruger
-                </a>
-            </div>
-            <p class="display-3">Opdater bruger</p>
 
-            <div class="container lower-container">
-                <div class="row col-row">
-                    @foreach(Model.Containers.Users user in Model.UserList)
-                    {
-                        <div class="col-12">
-                            <label>@user.UserName</label>
-                            <input type="button" class="btn btn-danger" value="Slet" />
-                        </div>
-                    }
+<div class="AdminPage">
+    <div class="container">
+        <div class="row upper-row">
+            <a href="/AdminPage/CreateUsers" class="btn btn-lg btn-primary">
+                <i class="fas fa-plus-circle"></i> Opret bruger
+            </a>
+            <a href="/AdminPage/UpdateUser" class="btn btn-lg btn-secondary">
+                <i class="fas fa-user-edit"></i> Opdater bruger
+            </a>
+            <a href="/AdminPage/UpdateTimeCard" class="btn btn-lg btn-secondary">
+                <i class="fas fa-user-clock"></i> Opdater Timekort
+            </a>
+            <a href="/AdminPage/DeleteUser" class="btn btn-lg btn-danger">
+                <i class="fas fa-minus-circle"></i> Fjern bruger
+            </a>
+        </div>
+        <p class="display-3">Slet bruger</p>
 
+        <div class="container lower-container DeleteUser">
+            <div class="row col-row">
+                <div class="box">
+                    <h3>Bruger</h3>
                 </div>
+                @foreach (Model.Containers.Users user in Model.UserList)
+                {
+                    <form method="post">
+                        <div class="col-12 delete">
+                            <label class="col-4">@user.UserName</label>
+                            <input asp-for="ID" value="@user.User_ID" hidden />
+                            <input type="button" class="btn btn-danger col-4" value="Slet" />
+                        </div>
+                    </form>
+                }
+
             </div>
         </div>
     </div>
-</form>
+</div>
+

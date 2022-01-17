@@ -19,6 +19,7 @@ namespace Astrow_2._0.Pages.AdminPage
             _userRepository = userRepository;
         }
 
+        #region Properties
         [BindProperty]
         public string UserName { get; set; }
 
@@ -43,22 +44,28 @@ namespace Astrow_2._0.Pages.AdminPage
         [BindProperty]
         public string EndDate { get; set; }
 
+        #endregion
 
+        /// <summary>
+        /// Check if users has rights to be on side
+        /// </summary>
+        /// <returns></returns>
         public IActionResult OnGet()
         {
-            //if (HttpContext.Session.GetString("_Status") != "Instructør")
-            //{
-            //    return RedirectToPage("/Login");
-            //}
-            //else
-            //{
-               
-            //    return Page();
-            //}
+            if (HttpContext.Session.GetString("_Status") != "Instructør")
+            {
+                return RedirectToPage("/Login");
+            }
+            else
+            {
 
-            return Page();
+                return Page();
+            }
         }
 
+        /// <summary>
+        /// Create User
+        /// </summary>
         public void OnPost()
         {
             //Generate salt
@@ -67,7 +74,7 @@ namespace Astrow_2._0.Pages.AdminPage
             //Use salt to hash the password
             string hashPass = _userRepository.GenerateHash(Password, salt);
 
-
+            //Perosnal info
             UserPersonalInfo person = new UserPersonalInfo()
             {
                 FirstName = FirstName,
@@ -76,6 +83,7 @@ namespace Astrow_2._0.Pages.AdminPage
                 FullName = $"{FirstName} {MiddleName} {LastName}"
             };
 
+            //User info
             Users users = new Users()
             {
                 UserName = UserName,
@@ -88,7 +96,7 @@ namespace Astrow_2._0.Pages.AdminPage
                 EndDate = DateTime.Parse(EndDate)
             };
 
-
+            //Create user with stored procedure
             _userRepository.CreateUser(users, person);
         }
     }

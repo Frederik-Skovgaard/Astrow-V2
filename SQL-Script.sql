@@ -263,18 +263,21 @@ GO
 
 -------------- Update-Data --------------
 
-
 -- Update
 CREATE PROCEDURE [UpdateUser]
 @id INT,
 @UserName NVARCHAR(50),
 @Password NVARCHAR(MAX),
-@Status NVARCHAR(25)
+@Status NVARCHAR(25),
+@startDate DATETIME,
+@endDate DATETIME
 AS
 UPDATE [User]
 SET UserName = @UserName,
 Password = @Password,
-Status = @Status
+Status = @Status,
+StartDate = @startDate,
+EndDate = @endDate
 WHERE User_ID = @id
 GO
 

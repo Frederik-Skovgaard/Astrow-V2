@@ -75,8 +75,6 @@ namespace Astrow_2._0.Pages.AdminPage
 
                 return Page();
             }
-
-
         }
 
         /// <summary>
@@ -121,11 +119,8 @@ namespace Astrow_2._0.Pages.AdminPage
             //Get user salt
             Users user = _userRepository.FindUser(id);
 
-            //Generate salt
-            string salt = _userRepository.CreateSalt(32);
-
             //Use salt to hash the password
-            string hashPass = _userRepository.GenerateHash(Password, salt);
+            string hashPass = _userRepository.GenerateHash(Password, user.Salt);
 
             //Fill user with new data
             user = new Users

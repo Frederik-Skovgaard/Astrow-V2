@@ -308,6 +308,9 @@ namespace Astrow_2._0.DataLayer
                 updateUser.Parameters.AddWithValue("@UserName", user.UserName);
                 updateUser.Parameters.AddWithValue("@Password", user.Password);
                 updateUser.Parameters.AddWithValue("@Status", user.Status);
+                updateUser.Parameters.AddWithValue("@startDate", user.StartDate);
+                updateUser.Parameters.AddWithValue("@endDate", user.EndDate);
+
 
                 updateUser.ExecuteNonQuery();
             }

@@ -733,6 +733,26 @@ nav ul li a span.rotate {
     border-radius:10px;
 
     width: 50rem;
+
+    
+
+    min-block-size: max-content;
+}
+
+.AdminPage .container .CreateUser {
+    height:fit-content !important;
+}
+.AdminPage .container .CreateUser .createRow {
+    padding-top: 2rem;
+}
+
+.AdminPage .container .UpdateUser {
+    height:fit-content !important;
+}
+
+.AdminPage .container .DeleteUser {
+    min-height: 45rem !important;
+    max-height: fit-content !important;
 }
 
 .AdminPage .container .lower-container .submit-row {
@@ -758,7 +778,25 @@ nav ul li a span.rotate {
 .AdminPage .container .lower-container .col-row {
     text-align: -webkit-center;
     width:100%;
-    padding-top: 1rem;
+    justify-content: center;
+}
+
+.AdminPage .container .lower-container .col-row .box {
+    background: #00405e;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.AdminPage .container .lower-container .col-row h3 {
+    color: white;
+}
+
+
+.AdminPage .container .lower-container .col-row .delete {
+    background: #00405e;
+    margin-top:1rem;
 }
 
 .AdminPage .container .lower-container .col-row .col-12 .dropdown .dropdown-toggle {
@@ -797,6 +835,10 @@ nav ul li a span.rotate {
         color: black !important;
         background: transparent;
     }
+
+.AdminPage .container .lower-container .col-row .col-12 {
+    padding: 1rem;
+}
 
 .AdminPage .container .lower-container .row label {
     color: white;
