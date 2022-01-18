@@ -246,6 +246,11 @@ namespace Astrow_2._0.DataLayer
 
         public UserPersonalInfo CreateUserInfo(UserPersonalInfo info)
         {
+            if (info.MiddleName == null)
+            {
+                info.MiddleName = "";
+            }
+
             using (sql = new SqlConnection(connectionString))
             {
                 sql.Open();
@@ -322,6 +327,11 @@ namespace Astrow_2._0.DataLayer
         /// <param name="person"></param>
         public void UpdateUserInfo(UserPersonalInfo person)
         {
+            if (person.MiddleName == null)
+            {
+                person.MiddleName = "";
+            }
+
             using (sql = new SqlConnection(connectionString))
             {
                 sql.Open();
@@ -471,7 +481,7 @@ namespace Astrow_2._0.DataLayer
                 readAll.CommandType = CommandType.StoredProcedure;
 
                 Users users = new Users();
-                
+
 
                 using (SqlDataReader read = readAll.ExecuteReader())
                 {
@@ -498,7 +508,6 @@ namespace Astrow_2._0.DataLayer
             return list;
         }
 
-  
 
         /// <summary>
         /// Method for getting user by id
@@ -584,7 +593,7 @@ namespace Astrow_2._0.DataLayer
                 sql.Open();
 
                 SqlCommand find = new SqlCommand("FindUserInfo", sql);
-                find.CommandType= CommandType.StoredProcedure;
+                find.CommandType = CommandType.StoredProcedure;
 
                 find.Parameters.AddWithValue("@id", id);
 

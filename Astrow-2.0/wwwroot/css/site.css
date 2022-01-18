@@ -2,6 +2,8 @@
 for details on configuring this project to bundle and minify static web assets. */
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
+/*Minimum width-requiment is 650px * 740px/*/
+
 * {
     list-style: none;
     text-decoration: none;
@@ -511,9 +513,6 @@ nav ul li a span.rotate {
 ---------------*/
 
 .TimeCard {
-    position: absolute;
-    top: 0%;
-    left: 17.5%;
     height: 100%;
     width: 82.5%;
 }
@@ -859,6 +858,115 @@ nav ul li a span.rotate {
 
 .AdminPage .container .lower-container .form-control {
     width:max-content;
+}
+
+@media only screen and (min-width: 650px) {
+    .TimeCard .outer {
+        margin-left: 10rem;
+    }
+    .TimeCard table tbody, td, tfoot, th, thead, tr {
+        width: 4rem;
+    }
+
+    .sidebar {
+        width: 210px;
+    }
+    .sidebar .logo {
+        width: 13rem;
+        background-repeat: no-repeat;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .TimeCard .outer {
+        margin-left: 13rem;
+    }
+    .sidebar {
+        width: 235px;
+    }
+}
+
+
+@media only screen and (min-width: 845px) {
+    .TimeCard {
+        margin-left: 1rem;
+    }
+
+    .TimeCard table tbody, td, tfoot, th, thead, tr {
+        width: 4rem;
+    }
+}
+
+
+@media only screen and (min-width: 985px) {
+    .TimeCard table tbody, td, tfoot, th, thead, tr {
+        width: 5rem;
+    }
+    .TimeCard .outer {
+        margin-left: 9rem;
+    }
+}
+@media only screen and (min-width: 992px) {
+    .TimeCard .outer {
+        margin-left: 16rem;
+    }
+}
+
+
+@media only screen and (min-width: 1100px) {
+    .TimeCard table tbody, td, tfoot, th, thead, tr {
+        width: 6rem;
+    }
+    .TimeCard .outer {
+        margin-left: 16rem;
+    }
+
+    .sidebar {
+        width: 336px;
+    }
+    .sidebar .logo {
+        width: 19rem;
+        background-repeat: no-repeat;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .TimeCard .outer {
+        margin-left: 18rem;
+    }
+}
+
+@media only screen and (min-width: 1255px) {
+    .TimeCard table tbody, td, tfoot, th, thead, tr {
+        width: 7rem;
+    }
+    .TimeCard .outer {
+        margin-left: 18rem;
+    }
+}
+
+@media only screen and (min-width: 1380px) {
+    .TimeCard table tbody, td, tfoot, th, thead, tr {
+        width: 8rem;
+    }
+    .TimeCard .outer {
+        margin-left: 14rem;
+    }
+}
+
+@media only screen and (min-width: 1400px) {
+    .TimeCard .outer {
+        margin-left: 18rem;
+    }
+}
+
+@media only screen and (min-width: 1500px) {
+    .TimeCard {
+        margin-left: 3rem;
+    }
+    .TimeCard .outer {
+        margin-left: 17rem;
+    }
 }
 
 /* Feature

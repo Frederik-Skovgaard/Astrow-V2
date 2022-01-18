@@ -30,7 +30,7 @@ namespace Astrow_2._0.Pages
         [BindProperty]
         public string Calendar { get; set; }
 
-       
+
         [BindProperty]
         public string CalendarValue { get; set; }
 
@@ -139,14 +139,25 @@ namespace Astrow_2._0.Pages
         {
             //To get start & end date of user
             logged = GetDate();
-
-            //Set Start date to input value
-            StartDate = DateTime.Parse(Calendar);
+            
+            try
+            {
+                //Set Start date to input value
+                StartDate = DateTime.Parse(Calendar);
+            }
+            catch (Exception)
+            {
+                Calendar = DateTime.Now.AddMonths(1).ToString("MMMM 1, yyyy");
+            }
+            finally
+            {
+                StartDate = DateTime.Parse(Calendar);
+            }
 
             StartDate = StartDate.AddMonths(-1);
 
 
-            if (StartDate.Year !>= logged.StartDate.Year)
+            if (StartDate.Year! >= logged.StartDate.Year)
             {
                 //Change values
                 EndDate = StartDate.AddMonths(1);
@@ -200,17 +211,29 @@ namespace Astrow_2._0.Pages
         {
             //To get start & end date of user
             logged = GetDate();
-             
+
             //Bug forward when year only
 
-            //Set Start date to input value
-            StartDate = DateTime.Parse(Calendar);
+            try
+            {
+                //Set Start date to input value
+                StartDate = DateTime.Parse(Calendar);
+            }
+            catch (Exception)
+            {
+                Calendar = DateTime.Now.AddMonths(-1).ToString("MMMM 1, yyyy");
+                
+            }
+            finally
+            {
+                StartDate = DateTime.Parse(Calendar);
+            }
 
             StartDate = StartDate.AddMonths(1);
 
             //Change 2026 to user enddate & endate.year to date.
 
-            if (StartDate.Year !<= logged.EndDate.Year)
+            if (StartDate.Year! <= logged.EndDate.Year)
             {
                 //Change values
                 EndDate = StartDate.AddMonths(1);
@@ -261,7 +284,7 @@ namespace Astrow_2._0.Pages
             {
                 return null;
             }
-            
+
         }
     }
 }

@@ -29,12 +29,12 @@
                 <div class="box">
                     <h3>Bruger</h3>
                 </div>
-                @foreach (Model.Containers.Users user in Model.UserList)
+                @foreach (Model.Containers.PersonalInfo user in Model.People)
                 {
                     <form method="post">
                         <div class="col-12 delete">
-                            <label class="col-4">@user.UserName</label>
-                            <input asp-for="ID" value="@user.User_ID" hidden />
+                            <label class="col-4">@user.FirstName @user.MiddleName @user.LastName</label>
+                            <input asp-for="ID" value="@user.ID" hidden />
                             <input type="submit" asp-route-id="@Model.ID" class="btn btn-danger col-4" value="Slet" />
                         </div>
                     </form>

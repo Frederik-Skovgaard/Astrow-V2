@@ -61,7 +61,7 @@
                     <div class="col-4">
                         <label>Mellemnavn</label> <br />
 
-                        <input autocomplete="off" required asp-for="MiddleName" id="MiddleName" type="text" placeholder="Mellemnavn" class="form-control" oninvalid="this.setCustomValidity('Skriv mellemnavn her')" oninput="this.setCustomValidity('')" />
+                        <input autocomplete="off" asp-for="MiddleName" id="MiddleName" type="text" placeholder="Mellemnavn" class="form-control" />
                         <span asp-validation-for="MiddleName" class="CreateUserError"></span>
                     </div>
 

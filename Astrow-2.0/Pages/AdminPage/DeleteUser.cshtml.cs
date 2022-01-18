@@ -23,6 +23,9 @@ namespace Astrow_2._0.Pages.AdminPage
         public List<Users> UserList { get; set; }
 
         [BindProperty]
+        public List<PersonalInfo> People { get; set; }
+
+        [BindProperty]
         public int ID { get; set; }
 
         /// <summary>
@@ -40,6 +43,25 @@ namespace Astrow_2._0.Pages.AdminPage
             {
                 //Fills dropdown with users 
                 UserList = _userRepository.ReadAllUsers();
+
+                People = new List<PersonalInfo>();
+
+                foreach (Users item in UserList)
+                {
+                    UserPersonalInfo person = _userRepository.FindUserInfo(item.User_ID);
+
+                    PersonalInfo personalInfo = new PersonalInfo()
+                    {
+                        ID = item.User_ID,
+                        UserName = item.UserName,
+                        Status = item.Status,
+                        FirstName = person.FirstName,
+                        MiddleName = person.MiddleName,
+                        LastName = person.LastName
+                    };
+
+                    People.Add(personalInfo);
+                }
 
                 return Page();
             }
