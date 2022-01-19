@@ -395,7 +395,7 @@ GO
 CREATE PROCEDURE [FindAllDays]
 @id INT
 AS
-SELECT * FROM Days
+SELECT Days_ID, User_ID, Date, StartDay FROM Days
 WHERE User_ID = @id
 GO
 
@@ -410,6 +410,6 @@ CREATE PROCEDURE [FindDay]
 @Date DATETIME,
 @id INT
 AS
-SELECT * FROM Days
+SELECT Date, StartDay FROM Days
 WHERE StartDay = @Date AND User_ID = @id
 GO

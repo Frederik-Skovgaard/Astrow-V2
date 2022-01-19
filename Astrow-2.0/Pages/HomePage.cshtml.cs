@@ -270,31 +270,58 @@ namespace Astrow_2._0.Pages
         /// <returns></returns>
         public IActionResult OnPostRegistrering()
         {
+            //User ID
             int id = (int)HttpContext.Session.GetInt32("_UserID");
 
+            //List of all users
             List<Days> daysList = _timeCard.FindAllDays(id);
 
+
+            //Find days with datetime now and users id
             foreach (Days time in daysList)
             {
-                if (time.Date == DateTime.Now)
+
+                //TODO: Saldo update 2
+
+                //If Days Clockin date is equal to now
+                if (time.Date != DateTime.Now)
                 {
+                    //Find date with Startday time and id
                     Days date = _timeCard.FindDay(time.StartDay, id);
+
+                    //Set EndDay to now
+                    date.EndDay = DateTime.Now;
+
+                    //Update EndDay in the database
+                    _timeCard.UpdateEndDay(date, id);
+
+                    //Give saldo the combined value of start day and end day hour/minut
+                    DateTime home = new DateTime(0,0,0,0,0,0);
+                    DateTime saldo = home.AddHours(date.EndDay.Hour).AddMinutes(date.EndDay.Minute);
+
+                    //Set Saldo to saldo value
+                    date.Saldo = saldo;
+
+                    //Update Saldo in the database
+                    _timeCard.UpdateSaldo(date, id);
+
+                    //Return to home page
+                    return RedirectToPage("/HomePage");
                 }
             }           
 
-            DateTime da = DateTime.Now;
-
-            DateTime ad = new DateTime(da.Year, da.Month, da.Day, da.Hour, da.Minute, 0);
-
+            //Create a Day object
             Days day = new Days()
             {
                 Date = DateTime.Now,
                 User_ID = id,
-                StartDay = ad
+                StartDay = DateTime.Now
             };
 
+            //Add Day object to database 
             _timeCard.CreateDay(day);
 
+            //Return to home page
             return RedirectToPage("/HomePage");
         }
 

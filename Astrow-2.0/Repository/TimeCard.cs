@@ -48,27 +48,27 @@ namespace Astrow_2._0.Repository
         /// Update the start of day column in Day
         /// </summary>
         /// <param name="day"></param>
-        public void UpdateStartDay(Days day)
+        public void UpdateStartDay(Days day, int id)
         {
-            stored.UpdateStartDay(day);
+            stored.UpdateStartDay(day, id);
         }
 
         /// <summary>
         /// Update the end of day column in Day
         /// </summary>
         /// <param name="day"></param>
-        public void UpdateEndDay(Days day)
+        public void UpdateEndDay(Days day, int id)
         {
-            stored.UpdateEndtDay(day);
+            stored.UpdateEndtDay(day, id);
         }
 
         /// <summary>
         /// Update the saldo column in Day
         /// </summary>
         /// <param name="day"></param>
-        public void UpdateSaldo(Days day)
+        public void UpdateSaldo(Days day, int id)
         {
-            stored.UpdateSaldo(day);
+            stored.UpdateSaldo(day, id);
         }
 
         /// <summary>
