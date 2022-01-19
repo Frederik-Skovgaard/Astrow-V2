@@ -176,7 +176,7 @@ namespace Astrow_2._0.DataLayer
         /// </summary>
         /// <param name="day"></param>
         /// <param name="user"></param>
-        public void CreateDay(Days day, Users user)
+        public void CreateDay(Days day)
         {
             using (sql = new SqlConnection(connectionString))
             {
@@ -187,12 +187,8 @@ namespace Astrow_2._0.DataLayer
                 createDay.CommandType = CommandType.StoredProcedure;
 
                 createDay.Parameters.AddWithValue("@date", day.Date);
-                createDay.Parameters.AddWithValue("@userID", user.User_ID);
-                createDay.Parameters.AddWithValue("@abscenceDate", day.AbsenceDate);
-                createDay.Parameters.AddWithValue("@abscenceText", day.AbscenceText);
+                createDay.Parameters.AddWithValue("@userID", day.User_ID);
                 createDay.Parameters.AddWithValue("@startDay", day.StartDay);
-                createDay.Parameters.AddWithValue("@endDay", day.EndDay);
-                createDay.Parameters.AddWithValue("@saldo", day.Saldo);
 
                 createDay.ExecuteNonQuery();
 
@@ -354,7 +350,7 @@ namespace Astrow_2._0.DataLayer
         /// Set abscens
         /// </summary>
         /// <param name="day"></param>
-        public void UpdateAbscence(Days day)
+        public void UpdateAbscence(Absence abs, Days day)
         {
             using (sql = new SqlConnection(connectionString))
             {
@@ -364,8 +360,8 @@ namespace Astrow_2._0.DataLayer
                 UpdateAbscence.CommandType = CommandType.StoredProcedure;
                 UpdateAbscence.Parameters.AddWithValue("@id", day.Days_ID);
 
-                UpdateAbscence.Parameters.AddWithValue("@AbscenceDate", day.AbsenceDate);
-                UpdateAbscence.Parameters.AddWithValue("@AbscenceText", day.AbscenceText);
+                UpdateAbscence.Parameters.AddWithValue("@AbscenceDate", abs.AbsenceDate);
+                UpdateAbscence.Parameters.AddWithValue("@AbscenceText", abs.AbscenceText);
 
                 UpdateAbscence.ExecuteNonQuery();
             }
@@ -551,6 +547,80 @@ namespace Astrow_2._0.DataLayer
             }
         }
 
+        /// <summary>
+        /// Method for finding all days
+        /// </summary>
+        /// <param name="day"></param>
+        /// <returns></returns>
+        public List<Days> FindAllDays(int id)
+        {
+            List<Days> days = new List<Days>();
+
+            using (sql = new SqlConnection(connectionString)) { 
+                sql.Open();
+
+                SqlCommand find = new SqlCommand("FindAllDays", sql);
+                find.CommandType = CommandType.StoredProcedure;
+
+                find.Parameters.AddWithValue("@id", id);
+
+                Days day = new Days();
+
+                using (SqlDataReader read = find.ExecuteReader())
+                {
+                    while (read.Read())
+                    {
+                        day = new Days()
+                        {
+                            Days_ID = read.GetInt32(0),
+                            User_ID = read.GetInt32(1),
+                            Date = read.GetDateTime(2),
+                            StartDay = read.GetDateTime(3),
+                            EndDay = read.GetDateTime(4),
+                            Saldo = read.GetDateTime(5)
+
+                        };
+
+                        days.Add(day);
+                    }
+                }
+            }
+
+            return days;
+        }
+
+        public Days FindDay(DateTime date, int id)
+        {
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand find = new SqlCommand("FindDay", sql); 
+
+                find.CommandType = CommandType.StoredProcedure;
+
+                find.Parameters.AddWithValue("@Date", date);
+                find.Parameters.AddWithValue("@id", id);
+
+                Days day = new Days();
+
+                using (SqlDataReader read = find.ExecuteReader())
+                {
+                    while (read.Read())
+                    {
+                        day = new Days()
+                        {
+                            Date = read.GetDateTime(0),
+                            StartDay = read.GetDateTime(1),
+                            EndDay = read.GetDateTime(2),
+                            Saldo = read.GetDateTime(3)
+                        };
+                    }
+                }
+
+                return day;
+            }
+        }
 
         /// <summary>
         /// Method for getting salt

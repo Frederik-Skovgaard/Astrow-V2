@@ -21,9 +21,27 @@ namespace Astrow_2._0.Repository
         /// </summary>
         /// <param name="day"></param>
         /// <param name="user"></param>
-        public void CreateDay(Days day, Users user)
+        public void CreateDay(Days day)
         {
-            stored.CreateDay(day, user);
+            stored.CreateDay(day);
+        }
+
+        /// <summary>
+        /// Method for finding all days
+        /// </summary>
+        /// <param name="day"></param>
+        /// <returns></returns>
+        public List<Days> FindAllDays(int id)
+        {
+            List<Days> days = stored.FindAllDays(id);
+
+            return days;
+        }
+
+        public Days FindDay(DateTime date, int id)
+        {
+            Days day = stored.FindDay(date, id);
+            return day;
         }
 
         /// <summary>
@@ -57,9 +75,9 @@ namespace Astrow_2._0.Repository
         /// Update the absence column in Day
         /// </summary>
         /// <param name="day"></param>
-        public void UpdateAbsence(Days day)
+        public void UpdateAbsence(Absence abs, Days day)
         {
-            stored.UpdateAbscence(day);
+            stored.UpdateAbscence(abs, day);
         }
 
         public IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)

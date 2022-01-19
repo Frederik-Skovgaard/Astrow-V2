@@ -35,38 +35,51 @@ namespace Astrow_2._0.Pages.AdminPage
         public IActionResult OnGet()
         {
             //Check if user has "Instructør" rights
-            if (HttpContext.Session.GetString("_Status") != "Instructør")
+            if (HttpContext.Session.GetInt32("_UserID") == 0)
             {
                 return RedirectToPage("/Login");
             }
             else
             {
-                //Fills dropdown with users 
-                UserList = _userRepository.ReadAllUsers();
-
-                People = new List<PersonalInfo>();
-
-                foreach (Users item in UserList)
+                if (HttpContext.Session.GetString("_Status") != "Instructør")
                 {
-                    UserPersonalInfo person = _userRepository.FindUserInfo(item.User_ID);
-
-                    PersonalInfo personalInfo = new PersonalInfo()
-                    {
-                        ID = item.User_ID,
-                        UserName = item.UserName,
-                        Status = item.Status,
-                        FirstName = person.FirstName,
-                        MiddleName = person.MiddleName,
-                        LastName = person.LastName
-                    };
-
-                    People.Add(personalInfo);
+                    return RedirectToPage("/HomePage");
                 }
+                else
+                {
+                    //Fills dropdown with users 
+                    UserList = _userRepository.ReadAllUsers();
 
-                return Page();
+                    People = new List<PersonalInfo>();
+
+                    foreach (Users item in UserList)
+                    {
+                        UserPersonalInfo person = _userRepository.FindUserInfo(item.User_ID);
+
+                        PersonalInfo personalInfo = new PersonalInfo()
+                        {
+                            ID = item.User_ID,
+                            UserName = item.UserName,
+                            Status = item.Status,
+                            FirstName = person.FirstName,
+                            MiddleName = person.MiddleName,
+                            LastName = person.LastName
+                        };
+
+                        People.Add(personalInfo);
+                    }
+
+                    return Page();
+                }
             }
+            
         }
 
+        /// <summary>
+        /// Method for deleting users
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult OnPost(int id)
         {
             //Get user

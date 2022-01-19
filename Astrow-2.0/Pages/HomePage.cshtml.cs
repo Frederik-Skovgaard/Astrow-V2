@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
 using Astrow_2._0.Model.Containers;
+using Astrow_2._0.Model.Items;
 
 namespace Astrow_2._0.Pages
 {
@@ -64,24 +65,30 @@ namespace Astrow_2._0.Pages
             {
                 //To get start & end date of user
                 logged = GetDate();
+                if (logged != null)
+                {
+                    //Change values
+                    CalendarValue = DateTime.Now.ToString("MMMM 1, yyyy");
 
-                //Change values
-                CalendarValue = DateTime.Now.ToString("MMMM 1, yyyy");
+                    StartDate = DateTime.Now;
 
-                StartDate = DateTime.Now;
+                    StartDate = new DateTime(StartDate.Year, StartDate.Month, 1);
 
-                StartDate = new DateTime(StartDate.Year, StartDate.Month, 1);
+                    EndDate = StartDate.AddMonths(1);
 
-                EndDate = StartDate.AddMonths(1);
+                    //Render days % year/month selector
+                    Days = _timeCard.EachDay(StartDate, EndDate.AddDays(-1));
 
-                //Render days % year/month selector
-                Days = _timeCard.EachDay(StartDate, EndDate.AddDays(-1));
-
-                Years = _timeCard.EachYear(logged.StartDate, logged.EndDate);
+                    Years = _timeCard.EachYear(logged.StartDate, logged.EndDate);
 
 
-                //Return to page
-                return Page();
+                    //Return to page
+                    return Page();
+                }
+                else
+                {
+                    return RedirectToPage("/Login");
+                }
             }
         }
 
@@ -257,7 +264,39 @@ namespace Astrow_2._0.Pages
             }
         }
 
+        /// <summary>
+        /// Method for clocking in and out
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult OnPostRegistrering()
+        {
+            int id = (int)HttpContext.Session.GetInt32("_UserID");
 
+            List<Days> daysList = _timeCard.FindAllDays(id);
+
+            foreach (Days time in daysList)
+            {
+                if (time.Date == DateTime.Now)
+                {
+                    Days date = _timeCard.FindDay(time.StartDay, id);
+                }
+            }           
+
+            DateTime da = DateTime.Now;
+
+            DateTime ad = new DateTime(da.Year, da.Month, da.Day, da.Hour, da.Minute, 0);
+
+            Days day = new Days()
+            {
+                Date = DateTime.Now,
+                User_ID = id,
+                StartDay = ad
+            };
+
+            _timeCard.CreateDay(day);
+
+            return RedirectToPage("/HomePage");
+        }
 
         /// <summary>
         /// Get Start & End date for rendering years

@@ -64,16 +64,23 @@ namespace Astrow_2._0.Pages.AdminPage
         public IActionResult OnGet()
         {
             //Check if user has "Instructør" rights
-            if (HttpContext.Session.GetString("_Status") != "Instructør")
+            if (HttpContext.Session.GetInt32("_UserID") == 0)
             {
                 return RedirectToPage("/Login");
             }
             else
             {
-                //Fills dropdown with users 
-                UserList = _userRepository.ReadAllUsers();
+                if (HttpContext.Session.GetString("_Status") != "Instructør")
+                {
+                    return RedirectToPage("/HomePage");
+                }
+                else
+                {
+                    //Fills dropdown with users 
+                    UserList = _userRepository.ReadAllUsers();
 
-                return Page();
+                    return Page();
+                }
             }
         }
 
@@ -119,19 +126,35 @@ namespace Astrow_2._0.Pages.AdminPage
             //Get user salt
             Users user = _userRepository.FindUser(id);
 
-            //Use salt to hash the password
-            string hashPass = _userRepository.GenerateHash(Password, user.Salt);
-
-            //Fill user with new data
-            user = new Users
+            if (Password != null)
             {
-                User_ID = id,
-                UserName = UserName,
-                Password = hashPass,
-                StartDate = DateTime.Parse(StartDate),
-                EndDate = DateTime.Parse(EndDate),
-                Status = Role
-            };
+                //Use salt to hash the password
+                string hashPass = _userRepository.GenerateHash(Password, user.Salt);
+
+                //Fill user with new data
+                user = new Users
+                {
+                    User_ID = id,
+                    UserName = UserName,
+                    Password = hashPass,
+                    StartDate = DateTime.Parse(StartDate),
+                    EndDate = DateTime.Parse(EndDate),
+                    Status = Role
+                };
+            }
+            else
+            {
+                //Fill user with new data and old password
+                user = new Users
+                {
+                    User_ID = id,
+                    UserName = UserName,
+                    Password = user.Password,
+                    StartDate = DateTime.Parse(StartDate),
+                    EndDate = DateTime.Parse(EndDate),
+                    Status = Role
+                };
+            }
 
             //Fill personal info with new data
             UserPersonalInfo userPersonalInfo = new UserPersonalInfo()

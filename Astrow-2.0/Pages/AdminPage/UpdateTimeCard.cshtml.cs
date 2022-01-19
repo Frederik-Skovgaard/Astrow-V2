@@ -18,14 +18,22 @@ namespace Astrow_2._0.Pages.AdminPage
 
         public IActionResult OnGet()
         {
-            if (HttpContext.Session.GetString("_Status") != "Instructør")
+            if (HttpContext.Session.GetInt32("_UserID") == 0)
             {
                 return RedirectToPage("/Login");
             }
             else
             {
-                return Page();
+                if (HttpContext.Session.GetString("_Status") != "Instructør")
+                {
+                    return RedirectToPage("/HomePage");
+                }
+                else
+                {
+                    return Page();
+                }
             }
+            
         }
     }
 }

@@ -509,9 +509,76 @@ nav ul li a span.rotate {
 
 
 
+.sidebar #Oper-li .Oper-show #Registrering {
+    position: relative;
+    display: inline-block;
+    opacity: 1;
+    font-size: 17px;
+    height: 42px;
+    font-weight: 600;
+    line-height: inherit;
+
+    color: white;
+    border-left: solid #0588c9 3px;
+    text-decoration: none;
+    border-left-color: transparent;
+    transition: all 0.1s ease-in-out;
+    padding-left: 15px;
+    width: -webkit-fill-available;
+}
+
+.sidebar #Oper-li .Oper-show #Registrering:hover {
+    background: #0870a3;
+    border-left: solid 3px #0588c9 !important;
+    color: white !important;
+    width:-webkit-fill-available;
+}
+
+.sidebar #Oper-li .Oper-show #Registrering .tooltiptext .TimeBox {
+    background: #00405e;
+    color: white;
+    width: fit-content;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: 10px;
+    width: 7rem;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+}
+.sidebar #Oper-li .Oper-show #Registrering .tooltiptext {
+    visibility: hidden;
+    opacity: 0;
+    width: 15rem;
+    height: 15rem;
+    margin: 0;
+    color: white;
+    padding: 5px 0;
+    position: absolute;
+    background: #004f75;
+    z-index: 1;
+    left: 20rem;
+    top: -8rem;
+    text-align: -webkit-center;
+    padding: 1rem;
+    border: 8px solid #00405e;
+}
+
+.sidebar #Oper-li .Oper-show #Registrering .show {
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.sidebar #Oper-li .Oper-show #Registrering .tooltiptext input {
+    background: #00405e;
+    border: none;
+    color: white;
+}
+
+
+
+
 /* Div styling
 ---------------*/
-
 .TimeCard {
     height: 100%;
     width: 82.5%;
@@ -875,6 +942,9 @@ nav ul li a span.rotate {
         width: 13rem;
         background-repeat: no-repeat;
     }
+
+
+
 }
 
 @media only screen and (min-width: 768px) {
@@ -928,6 +998,7 @@ nav ul li a span.rotate {
         width: 19rem;
         background-repeat: no-repeat;
     }
+
 }
 
 @media only screen and (min-width: 1200px) {

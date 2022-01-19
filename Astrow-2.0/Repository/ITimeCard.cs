@@ -7,7 +7,11 @@ namespace Astrow_2._0.Repository
 {
     public interface ITimeCard
     {
-        void CreateDay(Days day, Users user);
+        void CreateDay(Days day);
+
+        List<Days> FindAllDays(int id);
+
+        Days FindDay(DateTime date, int id);
 
         void UpdateStartDay(Days day);
 
@@ -15,7 +19,7 @@ namespace Astrow_2._0.Repository
 
         void UpdateSaldo(Days day);
 
-        void UpdateAbsence(Days day);
+        void UpdateAbsence(Absence abs, Days day);
 
         IEnumerable<DateTime> EachDay(DateTime from, DateTime thru);
 

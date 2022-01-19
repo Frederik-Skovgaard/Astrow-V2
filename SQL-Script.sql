@@ -224,19 +224,14 @@ INSERT INTO [File] (Name, Type, Details, Description, Date, SensitiveData)
 VALUES (@Name, @Type, @Details, @Description, @Date, @SensitiveDate)
 GO
 
-
 -- Create Days
 CREATE PROCEDURE [CreateDay]
 @date DATETIME,
 @userID INT,
-@abscenceDate DATETIME,
-@abscenceText NVARCHAR(100),
-@startDay DATETIME,
-@endDay DATETIME,
-@saldo DATETIME
+@startDay DATETIME
 AS
-INSERT INTO [Days] (Date, User_ID, AbsenceDate, AbscenceText, StartDay, EndDay, Saldo)
-VALUES (@date, @userID, @abscenceDate, @abscenceText, @startDay, @endDay, @saldo)
+INSERT INTO [Days] (Date, User_ID, StartDay)
+VALUES (@date, @userID, @startDay)
 GO
 
 -- Create Message
@@ -257,7 +252,7 @@ CREATE PROCEDURE [CreateName]
 @fullName NVARCHAR(90)
 AS
 INSERT INTO [Name] (FirstName, MiddleName, LastName, FullName)
-VALUES (@firstName, @middleName, @lastName, @firstName + ' ' + @middleName + ' ' + @lastName)
+VALUES (@firstName, @middleName, @lastName, @firstName + ' ' + @middleName + ' ' + @lastName) 
 GO
 
 
@@ -397,7 +392,6 @@ SELECT * FROM [Name]
 WHERE FullName = @fullName
 GO
 
-
 CREATE PROCEDURE [FindAllDays]
 @id INT
 AS
@@ -410,4 +404,12 @@ CREATE PROCEDURE [FindUserInfo]
 AS
 SELECT * FROM Name
 WHERE Name_ID = @id
+GO
+
+CREATE PROCEDURE [FindDay]
+@Date DATETIME,
+@id INT
+AS
+SELECT * FROM Days
+WHERE StartDay = @Date AND User_ID = @id
 GO

@@ -84,7 +84,7 @@
                     <div class="col-6">
                         <label>Kodeord</label> <br />
 
-                        <input autocomplete="off" required asp-for="Password" id="Password" type="password" placeholder="Kodeord" autocomplete="off" class="form-control" oninvalid="this.setCustomValidity('Skriv kodeord her')" oninput="this.setCustomValidity('')" />
+                        <input autocomplete="off" asp-for="Password" id="Password" type="password" placeholder="Kodeord" autocomplete="off" class="form-control"/>
                         <span asp-validation-for="Password" class="CreateUserError"></span>
                     </div>
                 </div>
