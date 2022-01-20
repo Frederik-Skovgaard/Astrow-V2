@@ -552,7 +552,7 @@ namespace Astrow_2._0.DataLayer
         /// </summary>
         /// <param name="day"></param>
         /// <returns></returns>
-        public List<Days> FindAllDays(int id)
+        public List<Days> FindAllDays(int id, DateTime date)
         {
             List<Days> days = new List<Days>();
 
@@ -564,6 +564,7 @@ namespace Astrow_2._0.DataLayer
                 find.CommandType = CommandType.StoredProcedure;
 
                 find.Parameters.AddWithValue("@id", id);
+                find.Parameters.AddWithValue("@date", date);
 
                 Days day = new Days();
 
@@ -576,7 +577,8 @@ namespace Astrow_2._0.DataLayer
                             Days_ID = read.GetInt32(0),
                             User_ID = read.GetInt32(1),
                             Date = read.GetDateTime(2),
-                            StartDay = read.GetDateTime(3)
+                            StartDay = read.GetDateTime(3),
+                            EndDay = read.GetDateTime(4)
                         };
 
                         days.Add(day);

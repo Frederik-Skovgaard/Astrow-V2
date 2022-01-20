@@ -320,7 +320,7 @@ CREATE PROCEDURE [UpdateEnd]
 AS
 UPDATE [Days]
 SET EndDay = @EndDay
-WHERE Days_ID = @id
+WHERE User_ID = @id
 GO
 
 -- Update Saldo
@@ -330,7 +330,7 @@ CREATE PROCEDURE [UpdateSaldo]
 AS
 UPDATE [Days]
 SET Saldo = @Saldo
-WHERE Days_ID = @id
+WHERE User_ID = @id
 GO
 
 -------------- Delete-Data --------------
@@ -393,10 +393,11 @@ WHERE FullName = @fullName
 GO
 
 CREATE PROCEDURE [FindAllDays]
-@id INT
+@id INT,
+@date DATETIME
 AS
-SELECT Days_ID, User_ID, Date, StartDay FROM Days
-WHERE User_ID = @id
+SELECT Days_ID, User_ID, Date, StartDay, EndDay FROM Days
+WHERE User_ID = @id AND Date = @date
 GO
 
 CREATE PROCEDURE [FindUserInfo]
@@ -412,4 +413,11 @@ CREATE PROCEDURE [FindDay]
 AS
 SELECT Date, StartDay FROM Days
 WHERE StartDay = @Date AND User_ID = @id
+GO
+
+
+USE [Astrow-2.0]
+GO
+
+DELETE FROM Days
 GO

@@ -31,9 +31,9 @@ namespace Astrow_2._0.Repository
         /// </summary>
         /// <param name="day"></param>
         /// <returns></returns>
-        public List<Days> FindAllDays(int id)
+        public List<Days> FindAllDays(int id, DateTime date)
         {
-            List<Days> days = stored.FindAllDays(id);
+            List<Days> days = stored.FindAllDays(id, date);
 
             return days;
         }

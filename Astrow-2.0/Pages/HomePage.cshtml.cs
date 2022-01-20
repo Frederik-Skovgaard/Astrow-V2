@@ -270,60 +270,86 @@ namespace Astrow_2._0.Pages
         /// <returns></returns>
         public IActionResult OnPostRegistrering()
         {
+            //Variable datetime now
+            DateTime now = DateTime.Now;
+
             //User ID
             int id = (int)HttpContext.Session.GetInt32("_UserID");
 
             //List of all users
-            List<Days> daysList = _timeCard.FindAllDays(id);
+            List<Days> daysList = _timeCard.FindAllDays(id, new DateTime(now.Year, now.Month, now.Day, 0, 0, 0));
 
-
-            //Find days with datetime now and users id
-            foreach (Days time in daysList)
+            //If list is empty
+            if (daysList.Count != 0)
             {
 
-                //TODO: Saldo update 2
-
-                //If Days Clockin date is equal to now
-                if (time.Date != DateTime.Now)
+                //Find days with datetime now and users id
+                foreach (Days time in daysList)
                 {
-                    //Find date with Startday time and id
-                    Days date = _timeCard.FindDay(time.StartDay, id);
 
-                    //Set EndDay to now
-                    date.EndDay = DateTime.Now;
+                    //If today isen't the same day
+                    if (DateTime.Now.ToString("yyyy/MM/dd") != time.Date.ToString("yyyy/MM/dd"))
+                    {
+                        //Create a Day object
+                        Days day = new Days()
+                        {
+                            Date = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0),
+                            User_ID = id,
+                            StartDay = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0)
+                        };
 
-                    //Update EndDay in the database
-                    _timeCard.UpdateEndDay(date, id);
+                        //Add Day object to database 
+                        _timeCard.CreateDay(day);
 
-                    //Give saldo the combined value of start day and end day hour/minut
-                    DateTime home = new DateTime(0,0,0,0,0,0);
-                    DateTime saldo = home.AddHours(date.EndDay.Hour).AddMinutes(date.EndDay.Minute);
+                        //Break out of the loop
+                        break;
+                    }
+                    
+                    //Eles if today isen't equal to Enday
+                    else if (DateTime.Now.ToString("yyyy/MM/dd") != time.EndDay.ToString("yyyy/MM/dd"))
+                    {
+                        //Find date with Startday time and id
+                        Days date = _timeCard.FindDay(time.StartDay, id);
 
-                    //Set Saldo to saldo value
-                    date.Saldo = saldo;
+                        //Set EndDay to now
+                        date.EndDay = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0);
 
-                    //Update Saldo in the database
-                    _timeCard.UpdateSaldo(date, id);
+                        //Update EndDay in the database
+                        _timeCard.UpdateEndDay(date, id);
 
-                    //Return to home page
-                    return RedirectToPage("/HomePage");
+                        //Time between the two dates 
+                        TimeSpan ts = date.EndDay - date.StartDay;
+
+                        //Set Saldo to saldo value
+                        date.Saldo = new DateTime(now.Year, now.Month, now.Day, ts.Hours, ts.Minutes, 0);
+
+                        //Update Saldo in the database
+                        _timeCard.UpdateSaldo(date, id);
+
+                        //Break out of the loop
+                        break;
+                    }
                 }
-            }           
-
-            //Create a Day object
-            Days day = new Days()
+            }
+            else
             {
-                Date = DateTime.Now,
-                User_ID = id,
-                StartDay = DateTime.Now
-            };
+                //Create a Day object
+                Days day = new Days()
+                {
+                    Date = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0),
+                    User_ID = id,
+                    StartDay = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0)
+                };
 
-            //Add Day object to database 
-            _timeCard.CreateDay(day);
+                //Add Day object to database 
+                _timeCard.CreateDay(day);
+
+            }
 
             //Return to home page
             return RedirectToPage("/HomePage");
         }
+
 
         /// <summary>
         /// Get Start & End date for rendering years

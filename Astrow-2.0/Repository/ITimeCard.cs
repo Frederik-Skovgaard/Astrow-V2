@@ -9,7 +9,7 @@ namespace Astrow_2._0.Repository
     {
         void CreateDay(Days day);
 
-        List<Days> FindAllDays(int id);
+        List<Days> FindAllDays(int id, DateTime date);
 
         Days FindDay(DateTime date, int id);
 
