@@ -74,7 +74,8 @@
                         <th scope="col">Day</th>
                         <th scope="col">Dato</th>
                         <th scope="col">Fravær</th>
-                        <th scope="col">Registreringer</th>
+                        <th scope="col">Login</th>
+                        <th scope="col">Logud</th>
                         <th scope="col">TotFrv</th>
                         <th scope="col">Saldo</th>
                         <th scope="col">Saldo+</th>
@@ -86,17 +87,95 @@
                 <table class="table table-striped">
                     <tbody>
                         @{
+                            //If list of days, day match the date of days date show date i guss
                             foreach (DateTime day in Model.Days)
                             {
-                                <tr>
-                                    <th scope="row">@day.ToString("dddd")  </th>
-                                    <td>@day.ToString("yyyy-MM-dd")</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                                if (Model.daysList.Count != 0)
+                                {
+                                    foreach (Model.Items.Days date in Model.daysList)
+                                    {
+                                        if (date.Date.ToString("yyyy/MM/dd") == day.ToString("yyyy/MM/dd"))
+                                        {
+                                            if (date.EndDay.ToString("HH:mm") == "00:00")
+                                            {
+                                                <tr>
+                                                    <th scope="row">@day.ToString("dddd")  </th>
+                                                    <td>@day.ToString("yyyy-MM-dd")</td>
+                                                    <td></td>
+                                                    <td>@date.StartDay.ToString("HH:mm")</td>
+                                                    <td></td>
+                                                    <td>-7:24 </td>
+                                                    <td></td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <th scope="row">@day.ToString("dddd")  </th>
+                                                    <td>@day.ToString("yyyy-MM-dd")</td>
+                                                    <td></td>
+                                                    <td>@date.StartDay.ToString("HH:mm")</td>
+                                                    <td>@date.EndDay.ToString("HH:mm")</td>
+                                                    <td>@date.Saldo</td>
+                                                    <td></td>
+                                                </tr>
+                                            }
+
+
+                                        }
+                                        else if (day.ToString("dddd") == "lørdag" || day.ToString("dddd") == "søndag")
+                                        {
+
+                                            <tr>
+                                                <th scope="row">@day.ToString("dddd")  </th>
+                                                <td class="WeekdEnd">@day.ToString("yyyy-MM-dd")</td>
+                                                <td class="WeekdEnd"></td>
+                                                <td class="WeekdEnd"></td>
+                                                <td class="WeekdEnd"></td>
+                                                <td class="WeekdEnd"></td>
+                                                <td class="WeekdEnd"></td>
+                                            </tr>
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <th scope="row">@day.ToString("dddd")  </th>
+                                                <td>@day.ToString("yyyy-MM-dd")</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        }
+                                    }
+                                }
+                                else if (day.ToString("dddd") == "lørdag" || day.ToString("dddd") == "søndag")
+                                {
+                                    <tr>
+                                        <th scope="row">@day.ToString("dddd")  </th>
+                                        <td class="WeekdEnd">@day.ToString("yyyy-MM-dd")</td>
+                                        <td class="WeekdEnd"></td>
+                                        <td class="WeekdEnd"></td>
+                                        <td class="WeekdEnd"></td>
+                                        <td class="WeekdEnd"></td>
+                                        <td class="WeekdEnd"></td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <th scope="row">@day.ToString("dddd")  </th>
+                                        <td>@day.ToString("yyyy-MM-dd")</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+
+                                }
+
                             }
                         }
                     </tbody>
@@ -108,6 +187,8 @@
     <script>
         var year;
         var month;
+
+
 
         //Show date picker years
         $('#Calendar').click(function() {

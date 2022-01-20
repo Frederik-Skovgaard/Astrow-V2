@@ -189,8 +189,10 @@ namespace Astrow_2._0.DataLayer
                 createDay.Parameters.AddWithValue("@date", day.Date);
                 createDay.Parameters.AddWithValue("@userID", day.User_ID);
                 createDay.Parameters.AddWithValue("@startDay", day.StartDay);
+                createDay.Parameters.AddWithValue("@endDay", day.EndDay);
+                createDay.Parameters.AddWithValue("@saldo", day.Saldo);
 
-                createDay.ExecuteNonQuery();
+                    createDay.ExecuteNonQuery();
 
             }
         }
@@ -578,7 +580,8 @@ namespace Astrow_2._0.DataLayer
                             User_ID = read.GetInt32(1),
                             Date = read.GetDateTime(2),
                             StartDay = read.GetDateTime(3),
-                            EndDay = read.GetDateTime(4)
+                            EndDay = read.GetDateTime(4),
+                            Saldo = read.GetString(5)
                         };
 
                         days.Add(day);

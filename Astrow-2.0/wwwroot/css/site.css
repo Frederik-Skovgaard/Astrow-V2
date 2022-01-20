@@ -517,7 +517,6 @@ nav ul li a span.rotate {
     height: 42px;
     font-weight: 600;
     line-height: inherit;
-
     color: white;
     border-left: solid #0588c9 3px;
     text-decoration: none;
@@ -525,6 +524,8 @@ nav ul li a span.rotate {
     transition: all 0.1s ease-in-out;
     padding-left: 15px;
     width: -webkit-fill-available;
+    cursor: pointer;
+    user-select: none;
 }
 
 .sidebar #Oper-li .Oper-show #Registrering:hover {
@@ -575,7 +576,11 @@ nav ul li a span.rotate {
 }
 
 
-
+.TimeCard .outer .grid-container .table .WeekdEnd {
+    background: #00405e !important;
+    border-bottom: solid #00405e 2px;
+    border-top: solid #00405e 2px;
+}
 
 /* Div styling
 ---------------*/

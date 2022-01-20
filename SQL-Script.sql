@@ -107,8 +107,7 @@ CREATE TABLE [Days] (
 [AbscenceText] NVARCHAR(100),
 [StartDay] DATETIME,
 [EndDay] DATETIME,
-[Saldo] DATETIME
-
+[Saldo] NVARCHAR(5)
 
 PRIMARY KEY(Days_ID)
 
@@ -228,10 +227,12 @@ GO
 CREATE PROCEDURE [CreateDay]
 @date DATETIME,
 @userID INT,
-@startDay DATETIME
+@startDay DATETIME,
+@endDay DATETIME,
+@saldo NVARCHAR(5)
 AS
-INSERT INTO [Days] (Date, User_ID, StartDay)
-VALUES (@date, @userID, @startDay)
+INSERT INTO [Days] (Date, User_ID, StartDay, EndDay, Saldo)
+VALUES (@date, @userID, @startDay, @endDay, @saldo)
 GO
 
 -- Create Message
@@ -323,10 +324,11 @@ SET EndDay = @EndDay
 WHERE User_ID = @id
 GO
 
+
 -- Update Saldo
 CREATE PROCEDURE [UpdateSaldo]
 @id INT,
-@Saldo DATETIME
+@Saldo NVARCHAR(5)
 AS
 UPDATE [Days]
 SET Saldo = @Saldo
@@ -372,7 +374,7 @@ GO
 CREATE PROCEDURE [GetByUserName]
 @UserName NVARCHAR(50)
 AS
-SELECT salt FROM [User]
+SELECT salt, User_ID FROM [User]
 WHERE UserName = @UserName
 GO
 
@@ -396,7 +398,7 @@ CREATE PROCEDURE [FindAllDays]
 @id INT,
 @date DATETIME
 AS
-SELECT Days_ID, User_ID, Date, StartDay, EndDay FROM Days
+SELECT Days_ID, User_ID, Date, StartDay, EndDay, Saldo FROM Days
 WHERE User_ID = @id AND Date = @date
 GO
 

@@ -25,25 +25,5 @@ namespace Astrow_2._0.Pages.Shared
         {
 
         }
-
-        public IActionResult OnPostRegistrering()
-        {
-            string id = HttpContext.Session.GetString("_UserID");
-
-            DateTime da = DateTime.Now;
-
-            DateTime ad = new DateTime(da.Year, da.Month, da.Day, da.Hour, da.Minute, 0);
-
-            Days day = new Days()
-            {
-                Date = DateTime.Now,
-                User_ID = Convert.ToInt32(id),
-                StartDay = ad
-            };
-
-            _timeCard.CreateDay(day);
-
-            return RedirectToPage("/HomePage");
-        }
     }
 }
