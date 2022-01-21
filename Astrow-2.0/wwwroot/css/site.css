@@ -606,6 +606,11 @@ nav ul li a span.rotate {
     width:max-content;
 }
 
+.TimeCard table tbody tr .ToDayClass {
+    background: #ffffff !important;
+    color: black !important;
+    border-bottom: solid #ffffff 2px !important;
+}
 
 
 
@@ -758,18 +763,20 @@ nav ul li a span.rotate {
 .AdminPage {
     position: absolute;
     top: 0%;
-    left: 17.5%;
+    left: 34.5%;
     height: 100%;
-    width: 82.5%;
+    width: fit-content;
 }
 
 .AdminPage .container {
-   
+   text-align: -webkit-center;
+   width: fit-content;
 }
 
 .AdminPage .container p {
     text-align: center;
     margin-top: 2.5rem;
+    width: fit-content;
 }
 
 .AdminPage .container .upper-row {

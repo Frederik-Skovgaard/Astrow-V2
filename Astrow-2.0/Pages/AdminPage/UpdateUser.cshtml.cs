@@ -172,5 +172,24 @@ namespace Astrow_2._0.Pages.AdminPage
             //Popup message for succes
             ViewData["Message"] = string.Format("Bruger blev opdateret...");
         }
+
+
+        /// <summary>
+        /// Method for clocking in and out
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult OnPostRegistrering()
+        {
+            //User ID
+            int id = (int)HttpContext.Session.GetInt32("_UserID");
+
+            //Method for registry
+            _userRepository.Registrer(id);
+
+            //Return to home page
+            return RedirectToPage("/HomePage");
+        }
+
+
     }
 }

@@ -27,6 +27,8 @@ namespace Astrow_2._0.Repository
 
         LogedUser Login(string username, string password);
 
+        void Registrer(int id);
+
         string CreateSalt(int size);
 
         string GenerateHash(string password, string salt);

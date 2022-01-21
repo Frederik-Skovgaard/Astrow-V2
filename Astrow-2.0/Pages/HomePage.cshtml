@@ -89,9 +89,16 @@
                         @{
                             bool trigger = false;
 
+                            string strClass = "";
+
                             //If list of days, day match the date of days date show date i guss
                             foreach (DateTime day in Model.Days)
                             {
+                                if(day.ToString("yyyy/MM/dd") == DateTime.Now.ToString("yyyy/MM/dd"))
+                                {
+                                    strClass = "ToDayClass";
+                                }
+
                                 if (Model.daysList.Count != 0)
                                 {
                                     //Foreach day in day list
@@ -105,13 +112,15 @@
                                             {
                                                 <tr>
                                                     <th scope="row">@day.ToString("dddd")  </th>
-                                                    <td>@day.ToString("yyyy-MM-dd")</td>
-                                                    <td></td>
-                                                    <td>@date.StartDay.ToString("HH:mm")</td>
-                                                    <td></td>
-                                                    <td>-7:24 </td>
-                                                    <td></td>
+                                                    <td class="@strClass">@day.ToString("yyyy-MM-dd")</td>
+                                                    <td class="@strClass"></td>
+                                                    <td class="@strClass">@date.StartDay.ToString("HH:mm")</td>
+                                                    <td class="@strClass"></td>
+                                                    <td class="@strClass">-7:24 </td>
+                                                    <td class="@strClass"></td>
                                                 </tr>
+
+                                                strClass = "";
 
                                                 trigger = true;
                                             }
@@ -119,13 +128,15 @@
                                             {
                                                 <tr>
                                                     <th scope="row">@day.ToString("dddd")  </th>
-                                                    <td>@day.ToString("yyyy-MM-dd")</td>
-                                                    <td></td>
-                                                    <td>@date.StartDay.ToString("HH:mm")</td>
-                                                    <td>@date.EndDay.ToString("HH:mm")</td>
-                                                    <td>@date.Saldo</td>
-                                                    <td></td>
+                                                    <td class="@strClass">@day.ToString("yyyy-MM-dd")</td>
+                                                    <td class="@strClass"></td>
+                                                    <td class="@strClass">@date.StartDay.ToString("HH:mm")</td>
+                                                    <td class="@strClass">@date.EndDay.ToString("HH:mm")</td>
+                                                    <td class="@strClass">@date.Saldo</td>
+                                                    <td class="@strClass"></td>
                                                 </tr>
+
+                                                strClass = "";
 
                                                 trigger = true;
                                             }
@@ -141,25 +152,29 @@
                                     {
                                         <tr>
                                             <th scope="row">@day.ToString("dddd")  </th>
-                                            <td class="WeekdEnd">@day.ToString("yyyy-MM-dd")</td>
-                                            <td class="WeekdEnd"></td>
-                                            <td class="WeekdEnd"></td>
-                                            <td class="WeekdEnd"></td>
-                                            <td class="WeekdEnd"></td>
-                                            <td class="WeekdEnd"></td>
+                                            <td class="WeekdEnd @strClass">@day.ToString("yyyy-MM-dd")</td>
+                                            <td class="WeekdEnd @strClass"></td>
+                                            <td class="WeekdEnd @strClass"></td>
+                                            <td class="WeekdEnd @strClass"></td>
+                                            <td class="WeekdEnd @strClass"></td>
+                                            <td class="WeekdEnd @strClass"></td>
                                         </tr>
+
+                                        strClass = "";
                                     }
                                     else
                                     {
                                         <tr>
                                             <th scope="row">@day.ToString("dddd")  </th>
                                             <td>@day.ToString("yyyy-MM-dd")</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td  class="@strClass"></td>
+                                            <td  class="@strClass"></td>
+                                            <td  class="@strClass"></td>
+                                            <td  class="@strClass"></td>
+                                            <td  class="@strClass"></td>
                                         </tr>
+
+                                        strClass = "";
                                     }
 
                                 }
@@ -167,25 +182,29 @@
                                 {
                                     <tr>
                                         <th scope="row">@day.ToString("dddd")  </th>
-                                        <td class="WeekdEnd">@day.ToString("yyyy-MM-dd")</td>
-                                        <td class="WeekdEnd"></td>
-                                        <td class="WeekdEnd"></td>
-                                        <td class="WeekdEnd"></td>
-                                        <td class="WeekdEnd"></td>
-                                        <td class="WeekdEnd"></td>
+                                        <td class="WeekdEnd @strClass">@day.ToString("yyyy-MM-dd")</td>
+                                        <td class="WeekdEnd @strClass"></td>
+                                        <td class="WeekdEnd @strClass"></td>
+                                        <td class="WeekdEnd @strClass"></td>
+                                        <td class="WeekdEnd @strClass"></td>
+                                        <td class="WeekdEnd @strClass"></td>
                                     </tr>
+
+                                    strClass = "";
                                 }
                                 else
                                 {
                                     <tr>
                                         <th scope="row">@day.ToString("dddd")  </th>
                                         <td>@day.ToString("yyyy-MM-dd")</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td  class="@strClass"></td>
+                                        <td  class="@strClass"></td>
+                                        <td  class="@strClass"></td>
+                                        <td  class="@strClass"></td>
+                                        <td  class="@strClass"></td>
                                     </tr>
+
+                                    strClass = "";
                                 }
                             }
                         }
