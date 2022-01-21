@@ -11,6 +11,8 @@ namespace Astrow_2._0.Repository
 
         List<Days> FindAllDays(int id, DateTime date);
 
+        List<Days> FindAllDaysByID(int id);
+
         Days FindDay(DateTime date, int id);
 
         void UpdateStartDay(Days day, int id);
@@ -20,6 +22,8 @@ namespace Astrow_2._0.Repository
         void UpdateSaldo(Days day, int id);
 
         void UpdateAbsence(Absence abs, Days day);
+
+        void Registrer(int id);
 
         IEnumerable<DateTime> EachDay(DateTime from, DateTime thru);
 

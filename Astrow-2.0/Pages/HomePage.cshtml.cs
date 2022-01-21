@@ -84,7 +84,7 @@ namespace Astrow_2._0.Pages
                     Days = _timeCard.EachDay(StartDate, EndDate.AddDays(-1));
 
                     //List of all users days
-                    daysList = _timeCard.FindAllDays(logged.User_ID, new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0));
+                    daysList = _timeCard.FindAllDaysByID(logged.User_ID);
 
                     Years = _timeCard.EachYear(logged.StartDate, logged.EndDate);
 
@@ -155,7 +155,7 @@ namespace Astrow_2._0.Pages
             logged = GetDate();
 
             //List of all users days
-            daysList = _timeCard.FindAllDays(logged.User_ID, new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0));
+            daysList = _timeCard.FindAllDaysByID(logged.User_ID);
 
             try
             {
@@ -217,7 +217,7 @@ namespace Astrow_2._0.Pages
             logged = GetDate();
 
             //List of all users days
-            daysList = _timeCard.FindAllDays(logged.User_ID, new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0));
+            daysList = _timeCard.FindAllDaysByID(logged.User_ID);
 
             //Bug forward when year only
 
@@ -270,105 +270,11 @@ namespace Astrow_2._0.Pages
         /// <returns></returns>
         public IActionResult OnPostRegistrering()
         {
-            //Variable datetime now
-            DateTime now = DateTime.Now;
-
             //User ID
             int id = (int)HttpContext.Session.GetInt32("_UserID");
 
-            //List of all users
-            List<Days> daysList = _timeCard.FindAllDays(id, new DateTime(now.Year, now.Month, now.Day, 0, 0, 0));
-
-            //If list is empty
-            if (daysList.Count != 0)
-            {
-
-                //Find days with datetime now and users id
-                foreach (Days time in daysList)
-                {
-
-                    //If today isen't the same day
-                    if (DateTime.Now.ToString("yyyy/MM/dd") != time.Date.ToString("yyyy/MM/dd"))
-                    {
-                        //Create a Day object
-                        Days day = new Days()
-                        {
-                            Date = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0),
-                            User_ID = id,
-                            StartDay = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0),
-                            EndDay = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0),
-                            Saldo = "0"
-                        };
-
-                        //Add Day object to database 
-                        _timeCard.CreateDay(day);
-
-                        //Break out of the loop
-                        break;
-                    }
-
-                    //Eles if today isen't equal to Enday
-                    else if (time.EndDay.ToString("HH:mm") == "00:00")
-                    {
-                        //Find date with Startday time and id
-                        Days date = _timeCard.FindDay(time.StartDay, id);
-
-                        //Set EndDay to now
-                        date.EndDay = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0);
-
-                        //Update EndDay in the database
-                        _timeCard.UpdateEndDay(date, id);
-
-                        DateTime StartOfDay = new DateTime(now.Year, now.Month, now.Day, 8, 0, 0);
-                        DateTime EndOfDay = new DateTime(now.Year, now.Month, now.Day, 15, 24, 0);
-
-
-                        //-7:24
-                        TimeSpan ts = StartOfDay - EndOfDay;
-
-                        //Start day minus end day 
-                        TimeSpan tempSpan = date.EndDay - date.StartDay;
-
-                        //Time between start and end date plus -7:24 
-                        TimeSpan saldo = tempSpan + ts;
-
-
-                        int min = 0;
-                        if (saldo.Minutes < 0)
-                        {
-                            min = saldo.Minutes * -1;
-                        }
-                        else
-                        {
-                            min = saldo.Minutes;
-                        }
-
-                        //Set Saldo to saldo value
-                        date.Saldo = $"{saldo.Hours}:{min}";
-
-                        //Update Saldo in the database
-                        _timeCard.UpdateSaldo(date, id);
-
-                        //Break out of the loop
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                //Create a Day object
-                Days day = new Days()
-                {
-                    Date = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0),
-                    User_ID = id,
-                    StartDay = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0),
-                    EndDay = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0),
-                    Saldo = "0"
-                };
-
-                //Add Day object to database 
-                _timeCard.CreateDay(day);
-            }
+            //Method for registry
+            _timeCard.Registrer(id);
 
             //Return to home page
             return RedirectToPage("/HomePage");

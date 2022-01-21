@@ -550,7 +550,7 @@ namespace Astrow_2._0.DataLayer
         }
 
         /// <summary>
-        /// Method for finding all days
+        /// Method for finding all days by date
         /// </summary>
         /// <param name="day"></param>
         /// <returns></returns>
@@ -567,6 +567,49 @@ namespace Astrow_2._0.DataLayer
 
                 find.Parameters.AddWithValue("@id", id);
                 find.Parameters.AddWithValue("@date", date);
+
+                Days day = new Days();
+
+                using (SqlDataReader read = find.ExecuteReader())
+                {
+                    while (read.Read())
+                    {
+                        day = new Days()
+                        {
+                            Days_ID = read.GetInt32(0),
+                            User_ID = read.GetInt32(1),
+                            Date = read.GetDateTime(2),
+                            StartDay = read.GetDateTime(3),
+                            EndDay = read.GetDateTime(4),
+                            Saldo = read.GetString(5)
+                        };
+
+                        days.Add(day);
+                    }
+                }
+            }
+
+            return days;
+        }
+
+        /// <summary>
+        /// Method for finding all days
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public List<Days> FindAllDaysByID(int id)
+        {
+            List<Days> days = new List<Days>();
+
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand find = new SqlCommand("FindAllDaysByID", sql);
+
+                find.CommandType = CommandType.StoredProcedure;
+
+                find.Parameters.AddWithValue("@id", id);
 
                 Days day = new Days();
 

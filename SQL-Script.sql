@@ -402,6 +402,13 @@ SELECT Days_ID, User_ID, Date, StartDay, EndDay, Saldo FROM Days
 WHERE User_ID = @id AND Date = @date
 GO
 
+CREATE PROCEDURE [FindAllDaysByID]
+@id INT
+AS
+SELECT Days_ID, User_ID, Date, StartDay, EndDay, Saldo FROM Days
+WHERE User_ID = @id
+GO
+
 CREATE PROCEDURE [FindUserInfo]
 @id INT
 AS

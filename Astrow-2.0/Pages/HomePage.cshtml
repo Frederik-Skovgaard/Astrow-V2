@@ -87,15 +87,20 @@
                 <table class="table table-striped">
                     <tbody>
                         @{
+                            bool trigger = false;
+
                             //If list of days, day match the date of days date show date i guss
                             foreach (DateTime day in Model.Days)
                             {
                                 if (Model.daysList.Count != 0)
                                 {
+                                    //Foreach day in day list
                                     foreach (Model.Items.Days date in Model.daysList)
                                     {
+                                        //If day is equal to day from days lists
                                         if (date.Date.ToString("yyyy/MM/dd") == day.ToString("yyyy/MM/dd"))
                                         {
+                                            //If date enday is equal too 00:00 load without end day
                                             if (date.EndDay.ToString("HH:mm") == "00:00")
                                             {
                                                 <tr>
@@ -107,6 +112,8 @@
                                                     <td>-7:24 </td>
                                                     <td></td>
                                                 </tr>
+
+                                                trigger = true;
                                             }
                                             else
                                             {
@@ -119,36 +126,42 @@
                                                     <td>@date.Saldo</td>
                                                     <td></td>
                                                 </tr>
+
+                                                trigger = true;
                                             }
-
-
-                                        }
-                                        else if (day.ToString("dddd") == "lørdag" || day.ToString("dddd") == "søndag")
-                                        {
-
-                                            <tr>
-                                                <th scope="row">@day.ToString("dddd")  </th>
-                                                <td class="WeekdEnd">@day.ToString("yyyy-MM-dd")</td>
-                                                <td class="WeekdEnd"></td>
-                                                <td class="WeekdEnd"></td>
-                                                <td class="WeekdEnd"></td>
-                                                <td class="WeekdEnd"></td>
-                                                <td class="WeekdEnd"></td>
-                                            </tr>
-                                        }
-                                        else
-                                        {
-                                            <tr>
-                                                <th scope="row">@day.ToString("dddd")  </th>
-                                                <td>@day.ToString("yyyy-MM-dd")</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
                                         }
                                     }
+
+                                    //Need if too get rid of repets
+                                    if (trigger == true)
+                                    {
+                                        trigger = false;
+                                    }
+                                    else if (day.ToString("dddd") == "lørdag" || day.ToString("dddd") == "søndag")
+                                    {
+                                        <tr>
+                                            <th scope="row">@day.ToString("dddd")  </th>
+                                            <td class="WeekdEnd">@day.ToString("yyyy-MM-dd")</td>
+                                            <td class="WeekdEnd"></td>
+                                            <td class="WeekdEnd"></td>
+                                            <td class="WeekdEnd"></td>
+                                            <td class="WeekdEnd"></td>
+                                            <td class="WeekdEnd"></td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <th scope="row">@day.ToString("dddd")  </th>
+                                            <td>@day.ToString("yyyy-MM-dd")</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    }
+
                                 }
                                 else if (day.ToString("dddd") == "lørdag" || day.ToString("dddd") == "søndag")
                                 {
@@ -173,9 +186,7 @@
                                         <td></td>
                                         <td></td>
                                     </tr>
-
                                 }
-
                             }
                         }
                     </tbody>
