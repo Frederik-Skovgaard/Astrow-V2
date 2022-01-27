@@ -82,18 +82,8 @@ namespace Astrow_2._0.Pages.AdminPage
         /// <returns></returns>
         public IActionResult OnPost(int id)
         {
-            //Get user
-            Users user = _userRepository.FindUser(id);
-
-            //Fill user with new data
-            user = new Users
-            {
-                User_ID = id,
-                IsDeleted = true
-            };
-
             //Check user of as deleted in database
-            _userRepository.DeleteUser(user);
+            _userRepository.DeleteUser(id);
 
 
             //Popup message for succes

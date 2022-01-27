@@ -110,35 +110,37 @@ namespace Astrow_2._0.Pages
             //Change values
             StartDate = DateTime.Parse(Calendar);
 
-            if (StartDate < logged.StartDate)
+            if (StartDate <= logged.StartDate)
             {
-                StartDate = DateTime.Parse($"1-{logged.StartDate.Month}-{logged.StartDate.Year}");
-
-                EndDate = StartDate.AddMonths(1);
+                StartDate = DateTime.Parse($"{logged.StartDate.Day}-{logged.StartDate.Month}-{logged.StartDate.Year}");
 
                 CalendarValue = StartDate.ToString("MMMM dd, yyyy");
 
+                int temp = DateTime.DaysInMonth(StartDate.Year, StartDate.Month);
+
+                EndDate = DateTime.Parse($"{temp}-{StartDate.Month}-{StartDate.Year}");
+
                 //Render days % year/month selector
-                Days = _timeCard.EachDay(StartDate, EndDate.AddDays(-1));
+                Days = _timeCard.EachDay(StartDate, EndDate);
                 Years = _timeCard.EachYear(logged.StartDate, logged.EndDate);
             }
-            else if (StartDate > logged.EndDate)
+            else if (StartDate >= logged.EndDate)
             {
                 StartDate = DateTime.Parse($"1-{logged.EndDate.Month}-{logged.EndDate.Year}");
 
-                EndDate = StartDate.AddMonths(1);
+                EndDate = logged.EndDate;
 
                 CalendarValue = StartDate.ToString("MMMM dd, yyyy");
 
                 //Render days % year/month selector
-                Days = _timeCard.EachDay(StartDate, EndDate.AddDays(-1));
+                Days = _timeCard.EachDay(StartDate, EndDate);
                 Years = _timeCard.EachYear(logged.StartDate, logged.EndDate);
             }
             else
             {
                 EndDate = StartDate.AddMonths(1);
 
-                CalendarValue = Calendar;
+                CalendarValue = StartDate.ToString("MMMM dd, yyyy");
 
                 //Render days % year/month selector
                 Days = _timeCard.EachDay(StartDate, EndDate.AddDays(-1));
@@ -174,28 +176,29 @@ namespace Astrow_2._0.Pages
             StartDate = StartDate.AddMonths(-1);
 
 
-            if (StartDate.Year! >= logged.StartDate.Year)
+            if (StartDate <= logged.StartDate)
             {
-                //Change values
-                EndDate = StartDate.AddMonths(1);
+                StartDate = DateTime.Parse($"{logged.StartDate.Day}-{logged.StartDate.Month}-{logged.StartDate.Year}");
 
-                CalendarValue = StartDate.ToString("MMMM 1, yyyy");
+                CalendarValue = StartDate.ToString("MMMM dd, yyyy");
+
+                int temp = DateTime.DaysInMonth(StartDate.Year, StartDate.Month);
+
+                EndDate = DateTime.Parse($"{temp}-{StartDate.Month}-{StartDate.Year}");
 
                 //Render days % year/month selector
-                Days = _timeCard.EachDay(StartDate, EndDate.AddDays(-1));
+                Days = _timeCard.EachDay(StartDate, EndDate);
                 Years = _timeCard.EachYear(logged.StartDate, logged.EndDate);
             }
             else
             {
-                //Change values
-                EndDate = StartDate.AddMonths(2);
+                EndDate = StartDate.AddMonths(1);
 
-                CalendarValue = StartDate.AddMonths(1).ToString("MMMM 1, yyyy");
+                CalendarValue = StartDate.ToString("MMMM dd, yyyy");
 
                 //Render days % year/month selector
-                Days = _timeCard.EachDay(StartDate.AddMonths(1), EndDate.AddDays(-1));
+                Days = _timeCard.EachDay(StartDate, EndDate.AddDays(-1));
                 Years = _timeCard.EachYear(logged.StartDate, logged.EndDate);
-
             }
         }
 
@@ -240,26 +243,26 @@ namespace Astrow_2._0.Pages
 
             //Change 2026 to user enddate & endate.year to date.
 
-            if (StartDate.Year! <= logged.EndDate.Year)
+            if (StartDate >= logged.EndDate)
             {
-                //Change values
-                EndDate = StartDate.AddMonths(1);
+                StartDate = DateTime.Parse($"1-{logged.EndDate.Month}-{logged.EndDate.Year}");
 
-                CalendarValue = StartDate.ToString("MMMM 1, yyyy");
+                EndDate = logged.EndDate;
+
+                CalendarValue = StartDate.ToString("MMMM dd, yyyy");
 
                 //Render days % year/month selector
-                Days = _timeCard.EachDay(StartDate, EndDate.AddDays(-1));
+                Days = _timeCard.EachDay(StartDate, EndDate);
                 Years = _timeCard.EachYear(logged.StartDate, logged.EndDate);
             }
             else
             {
-                //Change values
-                EndDate = StartDate;
+                EndDate = StartDate.AddMonths(1);
 
-                CalendarValue = StartDate.AddMonths(-1).ToString("MMMM 1, yyyy");
+                CalendarValue = StartDate.ToString("MMMM dd, yyyy");
 
                 //Render days % year/month selector
-                Days = _timeCard.EachDay(StartDate.AddMonths(-1), EndDate.AddDays(-1));
+                Days = _timeCard.EachDay(StartDate, EndDate.AddDays(-1));
                 Years = _timeCard.EachYear(logged.StartDate, logged.EndDate);
             }
         }

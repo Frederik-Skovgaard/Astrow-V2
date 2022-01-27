@@ -18,11 +18,10 @@ namespace Astrow_2._0.Model.Containers
             this.Password = password;
             this.Name_ID = nameID;
             this.Status = status;
-            this.IsDeleted = isDeleted;
-            this.Salt = salt;
             this.StartDate = startDate;
             this.EndDate = endDate;
-
+            this.Salt = salt;
+            this.IsDeleted = isDeleted;
         }
 
         public int User_ID { get; set; }

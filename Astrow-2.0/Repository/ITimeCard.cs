@@ -7,7 +7,7 @@ namespace Astrow_2._0.Repository
 {
     public interface ITimeCard
     {
-        void CreateDay(Days day);
+        void CreateDay(Days day, int id);
 
         List<Days> FindAllDays(int id, DateTime date);
 

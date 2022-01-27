@@ -68,8 +68,6 @@ namespace Astrow_2._0.Pages.AdminPage
                     return Page();
                 }
             }
-
-            
         }
 
         /// <summary>
@@ -116,10 +114,10 @@ namespace Astrow_2._0.Pages.AdminPage
                 Password = hashPass,
                 Name_ID = person.Name_ID,
                 Status = Role,
-                IsDeleted = false,
-                Salt = salt.ToString(),
                 StartDate = DateTime.Parse(StartDate),
-                EndDate = DateTime.Parse(EndDate)
+                EndDate = DateTime.Parse(EndDate),
+                Salt = salt.ToString(),
+                IsDeleted = false                
             };
 
             //Create user with stored procedure

@@ -11,7 +11,7 @@ namespace Astrow_2._0.Repository
     {
         void CreateUser(Users user, UserPersonalInfo info);
 
-        void DeleteUser(Users user);
+        void DeleteUser(int id);
 
         void UpdateUser(Users user);
 

@@ -68,7 +68,7 @@
             </div>
 
             @*Date grid*@
-            <table>
+            <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">Day</th>
@@ -166,7 +166,7 @@
                                     {
                                         <tr>
                                             <th scope="row">@day.ToString("dddd")  </th>
-                                            <td>@day.ToString("yyyy-MM-dd")</td>
+                                            <td  class="@strClass">@day.ToString("yyyy-MM-dd")</td>
                                             <td  class="@strClass"></td>
                                             <td  class="@strClass"></td>
                                             <td  class="@strClass"></td>
@@ -196,7 +196,7 @@
                                 {
                                     <tr>
                                         <th scope="row">@day.ToString("dddd")  </th>
-                                        <td>@day.ToString("yyyy-MM-dd")</td>
+                                        <td  class="@strClass">@day.ToString("yyyy-MM-dd")</td>
                                         <td  class="@strClass"></td>
                                         <td  class="@strClass"></td>
                                         <td  class="@strClass"></td>

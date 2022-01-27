@@ -35,9 +35,9 @@ namespace Astrow_2._0.Repository
         /// Delete user from database
         /// </summary>
         /// <param name="user"></param>
-        public void DeleteUser(Users user)
+        public void DeleteUser(int id)
         {
-            stored.DeleteUser(user);
+            stored.DeleteUser(id);
         }
 
         /// <summary>
@@ -158,14 +158,14 @@ namespace Astrow_2._0.Repository
                         Days day = new Days()
                         {
                             Date = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0),
-                            User_ID = id,
+                            UserID = id,
                             StartDay = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0),
                             EndDay = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0),
                             Saldo = "0"
                         };
 
                         //Add Day object to database 
-                        timeCard.CreateDay(day);
+                        timeCard.CreateDay(day, id);
 
                         //Break out of the loop
                         break;
@@ -227,14 +227,14 @@ namespace Astrow_2._0.Repository
                 Days day = new Days()
                 {
                     Date = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0),
-                    User_ID = id,
+                    UserID = id,
                     StartDay = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0),
                     EndDay = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0),
                     Saldo = "0"
                 };
 
                 //Add Day object to database 
-                timeCard.CreateDay(day);
+                timeCard.CreateDay(day, id);
             }
         }
 

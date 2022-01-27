@@ -137,9 +137,10 @@ namespace Astrow_2._0.Pages.AdminPage
                     User_ID = id,
                     UserName = UserName,
                     Password = hashPass,
+                    Status = Role,
                     StartDate = DateTime.Parse(StartDate),
-                    EndDate = DateTime.Parse(EndDate),
-                    Status = Role
+                    EndDate = DateTime.Parse(EndDate)
+                    
                 };
             }
             else
@@ -150,9 +151,10 @@ namespace Astrow_2._0.Pages.AdminPage
                     User_ID = id,
                     UserName = UserName,
                     Password = user.Password,
+                    Status = Role,
                     StartDate = DateTime.Parse(StartDate),
-                    EndDate = DateTime.Parse(EndDate),
-                    Status = Role
+                    EndDate = DateTime.Parse(EndDate)
+                    
                 };
             }
 

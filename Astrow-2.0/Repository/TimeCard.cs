@@ -21,9 +21,9 @@ namespace Astrow_2._0.Repository
         /// </summary>
         /// <param name="day"></param>
         /// <param name="user"></param>
-        public void CreateDay(Days day)
+        public void CreateDay(Days day, int id)
         {
-            stored.CreateDay(day);
+            stored.CreateDay(day, id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Astrow_2._0.Repository
         /// <param name="day"></param>
         public void UpdateEndDay(Days day, int id)
         {
-            stored.UpdateEndtDay(day, id);
+            stored.UpdateEndDay(day, id);
         }
 
         /// <summary>
@@ -132,14 +132,14 @@ namespace Astrow_2._0.Repository
                         Days day = new Days()
                         {
                             Date = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0),
-                            User_ID = id,
+                            UserID = id,
                             StartDay = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0),
                             EndDay = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0),
                             Saldo = "0"
                         };
 
                         //Add Day object to database 
-                        CreateDay(day);
+                        CreateDay(day, id);
 
                         //Break out of the loop
                         break;
@@ -199,14 +199,14 @@ namespace Astrow_2._0.Repository
                 Days day = new Days()
                 {
                     Date = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0),
-                    User_ID = id,
+                    UserID = id,
                     StartDay = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0),
                     EndDay = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0),
                     Saldo = "0"
                 };
 
                 //Add Day object to database 
-                CreateDay(day);
+                CreateDay(day, id);
             }
         }
     }
