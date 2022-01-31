@@ -21,6 +21,8 @@ namespace Astrow_2._0.Repository
 
         void UpdateSaldo(Days day, int id);
 
+        void UpdateTotalSaldo(Days day, int id);
+
         void UpdateAbsence(Absence abs, Days day);
 
         void Registrer(int id);

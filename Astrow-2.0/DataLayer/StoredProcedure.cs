@@ -32,7 +32,7 @@ namespace Astrow_2._0.DataLayer
         }
         #endregion
 
-        //Create Procedures
+        
         #region Create
 
 
@@ -128,8 +128,9 @@ namespace Astrow_2._0.DataLayer
                 createDay.Parameters.AddWithValue("@startDay", day.StartDay);
                 createDay.Parameters.AddWithValue("@endDay", day.EndDay);
                 createDay.Parameters.AddWithValue("@saldo", day.Saldo);
+                createDay.Parameters.AddWithValue("@totalSaldo", day.TotalSaldo);
 
-                    createDay.ExecuteNonQuery();
+                createDay.ExecuteNonQuery();
 
             }
         }
@@ -183,7 +184,7 @@ namespace Astrow_2._0.DataLayer
 
         #endregion
 
-        //Update Procedures
+        
         #region Update
 
         /// <summary>
@@ -324,34 +325,30 @@ namespace Astrow_2._0.DataLayer
             }
         }
 
-        #endregion
-
-        //Delete Procedures
-        #region Delete
-
         /// <summary>
-        /// Method for removing users from database
+        /// Methoed for updating the total saldo
         /// </summary>
-        /// <param name="user"></param>
-        public void DeleteUser(int id)
+        /// <param name="day"></param>
+        /// <param name="id"></param>
+        public void UpdateTotalSaldo(Days day, int id)
         {
             using (sql = new SqlConnection(connectionString))
             {
                 sql.Open();
 
-                SqlCommand deleteUser = new SqlCommand("DeleteUser", sql);
-                deleteUser.CommandType = CommandType.StoredProcedure;
+                SqlCommand cmd = new SqlCommand("UpdateTotalSaldo", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                deleteUser.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@Saldo", day.Saldo);
 
-                deleteUser.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();
             }
         }
 
-
         #endregion
 
-        //Read Procedures
+
         #region Read
 
         /// <summary>
@@ -451,7 +448,8 @@ namespace Astrow_2._0.DataLayer
         {
             List<Days> days = new List<Days>();
 
-            using (sql = new SqlConnection(connectionString)) { 
+            using (sql = new SqlConnection(connectionString))
+            {
                 sql.Open();
 
                 SqlCommand find = new SqlCommand("FindAllDays", sql);
@@ -534,7 +532,7 @@ namespace Astrow_2._0.DataLayer
             {
                 sql.Open();
 
-                SqlCommand find = new SqlCommand("FindDay", sql); 
+                SqlCommand find = new SqlCommand("FindDay", sql);
 
                 find.CommandType = CommandType.StoredProcedure;
 
@@ -623,6 +621,31 @@ namespace Astrow_2._0.DataLayer
                 return person;
             }
         }
-        #endregion       
+        #endregion 
+
+
+        #region Delete
+
+        /// <summary>
+        /// Method for removing users from database
+        /// </summary>
+        /// <param name="user"></param>
+        public void DeleteUser(int id)
+        {
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand deleteUser = new SqlCommand("DeleteUser", sql);
+                deleteUser.CommandType = CommandType.StoredProcedure;
+
+                deleteUser.Parameters.AddWithValue("@id", id);
+
+                deleteUser.ExecuteNonQuery();
+            }
+        }
+
+
+        #endregion        
     }
 }

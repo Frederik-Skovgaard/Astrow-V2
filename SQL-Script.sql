@@ -91,7 +91,8 @@ CREATE TABLE [Days] (
 [AbscenceText] NVARCHAR(100),
 [StartDay] DATETIME,
 [EndDay] DATETIME,
-[Saldo] NVARCHAR(5)
+[Saldo] NVARCHAR(5),
+[TotalSaldo] NVARCHAR(5)
 
 PRIMARY KEY([Days_ID]),
 FOREIGN KEY ([User_ID]) REFERENCES [User]([User_ID])
@@ -133,10 +134,11 @@ CREATE PROCEDURE [CreateDay]
 @date DATETIME,
 @startDay DATETIME,
 @endDay DATETIME,
-@saldo NVARCHAR(5)
+@saldo NVARCHAR(5),
+@totalSaldo NVARCHAR(5)
 AS
-INSERT INTO [Days] ([User_ID], [Date], [StartDay], [EndDay], [Saldo])
-VALUES (@id, @date, @startDay, @endDay, @saldo) 
+INSERT INTO [Days] ([User_ID], [Date], [StartDay], [EndDay], [Saldo], [TotalSaldo])
+VALUES (@id, @date, @startDay, @endDay, @saldo, @totalSaldo) 
 GO
 
 -- Create Name
@@ -230,6 +232,16 @@ SET [Saldo] = @Saldo
 WHERE [Days_ID] = @id
 GO
 
+
+-- Update TotalSaldo
+CREATE PROCEDURE [UpdateTotalSaldo]
+@id INT,
+@Saldo NVARCHAR(5)
+AS
+UPDATE [Days]
+SET [TotalSaldo] = @Saldo
+WHERE [Days_ID] = @id
+GO
 ---------------------------- Delete ----------------------------
 
 

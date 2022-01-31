@@ -11,7 +11,7 @@ namespace Astrow_2._0.Model.Items
         {
 
         }
-        public Days(int id, int userID, DateTime date, DateTime startDate, DateTime endDate, string saldo)
+        public Days(int id, int userID, DateTime date, DateTime startDate, DateTime endDate, string saldo, string totalSaldo)
         {
             this.Days_ID = id;
             this.UserID = userID;
@@ -20,6 +20,7 @@ namespace Astrow_2._0.Model.Items
             this.StartDay = startDate;
             this.EndDay = endDate;
             this.Saldo = saldo;
+            this.TotalSaldo = totalSaldo;
         }
 
         public int Days_ID { get; set; }
@@ -28,5 +29,6 @@ namespace Astrow_2._0.Model.Items
         public DateTime StartDay { get; set; }
         public DateTime EndDay { get; set; }
         public string Saldo { get; set; }
+        public string TotalSaldo { get; set; }
     }
 }

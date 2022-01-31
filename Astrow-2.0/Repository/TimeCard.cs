@@ -85,6 +85,16 @@ namespace Astrow_2._0.Repository
         }
 
         /// <summary>
+        /// Update total saldo
+        /// </summary>
+        /// <param name="day"></param>
+        /// <param name="id"></param>
+        public void UpdateTotalSaldo(Days day, int id)
+        {
+            stored.UpdateTotalSaldo(day, id);
+        }
+
+        /// <summary>
         /// Update the absence column in Day
         /// </summary>
         /// <param name="day"></param>
@@ -135,7 +145,7 @@ namespace Astrow_2._0.Repository
                             UserID = id,
                             StartDay = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0),
                             EndDay = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0),
-                            Saldo = "0"
+                            Saldo = "00:00"
                         };
 
                         //Add Day object to database 
