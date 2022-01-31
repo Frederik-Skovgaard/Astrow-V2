@@ -332,6 +332,9 @@ SELECT [Date], [StartDay] FROM Days
 WHERE [StartDay] = @Date AND [User_ID] = @id
 GO
 
-
+CREATE PROCEDURE [FindTotalSaldo]
+@
+AS
+GO
 
 
