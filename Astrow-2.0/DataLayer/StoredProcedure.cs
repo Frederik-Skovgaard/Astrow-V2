@@ -127,6 +127,8 @@ namespace Astrow_2._0.DataLayer
                 createDay.Parameters.AddWithValue("@date", day.Date);
                 createDay.Parameters.AddWithValue("@startDay", day.StartDay);
                 createDay.Parameters.AddWithValue("@endDay", day.EndDay);
+                createDay.Parameters.AddWithValue("@min", day.Min);
+                createDay.Parameters.AddWithValue("@hour", day.Hour);
                 createDay.Parameters.AddWithValue("@saldo", day.Saldo);
                 createDay.Parameters.AddWithValue("@totalSaldo", day.TotalSaldo);
 
@@ -210,6 +212,32 @@ namespace Astrow_2._0.DataLayer
 
 
                 updateUser.ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// Update day
+        /// </summary>
+        /// <param name="day"></param>
+        public void UpdateDay(Days day)
+        {
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand cmd = new SqlCommand("UpdateDay", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@id", day.Days_ID);
+                cmd.Parameters.AddWithValue("@date", day.Date);
+                cmd.Parameters.AddWithValue("@startDay", day.StartDay);
+                cmd.Parameters.AddWithValue("@endDay", day.EndDay);
+                cmd.Parameters.AddWithValue("@min", day.Min);
+                cmd.Parameters.AddWithValue("@hour", day.Hour);
+                cmd.Parameters.AddWithValue("@saldo", day.Saldo);
+                cmd.Parameters.AddWithValue("@totalSaldo", day.TotalSaldo);
+
+                cmd.ExecuteNonQuery();
             }
         }
 
@@ -472,7 +500,10 @@ namespace Astrow_2._0.DataLayer
                             Date = read.GetDateTime(2),
                             StartDay = read.GetDateTime(3),
                             EndDay = read.GetDateTime(4),
-                            Saldo = read.GetString(5)
+                            Min = read.GetInt32(5),
+                            Hour = read.GetInt32(6),
+                            Saldo = read.GetString(7),
+                            TotalSaldo = read.GetString(8)
                         };
 
                         days.Add(day);
@@ -515,7 +546,10 @@ namespace Astrow_2._0.DataLayer
                             Date = read.GetDateTime(2),
                             StartDay = read.GetDateTime(3),
                             EndDay = read.GetDateTime(4),
-                            Saldo = read.GetString(5)
+                            Min = read.GetInt32(5),
+                            Hour = read.GetInt32(6),
+                            Saldo = read.GetString(7),
+                            TotalSaldo = read.GetString(8)
                         };
 
                         days.Add(day);
@@ -547,8 +581,51 @@ namespace Astrow_2._0.DataLayer
                     {
                         day = new Days()
                         {
-                            Date = read.GetDateTime(0),
-                            StartDay = read.GetDateTime(1)
+                            Days_ID = read.GetInt32(0),
+                            Date = read.GetDateTime(1),
+                            StartDay = read.GetDateTime(2)
+                        };
+                    }
+                }
+
+                return day;
+            }
+        }
+
+        /// <summary>
+        /// Find day by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Days FindDayByID(int id)
+        {
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand cmd = new SqlCommand("FindDayByID", sql);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@id", id);
+
+                Days day = new Days();
+
+                using (SqlDataReader read = cmd.ExecuteReader())
+                {
+                    while (read.Read())
+                    {
+                        day = new Days()
+                        {
+                            Days_ID = read.GetInt32(0),
+                            UserID = read.GetInt32(1),
+                            Date = read.GetDateTime(2),
+                            StartDay = read.GetDateTime(3),
+                            EndDay = read.GetDateTime(4),
+                            Min = read.GetInt32(5),
+                            Hour = read.GetInt32(6),
+                            Saldo = read.GetString(7),
+                            TotalSaldo = read.GetString(8)
                         };
                     }
                 }
@@ -621,6 +698,48 @@ namespace Astrow_2._0.DataLayer
                 return person;
             }
         }
+
+        /// <summary>
+        /// Find day by date
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public Days FindTotalSaldo()
+        {
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand cmd = new SqlCommand("FindTotalSaldo", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                Days days = new Days();
+
+                using (SqlDataReader read = cmd.ExecuteReader())
+                {
+                    while (read.Read())
+                    {
+                        days = new Days
+                        {
+                            Days_ID = read.GetInt32(0),
+                            UserID = read.GetInt32(1),
+                            Date = read.GetDateTime(2),
+                            StartDay = read.GetDateTime(3),
+                            EndDay = read.GetDateTime(4),
+                            Min = read.GetInt32(5),
+                            Hour = read.GetInt32(6),
+                            Saldo = read.GetString(7),
+                            TotalSaldo = read.GetString(8)
+                        };
+                    }
+                }
+
+                return days;
+            }
+        }
+
+
+
         #endregion 
 
 

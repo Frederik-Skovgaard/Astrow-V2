@@ -15,6 +15,12 @@ namespace Astrow_2._0.Repository
 
         Days FindDay(DateTime date, int id);
 
+        Days FindTotalSaldo();
+
+        Days FindDayByID(int id);
+
+        void UpdateDay(Days day);
+
         void UpdateStartDay(Days day, int id);
 
         void UpdateEndDay(Days day, int id);

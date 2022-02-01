@@ -656,6 +656,7 @@ nav ul li a span.rotate {
     color: white !important;
     text-align: center;
     height: 35px;
+    border-bottom: 2px solid #004f75 !important;
 }
 .TimeCard table tbody tr th {
     background: #004f75 !important;
