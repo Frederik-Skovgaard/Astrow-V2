@@ -22,7 +22,7 @@ for details on configuring this project to bundle and minify static web assets. 
 }
 
 body {
-    background: url(../Img/);
+    background-image: linear-gradient( 133deg, rgb(35 140 202 / 14%) 25%, rgb(35 202 194 / 30%) 50%, rgb(35 202 202 / 32%) 75%), url(/Img/bg1.jpg);
     background-size: cover;
     background-attachment: fixed;
 }
@@ -163,7 +163,7 @@ a:hover {
 }
 
 .sidebar .logo {
-    background: url("../Img/Logo.jpg");
+    background: url("../Img/logoSBO.png");
     background-size: contain;
     height: 4.5rem;
     width: 19rem;
@@ -190,6 +190,7 @@ nav .nav-bottom {
     text-align: center;
     transition: all 0.1s ease-in-out;
     border-left: solid transparent 3px;
+    cursor: pointer;
 }
 nav .nav-bottom a {
     padding:0;
@@ -381,7 +382,8 @@ nav ul li a span.rotate {
     }
 
         .Login-Page .top .login-logo {
-            background: url("../Img/FORSØG.png");
+            background: url("../Img/LightlogoSBO.png");
+            background-repeat:no-repeat;
             background-size: contain;
             width: 20rem;
             border-radius: 5px;
@@ -601,6 +603,7 @@ nav ul li a span.rotate {
 .TimeCard .row p {
     width: max-content;
     line-height: 2rem;
+    color: white;
 }
 .TimeCard form {
     width:max-content;
@@ -618,6 +621,7 @@ nav ul li a span.rotate {
 ---------------*/
 .TimeCard .outer table {
     margin:0;
+    border-top: #004f75 3px solid;
 }
 
 /* Grid inside Table*/
@@ -702,6 +706,10 @@ nav ul li a span.rotate {
     margin-right:1rem;
     background: white;
     text-transform: capitalize;
+    background: #004f75;
+    border: 2px solid #00000000;
+    color: white;
+    transition: all 0.3s ease-in-out;
 }
 .TimeCard .row .form-control:hover {
     box-shadow:none;
@@ -721,7 +729,7 @@ nav ul li a span.rotate {
     padding-right: 5px;
 }
 .TimeCard .outer .row button i {
-    color: #0978ae;
+    color: #ffffff;
 }
 
 
@@ -779,6 +787,8 @@ nav ul li a span.rotate {
     text-align: center;
     margin-top: 2.5rem;
     width: fit-content;
+    color: white;
+    font-family: -webkit-pictograph;
 }
 
 .AdminPage .container .upper-row {
@@ -831,7 +841,7 @@ nav ul li a span.rotate {
 }
 
 .AdminPage .container .DeleteUser {
-    min-height: 45rem !important;
+    min-height: 40rem !important;
     max-height: fit-content !important;
 }
 
