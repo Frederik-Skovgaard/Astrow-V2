@@ -206,7 +206,6 @@ namespace Astrow_2._0.Repository
                         //Add Day object to database 
                         CreateDay(day, id);
 
-                        //Break out of the loop
                         break;
                     }
 
@@ -355,6 +354,7 @@ namespace Astrow_2._0.Repository
                             {
                                 tempTotStr = hourTemp.ToString();
                             }
+
                         }
 
 
@@ -365,7 +365,6 @@ namespace Astrow_2._0.Repository
                         //Update day
                         UpdateDay(date);
 
-                        //Break out of the loop
                         break;
                     }
                 }
@@ -386,8 +385,8 @@ namespace Astrow_2._0.Repository
                 };
 
                 //Add Day object to database 
-                CreateDay(day, id);
-            }
+                CreateDay(day, id);  
+            }            
         }
     }
 }

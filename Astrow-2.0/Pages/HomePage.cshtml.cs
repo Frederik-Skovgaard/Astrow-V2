@@ -70,9 +70,8 @@ namespace Astrow_2._0.Pages
                 logged = GetDate();
                 if (logged != null)
                 {
-                    
                     //Change values
-                    CalendarValue = DateTime.Now.ToString("MMMM 1, yyyy");
+                    CalendarValue = DateTime.Now.ToString("yyyy-MM");
 
                     StartDate = DateTime.Now;
 
@@ -104,6 +103,8 @@ namespace Astrow_2._0.Pages
         /// </summary>
         public void OnPostLoad()
         {
+            
+
             //To get start & end date of user
             logged = GetDate();
 
@@ -114,7 +115,7 @@ namespace Astrow_2._0.Pages
             {
                 StartDate = DateTime.Parse($"{logged.StartDate.Day}-{logged.StartDate.Month}-{logged.StartDate.Year}");
 
-                CalendarValue = StartDate.ToString("MMMM dd, yyyy");
+                CalendarValue = StartDate.ToString("yyyy-MM");
 
                 int temp = DateTime.DaysInMonth(StartDate.Year, StartDate.Month);
 
@@ -130,7 +131,7 @@ namespace Astrow_2._0.Pages
 
                 EndDate = logged.EndDate;
 
-                CalendarValue = StartDate.ToString("MMMM dd, yyyy");
+                CalendarValue = StartDate.ToString("yyyy-MM");
 
                 //Render days % year/month selector
                 Days = _timeCard.EachDay(StartDate, EndDate);
@@ -140,7 +141,7 @@ namespace Astrow_2._0.Pages
             {
                 EndDate = StartDate.AddMonths(1);
 
-                CalendarValue = StartDate.ToString("MMMM dd, yyyy");
+                CalendarValue = StartDate.ToString("yyyy-MM");
 
                 //Render days % year/month selector
                 Days = _timeCard.EachDay(StartDate, EndDate.AddDays(-1));
@@ -153,6 +154,8 @@ namespace Astrow_2._0.Pages
         /// </summary>
         public void OnPostBack()
         {
+            CalendarValue = Request.Form["Calendar"];
+
             //To get start & end date of user
             logged = GetDate();
 
@@ -166,7 +169,7 @@ namespace Astrow_2._0.Pages
             }
             catch (Exception)
             {
-                Calendar = DateTime.Now.AddMonths(1).ToString("MMMM 1, yyyy");
+                Calendar = DateTime.Now.AddMonths(1).ToString("yyyy-MM");
             }
             finally
             {
@@ -180,7 +183,7 @@ namespace Astrow_2._0.Pages
             {
                 StartDate = DateTime.Parse($"{logged.StartDate.Day}-{logged.StartDate.Month}-{logged.StartDate.Year}");
 
-                CalendarValue = StartDate.ToString("MMMM dd, yyyy");
+                CalendarValue = StartDate.ToString("yyyy-MM");
 
                 int temp = DateTime.DaysInMonth(StartDate.Year, StartDate.Month);
 
@@ -194,7 +197,7 @@ namespace Astrow_2._0.Pages
             {
                 EndDate = StartDate.AddMonths(1);
 
-                CalendarValue = StartDate.ToString("MMMM dd, yyyy");
+                CalendarValue = StartDate.ToString("yyyy-MM");
 
                 //Render days % year/month selector
                 Days = _timeCard.EachDay(StartDate, EndDate.AddDays(-1));
@@ -216,6 +219,8 @@ namespace Astrow_2._0.Pages
         /// </summary>
         public void OnPostForward()
         {
+            CalendarValue = Request.Form["Calendar"];
+
             //To get start & end date of user
             logged = GetDate();
 
@@ -231,7 +236,7 @@ namespace Astrow_2._0.Pages
             }
             catch (Exception)
             {
-                Calendar = DateTime.Now.AddMonths(-1).ToString("MMMM 1, yyyy");
+                Calendar = DateTime.Now.AddMonths(-1).ToString("yyyy-MM");
                 
             }
             finally
@@ -249,7 +254,7 @@ namespace Astrow_2._0.Pages
 
                 EndDate = logged.EndDate;
 
-                CalendarValue = StartDate.ToString("MMMM dd, yyyy");
+                CalendarValue = StartDate.ToString("yyyy-MM");
 
                 //Render days % year/month selector
                 Days = _timeCard.EachDay(StartDate, EndDate);
@@ -259,7 +264,7 @@ namespace Astrow_2._0.Pages
             {
                 EndDate = StartDate.AddMonths(1);
 
-                CalendarValue = StartDate.ToString("MMMM dd, yyyy");
+                CalendarValue = StartDate.ToString("yyyy-MM");
 
                 //Render days % year/month selector
                 Days = _timeCard.EachDay(StartDate, EndDate.AddDays(-1));

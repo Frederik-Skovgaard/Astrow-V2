@@ -537,16 +537,15 @@ nav ul li a span.rotate {
     width:-webkit-fill-available;
 }
 
-.sidebar #Oper-li .Oper-show #Registrering .tooltiptext .TimeBox {
+.sidebar #Oper-li .Oper-show #Registrering .tooltiptext #TimeBox {
     background: #00405e;
-    color: white;
-    width: fit-content;
+    width: max-content;
+    border-radius: 10px;
+    height: max-content;
+    font-size: 25px;
+    padding: 0.1rem;
     padding-left: 1rem;
     padding-right: 1rem;
-    border-radius: 10px;
-    width: 7rem;
-    margin-bottom: 2rem;
-    margin-top: 2rem;
 }
 .sidebar #Oper-li .Oper-show #Registrering .tooltiptext {
     visibility: hidden;
@@ -575,10 +574,17 @@ nav ul li a span.rotate {
     background: #00405e;
     border: none;
     color: white;
+    
+    margin-top: 3rem;
+    font-size: 18px;
+    border-radius: 10px;
+    padding: 0.3rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 
 
-.TimeCard .outer .grid-container .table .WeekdEnd {
+.TimeCard .outer table .WeekdEnd {
     background: #00405e !important;
     border-bottom: solid #00405e 2px;
     border-top: solid #00405e 2px;
@@ -599,6 +605,7 @@ nav ul li a span.rotate {
 .TimeCard .row {
     flex-wrap: nowrap;
     margin: 0 auto;
+    margin-bottom: 3rem;
 }
 .TimeCard .row p {
     width: max-content;
@@ -625,28 +632,28 @@ nav ul li a span.rotate {
 }
 
 /* Grid inside Table*/
-.TimeCard .outer .grid-container {
+.TimeCard .outer .tableOverview {
     overflow: overlay;
     min-height: fit-content;
     max-height: 42rem;
     background: #00405e;
 }
-.TimeCard .outer .grid-container table {
+.TimeCard .outer .tableOverview {
     border-top: solid #0978ae 1.2px;
 }
 
 
 /* Scrollbar for day grid*/
-.TimeCard .outer .grid-container::-webkit-scrollbar {
+.TimeCard .outer .tableOverview::-webkit-scrollbar {
     width:5px !important;
     display: contents !important;
 }
-.TimeCard .outer .grid-container::-webkit-scrollbar-track {
+.TimeCard .outer .tableOverview::-webkit-scrollbar-track {
     background: #00405e !important;
     border-radius: 15px !important;
     display: contents !important;
 }
-.TimeCard .outer .grid-container::-webkit-scrollbar-thumb {
+.TimeCard .outer .tableOverview::-webkit-scrollbar-thumb {
     background: #0588c9 !important;
     border-radius: 15px !important;
     display: contents !important;
@@ -655,6 +662,11 @@ nav ul li a span.rotate {
 
 
 /* Table Items*/
+.TimeCard table thead {
+    position: absolute;
+    width: -webkit-fill-available;
+    top: 15%;
+}
 .TimeCard table thead tr th {
     background: #004f75 !important;
     color: white !important;
@@ -710,23 +722,39 @@ nav ul li a span.rotate {
     border: 2px solid #00000000;
     color: white;
     transition: all 0.3s ease-in-out;
+    float:left;
 }
+.TimeCard .row .submitBTN {
+    height: 1.5rem !important;
+    border: none !important;
+    padding-left: 5px !important;
+    padding-right: 10px !important;
+    color: white !important;
+    background: #004f75 !important;
+    border-radius: 10px !important;
+}
+
+
+
 .TimeCard .row .form-control:hover {
     box-shadow:none;
+    border: 2px solid #00000000;
 }
 .TimeCard .row .form-control:focus {
     box-shadow:none;
-    border-color:#ced4da;
+    border: 2px solid #00000000;
 }
 
 
 /*Date shortcuts*/
 .TimeCard .outer .row button {
-    width: max-content;
-    border:none;
-    background:none;
+    border: none;
+    background: none;
     padding-left: 5px;
     padding-right: 5px;
+    vertical-align: -webkit-baseline-middle;
+    width: max-content;
+    height: 40px;
 }
 .TimeCard .outer .row button i {
     color: #ffffff;
@@ -956,7 +984,7 @@ nav ul li a span.rotate {
         margin-left: 10rem;
     }
     .TimeCard table tbody, td, tfoot, th, thead, tr {
-        width: 4rem;
+        width: 3.88rem;
     }
 
     .sidebar {
@@ -987,7 +1015,7 @@ nav ul li a span.rotate {
     }
 
     .TimeCard table tbody, td, tfoot, th, thead, tr {
-        width: 4rem;
+        width: 3.88rem;;
     }
 }
 
@@ -1009,7 +1037,7 @@ nav ul li a span.rotate {
 
 @media only screen and (min-width: 1100px) {
     .TimeCard table tbody, td, tfoot, th, thead, tr {
-        width: 6rem;
+        width: 5.5rem;
     }
     .TimeCard .outer {
         margin-left: 16rem;
@@ -1033,7 +1061,7 @@ nav ul li a span.rotate {
 
 @media only screen and (min-width: 1255px) {
     .TimeCard table tbody, td, tfoot, th, thead, tr {
-        width: 7rem;
+        width: 6.5rem;
     }
     .TimeCard .outer {
         margin-left: 18rem;
@@ -1042,7 +1070,7 @@ nav ul li a span.rotate {
 
 @media only screen and (min-width: 1380px) {
     .TimeCard table tbody, td, tfoot, th, thead, tr {
-        width: 8rem;
+        width: 7.5rem;
     }
     .TimeCard .outer {
         margin-left: 14rem;
@@ -1059,8 +1087,13 @@ nav ul li a span.rotate {
     .TimeCard {
         margin-left: 3rem;
     }
+    .TimeCard table tbody, td, tfoot, th, thead, tr {
+        width: 8.5rem;
+    }
     .TimeCard .outer {
-        margin-left: 17rem;
+        margin: 0 auto;
+        margin-left: 14rem;
+        margin-top: 5rem;
     }
 }
 

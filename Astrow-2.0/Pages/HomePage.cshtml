@@ -1,8 +1,16 @@
 ﻿@page
 @model IndexModel
+@using Microsoft.AspNetCore.Http
+
 @{
     ViewData["Title"] = "Home page";
     Layout = "~/Pages/Shared/_Layout.cshtml";
+
+    DateTime startTime = DateTime.Parse(HttpContext.Session.GetString("_StartDate"));
+    DateTime endTime = DateTime.Parse(HttpContext.Session.GetString("_EndDate"));
+
+    string startDate = startTime.ToString("yyyy-MM");
+    string endDate = endTime.ToString("yyyy-MM");
 }
 <form method="post">
     <div class="TimeCard">
@@ -10,50 +18,12 @@
             <div class="row">
                 <p>Dato: </p>
                 <div style="width:max-content;">
-
-                    @*Datepicker*@
-                    <input type="text" readonly autocomplete="off" id="Calendar" value="@Model.CalendarValue" asp-for="Calendar" class="form-control calendar" />
-
-                    <div id="calendarBox">
-
-                        @foreach (DateTime year in Model.Years)
-                        {
-                            <a onclick="DatePicker(@year.ToString("yyyy"))" href="#">@year.ToString("yyyy")</a>
-                            <div id="@year.ToString("yyyy")" class="HideShow">
-
-                                @*submits*@
-                                <div class="row">
-                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('Januar')" value="Jan" />
-                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('Februar')" value="Feb" />
-                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('Marts')" value="Mar" />
-                                </div>
-
-                                <div class="row">
-                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('April')" value="Apr" />
-                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('Maj')" value="May" />
-                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('Juni')" value="Jun" />
-                                </div>
-
-                                <div class="row">
-                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('Juli')" value="Jul" />
-                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('August')" value="Aug" />
-                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('September')" value="Sep" />
-                                </div>
-
-                                <div class="row">
-                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('Oktober')" value="Oct" />
-                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('November')" value="Nov" />
-                                    <input asp-page-handler="Load" type="submit" onclick="MonthPicker('December')" value="Dec" />
-                                </div>
-
-
-
-
-
-                            </div>
-                        }
-                    </div>
+                    <input id="Calendar" value="@Model.CalendarValue" type="month" name="Calendar" class="form-control" min="@startDate" max="@endDate" required />
+                    <button type="submit" asp-page-handler="Load" class="submitBTN">
+                        <i class="fas fa-check"></i> Submit
+                    </button>
                 </div>
+
 
                 @*one month back | Now | one month front*@
                 <button type="submit" asp-page-handler="Back">
@@ -65,26 +35,25 @@
                 <button type="submit" asp-page-handler="Forward">
                     <i style="font-size: 25px;" class="fas fa-chevron-circle-right"></i>
                 </button>
+
+
             </div>
 
             @*Date grid*@
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Day</th>
-                        <th scope="col">Dato</th>
-                        <th scope="col">Fravær</th>
-                        <th scope="col">Login</th>
-                        <th scope="col">Logud</th>
-                        <th scope="col">TotFrv</th>
-                        <th scope="col">Saldo</th>
-                        <th scope="col">Saldo+</th>
-                    </tr>
-                </thead>
-            </table>
-
-            <div class="grid-container">
-                <table class="table table-striped">
+            <div class="tableOverview">
+                <table class="table">
+                    <thead>
+                        <tr style="border-top: solid 3px #00000000;">
+                            <th scope="col">Day</th>
+                            <th scope="col">Dato</th>
+                            <th scope="col">Fravær</th>
+                            <th scope="col">Login</th>
+                            <th scope="col">Logud</th>
+                            <th scope="col">TotFrv</th>
+                            <th scope="col">Saldo</th>
+                            <th scope="col">Saldo+</th>
+                        </tr>
+                    </thead>
                     <tbody>
                         @{
                             bool trigger = false;
@@ -94,7 +63,7 @@
                             //If list of days, day match the date of days date show date i guss
                             foreach (DateTime day in Model.Days)
                             {
-                                if(day.ToString("yyyy/MM/dd") == DateTime.Now.ToString("yyyy/MM/dd"))
+                                if (day.ToString("yyyy/MM/dd") == DateTime.Now.ToString("yyyy/MM/dd"))
                                 {
                                     strClass = "ToDayClass";
                                 }
@@ -116,6 +85,7 @@
                                                     <td class="@strClass"></td>
                                                     <td class="@strClass">@date.StartDay.ToString("HH:mm")</td>
                                                     <td class="@strClass"></td>
+                                                    <td class="@strClass"></td>
                                                     <td class="@strClass">-7:24 </td>
                                                     <td class="@strClass">@date.TotalSaldo</td>
                                                 </tr>
@@ -132,6 +102,7 @@
                                                     <td class="@strClass"></td>
                                                     <td class="@strClass">@date.StartDay.ToString("HH:mm")</td>
                                                     <td class="@strClass">@date.EndDay.ToString("HH:mm")</td>
+                                                    <td class="@strClass"></td>
                                                     <td class="@strClass">@date.Saldo</td>
                                                     <td class="@strClass">@date.TotalSaldo</td>
                                                 </tr>
@@ -158,6 +129,7 @@
                                             <td class="WeekdEnd @strClass"></td>
                                             <td class="WeekdEnd @strClass"></td>
                                             <td class="WeekdEnd @strClass"></td>
+                                            <td class="WeekdEnd @strClass"></td>
                                         </tr>
 
                                         strClass = "";
@@ -166,12 +138,13 @@
                                     {
                                         <tr>
                                             <th scope="row">@day.ToString("dddd")  </th>
-                                            <td  class="@strClass">@day.ToString("yyyy-MM-dd")</td>
-                                            <td  class="@strClass"></td>
-                                            <td  class="@strClass"></td>
-                                            <td  class="@strClass"></td>
-                                            <td  class="@strClass"></td>
-                                            <td  class="@strClass"></td>
+                                            <td class="@strClass">@day.ToString("yyyy-MM-dd")</td>
+                                            <td class="@strClass"></td>
+                                            <td class="@strClass"></td>
+                                            <td class="@strClass"></td>
+                                            <td class="@strClass"></td>
+                                            <td class="@strClass"></td>
+                                            <td class="@strClass"></td>
                                         </tr>
 
                                         strClass = "";
@@ -188,6 +161,7 @@
                                         <td class="WeekdEnd @strClass"></td>
                                         <td class="WeekdEnd @strClass"></td>
                                         <td class="WeekdEnd @strClass"></td>
+                                        <td class="WeekdEnd @strClass"></td>
                                     </tr>
 
                                     strClass = "";
@@ -196,12 +170,13 @@
                                 {
                                     <tr>
                                         <th scope="row">@day.ToString("dddd")  </th>
-                                        <td  class="@strClass">@day.ToString("yyyy-MM-dd")</td>
-                                        <td  class="@strClass"></td>
-                                        <td  class="@strClass"></td>
-                                        <td  class="@strClass"></td>
-                                        <td  class="@strClass"></td>
-                                        <td  class="@strClass"></td>
+                                        <td class="@strClass">@day.ToString("yyyy-MM-dd")</td>
+                                        <td class="@strClass"></td>
+                                        <td class="@strClass"></td>
+                                        <td class="@strClass"></td>
+                                        <td class="@strClass"></td>
+                                        <td class="@strClass"></td>
+                                        <td class="@strClass"></td>
                                     </tr>
 
                                     strClass = "";
@@ -213,38 +188,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        var year;
-        var month;
-
-
-
-        //Show date picker years
-        $('#Calendar').click(function() {
-            $('#calendarBox').toggleClass("show")
-        });
-
-
-        //on click show month of choosen year
-        function DatePicker(id) {
-            if (document.getElementById(id).classList.contains("showDiv")) {
-                document.getElementById(id).classList.remove("showDiv")
-            }
-            else {
-                year = id;
-
-                $(".showDiv").removeClass("showDiv")
-                document.getElementById(id).classList.add("showDiv")
-
-                $("#Calendar").val(id)
-            }
-        }
-
-        //Change input value to new value
-        function MonthPicker(month) {
-            var date = month + " 1" + "," + year;
-            $("#Calendar").val(date)
-        }
-    </script>
 </form>
