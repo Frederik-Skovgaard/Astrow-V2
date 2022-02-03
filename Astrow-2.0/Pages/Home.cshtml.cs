@@ -211,7 +211,7 @@ namespace Astrow_2._0.Pages
         public IActionResult OnPostNow()
         {
             //Return to home page
-            return RedirectToPage("/HomePage");
+            return RedirectToPage("/Home");
         }
 
         /// <summary>
@@ -288,12 +288,12 @@ namespace Astrow_2._0.Pages
                 _timeCard.Registrer(id);
 
                 //Return to home page
-                return RedirectToPage("/HomePage");
+                return RedirectToPage("/Home");
             }
             else
             {
                 //Return to home page
-                return RedirectToPage("/HomePage");
+                return RedirectToPage("/Home");
             }
         }
 

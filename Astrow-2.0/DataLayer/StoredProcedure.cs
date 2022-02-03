@@ -59,18 +59,18 @@ namespace Astrow_2._0.DataLayer
             {
                 sql.Open();
 
-                SqlCommand createUser = new SqlCommand("CreateUser", sql);
-                createUser.CommandType = CommandType.StoredProcedure;
+                SqlCommand cmd = new SqlCommand("CreateUser", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                createUser.Parameters.AddWithValue("@id", info.Name_ID);
-                createUser.Parameters.AddWithValue("@UserName", user.UserName);
-                createUser.Parameters.AddWithValue("@Password", user.Password);
-                createUser.Parameters.AddWithValue("@Status", user.Status);
-                createUser.Parameters.AddWithValue("@salt", user.Salt);
-                createUser.Parameters.AddWithValue("@startDate", user.StartDate);
-                createUser.Parameters.AddWithValue("@endDate", user.EndDate);
+                cmd.Parameters.AddWithValue("@id", info.Name_ID);
+                cmd.Parameters.AddWithValue("@UserName", user.UserName);
+                cmd.Parameters.AddWithValue("@Password", user.Password);
+                cmd.Parameters.AddWithValue("@Status", user.Status);
+                cmd.Parameters.AddWithValue("@salt", user.Salt);
+                cmd.Parameters.AddWithValue("@startDate", user.StartDate);
+                cmd.Parameters.AddWithValue("@endDate", user.EndDate);
 
-                createUser.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();
             }
 
             //Find ID
@@ -78,13 +78,13 @@ namespace Astrow_2._0.DataLayer
             {
                 sql.Open();
 
-                SqlCommand findUser = new SqlCommand("GetUser", sql);
-                findUser.CommandType = CommandType.StoredProcedure;
+                SqlCommand cmd = new SqlCommand("GetUser", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                findUser.Parameters.AddWithValue("@userName", user.UserName);
-                findUser.Parameters.AddWithValue("@password", user.Password);
+                cmd.Parameters.AddWithValue("@userName", user.UserName);
+                cmd.Parameters.AddWithValue("@password", user.Password);
 
-                using (SqlDataReader read = findUser.ExecuteReader())
+                using (SqlDataReader read = cmd.ExecuteReader())
                 {
                     while (read.Read())
                     {
@@ -119,22 +119,24 @@ namespace Astrow_2._0.DataLayer
             {
                 sql.Open();
 
-                SqlCommand createDay = new SqlCommand("CreateDay", sql);
+                SqlCommand cmd = new SqlCommand("CreateDay", sql);
 
-                createDay.CommandType = CommandType.StoredProcedure;
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                createDay.Parameters.AddWithValue("@id", id);
-                createDay.Parameters.AddWithValue("@date", day.Date);
-                createDay.Parameters.AddWithValue("@startDay", day.StartDay);
-                createDay.Parameters.AddWithValue("@endDay", day.EndDay);
-                createDay.Parameters.AddWithValue("@min", day.Min);
-                createDay.Parameters.AddWithValue("@hour", day.Hour);
-                createDay.Parameters.AddWithValue("@saldo", day.Saldo);
-                createDay.Parameters.AddWithValue("@toMin", day.TotalMin);
-                createDay.Parameters.AddWithValue("@toHour", day.TotalHour);
-                createDay.Parameters.AddWithValue("@totalSaldo", day.TotalSaldo);
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@date", day.Date);
+                cmd.Parameters.AddWithValue("@absenceDate", day.AbsenceDate);
+                cmd.Parameters.AddWithValue("@absenceText", day.AbsenceText);
+                cmd.Parameters.AddWithValue("@startDay", day.StartDay);
+                cmd.Parameters.AddWithValue("@endDay", day.EndDay);
+                cmd.Parameters.AddWithValue("@min", day.Min);
+                cmd.Parameters.AddWithValue("@hour", day.Hour);
+                cmd.Parameters.AddWithValue("@saldo", day.Saldo);
+                cmd.Parameters.AddWithValue("@toMin", day.TotalMin);
+                cmd.Parameters.AddWithValue("@toHour", day.TotalHour);
+                cmd.Parameters.AddWithValue("@totalSaldo", day.TotalSaldo);
 
-                createDay.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();
 
             }
         }
@@ -151,28 +153,28 @@ namespace Astrow_2._0.DataLayer
             {
                 sql.Open();
 
-                SqlCommand createName = new SqlCommand("CreateName", sql);
-                createName.CommandType = CommandType.StoredProcedure;
+                SqlCommand cmd = new SqlCommand("CreateName", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                createName.Parameters.AddWithValue("@firstName", info.FirstName);
-                createName.Parameters.AddWithValue("@middleName", info.MiddleName);
-                createName.Parameters.AddWithValue("@lastName", info.LastName);
-                createName.Parameters.AddWithValue("@fullName", info.FullName);
+                cmd.Parameters.AddWithValue("@firstName", info.FirstName);
+                cmd.Parameters.AddWithValue("@middleName", info.MiddleName);
+                cmd.Parameters.AddWithValue("@lastName", info.LastName);
+                cmd.Parameters.AddWithValue("@fullName", info.FullName);
 
-                createName.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();
             }
 
             using (sql = new SqlConnection(connectionString))
             {
                 sql.Open();
 
-                SqlCommand find = new SqlCommand("GetUserInfo", sql);
-                find.CommandType = CommandType.StoredProcedure;
+                SqlCommand cmd = new SqlCommand("GetUserInfo", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                find.Parameters.AddWithValue("@fullName", info.FullName);
+                cmd.Parameters.AddWithValue("@fullName", info.FullName);
 
 
-                using (SqlDataReader read = find.ExecuteReader())
+                using (SqlDataReader read = cmd.ExecuteReader())
                 {
                     while (read.Read())
                     {
@@ -201,19 +203,19 @@ namespace Astrow_2._0.DataLayer
             {
                 sql.Open();
 
-                SqlCommand updateUser = new SqlCommand("UpdateUser", sql);
-                updateUser.CommandType = CommandType.StoredProcedure;
+                SqlCommand cmd = new SqlCommand("UpdateUser", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                updateUser.Parameters.AddWithValue("@id", user.User_ID);
+                cmd.Parameters.AddWithValue("@id", user.User_ID);
 
-                updateUser.Parameters.AddWithValue("@UserName", user.UserName);
-                updateUser.Parameters.AddWithValue("@Password", user.Password);
-                updateUser.Parameters.AddWithValue("@Status", user.Status);
-                updateUser.Parameters.AddWithValue("@startDate", user.StartDate);
-                updateUser.Parameters.AddWithValue("@endDate", user.EndDate);
+                cmd.Parameters.AddWithValue("@UserName", user.UserName);
+                cmd.Parameters.AddWithValue("@Password", user.Password);
+                cmd.Parameters.AddWithValue("@Status", user.Status);
+                cmd.Parameters.AddWithValue("@startDate", user.StartDate);
+                cmd.Parameters.AddWithValue("@endDate", user.EndDate);
 
 
-                updateUser.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();
             }
         }
 
@@ -232,6 +234,8 @@ namespace Astrow_2._0.DataLayer
 
                 cmd.Parameters.AddWithValue("@id", day.Days_ID);
                 cmd.Parameters.AddWithValue("@date", day.Date);
+                cmd.Parameters.AddWithValue("@absenceDate", day.AbsenceDate);
+                cmd.Parameters.AddWithValue("@absenceText", day.AbsenceText);
                 cmd.Parameters.AddWithValue("@startDay", day.StartDay);
                 cmd.Parameters.AddWithValue("@endDay", day.EndDay);
                 cmd.Parameters.AddWithValue("@min", day.Min);
@@ -260,16 +264,16 @@ namespace Astrow_2._0.DataLayer
             {
                 sql.Open();
 
-                SqlCommand updateUserInfo = new SqlCommand("UpdateUserInfo", sql);
-                updateUserInfo.CommandType = CommandType.StoredProcedure;
+                SqlCommand cmd = new SqlCommand("UpdateUserInfo", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                updateUserInfo.Parameters.AddWithValue("@id", person.Name_ID);
+                cmd.Parameters.AddWithValue("@id", person.Name_ID);
 
-                updateUserInfo.Parameters.AddWithValue("@firstNavn", person.FirstName);
-                updateUserInfo.Parameters.AddWithValue("@middleNavn", person.MiddleName);
-                updateUserInfo.Parameters.AddWithValue("@lastNavn", person.LastName);
+                cmd.Parameters.AddWithValue("@firstNavn", person.FirstName);
+                cmd.Parameters.AddWithValue("@middleNavn", person.MiddleName);
+                cmd.Parameters.AddWithValue("@lastNavn", person.LastName);
 
-                updateUserInfo.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();
             }
         }
 
@@ -278,20 +282,20 @@ namespace Astrow_2._0.DataLayer
         /// Set abscens
         /// </summary>
         /// <param name="day"></param>
-        public void UpdateAbscence(Absence abs, Days day)
+        public void UpdateAbscence(Days day)
         {
             using (sql = new SqlConnection(connectionString))
             {
                 sql.Open();
 
-                SqlCommand UpdateAbscence = new SqlCommand("UpdateAbscence", sql);
-                UpdateAbscence.CommandType = CommandType.StoredProcedure;
-                UpdateAbscence.Parameters.AddWithValue("@id", day.Days_ID);
+                SqlCommand cmd = new SqlCommand("UpdateAbscence", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", day.Days_ID);
 
-                UpdateAbscence.Parameters.AddWithValue("@AbscenceDate", abs.AbsenceDate);
-                UpdateAbscence.Parameters.AddWithValue("@AbscenceText", abs.AbscenceText);
+                cmd.Parameters.AddWithValue("@AbscenceDate", day.AbsenceDate);
+                cmd.Parameters.AddWithValue("@AbscenceText", day.AbsenceText);
 
-                UpdateAbscence.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();
             }
         }
 
@@ -305,14 +309,14 @@ namespace Astrow_2._0.DataLayer
             {
                 sql.Open();
 
-                SqlCommand scanIn = new SqlCommand("UpdateStart", sql);
-                scanIn.CommandType = CommandType.StoredProcedure;
+                SqlCommand cmd = new SqlCommand("UpdateStart", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                scanIn.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@id", id);
 
-                scanIn.Parameters.AddWithValue("@StartDay", day.StartDay);
+                cmd.Parameters.AddWithValue("@StartDay", day.StartDay);
 
-                scanIn.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();
             }
         }
 
@@ -326,14 +330,14 @@ namespace Astrow_2._0.DataLayer
             {
                 sql.Open();
 
-                SqlCommand scanIn = new SqlCommand("UpdateEnd", sql);
-                scanIn.CommandType = CommandType.StoredProcedure;
+                SqlCommand cmd = new SqlCommand("UpdateEnd", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                scanIn.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@id", id);
 
-                scanIn.Parameters.AddWithValue("@EndDay", day.EndDay);
+                cmd.Parameters.AddWithValue("@EndDay", day.EndDay);
 
-                scanIn.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();
             }
         }
 
@@ -347,13 +351,13 @@ namespace Astrow_2._0.DataLayer
             {
                 sql.Open();
 
-                SqlCommand saldo = new SqlCommand("UpdateSaldo", sql);
-                saldo.CommandType = CommandType.StoredProcedure;
+                SqlCommand cmd = new SqlCommand("UpdateSaldo", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                saldo.Parameters.AddWithValue("@id", id);
-                saldo.Parameters.AddWithValue("@Saldo", day.Saldo);
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@Saldo", day.Saldo);
 
-                saldo.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();
             }
         }
 
@@ -397,13 +401,13 @@ namespace Astrow_2._0.DataLayer
             {
                 sql.Open();
 
-                SqlCommand readAll = new SqlCommand("ReadAllUsers", sql);
-                readAll.CommandType = CommandType.StoredProcedure;
+                SqlCommand cmd = new SqlCommand("ReadAllUsers", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
 
                 Users users = new Users();
 
 
-                using (SqlDataReader read = readAll.ExecuteReader())
+                using (SqlDataReader read = cmd.ExecuteReader())
                 {
                     while (read.Read())
                     {
@@ -441,14 +445,14 @@ namespace Astrow_2._0.DataLayer
             {
                 sql.Open();
 
-                SqlCommand find = new SqlCommand("GetByID", sql);
-                find.CommandType = CommandType.StoredProcedure;
+                SqlCommand cmd = new SqlCommand("GetByID", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                find.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@id", id);
 
                 Users user = new Users();
 
-                using (SqlDataReader read = find.ExecuteReader())
+                using (SqlDataReader read = cmd.ExecuteReader())
                 {
                     while (read.Read())
                     {
@@ -484,16 +488,16 @@ namespace Astrow_2._0.DataLayer
             {
                 sql.Open();
 
-                SqlCommand find = new SqlCommand("FindAllDays", sql);
+                SqlCommand cmd = new SqlCommand("FindAllDays", sql);
 
-                find.CommandType = CommandType.StoredProcedure;
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                find.Parameters.AddWithValue("@id", id);
-                find.Parameters.AddWithValue("@date", date);
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@date", date);
 
                 Days day = new Days();
 
-                using (SqlDataReader read = find.ExecuteReader())
+                using (SqlDataReader read = cmd.ExecuteReader())
                 {
                     while (read.Read())
                     {
@@ -502,14 +506,16 @@ namespace Astrow_2._0.DataLayer
                             Days_ID = read.GetInt32(0),
                             UserID = read.GetInt32(1),
                             Date = read.GetDateTime(2),
-                            StartDay = read.GetDateTime(3),
-                            EndDay = read.GetDateTime(4),
-                            Min = read.GetInt32(5),
-                            Hour = read.GetInt32(6),
-                            Saldo = read.GetString(7),
-                            TotalMin = read.GetInt32(8),
-                            TotalHour = read.GetInt32(9),
-                            TotalSaldo = read.GetString(10)
+                            AbsenceDate = read.GetDateTime(3),
+                            AbsenceText = read.GetString(4),
+                            StartDay = read.GetDateTime(5),
+                            EndDay = read.GetDateTime(6),
+                            Min = read.GetInt32(7),
+                            Hour = read.GetInt32(8),
+                            Saldo = read.GetString(9),
+                            TotalMin = read.GetInt32(10),
+                            TotalHour = read.GetInt32(11),
+                            TotalSaldo = read.GetString(12)
                         };
 
                         days.Add(day);
@@ -533,15 +539,15 @@ namespace Astrow_2._0.DataLayer
             {
                 sql.Open();
 
-                SqlCommand find = new SqlCommand("FindAllDaysByID", sql);
+                SqlCommand cmd = new SqlCommand("FindAllDaysByID", sql);
 
-                find.CommandType = CommandType.StoredProcedure;
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                find.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@id", id);
 
                 Days day = new Days();
 
-                using (SqlDataReader read = find.ExecuteReader())
+                using (SqlDataReader read = cmd.ExecuteReader())
                 {
                     while (read.Read())
                     {
@@ -550,14 +556,16 @@ namespace Astrow_2._0.DataLayer
                             Days_ID = read.GetInt32(0),
                             UserID = read.GetInt32(1),
                             Date = read.GetDateTime(2),
-                            StartDay = read.GetDateTime(3),
-                            EndDay = read.GetDateTime(4),
-                            Min = read.GetInt32(5),
-                            Hour = read.GetInt32(6),
-                            Saldo = read.GetString(7),
-                            TotalMin = read.GetInt32(8),
-                            TotalHour = read.GetInt32(9),
-                            TotalSaldo = read.GetString(10)
+                            AbsenceDate = read.GetDateTime(3),
+                            AbsenceText = read.GetString(4),
+                            StartDay = read.GetDateTime(5),
+                            EndDay = read.GetDateTime(6),
+                            Min = read.GetInt32(7),
+                            Hour = read.GetInt32(8),
+                            Saldo = read.GetString(9),
+                            TotalMin = read.GetInt32(10),
+                            TotalHour = read.GetInt32(11),
+                            TotalSaldo = read.GetString(12)
                         };
 
                         days.Add(day);
@@ -574,16 +582,16 @@ namespace Astrow_2._0.DataLayer
             {
                 sql.Open();
 
-                SqlCommand find = new SqlCommand("FindDay", sql);
+                SqlCommand cmd = new SqlCommand("FindDay", sql);
 
-                find.CommandType = CommandType.StoredProcedure;
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                find.Parameters.AddWithValue("@Date", date);
-                find.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@Date", date);
+                cmd.Parameters.AddWithValue("@id", id);
 
                 Days day = new Days();
 
-                using (SqlDataReader read = find.ExecuteReader())
+                using (SqlDataReader read = cmd.ExecuteReader())
                 {
                     while (read.Read())
                     {
@@ -591,7 +599,9 @@ namespace Astrow_2._0.DataLayer
                         {
                             Days_ID = read.GetInt32(0),
                             Date = read.GetDateTime(1),
-                            StartDay = read.GetDateTime(2)
+                            StartDay = read.GetDateTime(2),
+                            AbsenceDate = read.GetDateTime(3),
+                            AbsenceText = read.GetString(4)
                         };
                     }
                 }
@@ -628,14 +638,16 @@ namespace Astrow_2._0.DataLayer
                             Days_ID = read.GetInt32(0),
                             UserID = read.GetInt32(1),
                             Date = read.GetDateTime(2),
-                            StartDay = read.GetDateTime(3),
-                            EndDay = read.GetDateTime(4),
-                            Min = read.GetInt32(5),
-                            Hour = read.GetInt32(6),
-                            Saldo = read.GetString(7),
-                            TotalMin = read.GetInt32(8),
-                            TotalHour = read.GetInt32(9),
-                            TotalSaldo = read.GetString(10)
+                            AbsenceDate = read.GetDateTime(3),
+                            AbsenceText = read.GetString(4),
+                            StartDay = read.GetDateTime(5),
+                            EndDay = read.GetDateTime(6),
+                            Min = read.GetInt32(7),
+                            Hour = read.GetInt32(8),
+                            Saldo = read.GetString(9),
+                            TotalMin = read.GetInt32(10),
+                            TotalHour = read.GetInt32(11),
+                            TotalSaldo = read.GetString(12)
                         };
                     }
                 }
@@ -656,14 +668,14 @@ namespace Astrow_2._0.DataLayer
             {
                 sql.Open();
 
-                SqlCommand find = new SqlCommand("GetByUserName", sql);
-                find.CommandType = CommandType.StoredProcedure;
+                SqlCommand cmd = new SqlCommand("GetByUserName", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                find.Parameters.AddWithValue("@UserName", username);
+                cmd.Parameters.AddWithValue("@UserName", username);
 
                 Users user = new Users();
 
-                using (SqlDataReader read = find.ExecuteReader())
+                using (SqlDataReader read = cmd.ExecuteReader())
                 {
                     while (read.Read())
                     {
@@ -684,14 +696,14 @@ namespace Astrow_2._0.DataLayer
             {
                 sql.Open();
 
-                SqlCommand find = new SqlCommand("FindUserInfo", sql);
-                find.CommandType = CommandType.StoredProcedure;
+                SqlCommand cmd = new SqlCommand("FindUserInfo", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                find.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@id", id);
 
                 UserPersonalInfo person = new UserPersonalInfo();
 
-                using (SqlDataReader read = find.ExecuteReader())
+                using (SqlDataReader read = cmd.ExecuteReader())
                 {
                     while (read.Read())
                     {
@@ -734,14 +746,16 @@ namespace Astrow_2._0.DataLayer
                             Days_ID = read.GetInt32(0),
                             UserID = read.GetInt32(1),
                             Date = read.GetDateTime(2),
-                            StartDay = read.GetDateTime(3),
-                            EndDay = read.GetDateTime(4),
-                            Min = read.GetInt32(5),
-                            Hour = read.GetInt32(6),
-                            Saldo = read.GetString(7),
-                            TotalMin = read.GetInt32(8),
-                            TotalHour = read.GetInt32(9),
-                            TotalSaldo = read.GetString(10)
+                            AbsenceDate = read.GetDateTime(3),
+                            AbsenceText = read.GetString(4),
+                            StartDay = read.GetDateTime(5),
+                            EndDay = read.GetDateTime(6),
+                            Min = read.GetInt32(7),
+                            Hour = read.GetInt32(8),
+                            Saldo = read.GetString(9),
+                            TotalMin = read.GetInt32(10),
+                            TotalHour = read.GetInt32(11),
+                            TotalSaldo = read.GetString(12)
                         };
                     }
                 }

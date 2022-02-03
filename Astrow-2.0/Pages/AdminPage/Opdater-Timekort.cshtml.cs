@@ -26,7 +26,7 @@ namespace Astrow_2._0.Pages.AdminPage
             {
                 if (HttpContext.Session.GetString("_Status") != "Instructør")
                 {
-                    return RedirectToPage("/HomePage");
+                    return RedirectToPage("/Home");
                 }
                 else
                 {
@@ -49,7 +49,7 @@ namespace Astrow_2._0.Pages.AdminPage
             _userRepository.Registrer(id);
 
             //Return to home page
-            return RedirectToPage("/HomePage");
+            return RedirectToPage("/Home");
         }
     }
 }

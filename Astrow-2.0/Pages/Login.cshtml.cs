@@ -93,7 +93,7 @@ namespace Astrow_2._0.Pages
                     HttpContext.Session.SetString(sessionStartDate, LogedUser.StartDate.ToString());
                     HttpContext.Session.SetString(sessionEndDate, LogedUser.EndDate.ToString());
 
-                    return RedirectToPage("/HomePage");
+                    return RedirectToPage("/Home");
                 }
                 else
                 {

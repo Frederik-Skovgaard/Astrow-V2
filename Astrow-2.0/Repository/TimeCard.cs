@@ -135,9 +135,9 @@ namespace Astrow_2._0.Repository
         /// Update the absence column in Day
         /// </summary>
         /// <param name="day"></param>
-        public void UpdateAbsence(Absence abs, Days day)
+        public void UpdateAbsence(Days day)
         {
-            stored.UpdateAbscence(abs, day);
+            stored.UpdateAbscence(day);
         }
 
         public IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)
@@ -154,9 +154,9 @@ namespace Astrow_2._0.Repository
             }
                 
         }
-        
+
         /// <summary>
-        /// Sign user in or out
+        ///  Method for checking user in/out
         /// </summary>
         /// <param name="id"></param>
         public void Registrer(int id)
@@ -194,6 +194,8 @@ namespace Astrow_2._0.Repository
                         Days day = new Days()
                         {
                             Date = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0),
+                            AbsenceDate = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0),
+                            AbsenceText = "",
                             UserID = id,
                             StartDay = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0),
                             EndDay = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0),
@@ -425,6 +427,8 @@ namespace Astrow_2._0.Repository
                 Days day = new Days()
                 {
                     Date = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0),
+                    AbsenceDate = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0),
+                    AbsenceText = "",
                     UserID = id,
                     StartDay = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0),
                     EndDay = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0),
