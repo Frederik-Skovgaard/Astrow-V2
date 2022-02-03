@@ -94,6 +94,8 @@ CREATE TABLE [Days] (
 [Min] INT,
 [Hour] INT,
 [Saldo] NVARCHAR(10),
+[TotalMin] INT,
+[TotalHour] INT,
 [TotalSaldo] NVARCHAR(10)
 
 PRIMARY KEY([Days_ID]),
@@ -112,12 +114,12 @@ INSERT INTO [User] ([UserName], [Password], [Name_ID], [Status], [StartDate], [E
 VALUES ('Admin', 'SPagn++JbYrbIp2/QqKNVA1UU3C572UZ1iNp9lEjMC8=', 1, 'Instructør', '200720 00:00:00 AM', '250101 00:00:00 AM','Roh+S6zwQ9vnp8Soaxw+tA==', 0)
 GO
 
-INSERT INTO [Days] ([User_ID], [Date], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalSaldo])
-VALUES (1, '220130 00:00:00 AM', '220130 08:00:00 AM', '220130 15:44:00 PM',20 ,0, '00:20', '00:20')
+INSERT INTO [Days] ([User_ID], [Date], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalMin], [TotalHour], [TotalSaldo])
+VALUES (1, '220201 00:00:00 AM', '220201 08:00:00 AM', '220130 15:00:00 PM',24 ,-0, '-00:24', 24, -0, '-00:24')
 GO
 
-INSERT INTO [Days] ([User_ID], [Date], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalSaldo])
-VALUES (1, '220131 00:00:00 AM', '220131 07:00:00 AM', '220131 15:44:00 PM',20 ,1, '01:20', '01:40')
+INSERT INTO [Days] ([User_ID], [Date], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalMin], [TotalHour], [TotalSaldo])
+VALUES (1, '220202 00:00:00 AM', '220202 08:00:00 AM', '220131 14:00:00 PM', 24,-1, '-01:24', 48, -1, '-01:48')
 GO
 
 ---------------------------- Create Procedures ----------------------------
@@ -146,10 +148,12 @@ CREATE PROCEDURE [CreateDay]
 @min INT,
 @hour INT,
 @saldo NVARCHAR(10),
+@toMin INT,
+@toHour INT,
 @totalSaldo NVARCHAR(10)
 AS
-INSERT INTO [Days] ([User_ID], [Date], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalSaldo])
-VALUES (@id, @date, @startDay, @endDay, @min, @hour, @saldo, @totalSaldo) 
+INSERT INTO [Days] ([User_ID], [Date], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalMin], [TotalHour], [TotalSaldo])
+VALUES (@id, @date, @startDay, @endDay, @min, @hour, @saldo, @toMin, @toHour, @totalSaldo) 
 GO
 
 -- Create Name
@@ -176,6 +180,8 @@ CREATE PROCEDURE [UpdateDay]
 @min INT,
 @hour INT,
 @saldo NVARCHAR(10),
+@toMin INT,
+@toHour INT,
 @totalSaldo NVARCHAR(10)
 AS
 UPDATE [Days]
@@ -185,6 +191,8 @@ SET [Date] = @date,
 [Min] = @min,
 [Hour] = @hour,
 [Saldo] = @saldo,
+[TotalMin] = @toMin,
+[TotalHour] = @toHour,
 [TotalSaldo] = @totalSaldo
 WHERE  [Days_ID] = @id
 GO
@@ -336,7 +344,7 @@ CREATE PROCEDURE [FindAllDays]
 @id INT,
 @date DATETIME
 AS
-SELECT [Days_ID], [User_ID], [Date], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalSaldo] FROM Days
+SELECT [Days_ID], [User_ID], [Date], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalMin], [TotalHour], [TotalSaldo] FROM Days
 WHERE [User_ID] = @id AND [Date] = @date
 GO
 
@@ -344,7 +352,7 @@ GO
 CREATE PROCEDURE [FindAllDaysByID]
 @id INT
 AS
-SELECT [Days_ID], [User_ID], [Date], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalSaldo] FROM Days
+SELECT [Days_ID], [User_ID], [Date], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalMin], [TotalHour], [TotalSaldo] FROM Days
 WHERE [User_ID] = @id
 GO
 
@@ -369,7 +377,7 @@ GO
 CREATE PROCEDURE [FindDayByID]
 @id INT
 AS
-SELECT [Days_ID], [User_ID], [Date], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalSaldo] FROM [Days]
+SELECT [Days_ID], [User_ID], [Date], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalMin], [TotalHour], [TotalSaldo] FROM [Days]
 WHERE [Days_ID] = @id
 GO
 
@@ -377,7 +385,7 @@ GO
 --Find saldo of the day before
 CREATE PROCEDURE [FindTotalSaldo]
 AS
-SELECT [Days_ID], [User_ID], [Date], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalSaldo]
+SELECT [Days_ID], [User_ID], [Date], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalMin], [TotalHour], [TotalSaldo]
 FROM [Days]
 WHERE [Days_ID] =( 
 	SELECT MAX([Days_ID]) FROM [Days])

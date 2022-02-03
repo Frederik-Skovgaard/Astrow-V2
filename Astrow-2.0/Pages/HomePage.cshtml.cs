@@ -278,14 +278,23 @@ namespace Astrow_2._0.Pages
         /// <returns></returns>
         public IActionResult OnPostRegistrering()
         {
-            //User ID
-            int id = (int)HttpContext.Session.GetInt32("_UserID");
 
-            //Method for registry
-            _timeCard.Registrer(id);
+            if (HttpContext.Session.GetInt32("_UserID") != null)
+            {
+                //User ID
+                int id = (int)HttpContext.Session.GetInt32("_UserID");
 
-            //Return to home page
-            return RedirectToPage("/HomePage");
+                //Method for registry
+                _timeCard.Registrer(id);
+
+                //Return to home page
+                return RedirectToPage("/HomePage");
+            }
+            else
+            {
+                //Return to home page
+                return RedirectToPage("/HomePage");
+            }
         }
 
 

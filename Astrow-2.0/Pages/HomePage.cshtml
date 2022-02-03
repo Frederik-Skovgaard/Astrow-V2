@@ -6,12 +6,15 @@
     ViewData["Title"] = "Home page";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 
+    //Get start and end date of the user, for determining the min and max of the calendar input
     DateTime startTime = DateTime.Parse(HttpContext.Session.GetString("_StartDate"));
     DateTime endTime = DateTime.Parse(HttpContext.Session.GetString("_EndDate"));
 
     string startDate = startTime.ToString("yyyy-MM");
     string endDate = endTime.ToString("yyyy-MM");
 }
+
+
 <form method="post">
     <div class="TimeCard">
         <div class="container outer">

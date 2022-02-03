@@ -213,10 +213,11 @@ namespace Astrow_2._0.Repository
                     else if (time.EndDay.ToString("HH:mm") == "00:00")
                     {
                         //Find date with Startday time and id
-                        Days date = FindDay(time.StartDay, id);
+                        Days toDay = FindDay(time.StartDay, id);
 
                         //Get totalsaldo of last day
-                        Days dayBefore = FindDayByID(date.Days_ID - 1);
+                        Days dayBefore = FindDayByID(toDay.Days_ID - 1);
+
 
                         //If there was none
                         if (dayBefore.Days_ID == 0)
@@ -226,144 +227,193 @@ namespace Astrow_2._0.Repository
                             dayBefore.TotalSaldo = "00:00";
                         }
 
+                        //If hour is negative make minut negative too
+                        if (dayBefore.Hour < 0)
+                        {
+                            dayBefore.TotalMin = dayBefore.TotalMin * -1;
+                        }
+
+
                         //Set EndDay to now
-                        date.EndDay = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0);
+                        toDay.EndDay = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0);
 
                         DateTime StartOfDay = new DateTime(now.Year, now.Month, now.Day, 8, 0, 0);
                         DateTime EndOfDay = new DateTime(now.Year, now.Month, now.Day, 15, 24, 0);
 
 
                         //-7:24
-                        TimeSpan ts = StartOfDay - EndOfDay;
+                        TimeSpan workHours = StartOfDay - EndOfDay;
 
                         //Start day minus end day 
-                        TimeSpan tempSpan = date.EndDay - date.StartDay;
+                        TimeSpan workTime = toDay.EndDay - toDay.StartDay;
 
                         //Time between start and end date plus -7:24 
-                        TimeSpan saldo = tempSpan + ts;
+                        TimeSpan saldo = workTime + workHours;
 
 
-                        //Remove the minus from the minut and hour
-                        int min = 0;
-                        int hour = 0;
+                        //current saldo remove the minus infront
+                        int currentSaldoMin = 0;
+                        int currentSaldoHour = 0;
 
                         //If minut is negative remove minus
                         if (saldo.Minutes < 0)
                         {
-                            min = saldo.Minutes * -1;
+                            currentSaldoMin = saldo.Minutes * -1;
                         }
                         else
                         {
-                            min = saldo.Minutes;
+                            currentSaldoMin = saldo.Minutes;
                         }
 
                         //If hour is negative remove minus
                         if (saldo.Hours < 0)
                         {
-                            hour = saldo.Hours * -1;
+                            currentSaldoHour = saldo.Hours * -1;
                         }
                         else
                         {
-                            hour = saldo.Hours;
+                            currentSaldoHour = saldo.Hours;
                         }
 
-                        //Temp string holder
-                        string tempMin = "";
-                        string tempHour = "";
+
+
+                        //New saldo
+                        string newSaldoMin = "";
+                        string newSaldoHour = "";
 
                         //If minut lenght equals to one add 0 infront  
-                        if (min.ToString().Length == 1)
+                        if (currentSaldoMin.ToString().Length == 1)
                         {
-                            tempMin = $"0{min}";
+                            newSaldoMin = $"0{currentSaldoMin}";
                         }
                         else
                         {
-                            tempMin = min.ToString();
+                            newSaldoMin = currentSaldoMin.ToString();
                         }
 
                         //If hours lenght equals to one add 0 infront  
-                        if (hour.ToString().Length == 1)
+                        if (currentSaldoHour.ToString().Length == 1)
                         {
                             //If hour is negativ add minus infront
                             if (saldo.Hours < 0)
                             {
-                                tempHour = $"-0{hour}";
+                                newSaldoHour = $"-0{currentSaldoHour}";
                             }
                             else
                             {
-                                tempHour = hour.ToString();
+                                newSaldoHour = currentSaldoHour.ToString();
                             }
                             
                         }
 
+
+
+                        //New total saldo
+                        int totalSaldoMinInt = 0;
+                        int totalSaldoHourInt = 0;
+
+                        if (saldo.Hours <= 0 && dayBefore.Hour <= 0)
+                        {
+                            //Old total saldo plus new saldo
+                            totalSaldoHourInt = Convert.ToInt32(newSaldoHour) + dayBefore.TotalHour;
+                        }
+                        else if (saldo.Hours < 0 && dayBefore.Hour > 0 || dayBefore.Hour > 0 && saldo.Hours < 0)
+                        {
+                            //Old total saldo plus new saldo
+                            totalSaldoHourInt = Convert.ToInt32(newSaldoHour) - dayBefore.TotalHour;
+                        }
+
+                        if (saldo.Minutes <= 0 && dayBefore.Min <= 0)
+                        {
+                            //If total saldo minut is negative remove the minus
+                            totalSaldoMinInt = Convert.ToInt32(saldo.Minutes) + dayBefore.TotalMin;
+                        }
+                        else if (saldo.Minutes < 0 && dayBefore.Min > 0 || dayBefore.Min > 0 && saldo.Minutes < 0)
+                        {
+                            //If total saldo minut is negative remove the minus
+                            totalSaldoMinInt = Convert.ToInt32(saldo.Minutes) + dayBefore.TotalMin;
+                        }
+
+                        
+
+                        //If minut reach 60 min
+                        if (totalSaldoMinInt >= 60 || totalSaldoMinInt <= -60)
+                        {
+                            //If hour is negative
+                            if (totalSaldoMinInt < 0)
+                            {
+                                totalSaldoMinInt = totalSaldoMinInt + 60;
+                                totalSaldoHourInt = totalSaldoHourInt - 1;
+                            }
+                            else
+                            {
+                                totalSaldoMinInt = totalSaldoMinInt - 60;
+                                totalSaldoHourInt = totalSaldoHourInt + 1;
+                            }
+                            
+                        }
+
+
+
+                        //If number negative 
+                        if (totalSaldoMinInt < 0)
+                        {
+                            totalSaldoMinInt = totalSaldoMinInt * -1;
+                        }
+                        if (totalSaldoHourInt < 0)
+                        {
+                            totalSaldoHourInt = totalSaldoHourInt * -1;
+                        }
+
+
+
+
+                        //string holder for new total saldo hour
+                        string totalSaldoHourStr = "";
+
+                        //string holder for new total saldo minut
+                        string totalSaldoMinStr = "";
+
+
+                        //If number is one digit long add zero infront
+                        if (totalSaldoHourInt.ToString().Length == 1)
+                        {
+                            //If number is negative add minus infront
+                            if (saldo.Hours < 0)
+                            {
+                                totalSaldoHourStr = $"-0{totalSaldoHourInt}";
+                            }
+
+                        }
+                        else
+                        {
+                            totalSaldoHourStr = totalSaldoHourInt.ToString();
+                        }
+
+                        //If number is one digit long add zero infront
+                        if (totalSaldoMinInt.ToString().Length == 1)
+                        {
+                            totalSaldoMinStr = $"0{totalSaldoMinInt}";
+                        }
+                        else
+                        {
+                            totalSaldoMinStr = totalSaldoMinInt.ToString();
+                        }
+
+
                         //Set min and hour
-                        date.Min = min;
-                        date.Hour = hour;
+                        toDay.Min = Convert.ToInt32(newSaldoMin);
+                        toDay.Hour = Convert.ToInt32(newSaldoHour);
 
                         //Set Saldo to saldo value
-                        date.Saldo = $"{tempHour}:{tempMin}";
-
-                        //If total saldo minut is negative remove the minus
-                        int minut = saldo.Minutes + dayBefore.Min;
-
-                        //string holder for new total saldo
-                        string tempMinStr = "";
-
-                        //If number negative 
-                        if (minut < 0)
-                        {
-                            minut = minut * -1;
-                        }
-
-                        //If number is one digit long add zero infront
-                        if (minut.ToString().Length == 1)
-                        {
-                            //If number is negative add minus infront
-                            if (saldo.Hours < 0)
-                            {
-                                tempMinStr = $"0{minut}";
-                            }
-                            else
-                            {
-                                tempMinStr = minut.ToString();
-                            }
-                        }
-
-                        //Old total saldo plus new saldo
-                        int hourTemp = saldo.Hours + dayBefore.Hour;
-
-                        //string holder for new total saldo
-                        string tempTotStr = "";
-
-                        //If number negative 
-                        if (hourTemp < 0)
-                        {
-                            hourTemp = hourTemp * -1;
-                        }
-
-
-                        //If number is one digit long add zero infront
-                        if (hourTemp.ToString().Length == 1)
-                        {
-                            //If number is negative add minus infront
-                            if (saldo.Hours < 0)
-                            {
-                                tempTotStr = $"-0{hourTemp}";
-                            }
-                            else
-                            {
-                                tempTotStr = hourTemp.ToString();
-                            }
-
-                        }
-
+                        toDay.Saldo = $"{newSaldoHour}:{newSaldoMin}";
 
                         //Set total saldo
-                        date.TotalSaldo = $"{tempTotStr}:{tempMinStr}";
+                        toDay.TotalSaldo = $"{totalSaldoHourStr}:{totalSaldoMinStr}";
 
 
                         //Update day
-                        UpdateDay(date);
+                        UpdateDay(toDay);
 
                         break;
                     }

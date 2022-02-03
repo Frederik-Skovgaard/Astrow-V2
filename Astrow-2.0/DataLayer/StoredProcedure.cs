@@ -130,6 +130,8 @@ namespace Astrow_2._0.DataLayer
                 createDay.Parameters.AddWithValue("@min", day.Min);
                 createDay.Parameters.AddWithValue("@hour", day.Hour);
                 createDay.Parameters.AddWithValue("@saldo", day.Saldo);
+                createDay.Parameters.AddWithValue("@toMin", day.TotalMin);
+                createDay.Parameters.AddWithValue("@toHour", day.TotalHour);
                 createDay.Parameters.AddWithValue("@totalSaldo", day.TotalSaldo);
 
                 createDay.ExecuteNonQuery();
@@ -235,6 +237,8 @@ namespace Astrow_2._0.DataLayer
                 cmd.Parameters.AddWithValue("@min", day.Min);
                 cmd.Parameters.AddWithValue("@hour", day.Hour);
                 cmd.Parameters.AddWithValue("@saldo", day.Saldo);
+                cmd.Parameters.AddWithValue("@toMin", day.TotalMin);
+                cmd.Parameters.AddWithValue("@toHour", day.TotalHour);
                 cmd.Parameters.AddWithValue("@totalSaldo", day.TotalSaldo);
 
                 cmd.ExecuteNonQuery();
@@ -503,7 +507,9 @@ namespace Astrow_2._0.DataLayer
                             Min = read.GetInt32(5),
                             Hour = read.GetInt32(6),
                             Saldo = read.GetString(7),
-                            TotalSaldo = read.GetString(8)
+                            TotalMin = read.GetInt32(8),
+                            TotalHour = read.GetInt32(9),
+                            TotalSaldo = read.GetString(10)
                         };
 
                         days.Add(day);
@@ -549,7 +555,9 @@ namespace Astrow_2._0.DataLayer
                             Min = read.GetInt32(5),
                             Hour = read.GetInt32(6),
                             Saldo = read.GetString(7),
-                            TotalSaldo = read.GetString(8)
+                            TotalMin = read.GetInt32(8),
+                            TotalHour = read.GetInt32(9),
+                            TotalSaldo = read.GetString(10)
                         };
 
                         days.Add(day);
@@ -625,7 +633,9 @@ namespace Astrow_2._0.DataLayer
                             Min = read.GetInt32(5),
                             Hour = read.GetInt32(6),
                             Saldo = read.GetString(7),
-                            TotalSaldo = read.GetString(8)
+                            TotalMin = read.GetInt32(8),
+                            TotalHour = read.GetInt32(9),
+                            TotalSaldo = read.GetString(10)
                         };
                     }
                 }
@@ -729,7 +739,9 @@ namespace Astrow_2._0.DataLayer
                             Min = read.GetInt32(5),
                             Hour = read.GetInt32(6),
                             Saldo = read.GetString(7),
-                            TotalSaldo = read.GetString(8)
+                            TotalMin = read.GetInt32(8),
+                            TotalHour = read.GetInt32(9),
+                            TotalSaldo = read.GetString(10)
                         };
                     }
                 }

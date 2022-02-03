@@ -11,7 +11,7 @@ namespace Astrow_2._0.Model.Items
         {
 
         }
-        public Days(int id, int userID, DateTime date, DateTime startDate, DateTime endDate, int min, int hour, string saldo, string totalSaldo)
+        public Days(int id, int userID, DateTime date, DateTime startDate, DateTime endDate, int min, int hour, string saldo, int toMin, int toHour, string totalSaldo)
         {
             this.Days_ID = id;
             this.UserID = userID;
@@ -19,9 +19,13 @@ namespace Astrow_2._0.Model.Items
             
             this.StartDay = startDate;
             this.EndDay = endDate;
+
             this.Min = min;
             this.Hour = hour;
             this.Saldo = saldo;
+
+            this.TotalMin = toMin;
+            this.TotalHour = toHour;
             this.TotalSaldo = totalSaldo;
         }
 
@@ -33,6 +37,8 @@ namespace Astrow_2._0.Model.Items
         public int Min { get; set; }
         public int Hour { get; set; }
         public string Saldo { get; set; }
+        public int TotalMin { get; set; }
+        public int TotalHour { get; set; }
         public string TotalSaldo { get; set; }
     }
 }

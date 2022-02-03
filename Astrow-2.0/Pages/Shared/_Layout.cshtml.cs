@@ -13,17 +13,5 @@ namespace Astrow_2._0.Pages.Shared
 {
     public class _Layout : PageModel
     {
-        private readonly ITimeCard _timeCard;
-
-        public _Layout(ITimeCard timeCard)
-        {
-            _timeCard = timeCard;
-        }
-
-
-        public void OnGet()
-        {
-
-        }
     }
 }
