@@ -1,27 +1,164 @@
-﻿@page
+﻿@page "{handler?}"
 @model Astrow_2._0.Pages.AdminPage.UpdateTimeCardModel
 @{
     ViewData["Title"] = "Timekort | Page";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<form method="post">
+
+
+<form asp-page-handler="User" method="post">
     <div class="AdminPage">
         <div class="container">
             <div class="row upper-row">
                 <a href="/AdminPage/Opret-Bruger" class="btn btn-lg btn-primary">
-                <i class="fas fa-plus-circle"></i> Opret bruger
-            </a>
-            <a href="/AdminPage/Opdater-Bruger" class="btn btn-lg btn-secondary">
-                <i class="fas fa-user-edit"></i> Opdater bruger
-            </a>
-            <a href="/AdminPage/Opdater-Timekort" class="btn btn-lg btn-secondary">
-                <i class="fas fa-user-clock"></i> Opdater Timekort
-            </a>
-            <a href="/AdminPage/Slet-Bruger" class="btn btn-lg btn-danger">
-                <i class="fas fa-minus-circle"></i> Fjern bruger
-            </a>
+                    <i class="fas fa-plus-circle"></i> Opret bruger
+                </a>
+                <a href="/AdminPage/Opdater-Bruger" class="btn btn-lg btn-secondary">
+                    <i class="fas fa-user-edit"></i> Opdater bruger
+                </a>
+                <a href="/AdminPage/Opdater-Timekort" class="btn btn-lg btn-secondary">
+                    <i class="fas fa-user-clock"></i> Opdater Timekort
+                </a>
+                <a href="/AdminPage/Slet-Bruger" class="btn btn-lg btn-danger">
+                    <i class="fas fa-minus-circle"></i> Fjern bruger
+                </a>
+            </div>
+            <p class="display-3">Opdater Timekort</p>
+            <div class="container lower-container OpdateTimeCard">
+
+                <div class="row col-row">
+
+                    <div class="col-3">
+                        <label>User</label> <br />
+                        <select class="form-control" name="UserValue" asp-for="UserValue" id="usernbtn">
+                            @foreach (Model.Containers.Users user in Model.UserList)
+                            {
+                                <option value="@user.User_ID">@user.UserName</option>
+                            }
+                        </select>
+
+                        <input type="submit" asp-page-handler="User" style="width: min-content;" id="SubmitBTN" value="Choose" class="form-control btn btn-primary" />
+                    </div>
+
+                </div>
+
+
+                <div class="row col-row">
+                    <div class="row col-6">
+                        <label>Date</label> <br />
+
+                        @if (Model.DateBool == true)
+                        {
+                            <input id="Calendar" value="@Model.CalenderValue" type="date" name="Calendar" class="form-control" min="@Model.StartDay" max="@Model.EndDay" oninvalid="this.setCustomValidity('Vælge en dato')" oninput="this.setCustomValidity('')" required />
+                            <input type="submit" asp-page-handler="Load" id="SubmitBTN" value="Choose" class="btn btn-primary" style="width: min-content;" />
+                        }
+                        else
+                        {
+                            <input id="Calendar" value="@Model.CalenderValue" type="date" name="Calendar" class="form-control" min="@Model.StartDay" max="@Model.EndDay" oninvalid="this.setCustomValidity('Vælge en dato')" oninput="this.setCustomValidity('')" required disabled />
+                            <input type="submit" asp-page-handler="Load" id="SubmitBTN" value="Choose" class="btn btn-primary" style="width: min-content;" disabled />
+                        }
+                    </div>
+
+                </div>
+
+
+                @if (Model.TimeBool == true)
+                {
+                    <div class="row col-row">
+                        <div class="row col-6 OpdaterTimeCardRow">
+                            <label>Start dag tid</label> <br />
+                            <input class="HourClock" type="time" name="StartHour" value="@Model.StartHour" asp-for="StartHour">
+                        </div>
+
+
+                        <div class="row col-6 OpdaterTimeCardRow">
+                            <label>Slut dag tid</label> <br />
+                            <input class="HourClock" id="HourClock" type="time" name="EndHour" value="@Model.EndHour" asp-for="EndHour">
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="row col-row">
+                        <div class="row col-6 OpdaterTimeCardRow">
+                            <label>Start dag tid</label> <br />
+                            <input class="HourClock" type="time" name="StartHour" value="@Model.StartHour" asp-for="StartHour" disabled>
+                        </div>
+
+
+                        <div class="row col-6 OpdaterTimeCardRow">
+                            <label>Slut dag tid</label> <br />
+                            <input class="HourClock" id="HourClock" type="time" name="EndHour" value="@Model.EndHour" asp-for="EndHour" disabled>
+                        </div>
+                    </div>
+                }
+
+
+                <div class="row col-row">
+                    <div class="row col-12 OpdaterTimeCardRow">
+                        <p class="AbOptions" id="AbOptions" style="font-size: 20px;">+</p>
+                        <p class="AbOptions"> Absence</p>
+
+                        <div class="AbsenceOptions">
+                            <div class="AbsHide AbsHidden">
+                                <label>Fravær Grund</label> <br />
+                                @if (Model.TimeBool == true)
+                                {
+                                   <textarea type="text" class="form-control AbsenceText" name="AbscenseText" value="@Model.AbscenseText" asp-for="AbscenseText"></textarea> 
+                                }
+                                else
+                                {
+                                    <textarea type="text" class="form-control AbsenceText" name="AbscenseText" value="@Model.AbscenseText" asp-for="AbscenseText" disabled></textarea>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row submit-row">
+                    @if (Model.TimeBool == true)
+                    {
+                         <input value="Submit" id="SubmitButton" type="submit" asp-page-handler="Submit" class="btn btn-lg btn-primary" />
+                    }
+                    else
+                    {
+                         <input value="Submit" id="SubmitButton" type="submit" asp-page-handler="Submit" class="btn btn-lg btn-primary" disabled/>
+                    }
+                   
+                </div>
+
             </div>
         </div>
     </div>
+
+
+    <script type="text/javascript">
+        $('#SubmitBTN').click(function(){
+            document.getElementById('SubmitButton').disabled = false;
+            document.getElementById('HourClock').disabled = false;
+            document.getElementById('Calendar').disabled = false;
+            document.getElementById('SubmitBTN').disabled = false;
+        });
+
+        $('.AbOptions').click(function() {
+
+            if(document.getElementById('AbOptions').innerText == "-")
+            {
+                document.getElementById('AbOptions').innerText = "+";
+                $('#AbOptions').toggleClass("Minnus");
+                $('.AbsHide').toggleClass('AbsHidden');
+            }
+            else
+            {
+                document.getElementById('AbOptions').innerText = "-";
+                $('#AbOptions').toggleClass("Minnus");
+                $('.AbsHide').toggleClass('AbsHidden');
+            }
+        });
+    </script>
+
+
+
 </form>

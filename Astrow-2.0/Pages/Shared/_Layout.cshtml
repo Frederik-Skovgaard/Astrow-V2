@@ -103,7 +103,7 @@
 
             @{
                 //If logged user is admin they can see the admin tab
-                if (System.Text.Encoding.UTF8.GetString(test, 0, test.Length) == "Instructør")
+                if (test != null && System.Text.Encoding.UTF8.GetString(test, 0, test.Length) == "Instructør") 
                 {
                     @*Admin sider*@
                     <li id="Ad-li">

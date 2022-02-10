@@ -385,7 +385,7 @@ nav ul li a span.rotate {
             background: url("../Img/LightlogoSBO.png");
             background-repeat:no-repeat;
             background-size: contain;
-            width: 20rem;
+            width: 18rem;
             border-radius: 5px;
             height: 4.4rem;
         }
@@ -811,12 +811,91 @@ nav ul li a span.rotate {
    width: fit-content;
 }
 
+.AdminPage .container .OpdateTimeCard {
+    min-height: 40rem !important;
+    position:relative;
+    padding-top: 1rem !important;
+}
+.AdminPage .container .OpdateTimeCard .OpdaterTimeCardRow {
+    place-content:center;
+
+}
+
+.AdminPage .container .OpdateTimeCard .OpdaterTimeCardRow p {
+    float: left;
+    line-height: 0px;
+    color: #afacace0;
+    -webkit-text-stroke: medium;
+    font-size: 15px;
+    cursor: pointer;
+    user-select:none;
+}
+
+
+.AdminPage .container .OpdateTimeCard .Minnus{
+    font-size: 20px !important;
+    width: 14px;
+}
+.AdminPage .container .OpdateTimeCard .AbsHidden{
+    display:none;
+}
+.AdminPage .container .OpdateTimeCard .AbsHide{
+    position: absolute;
+    top: 5rem;
+    left: 0%;
+    right: 0%;
+}
+
+
+
+
+.AdminPage .container .OpdateTimeCard .AbsenceOptions {
+    border-bottom: #7a70708c solid 3px;
+    float: left;
+    width: 40rem;
+    height: 44px;
+    margin-left: 1rem;
+}
+
+.AdminPage .container .OpdateTimeCard .form-control:disabled, .form-control[readonly] {
+    background-color: #a7c0cc;
+    opacity: 1;
+    border-color: #a7c0cc;
+}
+
+
+
+.AdminPage .container .OpdateTimeCard .row .HourClock {
+    width: 8vh;
+}
+.AdminPage .container .OpdateTimeCard #usernbtn {
+    float: left;
+    margin-right: 1rem;
+}
+.AdminPage .container .OpdateTimeCard #Calendar {
+    float: left;
+    width: 10rem;
+    margin-right: 1rem;
+    margin-left: 1.4rem;
+}
+.AdminPage .container .OpdateTimeCard .submitBTN {
+    float:left;
+}
+
+.AdminPage .container .OpdateTimeCard .AbsenceText {
+    height: 90px;
+    width: 20rem !important;
+    min-height: 90px;
+    max-height: 157px;
+}
+
+
 .AdminPage .container p {
     text-align: center;
     margin-top: 2.5rem;
     width: fit-content;
     color: white;
-    font-family: -webkit-pictograph;
+    font-family: unset;
 }
 
 .AdminPage .container .upper-row {
@@ -852,25 +931,28 @@ nav ul li a span.rotate {
 
     width: 50rem;
 
-    
-
     min-block-size: max-content;
 }
 
+
+
 .AdminPage .container .CreateUser {
-    height:fit-content !important;
+    min-height: 40rem !important;
+    position:relative;
 }
 .AdminPage .container .CreateUser .createRow {
     padding-top: 2rem;
 }
 
 .AdminPage .container .UpdateUser {
-    height:fit-content !important;
+    min-height: 40rem !important;
+    position:relative;
 }
 
 .AdminPage .container .DeleteUser {
     min-height: 40rem !important;
     max-height: fit-content !important;
+    position:relative;
 }
 
 .AdminPage .container .lower-container .submit-row {
@@ -883,6 +965,9 @@ nav ul li a span.rotate {
     align-items: center;
     place-content: center;
     padding: 0.5rem;
+    position: absolute;
+    bottom: 0;
+    left: 0;
     
 }
 

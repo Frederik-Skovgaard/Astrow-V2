@@ -282,7 +282,7 @@ namespace Astrow_2._0.DataLayer
         /// Set abscens
         /// </summary>
         /// <param name="day"></param>
-        public void UpdateAbscence(Days day)
+        public void UpdateAbscence(DateTime date, string text, int id)
         {
             using (sql = new SqlConnection(connectionString))
             {
@@ -290,10 +290,10 @@ namespace Astrow_2._0.DataLayer
 
                 SqlCommand cmd = new SqlCommand("UpdateAbscence", sql);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", day.Days_ID);
+                cmd.Parameters.AddWithValue("@id", id);
 
-                cmd.Parameters.AddWithValue("@AbscenceDate", day.AbsenceDate);
-                cmd.Parameters.AddWithValue("@AbscenceText", day.AbsenceText);
+                cmd.Parameters.AddWithValue("@AbscenceDate", date);
+                cmd.Parameters.AddWithValue("@AbscenceText", text);
 
                 cmd.ExecuteNonQuery();
             }
@@ -303,7 +303,7 @@ namespace Astrow_2._0.DataLayer
         /// Scan in date
         /// </summary>
         /// <param name="day"></param>
-        public void UpdateStartDay(Days day, int id)
+        public void UpdateStartDay(DateTime date, int id)
         {
             using (sql = new SqlConnection(connectionString))
             {
@@ -314,7 +314,7 @@ namespace Astrow_2._0.DataLayer
 
                 cmd.Parameters.AddWithValue("@id", id);
 
-                cmd.Parameters.AddWithValue("@StartDay", day.StartDay);
+                cmd.Parameters.AddWithValue("@StartDay", date);
 
                 cmd.ExecuteNonQuery();
             }
@@ -324,7 +324,7 @@ namespace Astrow_2._0.DataLayer
         /// Scan out date
         /// </summary>
         /// <param name="day"></param>
-        public void UpdateEndDay(Days day, int id)
+        public void UpdateEndDay(DateTime date, int id)
         {
             using (sql = new SqlConnection(connectionString))
             {
@@ -335,7 +335,7 @@ namespace Astrow_2._0.DataLayer
 
                 cmd.Parameters.AddWithValue("@id", id);
 
-                cmd.Parameters.AddWithValue("@EndDay", day.EndDay);
+                cmd.Parameters.AddWithValue("@EndDay", date);
 
                 cmd.ExecuteNonQuery();
             }
@@ -345,7 +345,7 @@ namespace Astrow_2._0.DataLayer
         /// Update saldo
         /// </summary>
         /// <param name="day"></param>
-        public void UpdateSaldo(Days day, int id)
+        public void UpdateSaldo(int min, int hour, string saldo, int id)
         {
             using (sql = new SqlConnection(connectionString))
             {
@@ -355,7 +355,9 @@ namespace Astrow_2._0.DataLayer
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@id", id);
-                cmd.Parameters.AddWithValue("@Saldo", day.Saldo);
+                cmd.Parameters.AddWithValue("@min", min);
+                cmd.Parameters.AddWithValue("@hour", hour);
+                cmd.Parameters.AddWithValue("@Saldo", saldo);
 
                 cmd.ExecuteNonQuery();
             }
@@ -366,7 +368,7 @@ namespace Astrow_2._0.DataLayer
         /// </summary>
         /// <param name="day"></param>
         /// <param name="id"></param>
-        public void UpdateTotalSaldo(Days day, int id)
+        public void UpdateTotalSaldo(int min, int hour, string saldo, int id)
         {
             using (sql = new SqlConnection(connectionString))
             {
@@ -376,7 +378,9 @@ namespace Astrow_2._0.DataLayer
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@id", id);
-                cmd.Parameters.AddWithValue("@Saldo", day.Saldo);
+                cmd.Parameters.AddWithValue("@totalMin", min);
+                cmd.Parameters.AddWithValue("@totalHour", hour);
+                cmd.Parameters.AddWithValue("@saldo", saldo);
 
                 cmd.ExecuteNonQuery();
             }
@@ -439,7 +443,7 @@ namespace Astrow_2._0.DataLayer
         /// <param name="id"></param>
         /// <param name="user"></param>
         /// <returns></returns>
-        public Users FindByID(int id)
+        public Users FindUser(int id)
         {
             using (sql = new SqlConnection(connectionString))
             {
@@ -598,10 +602,18 @@ namespace Astrow_2._0.DataLayer
                         day = new Days()
                         {
                             Days_ID = read.GetInt32(0),
-                            Date = read.GetDateTime(1),
-                            StartDay = read.GetDateTime(2),
+                            UserID = read.GetInt32(1),
+                            Date = read.GetDateTime(2),
                             AbsenceDate = read.GetDateTime(3),
-                            AbsenceText = read.GetString(4)
+                            AbsenceText = read.GetString(4),
+                            StartDay = read.GetDateTime(5),
+                            EndDay = read.GetDateTime(6),
+                            Min = read.GetInt32(7),
+                            Hour = read.GetInt32(8),
+                            Saldo = read.GetString(9),
+                            TotalMin = read.GetInt32(10),
+                            TotalHour = read.GetInt32(11),
+                            TotalSaldo = read.GetString(12)
                         };
                     }
                 }
@@ -609,6 +621,7 @@ namespace Astrow_2._0.DataLayer
                 return day;
             }
         }
+
 
         /// <summary>
         /// Find day by id

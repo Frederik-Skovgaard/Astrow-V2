@@ -11,11 +11,11 @@ namespace Astrow_2._0.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ITimeCard _timeCard;
+        private readonly IUserRepository _userRepository;
 
-        public IndexModel(ITimeCard timeCard)
+        public IndexModel(IUserRepository timeCard)
         {
-            _timeCard = timeCard;
+            _userRepository = timeCard;
         }
 
 
@@ -80,12 +80,12 @@ namespace Astrow_2._0.Pages
                     EndDate = StartDate.AddMonths(1);
 
                     //Render days % year/month selector
-                    Days = _timeCard.EachDay(StartDate, EndDate.AddDays(-1));
+                    Days = _userRepository.EachDay(StartDate, EndDate.AddDays(-1));
 
                     //List of all users days
-                    daysList = _timeCard.FindAllDaysByID(logged.User_ID);
+                    daysList = _userRepository.FindAllDaysByID(logged.User_ID);
 
-                    Years = _timeCard.EachYear(logged.StartDate, logged.EndDate);
+                    Years = _userRepository.EachYear(logged.StartDate, logged.EndDate);
 
 
                     //Return to page
@@ -122,8 +122,8 @@ namespace Astrow_2._0.Pages
                 EndDate = DateTime.Parse($"{temp}-{StartDate.Month}-{StartDate.Year}");
 
                 //Render days % year/month selector
-                Days = _timeCard.EachDay(StartDate, EndDate);
-                Years = _timeCard.EachYear(logged.StartDate, logged.EndDate);
+                Days = _userRepository.EachDay(StartDate, EndDate);
+                Years = _userRepository.EachYear(logged.StartDate, logged.EndDate);
             }
             else if (StartDate >= logged.EndDate)
             {
@@ -134,8 +134,8 @@ namespace Astrow_2._0.Pages
                 CalendarValue = StartDate.ToString("yyyy-MM");
 
                 //Render days % year/month selector
-                Days = _timeCard.EachDay(StartDate, EndDate);
-                Years = _timeCard.EachYear(logged.StartDate, logged.EndDate);
+                Days = _userRepository.EachDay(StartDate, EndDate);
+                Years = _userRepository.EachYear(logged.StartDate, logged.EndDate);
             }
             else
             {
@@ -144,8 +144,8 @@ namespace Astrow_2._0.Pages
                 CalendarValue = StartDate.ToString("yyyy-MM");
 
                 //Render days % year/month selector
-                Days = _timeCard.EachDay(StartDate, EndDate.AddDays(-1));
-                Years = _timeCard.EachYear(logged.StartDate, logged.EndDate);
+                Days = _userRepository.EachDay(StartDate, EndDate.AddDays(-1));
+                Years = _userRepository.EachYear(logged.StartDate, logged.EndDate);
             }
         }
 
@@ -160,7 +160,7 @@ namespace Astrow_2._0.Pages
             logged = GetDate();
 
             //List of all users days
-            daysList = _timeCard.FindAllDaysByID(logged.User_ID);
+            daysList = _userRepository.FindAllDaysByID(logged.User_ID);
 
             try
             {
@@ -190,8 +190,8 @@ namespace Astrow_2._0.Pages
                 EndDate = DateTime.Parse($"{temp}-{StartDate.Month}-{StartDate.Year}");
 
                 //Render days % year/month selector
-                Days = _timeCard.EachDay(StartDate, EndDate);
-                Years = _timeCard.EachYear(logged.StartDate, logged.EndDate);
+                Days = _userRepository.EachDay(StartDate, EndDate);
+                Years = _userRepository.EachYear(logged.StartDate, logged.EndDate);
             }
             else
             {
@@ -200,8 +200,8 @@ namespace Astrow_2._0.Pages
                 CalendarValue = StartDate.ToString("yyyy-MM");
 
                 //Render days % year/month selector
-                Days = _timeCard.EachDay(StartDate, EndDate.AddDays(-1));
-                Years = _timeCard.EachYear(logged.StartDate, logged.EndDate);
+                Days = _userRepository.EachDay(StartDate, EndDate.AddDays(-1));
+                Years = _userRepository.EachYear(logged.StartDate, logged.EndDate);
             }
         }
 
@@ -225,7 +225,7 @@ namespace Astrow_2._0.Pages
             logged = GetDate();
 
             //List of all users days
-            daysList = _timeCard.FindAllDaysByID(logged.User_ID);
+            daysList = _userRepository.FindAllDaysByID(logged.User_ID);
 
             //Bug forward when year only
 
@@ -257,8 +257,8 @@ namespace Astrow_2._0.Pages
                 CalendarValue = StartDate.ToString("yyyy-MM");
 
                 //Render days % year/month selector
-                Days = _timeCard.EachDay(StartDate, EndDate);
-                Years = _timeCard.EachYear(logged.StartDate, logged.EndDate);
+                Days = _userRepository.EachDay(StartDate, EndDate);
+                Years = _userRepository.EachYear(logged.StartDate, logged.EndDate);
             }
             else
             {
@@ -267,8 +267,8 @@ namespace Astrow_2._0.Pages
                 CalendarValue = StartDate.ToString("yyyy-MM");
 
                 //Render days % year/month selector
-                Days = _timeCard.EachDay(StartDate, EndDate.AddDays(-1));
-                Years = _timeCard.EachYear(logged.StartDate, logged.EndDate);
+                Days = _userRepository.EachDay(StartDate, EndDate.AddDays(-1));
+                Years = _userRepository.EachYear(logged.StartDate, logged.EndDate);
             }
         }
 
@@ -285,7 +285,7 @@ namespace Astrow_2._0.Pages
                 int id = (int)HttpContext.Session.GetInt32("_UserID");
 
                 //Method for registry
-                _timeCard.Registrer(id);
+                _userRepository.Registrer(id);
 
                 //Return to home page
                 return RedirectToPage("/Home");
