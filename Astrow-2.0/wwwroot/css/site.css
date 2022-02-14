@@ -887,7 +887,18 @@ nav ul li a span.rotate {
     width: 20rem !important;
     min-height: 90px;
     max-height: 157px;
+    float: left;
+    margin-left: 15rem;
+
 }
+
+.AdminPage .container .OpdateTimeCard .AbsenceOptions .AbscenseTypeDrop {
+    margin: 0;
+    float: left;
+    margin-left: 1rem;
+    width: 9rem;
+}
+
 
 
 .AdminPage .container p {

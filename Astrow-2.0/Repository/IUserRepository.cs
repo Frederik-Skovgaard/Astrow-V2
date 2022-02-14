@@ -43,6 +43,8 @@ namespace Astrow_2._0.Repository
         #region Days
         void CreateDay(Days day, int id);
 
+        List<AbscenseType> GetAllAbscenseType();
+
         List<Days> FindAllDays(int id, DateTime date);
 
         List<Days> FindAllDaysByID(int id);
@@ -63,7 +65,9 @@ namespace Astrow_2._0.Repository
 
         void UpdateTotalSaldo(int min, int hour, string saldo, int id);
 
-        void UpdateAbsence(DateTime date, string text, int id);
+        void UpdateAbsence(string text, int id);
+
+        void UpdateAbsencseType(int id, int dayID);
 
         void Registrer(int id);
 

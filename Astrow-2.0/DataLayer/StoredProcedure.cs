@@ -125,8 +125,8 @@ namespace Astrow_2._0.DataLayer
 
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@date", day.Date);
-                cmd.Parameters.AddWithValue("@absenceDate", day.AbsenceDate);
-                cmd.Parameters.AddWithValue("@absenceText", day.AbsenceText);
+                cmd.Parameters.AddWithValue("@abscenseID", day.AbscenseID);
+                cmd.Parameters.AddWithValue("@abscenseText", day.AbsenceText);
                 cmd.Parameters.AddWithValue("@startDay", day.StartDay);
                 cmd.Parameters.AddWithValue("@endDay", day.EndDay);
                 cmd.Parameters.AddWithValue("@min", day.Min);
@@ -234,8 +234,8 @@ namespace Astrow_2._0.DataLayer
 
                 cmd.Parameters.AddWithValue("@id", day.Days_ID);
                 cmd.Parameters.AddWithValue("@date", day.Date);
-                cmd.Parameters.AddWithValue("@absenceDate", day.AbsenceDate);
-                cmd.Parameters.AddWithValue("@absenceText", day.AbsenceText);
+                cmd.Parameters.AddWithValue("@abscenseID", day.AbscenseID);
+                cmd.Parameters.AddWithValue("@abscenseText", day.AbsenceText);
                 cmd.Parameters.AddWithValue("@startDay", day.StartDay);
                 cmd.Parameters.AddWithValue("@endDay", day.EndDay);
                 cmd.Parameters.AddWithValue("@min", day.Min);
@@ -282,7 +282,7 @@ namespace Astrow_2._0.DataLayer
         /// Set abscens
         /// </summary>
         /// <param name="day"></param>
-        public void UpdateAbscence(DateTime date, string text, int id)
+        public void UpdateAbscence(string text, int id)
         {
             using (sql = new SqlConnection(connectionString))
             {
@@ -292,10 +292,31 @@ namespace Astrow_2._0.DataLayer
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", id);
 
-                cmd.Parameters.AddWithValue("@AbscenceDate", date);
                 cmd.Parameters.AddWithValue("@AbscenceText", text);
 
                 cmd.ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// Method for Update Abscense type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="dayID"></param>
+        public void UpdateAbsencseType(int id, int dayID)
+        {
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand cmd = new SqlCommand("UpdateAbsencseType", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@dayID", dayID);
+
+                cmd.ExecuteNonQuery();
+
             }
         }
 
@@ -510,8 +531,8 @@ namespace Astrow_2._0.DataLayer
                             Days_ID = read.GetInt32(0),
                             UserID = read.GetInt32(1),
                             Date = read.GetDateTime(2),
-                            AbsenceDate = read.GetDateTime(3),
-                            AbsenceText = read.GetString(4),
+                            AbsenceText = read.GetString(3),
+                            AbscenseID = read.GetInt32(4),
                             StartDay = read.GetDateTime(5),
                             EndDay = read.GetDateTime(6),
                             Min = read.GetInt32(7),
@@ -560,8 +581,8 @@ namespace Astrow_2._0.DataLayer
                             Days_ID = read.GetInt32(0),
                             UserID = read.GetInt32(1),
                             Date = read.GetDateTime(2),
-                            AbsenceDate = read.GetDateTime(3),
-                            AbsenceText = read.GetString(4),
+                            AbsenceText = read.GetString(3),
+                            AbscenseID = read.GetInt32(4),
                             StartDay = read.GetDateTime(5),
                             EndDay = read.GetDateTime(6),
                             Min = read.GetInt32(7),
@@ -604,8 +625,8 @@ namespace Astrow_2._0.DataLayer
                             Days_ID = read.GetInt32(0),
                             UserID = read.GetInt32(1),
                             Date = read.GetDateTime(2),
-                            AbsenceDate = read.GetDateTime(3),
-                            AbsenceText = read.GetString(4),
+                            AbsenceText = read.GetString(3),
+                            AbscenseID = read.GetInt32(4),
                             StartDay = read.GetDateTime(5),
                             EndDay = read.GetDateTime(6),
                             Min = read.GetInt32(7),
@@ -651,8 +672,8 @@ namespace Astrow_2._0.DataLayer
                             Days_ID = read.GetInt32(0),
                             UserID = read.GetInt32(1),
                             Date = read.GetDateTime(2),
-                            AbsenceDate = read.GetDateTime(3),
-                            AbsenceText = read.GetString(4),
+                            AbsenceText = read.GetString(3),
+                            AbscenseID = read.GetInt32(4),
                             StartDay = read.GetDateTime(5),
                             EndDay = read.GetDateTime(6),
                             Min = read.GetInt32(7),
@@ -759,8 +780,8 @@ namespace Astrow_2._0.DataLayer
                             Days_ID = read.GetInt32(0),
                             UserID = read.GetInt32(1),
                             Date = read.GetDateTime(2),
-                            AbsenceDate = read.GetDateTime(3),
-                            AbsenceText = read.GetString(4),
+                            AbsenceText = read.GetString(3),
+                            AbscenseID = read.GetInt32(4),
                             StartDay = read.GetDateTime(5),
                             EndDay = read.GetDateTime(6),
                             Min = read.GetInt32(7),
@@ -777,6 +798,40 @@ namespace Astrow_2._0.DataLayer
             }
         }
 
+        /// <summary>
+        /// Method for getting all abscenseType
+        /// </summary>
+        /// <returns></returns>
+        public List<AbscenseType> GetAllAbscenseType()
+        {
+            List<AbscenseType> abscenseTypes = new List<AbscenseType>();
+
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand cmd = new SqlCommand("GetAllAbscenseTypes", sql);
+                cmd.CommandType= CommandType.StoredProcedure;
+
+                AbscenseType abscense = new AbscenseType();
+
+                using (SqlDataReader read = cmd.ExecuteReader())
+                {
+                    while (read.Read())
+                    {
+                        abscense = new AbscenseType
+                        {
+                            ID = read.GetInt32(0),
+                            Type = read.GetString(1)
+                        };
+
+                        abscenseTypes.Add(abscense);
+                    }
+                }
+
+                return abscenseTypes;
+            }
+        }
 
 
         #endregion 

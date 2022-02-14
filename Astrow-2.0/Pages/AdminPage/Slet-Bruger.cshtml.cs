@@ -105,7 +105,7 @@ namespace Astrow_2._0.Pages.AdminPage
             _userRepository.Registrer(id);
 
             //Return to home page
-            return RedirectToPage("/Home");
+            return RedirectToPage("/AdminPage/Slet-Bruger");
         }
     }
 }

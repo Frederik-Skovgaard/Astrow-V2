@@ -218,6 +218,17 @@ namespace Astrow_2._0.Repository
         }
 
         /// <summary>
+        /// Method return abscense types
+        /// </summary>
+        /// <returns></returns>
+        public List<AbscenseType> GetAllAbscenseType()
+        {
+            List<AbscenseType> abscenses = stored.GetAllAbscenseType();
+
+            return abscenses;
+        }
+
+        /// <summary>
         /// Find day by id
         /// </summary>
         /// <param name="id"></param>
@@ -244,6 +255,11 @@ namespace Astrow_2._0.Repository
         public void UpdateStartDay(DateTime date, int id)
         {
             stored.UpdateStartDay(date, id);
+        }
+
+        public void UpdateAbsencseType(int id, int dayID)
+        {
+            stored.UpdateAbsencseType(id, dayID);
         }
 
         /// <summary>
@@ -278,9 +294,9 @@ namespace Astrow_2._0.Repository
         /// Update the absence column in Day
         /// </summary>
         /// <param name="day"></param>
-        public void UpdateAbsence(DateTime date, string text, int id)
+        public void UpdateAbsence(string text, int id)
         {
-            stored.UpdateAbscence(date, text, id);
+            stored.UpdateAbscence(text, id);
         }
 
         public IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)
@@ -339,8 +355,7 @@ namespace Astrow_2._0.Repository
                         Days day = new Days()
                         {
                             Date = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0),
-                            AbsenceDate = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0),
-                            AbsenceText = "",
+                            AbscenseID = 1,
                             UserID = id,
                             StartDay = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0),
                             EndDay = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0),
@@ -481,8 +496,13 @@ namespace Astrow_2._0.Repository
                             totalSaldoMinInt = Convert.ToInt32(saldo.Minutes) + dayBefore.TotalMin;
                         }
 
-                        
 
+                        //If hour > 0 && min < 0 math
+                        if (totalSaldoHourInt > 0 && totalSaldoMinInt < 0)
+                        {
+                            totalSaldoMinInt = 60 + totalSaldoMinInt;
+                            totalSaldoHourInt = totalSaldoHourInt - 1;
+                        }
 
 
                         //If minut reach 60 min
@@ -573,8 +593,7 @@ namespace Astrow_2._0.Repository
                 Days day = new Days()
                 {
                     Date = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0),
-                    AbsenceDate = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0),
-                    AbsenceText = "",
+                    AbscenseID = 1,
                     UserID = id,
                     StartDay = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0),
                     EndDay = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0),

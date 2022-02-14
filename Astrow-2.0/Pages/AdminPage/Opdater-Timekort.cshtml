@@ -105,11 +105,27 @@
                                 <label>Fravær Grund</label> <br />
                                 @if (Model.TimeBool == true)
                                 {
-                                   <textarea type="text" class="form-control AbsenceText" name="AbscenseText" value="@Model.AbscenseText" asp-for="AbscenseText"></textarea> 
+                                    <textarea type="text" class="form-control AbsenceText" name="AbscenseText" value="@Model.AbscenseText" asp-for="AbscenseText"></textarea>
                                 }
                                 else
                                 {
                                     <textarea type="text" class="form-control AbsenceText" name="AbscenseText" value="@Model.AbscenseText" asp-for="AbscenseText" disabled></textarea>
+                                }
+
+                                @if (Model.TimeBool == true)
+                                {
+                                    <select class="form-control AbscenseTypeDrop" name="AbsenceType" asp-for="AbsenceType" id="AbscenseDrop">
+                                        @{
+                                            foreach (Model.Items.AbscenseType type in Model.AbscenseType)
+                                            {
+                                                <option value="@type.ID">@type.Type</option>
+                                            }
+                                        }
+                                    </select>
+                                }
+                                else
+                                {
+                                    <select class="form-control AbscenseTypeDrop" name="AbsenceType" asp-for="AbsenceType" id="AbscenseDrop" disabled></select>
                                 }
                             </div>
                         </div>
@@ -120,13 +136,13 @@
                 <div class="row submit-row">
                     @if (Model.TimeBool == true)
                     {
-                         <input value="Submit" id="SubmitButton" type="submit" asp-page-handler="Submit" class="btn btn-lg btn-primary" />
+                        <input value="Submit" id="SubmitButton" type="submit" asp-page-handler="Submit" class="btn btn-lg btn-primary" />
                     }
                     else
                     {
-                         <input value="Submit" id="SubmitButton" type="submit" asp-page-handler="Submit" class="btn btn-lg btn-primary" disabled/>
+                        <input value="Submit" id="SubmitButton" type="submit" asp-page-handler="Submit" class="btn btn-lg btn-primary" disabled />
                     }
-                   
+
                 </div>
 
             </div>

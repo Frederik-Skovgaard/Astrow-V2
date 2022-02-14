@@ -56,7 +56,13 @@ namespace Astrow_2._0.Pages.AdminPage
         public string UserValue { get; set; }
 
         [BindProperty]
+        public string AbsenceType { get; set; }
+
+        [BindProperty]
         public string CalenderValue { get; set; }
+
+        [BindProperty]
+        public List<AbscenseType> AbscenseType { get; set; }
 
         /// <summary>
         /// Check if user is logged and has premission
@@ -112,7 +118,6 @@ namespace Astrow_2._0.Pages.AdminPage
                 StartDay = firstElement.Date.ToString("yyyy-MM-dd");
                 EndDay = lastElement.Date.ToString("yyyy-MM-dd");
 
-
                 DateBool = true;
 
                 TimeBool = false;
@@ -135,6 +140,8 @@ namespace Astrow_2._0.Pages.AdminPage
         {
             int id = Convert.ToInt32(UserValue);
 
+            //Get abscense type
+            AbscenseType = _userRepository.GetAllAbscenseType();
 
             if (id != 0)
             {
@@ -156,6 +163,8 @@ namespace Astrow_2._0.Pages.AdminPage
                 StartHour = day.StartDay.ToString("HH:mm");
                 EndHour = day.EndDay.ToString("HH:mm");
 
+
+                AbsenceType = day.AbscenseID.ToString();
 
                 DateBool = true;
 
@@ -473,24 +482,28 @@ namespace Astrow_2._0.Pages.AdminPage
                         }
                     }
                 }
-                else
+
+                if (AbscenseText != null && AbsenceType != "1")
                 {
-                    //Nothing
+                    _userRepository.UpdateAbsence(AbscenseText, id);
+                    _userRepository.UpdateAbsencseType(Convert.ToInt32(AbsenceType), day.Days_ID);
                 }
 
-                
-                //TODO: Abscense Type 
                 if (AbscenseText != null)
                 {
-                    _userRepository.UpdateAbsence(calenderValue, AbscenseText, id);
+                    _userRepository.UpdateAbsence(AbscenseText, id);
+                }
+                if (AbsenceType != "1")
+                {
+                    _userRepository.UpdateAbsencseType(Convert.ToInt32(AbsenceType), day.Days_ID);
                 }
 
 
-                return RedirectToPage("/AdminPage/Opdater-Timekort/Load");
+                return RedirectToPage("/AdminPage/Opdater-Timekort");
             }
             else
             {
-                return RedirectToPage("/AdminPage/Opdater-Timekort/Load");
+                return RedirectToPage("/AdminPage/Opdater-Timekort");
             }
 
         }
@@ -508,7 +521,7 @@ namespace Astrow_2._0.Pages.AdminPage
             _userRepository.Registrer(id);
 
             //Return to home page
-            return RedirectToPage("/Home");
+            return RedirectToPage("/AdminPage/Opdater-Timekort");
         }
     }
 }
