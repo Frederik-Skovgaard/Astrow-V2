@@ -96,7 +96,6 @@ CREATE TABLE [Days] (
 [User_ID] INT NOT NULL,
 [AbscenseID] INT,
 [Date] DATETIME NOT NULL,
-[AbsenceDate] DATETIME,
 [AbscenceText] NVARCHAR(MAX),
 [StartDay] DATETIME,
 [EndDay] DATETIME,
@@ -195,7 +194,6 @@ CREATE PROCEDURE [CreateDay]
 @id INT,
 @date DATETIME,
 @abscenseID INT,
-@abscenseDate DATETIME,
 @abscenseText NVARCHAR(MAX),
 @startDay DATETIME,
 @endDay DATETIME,
@@ -206,8 +204,8 @@ CREATE PROCEDURE [CreateDay]
 @toHour INT,
 @totalSaldo NVARCHAR(10)
 AS
-INSERT INTO [Days] ([User_ID], [Date], [AbscenseID], [AbsenceDate], [AbscenceText] [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalMin], [TotalHour], [TotalSaldo])
-VALUES (@id, @date, @abscenseID, @abscenseDate, @abscenseText, @startDay, @endDay, @min, @hour, @saldo, @toMin, @toHour, @totalSaldo) 
+INSERT INTO [Days] ([User_ID], [Date], [AbscenseID], [AbscenceText], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalMin], [TotalHour], [TotalSaldo])
+VALUES (@id, @date, @abscenseID, @abscenseText, @startDay, @endDay, @min, @hour, @saldo, @toMin, @toHour, @totalSaldo) 
 GO
 
 -- Create Name
@@ -230,7 +228,6 @@ CREATE PROCEDURE [UpdateDay]
 @id INT,
 @date DATETIME,
 @abscenseID INT,
-@abscenseDate DATETIME,
 @abscenseText NVARCHAR(MAX),
 @startDay DATETIME,
 @endDay DATETIME,
@@ -246,7 +243,6 @@ SET [Date] = @date,
 [StartDay] = @startDay,
 [EndDay] = @endDay,
 [AbscenseID] = @abscenseID,
-[AbsenceDate] = @abscenseDate,
 [AbscenceText] = @abscenseText,
 [Min] = @min,
 [Hour] = @hour,
@@ -293,11 +289,9 @@ GO
 -- Update Abscence
 CREATE PROCEDURE [UpdateAbscence]
 @id INT,
-@AbscenceDate DATETIME,
 @AbscenceText NVARCHAR(100)
 AS
 UPDATE [Days]
-SET [AbsenceDate] = @AbscenceDate,
 [AbscenceText] = @AbscenceText
 WHERE [Days_ID] = @id
 GO
@@ -325,12 +319,10 @@ GO
 -- Update Abscense type
 CREATE PROCEDURE [UpdateAbsencseType]
 @id INT,
-@abscenceDate DATETIME,
 @dayID INT
 AS
 UPDATE [Days]
-SET [AbscenseID] = @id,
-[AbsenceDate] = @abscenceDate
+SET [AbscenseID] = @id
 WHERE [Days_ID] = @dayID
 GO
 
@@ -423,7 +415,7 @@ CREATE PROCEDURE [FindAllDays]
 @id INT,
 @date DATETIME
 AS
-SELECT [Days_ID], [User_ID], [Date], [AbsenceDate], [AbscenceText], [AbscenseID], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalMin], [TotalHour], [TotalSaldo] FROM Days
+SELECT * FROM Days
 WHERE [User_ID] = @id AND [Date] = @date
 GO
 
@@ -431,7 +423,7 @@ GO
 CREATE PROCEDURE [FindAllDaysByID]
 @id INT
 AS
-SELECT [Days_ID], [User_ID], [Date], [AbsenceDate], [AbscenceText], [AbscenseID], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalMin], [TotalHour], [TotalSaldo] FROM Days
+SELECT * FROM Days
 WHERE [User_ID] = @id
 GO
 
@@ -448,7 +440,7 @@ CREATE PROCEDURE [FindDay]
 @Date DATETIME,
 @id INT
 AS
-SELECT [Days_ID], [User_ID], [Date], [AbsenceDate], [AbscenceText], [AbscenseID], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalMin], [TotalHour], [TotalSaldo] FROM Days
+SELECT * FROM Days
 WHERE [Date] = @Date AND [User_ID] = @id
 GO
 
@@ -456,15 +448,14 @@ GO
 CREATE PROCEDURE [FindDayByID]
 @id INT
 AS
-SELECT [Days_ID], [User_ID], [Date], [AbsenceDate], [AbscenceText], [AbscenseID], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalMin], [TotalHour], [TotalSaldo] FROM [Days]
+SELECT * FROM [Days]
 WHERE [Days_ID] = @id
 GO
 
 --Find saldo of the day before
 CREATE PROCEDURE [FindTotalSaldo]
 AS
-SELECT [Days_ID], [User_ID], [Date], [AbsenceDate], [AbscenceText], [AbscenseID], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalMin], [TotalHour], [TotalSaldo]
-FROM [Days]
+SELECT * FROM [Days]
 WHERE [Days_ID] =( 
 	SELECT MAX([Days_ID]) FROM [Days])
 GO
@@ -475,3 +466,9 @@ CREATE PROCEDURE [GetAllAbscenseTypes]
 AS
 SELECT * FROM [AbscenseType]
 GO
+
+
+
+
+SELECT * FROM [Days]
+WHERE [Date] = GETDATE()

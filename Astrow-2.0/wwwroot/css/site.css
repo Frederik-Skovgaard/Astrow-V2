@@ -508,8 +508,35 @@ nav ul li a span.rotate {
 
 /* Home Page
 ------------------------------------------------------*/
+body .modal-backdrop{
+    opacity: 0 !important;
+}
 
+.sidebar #Oper-li .Oper-show #Fraværesanmodning {
+    position: relative;
+    display: inline-block;
+    opacity: 1;
+    font-size: 17px;
+    height: 42px;
+    font-weight: 600;
+    line-height: inherit;
+    color: white;
+    border-left: solid #0588c9 3px;
+    text-decoration: none;
+    border-left-color: transparent;
+    transition: all 0.1s ease-in-out;
+    padding-left: 15px;
+    width: -webkit-fill-available;
+    cursor: pointer;
+    user-select: none;
+}
 
+.sidebar #Oper-li .Oper-show #Fraværesanmodning:hover {
+    background: #0870a3;
+    border-left: solid 3px #0588c9 !important;
+    color: white !important;
+    width:-webkit-fill-available;
+}
 
 .sidebar #Oper-li .Oper-show #Registrering {
     position: relative;

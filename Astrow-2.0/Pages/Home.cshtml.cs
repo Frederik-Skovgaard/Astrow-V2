@@ -103,10 +103,11 @@ namespace Astrow_2._0.Pages
         /// </summary>
         public void OnPostLoad()
         {
-            
-
             //To get start & end date of user
             logged = GetDate();
+
+            //List of all users days
+            daysList = _userRepository.FindAllDaysByID(logged.User_ID);
 
             //Change values
             StartDate = DateTime.Parse(Calendar);

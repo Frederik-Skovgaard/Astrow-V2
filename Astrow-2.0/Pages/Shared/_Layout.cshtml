@@ -61,12 +61,12 @@
                         </form>
                     </li>
                     <li>
-                        <a href="#">
+                        <div id="Fraværesanmodning" data-toggle="modal" data-target="#exampleModal">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-x" viewBox="0 0 16 16">
                                 <path d="M6.146 7.146a.5.5 0 0 1 .708 0L8 8.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 9l1.147 1.146a.5.5 0 0 1-.708.708L8 9.707l-1.146 1.147a.5.5 0 0 1-.708-.708L7.293 9 6.146 7.854a.5.5 0 0 1 0-.708z" />
                                 <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
                             </svg> Opret fraværsanmodning
-                        </a>
+                        </div>
                     </li>
                     <li>
                         <a href="#">
@@ -103,7 +103,7 @@
 
             @{
                 //If logged user is admin they can see the admin tab
-                if (test != null && System.Text.Encoding.UTF8.GetString(test, 0, test.Length) == "Instructør") 
+                if (test != null && System.Text.Encoding.UTF8.GetString(test, 0, test.Length) == "Instructør")
                 {
                     @*Admin sider*@
                     <li id="Ad-li">
@@ -123,169 +123,190 @@
             </li>
         </ul>
     </nav>
-  
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     @*JavaScript...*@
     <script>
 
-        //Dynamic clock for the check in/out div
-       function startTime() {
-          const today = new Date();
-          let h = today.getHours();
-          let m = today.getMinutes();
-          m = checkTime(m);
-          document.getElementById('TimeBox').innerHTML =  h + ":" + m;
-          setTimeout(startTime, 1000);
-        };
+         //Dynamic clock for the check in/out div
+        function startTime() {
+           const today = new Date();
+           let h = today.getHours();
+           let m = today.getMinutes();
+           m = checkTime(m);
+           document.getElementById('TimeBox').innerHTML =  h + ":" + m;
+           setTimeout(startTime, 1000);
+         };
 
-        function checkTime(i) {
-          if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
-          return i;
-        };
-
-
-       
-        //Show the check in/out div
-        $('#Registrering').click(function() {
-            $('#RegiTooltip').toggleClass("show");
-        })
+         function checkTime(i) {
+           if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+           return i;
+         };
 
 
-        //On click rotate triangle and toggle class show to show sub menue
-        $('.Oper-btn').click(function() {
 
-            if (document.getElementById("Ops").classList.contains("show2")) {
-
-                $('nav ul .Ops-show').toggleClass("show2");
-                $('nav ul .third').toggleClass("rotate")
-
-                $('nav ul .Oper-show').toggleClass("show");
-                $('nav ul .first').toggleClass("rotate");
-            }
-            else {
-
-                $('nav ul .Oper-show').toggleClass("show");
-                $('nav ul .first').toggleClass("rotate");
-            }
-
-        });
+         //Show the check in/out div
+         $('#Registrering').click(function() {
+             $('#RegiTooltip').toggleClass("show");
+         })
 
 
-        $('.Ops-btn').click(function() {
-            if (document.getElementById("Oper").classList.contains("show")) {
+         //On click rotate triangle and toggle class show to show sub menue
+         $('.Oper-btn').click(function() {
 
-                $('nav ul .Oper-show').toggleClass("show");
-                $('nav ul .first').toggleClass("rotate");
+             if (document.getElementById("Ops").classList.contains("show2")) {
 
-                $('nav ul .Ops-show').toggleClass("show2");
-                $('nav ul .third').toggleClass("rotate");
-            }
-            else {
+                 $('nav ul .Ops-show').toggleClass("show2");
+                 $('nav ul .third').toggleClass("rotate")
 
-                $('nav ul .Ops-show').toggleClass("show2");
-                $('nav ul .third').toggleClass("rotate");
-            }
-        });
-
-
-        //Add active class and remove from others
-        $('nav ul .Oper-btn').click(function(){
-            if (document.getElementById("Oper-li").classList.contains("active")) {
-
-                document.getElementById("Oper-li").classList.remove("active")
-                document.getElementById("Ops-li").classList.remove("active")
-            }
-            else {
-                 document.getElementById("Oper-li").classList.add("active").removeClass("active");
-            }
-        });
-
-
-        $('nav ul .Ops-btn').click(function(){
-
-            if (document.getElementById("Ops-li").classList.contains("active")) {
-
-                document.getElementById("Oper-li").classList.remove("active")
-                document.getElementById("Ops-li").classList.remove("active")
-            }
-            else {
-                document.getElementById("Ops-li").classList.add("active").siblings().removeClass("active");
-            }
-        });
-
-
-        //Pop up if sure wan't to loggout
-        $('nav ul .nav-bottom').click(function() {
-            if(confirm("Du er igang med at logge ud, er du sikker på det er hvad du vil?")) {
-
-                location.href = '/Login';
-            }
-        });
-
-
-        //Mouse hover for Operationer
-        $('nav ul #Oper-li').mouseover(function() {
-             if (!document.getElementById("Oper-li").classList.contains("active")) {
-                document.getElementById("Ops-li").classList.remove("active")
+                 $('nav ul .Oper-show').toggleClass("show");
+                 $('nav ul .first').toggleClass("rotate");
              }
-        });
+             else {
 
-        $('nav ul #Oper-li').mouseleave(function() {
-            if (document.getElementById('Ops').classList.contains("show2")) {
-                document.getElementById("Ops-li").classList.add("active")
-            }
-        });
-
-
-
-        //Mouse hover for Opsætning
-        $('nav ul #Ops-li').mouseover(function() {
-
-              if (!document.getElementById("Ops-li").classList.contains("active")) {
-                document.getElementById("Oper-li").classList.remove("active")
+                 $('nav ul .Oper-show').toggleClass("show");
+                 $('nav ul .first').toggleClass("rotate");
              }
-        });
 
-        $('nav ul #Ops-li').mouseleave(function() {
-            if (document.getElementById('Oper').classList.contains("show")) {
-
-                document.getElementById("Oper-li").classList.add("active")
-            }
-        });
+         });
 
 
-        //Mouse hover for logout
-        $('nav ul #bottom-li').mouseover(function() {
+         $('.Ops-btn').click(function() {
+             if (document.getElementById("Oper").classList.contains("show")) {
 
-            document.getElementById("Ops-li").classList.remove("active")
-            document.getElementById("Oper-li").classList.remove("active")
-        });
+                 $('nav ul .Oper-show').toggleClass("show");
+                 $('nav ul .first').toggleClass("rotate");
 
-        $('nav ul #bottom-li').mouseleave(function() {
-            if(document.getElementById('Oper').classList.contains("show")) {
-                document.getElementById("Oper-li").classList.add("active")
-            }
-            else if (document.getElementById('Ops').classList.contains("show2")) {
-                document.getElementById("Ops-li").classList.add("active")
-            }
-        });
+                 $('nav ul .Ops-show').toggleClass("show2");
+                 $('nav ul .third').toggleClass("rotate");
+             }
+             else {
+
+                 $('nav ul .Ops-show').toggleClass("show2");
+                 $('nav ul .third').toggleClass("rotate");
+             }
+         });
 
 
-        //Mouse hover for Admin
-        $('nav ul #Ad-li').mouseover(function() {
+         //Add active class and remove from others
+         $('nav ul .Oper-btn').click(function(){
+             if (document.getElementById("Oper-li").classList.contains("active")) {
 
-            document.getElementById("Ops-li").classList.remove("active")
-            document.getElementById("Oper-li").classList.remove("active")
-        });
+                 document.getElementById("Oper-li").classList.remove("active")
+                 document.getElementById("Ops-li").classList.remove("active")
+             }
+             else {
+                  document.getElementById("Oper-li").classList.add("active").removeClass("active");
+             }
+         });
 
-        $('nav ul #Ad-li').mouseleave(function() {
-            if(document.getElementById('Oper').classList.contains("show")) {
-                document.getElementById("Oper-li").classList.add("active")
-            }
-            else if (document.getElementById('Ops').classList.contains("show2")) {
-                document.getElementById("Ops-li").classList.add("active")
-            }
-        });
+
+         $('nav ul .Ops-btn').click(function(){
+
+             if (document.getElementById("Ops-li").classList.contains("active")) {
+
+                 document.getElementById("Oper-li").classList.remove("active")
+                 document.getElementById("Ops-li").classList.remove("active")
+             }
+             else {
+                 document.getElementById("Ops-li").classList.add("active").siblings().removeClass("active");
+             }
+         });
+
+
+         //Pop up if sure wan't to loggout
+         $('nav ul .nav-bottom').click(function() {
+             if(confirm("Du er igang med at logge ud, er du sikker på det er hvad du vil?")) {
+
+                 location.href = '/Login';
+             }
+         });
+
+
+         //Mouse hover for Operationer
+         $('nav ul #Oper-li').mouseover(function() {
+              if (!document.getElementById("Oper-li").classList.contains("active")) {
+                 document.getElementById("Ops-li").classList.remove("active")
+              }
+         });
+
+         $('nav ul #Oper-li').mouseleave(function() {
+             if (document.getElementById('Ops').classList.contains("show2")) {
+                 document.getElementById("Ops-li").classList.add("active")
+             }
+         });
+
+
+
+         //Mouse hover for Opsætning
+         $('nav ul #Ops-li').mouseover(function() {
+
+               if (!document.getElementById("Ops-li").classList.contains("active")) {
+                 document.getElementById("Oper-li").classList.remove("active")
+              }
+         });
+
+         $('nav ul #Ops-li').mouseleave(function() {
+             if (document.getElementById('Oper').classList.contains("show")) {
+
+                 document.getElementById("Oper-li").classList.add("active")
+             }
+         });
+
+
+         //Mouse hover for logout
+         $('nav ul #bottom-li').mouseover(function() {
+
+             document.getElementById("Ops-li").classList.remove("active")
+             document.getElementById("Oper-li").classList.remove("active")
+         });
+
+         $('nav ul #bottom-li').mouseleave(function() {
+             if(document.getElementById('Oper').classList.contains("show")) {
+                 document.getElementById("Oper-li").classList.add("active")
+             }
+             else if (document.getElementById('Ops').classList.contains("show2")) {
+                 document.getElementById("Ops-li").classList.add("active")
+             }
+         });
+
+
+         //Mouse hover for Admin
+         $('nav ul #Ad-li').mouseover(function() {
+
+             document.getElementById("Ops-li").classList.remove("active")
+             document.getElementById("Oper-li").classList.remove("active")
+         });
+
+         $('nav ul #Ad-li').mouseleave(function() {
+             if(document.getElementById('Oper').classList.contains("show")) {
+                 document.getElementById("Oper-li").classList.add("active")
+             }
+             else if (document.getElementById('Ops').classList.contains("show2")) {
+                 document.getElementById("Ops-li").classList.add("active")
+             }
+         });
     </script>
 
 
