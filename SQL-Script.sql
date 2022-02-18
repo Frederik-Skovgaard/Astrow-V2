@@ -171,6 +171,10 @@ VALUES (1, '220202 00:00:00 AM', 1, '', '220202 08:00:00 AM', '220202 15:00:00 P
 GO
 
 
+INSERT INTO [Days] ([User_ID], [Date], [AbscenseID], [AbscenceText], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalMin], [TotalHour], [TotalSaldo])
+VALUES (1, '220201 00:00:00 AM', 1, '', '220201 08:00:00 AM', '220130 15:24:00 PM',0 ,0, '00:00', 0, 0, '00:00')
+GO
+
 
 ---------------------------- Create Procedures ----------------------------
  
@@ -469,6 +473,3 @@ GO
 
 
 
-
-SELECT * FROM [Days]
-WHERE [Date] = GETDATE()

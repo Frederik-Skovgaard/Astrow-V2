@@ -624,9 +624,9 @@ namespace Astrow_2._0.DataLayer
                         {
                             Days_ID = read.GetInt32(0),
                             UserID = read.GetInt32(1),
-                            Date = read.GetDateTime(2),
-                            AbsenceText = read.GetString(3),
-                            AbscenseID = read.GetInt32(4),
+                            AbscenseID = read.GetInt32(2),
+                            Date = read.GetDateTime(3),
+                            AbsenceText = read.GetString(4),
                             StartDay = read.GetDateTime(5),
                             EndDay = read.GetDateTime(6),
                             Min = read.GetInt32(7),

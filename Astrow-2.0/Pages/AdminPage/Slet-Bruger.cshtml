@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{handler?}"
 @model Astrow_2._0.Pages.AdminPage.DeleteUserModel
 @{
     ViewData["Title"] = "Fjern | Page";
@@ -31,11 +31,11 @@
                 </div>
                 @foreach (Model.Containers.PersonalInfo user in Model.People)
                 {
-                    <form method="post" onclick="return confirm('Are you sure you want to delete this?')">
+                    <form method="post" >
                         <div class="col-12 delete">
                             <label class="col-4">@user.FirstName @user.MiddleName @user.LastName</label>
                             <input asp-for="ID" value="@user.ID" hidden />
-                            <input type="submit" asp-route-id="@Model.ID" class="btn btn-danger col-4" id="DeleteBtn" value="Slet" />
+                            <input type="submit" class="btn btn-danger col-4" id="DeleteBtn" value="Slet" onclick="return confirm('Are you sure you want to delete this?')"/>
                         </div>
                     </form>
                 }

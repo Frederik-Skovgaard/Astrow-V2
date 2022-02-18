@@ -80,16 +80,16 @@ namespace Astrow_2._0.Pages.AdminPage
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public IActionResult OnPost(int id)
+        public IActionResult OnPost()
         {
             //Check user of as deleted in database
-            _userRepository.DeleteUser(id);
+            _userRepository.DeleteUser(ID);
 
 
             //Popup message for succes
             ViewData["Message"] = string.Format("Bruger blev slettet...");
 
-            return RedirectToPage("/AdminPage/DeleteUser");
+            return RedirectToPage("/AdminPage/Slet-Bruger");
         }
 
         /// <summary>

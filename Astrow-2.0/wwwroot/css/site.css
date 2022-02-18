@@ -382,7 +382,7 @@ nav ul li a span.rotate {
     }
 
         .Login-Page .top .login-logo {
-            background: url("../Img/LightlogoSBO.png");
+            background: url("../Img/LightlogoSBO2.png");
             background-repeat:no-repeat;
             background-size: contain;
             width: 18rem;
@@ -508,9 +508,7 @@ nav ul li a span.rotate {
 
 /* Home Page
 ------------------------------------------------------*/
-body .modal-backdrop{
-    opacity: 0 !important;
-}
+
 
 .sidebar #Oper-li .Oper-show #Fraværesanmodning {
     position: relative;
@@ -592,8 +590,8 @@ body .modal-backdrop{
     border: 8px solid #00405e;
 }
 
-.sidebar #Oper-li .Oper-show #Registrering .show {
-    visibility: visible !important;
+.sidebar #Oper-li .Oper-show #RegiTooltip .show {
+    display:block !important;
     opacity: 1 !important;
 }
 
@@ -611,11 +609,7 @@ body .modal-backdrop{
 }
 
 
-.TimeCard .outer table .WeekdEnd {
-    background: #00405e !important;
-    border-bottom: solid #00405e 2px;
-    border-top: solid #00405e 2px;
-}
+
 
 /* Div styling
 ---------------*/
@@ -643,44 +637,75 @@ body .modal-backdrop{
     width:max-content;
 }
 
-.TimeCard table tbody tr .ToDayClass {
-    background: #a5d2e7 !important;
-    color: black !important;
-    border-bottom: solid #a5d2e7 2px !important;
-}
 
 
 
 /* Table
 ---------------*/
 .TimeCard .outer table {
-    margin:0;
-    border-top: #004f75 3px solid;
+    color:white;
 }
 
-/* Grid inside Table*/
-.TimeCard .outer .tableOverview {
+.TimeCard .outer .Table-Head {
+    position: fixed;
+    top: 14.2476%;
+}
+
+.TimeCard .outer .Table-Gride {
     overflow: overlay;
     min-height: fit-content;
     max-height: 42rem;
-    background: #00405e;
-}
-.TimeCard .outer .tableOverview {
-    border-top: solid #0978ae 1.2px;
 }
 
+.TimeCard .outer table thead {
+    border-top: 3px solid #00405e;
+    border-bottom: 3px solid #00405e;
+    background: #00405e;
+    text-align: center;
+    height:2.5rem;
+}
+
+.TimeCard .outer table tbody {
+    border-bottom: 1px solid #004f7500;
+    background: #004f75eb;
+}
+
+.TimeCard .outer table tbody tr th {
+    text-transform: capitalize;
+    text-align: center;
+    background: #00405e73;
+    border-bottom: solid 1px #004f7500;
+    border-top: 1px;
+    
+}
+
+.TimeCard .outer table tbody tr td {
+    text-align: center;
+}
+
+.TimeCard table tbody tr .ToDayClass {
+    background: #ffffff8c !important;
+    color: black !important;
+    border-bottom: solid #ffffff00 2px !important;
+}
+
+.TimeCard .outer table .WeekdEnd {
+    background: #00405e73 !important;
+    border-bottom: solid #00405e00 2px;
+    border-top: solid #00405e00 2px;
+}
 
 /* Scrollbar for day grid*/
-.TimeCard .outer .tableOverview::-webkit-scrollbar {
+.TimeCard .outer .Table-Gride::-webkit-scrollbar {
     width:5px !important;
     display: contents !important;
 }
-.TimeCard .outer .tableOverview::-webkit-scrollbar-track {
+.TimeCard .outer .Table-Gride::-webkit-scrollbar-track {
     background: #00405e !important;
     border-radius: 15px !important;
     display: contents !important;
 }
-.TimeCard .outer .tableOverview::-webkit-scrollbar-thumb {
+.TimeCard .outer .Table-Gride::-webkit-scrollbar-thumb {
     background: #0588c9 !important;
     border-radius: 15px !important;
     display: contents !important;
@@ -689,9 +714,9 @@ body .modal-backdrop{
 
 
 /* Table Items*/
-.TimeCard table thead {
+/*.TimeCard table thead {
     position: absolute;
-    width: -webkit-fill-available;
+    width: max-content;
     top: 15%;
 }
 .TimeCard table thead tr th {
@@ -703,20 +728,20 @@ body .modal-backdrop{
 }
 .TimeCard table tbody tr th {
     background: #004f75 !important;
-    border-bottom: solid #004b6f 2px;
+    border-bottom: solid #004f75 2px;
     color: white !important;
     text-align: center;
     border-top: solid #004f75 1.2px;
 }
 .TimeCard table tbody tr td {
     background: #097eb7 !important;
-    border-bottom: solid #0978ae 2px;
+    border-bottom: solid #097eb7  2px;
     color: white !important;
     text-align: center;
 }
 .TimeCard table tbody, td, tfoot, th, thead, tr {
     width: 10rem;
-}
+}*/
 
 
 /* Date Picker
@@ -851,11 +876,11 @@ body .modal-backdrop{
 .AdminPage .container .OpdateTimeCard .OpdaterTimeCardRow p {
     float: left;
     line-height: 0px;
-    color: #afacace0;
+    color: #ffffff42;
     -webkit-text-stroke: medium;
     font-size: 15px;
     cursor: pointer;
-    user-select:none;
+    user-select: none;
 }
 
 
@@ -877,7 +902,7 @@ body .modal-backdrop{
 
 
 .AdminPage .container .OpdateTimeCard .AbsenceOptions {
-    border-bottom: #7a70708c solid 3px;
+    border-bottom: #ffffff42 solid 3px;
     float: left;
     width: 40rem;
     height: 44px;
@@ -960,15 +985,13 @@ body .modal-backdrop{
 }
 
 .AdminPage .container .lower-container {
-    margin-top: 3.5rem;
+   margin-top: 3.5rem;
     text-align: center;
     padding: 0;
-
-    background:#004f75;
-    border-radius:10px;
-
-    width: 50rem;
-
+    background: #00405e73 !important;
+    border-radius: 10px;
+    box-shadow: 4px 3px 5px 1px #0000002e;
+    width: 51rem;
     min-block-size: max-content;
 }
 
@@ -1036,7 +1059,7 @@ body .modal-backdrop{
 
 
 .AdminPage .container .lower-container .col-row .delete {
-    background: #00405e;
+    background: #00405e73;
     margin-top:1rem;
 }
 

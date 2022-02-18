@@ -41,12 +41,10 @@
 
 
             </div>
-
-            @*Date grid*@
-            <div class="tableOverview">
-                <table class="table">
+            <div class="Table-Head">
+                <table>
                     <thead>
-                        <tr style="border-top: solid 3px #00000000;">
+                        <tr>
                             <th scope="col">Day</th>
                             <th scope="col">Dato</th>
                             <th scope="col">Fravær</th>
@@ -57,6 +55,11 @@
                             <th scope="col">Saldo+</th>
                         </tr>
                     </thead>
+                </table>
+            </div>
+
+            <div class="Table-Gride">
+                <table class="table">
                     <tbody>
                         @{
                             bool trigger = false;
@@ -94,7 +97,6 @@
                                                 </tr>
 
                                                 strClass = "";
-
                                                 trigger = true;
                                             }
                                             else
@@ -192,3 +194,156 @@
         </div>
     </div>
 </form>
+
+
+
+
+
+@*Date grid*@
+@*<div class="tableOverview">
+    <table class="table">
+    <thead>
+    <tr style="border-top: solid 3px #00000000;">
+    <th scope="col">Day</th>
+    <th scope="col">Dato</th>
+    <th scope="col">Fravær</th>
+    <th scope="col">Login</th>
+    <th scope="col">Logud</th>
+    <th scope="col">TotFrv</th>
+    <th scope="col">Saldo</th>
+    <th scope="col">Saldo+</th>
+    </tr>
+    </thead>
+    <tbody>*@
+@{
+    //bool trigger = false;
+
+            //string strClass = "";
+
+    ////If list of days, day match the date of days date show date i guss
+    //foreach (DateTime day in Model.Days)
+    //{
+    //    if (day.ToString("yyyy/MM/dd") == DateTime.Now.ToString("yyyy/MM/dd"))
+    //    {
+    //        strClass = "ToDayClass";
+    //    }
+
+    //    if (Model.daysList.Count != 0)
+    //    {
+    //        //Foreach day in day list
+    //        foreach (Model.Items.Days date in Model.daysList)
+    //        {
+    //            //If day is equal to day from days lists
+    //            if (date.Date.ToString("yyyy/MM/dd") == day.ToString("yyyy/MM/dd"))
+    //            {
+    //                //If date enday is equal too 00:00 load without end day
+    //                if (date.EndDay.ToString("HH:mm") == "00:00")
+    //                {
+    //                    <tr>
+    //                        <th scope="row">@day.ToString("dddd")  </th>
+    //                        <td class="@strClass">@day.ToString("yyyy-MM-dd")</td>
+    //                        <td class="@strClass"></td>
+    //                        <td class="@strClass">@date.StartDay.ToString("HH:mm")</td>
+    //                        <td class="@strClass"></td>
+    //                        <td class="@strClass"></td>
+    //                        <td class="@strClass">-7:24 </td>
+    //                        <td class="@strClass">@date.TotalSaldo</td>
+    //                    </tr>
+
+    //                    strClass = "";
+
+    //                    trigger = true;
+    //                }
+    //                else
+    //                {
+    //                    <tr>
+    //                        <th scope="row">@day.ToString("dddd")  </th>
+    //                        <td class="@strClass">@day.ToString("yyyy-MM-dd")</td>
+    //                        <td class="@strClass"></td>
+    //                        <td class="@strClass">@date.StartDay.ToString("HH:mm")</td>
+    //                        <td class="@strClass">@date.EndDay.ToString("HH:mm")</td>
+    //                        <td class="@strClass"></td>
+    //                        <td class="@strClass">@date.Saldo</td>
+    //                        <td class="@strClass">@date.TotalSaldo</td>
+    //                    </tr>
+
+    //                    strClass = "";
+
+    //                    trigger = true;
+    //                }
+    //            }
+    //        }
+
+    //        //Need if too get rid of repets
+    //        if (trigger == true)
+    //        {
+    //            trigger = false;
+    //        }
+    //        else if (day.ToString("dddd") == "lørdag" || day.ToString("dddd") == "søndag")
+    //        {
+    //            <tr>
+    //                <th scope="row">@day.ToString("dddd")  </th>
+    //                <td class="WeekdEnd @strClass">@day.ToString("yyyy-MM-dd")</td>
+    //                <td class="WeekdEnd @strClass"></td>
+    //                <td class="WeekdEnd @strClass"></td>
+    //                <td class="WeekdEnd @strClass"></td>
+    //                <td class="WeekdEnd @strClass"></td>
+    //                <td class="WeekdEnd @strClass"></td>
+    //                <td class="WeekdEnd @strClass"></td>
+    //            </tr>
+
+    //            strClass = "";
+    //        }
+    //        else
+    //        {
+    //            <tr>
+    //                <th scope="row">@day.ToString("dddd")  </th>
+    //                <td class="@strClass">@day.ToString("yyyy-MM-dd")</td>
+    //                <td class="@strClass"></td>
+    //                <td class="@strClass"></td>
+    //                <td class="@strClass"></td>
+    //                <td class="@strClass"></td>
+    //                <td class="@strClass"></td>
+    //                <td class="@strClass"></td>
+    //            </tr>
+
+    //            strClass = "";
+    //        }
+
+    //    }
+    //    else if (day.ToString("dddd") == "lørdag" || day.ToString("dddd") == "søndag")
+    //    {
+    //        <tr>
+    //            <th scope="row">@day.ToString("dddd")  </th>
+    //            <td class="WeekdEnd @strClass">@day.ToString("yyyy-MM-dd")</td>
+    //            <td class="WeekdEnd @strClass"></td>
+    //            <td class="WeekdEnd @strClass"></td>
+    //            <td class="WeekdEnd @strClass"></td>
+    //            <td class="WeekdEnd @strClass"></td>
+    //            <td class="WeekdEnd @strClass"></td>
+    //            <td class="WeekdEnd @strClass"></td>
+    //        </tr>
+
+    //        strClass = "";
+    //    }
+    //    else
+    //    {
+    //        <tr>
+    //            <th scope="row">@day.ToString("dddd")  </th>
+    //            <td class="@strClass">@day.ToString("yyyy-MM-dd")</td>
+    //            <td class="@strClass"></td>
+    //            <td class="@strClass"></td>
+    //            <td class="@strClass"></td>
+    //            <td class="@strClass"></td>
+    //            <td class="@strClass"></td>
+    //            <td class="@strClass"></td>
+    //        </tr>
+
+    //        strClass = "";
+            //    }
+    //}
+}
+@* </tbody>
+    </table>*@
+@*</div>*@
+
