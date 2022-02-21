@@ -2,7 +2,7 @@
 for details on configuring this project to bundle and minify static web assets. */
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
-/*Minimum width-requiment is 650px * 740px/*/
+/*#region Page*/
 
 * {
     list-style: none;
@@ -12,25 +12,16 @@ for details on configuring this project to bundle and minify static web assets. 
     box-sizing: border-box;
 }
 
-/*Selection highligter*/
-::selection {
-    background: #00c4ff2e;
-}
-
-::-moz-selection {
-    background: #00c4ff2e;
-}
-
 body {
     background-image: linear-gradient( 133deg, rgb(35 140 202 / 14%) 25%, rgb(35 202 194 / 30%) 50%, rgb(35 202 202 / 32%) 75%), url(/Img/bg1.jpg);
     background-size: cover;
     background-attachment: fixed;
+    overflow: hidden;
 }
 
 .body {
     background-image: linear-gradient( 35deg, rgb(45 115 251 / 50%) 25%, rgb(39 152 224 / 50%) 50%, rgb(35 183 202 / 50%) 75%), url(/Img/bigbackground.jpg) !important;
 }
-
 
 button {
     outline: none !important;
@@ -44,15 +35,15 @@ img {
     -webkit-user-drag: none;
 }
 
-    img::-moz-selection {
-        background-color: transparent;
-        color: #000;
-    }
+img::-moz-selection {
+    background-color: transparent;
+    color: #000;
+}
 
-    img::selection {
-        background-color: transparent;
-        color: #000;
-    }
+img::selection {
+    background-color: transparent;
+    color: #000;
+}
 
 a.navbar-brand {
     white-space: normal;
@@ -61,9 +52,19 @@ a.navbar-brand {
 }
 
 
+/*Selection highligter*/
+::selection {
+    background: #00c4ff2e;
+}
+
+::-moz-selection {
+    background: #00c4ff2e;
+}
+
+
 /*Scroll bar*/
 ::-webkit-scrollbar {
-    display:none;
+    display: none;
 }
 
 ::-webkit-scrollbar-track {
@@ -73,238 +74,11 @@ a.navbar-brand {
 ::-webkit-scrollbar-thumb {
     display: none;
 }
+/*#endregion*/
 
+/*#region Login-Page*/
 
-
-/* Provide sufficient contrast against white background */
-
-a {
-    color: #0366d6;
-}
-
-.btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
-}
-
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
-}
-
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-    font-size: 14px;
-}
-
-@media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
-}
-
-.border-top {
-    border-top: 1px solid #e5e5e5;
-}
-
-.border-bottom {
-    border-bottom: 1px solid #e5e5e5;
-}
-
-.box-shadow {
-    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
-
-button.accept-policy {
-    font-size: 1rem;
-    line-height: inherit;
-}
-
-
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-    position: relative;
-    min-height: 100%;
-}
-
-body {
-    /* Margin bottom by footer height */
-    margin-bottom: 60px;
-}
-
-.footer {
-    background-color: white;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    white-space: nowrap;
-    line-height: 60px; /* Vertically center the text there */
-}
-
-/* Nav-bar
--------------------------------------------------------*/
-a:hover {
-    text-decoration:none;
-    color:white !important;
-}
-
-.sidebar {
-    position: fixed;
-    width: 336px;
-    height: 100%;
-    left: 0;
-    top:0;
-    background: #004f75;
-    padding: 1rem;
-}
-
-.sidebar .logo {
-    background: url("../Img/logoSBO.png");
-    background-size: contain;
-    height: 4.5rem;
-    width: 19rem;
-}
-nav svg {
-    width: 1.5rem;
-    height: 1.5rem;
-    margin-right: 1rem;
-}
-nav .mainUl {
-    margin-top: 1rem;
-}
-nav ul {
-    height: 90%;
-    width: 100%;
-    list-style: none;
-    padding: 0 ;
-    display: flex;
-    flex-direction: column;
-}
-
-nav .nav-bottom {
-    margin-top: auto;
-    text-align: center;
-    transition: all 0.1s ease-in-out;
-    border-left: solid transparent 3px;
-    cursor: pointer;
-}
-nav .nav-bottom a {
-    padding:0;
-    font-size: 20px;
-    transition: all 0.1s ease-in-out;
-    color:white !important;
-}
-nav .nav-bottom a svg {
-    width:1.5rem;
-    height:1.5rem;
-    margin:0;
-}
-nav .nav-bottom a:hover {
-    color: #ff3838 !important;
-    border-left: solid transparent 3px !important;
-}
-nav .nav-bottom:hover {
-    border-left: solid #ff3838 3px !important;
-}
-nav ul .nav-bottom:hover a {
-    border-left: solid 3px transparent !important;
-    color: #ff3838 !important;
-}
-
-nav ul li {
-    line-height: 60px;
-    background: #00405e;
-    margin-top: 0.5rem;
-}
-
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-    padding-left: 40px;
-    font-weight: 500;
-    display: block;
-    width: 100%;
-    border-left: solid transparent 3px;
-
-    transition: all 0.1s ease-in-out;
-}
-nav ul li:hover a {
-    border-left: solid #0588c9 3px;
-}
-nav ul li.active a {
-    color: white;
-    border-left: solid #0588c9 3px;
-    text-decoration: none;
-}
-
-nav ul ul {
-    position: static;
-    display: none;
-}
-
-nav ul .Oper-show.show {
-    display:block;
-}
-nav ul .Vis-show.show1 {
-    display:block;
-}
-nav ul .Ops-show.show2 {
-    display:block;
-}
-
-nav ul ul li {
-    line-height: 42px;
-    border-bottom: none;
-    background: #2676a585;
-    margin: 0;
-    transition: all 0.3s ease-in-out;
-}
-
-nav ul ul li a {
-    font-size: 17px;
-    padding-left: 15px;
-    color: white  !important;
-}
-nav ul li.active ul li a {
-    color: white;
-    border-left: solid #0588c9 3px;
-    text-decoration: none;
-    border-left-color: transparent;
-    transition: all 0.1s ease-in-out;
-}
-nav ul ul li a:hover {
-    background: #0870a3;
-    border-left: solid 3px #0588c9 !important;
-    color: white !important;
-}
-nav ul ul li a:focus {
-    background: #0870a3;
-    border-left: solid 3px #0588c9 !important;
-    color: white !important;
-}
-
-nav ul li a span {
-    position: absolute;
-    right: 30px;
-    transform: translateY(-50%);
-    font-size: 22px;
-    transition: all 0.3s ease-in-out;
-    margin-top: 2rem;
-}
-
-nav ul li a span.rotate {
-    transform: translateY(-50%) rotate(-180deg);
-}
-
-
-
-/* Login-Page
-------------------------------------------------------*/
+/*Error*/
 .ErrorUsername {
     color: #dd0707;
     text-shadow: 0px 0px #ff0000;
@@ -326,190 +100,227 @@ nav ul li a span.rotate {
 }
 
 
-
+/*Decoration*/
 .Login-Page {
     color: white;
     margin: 0 auto;
     width: 25rem;
 }
 
-    .Login-Page .copy {
-        text-align: center;
-        margin: 0 auto;
-        float: right;
-        margin-top: 2rem;
-        width: -webkit-fill-available;
-        font-size: small;
-    }
+.Login-Page .copy {
+    text-align: center;
+    margin: 0 auto;
+    float: right;
+    margin-top: 2rem;
+    width: -webkit-fill-available;
+    font-size: small;
+}
 
-        .Login-Page .copy p {
-            width: 9rem;
-            float: left;
-        }
+.Login-Page .copy p {
+    width: 9rem;
+    float: left;
+}
 
-        .Login-Page .copy .microBTN {
-            background: none;
-            border: none;
-            color: white;
-            width: 3rem;
-            text-decoration: none;
-            padding-right: 1rem;
-            float: left;
-        }
+.Login-Page .copy .microBTN {
+    background: none;
+    border: none;
+    color: white;
+    width: 3rem;
+    text-decoration: none;
+    padding-right: 1rem;
+    float: left;
+}
 
+.Login-Page .container {
+    margin: 0 auto;
+    height: 29rem;
+    margin-top: 50%;
+    background: linear-gradient( 35deg, rgb(45 115 251 / 50%) 25%, rgb(39 152 224 / 50%) 50%, rgb(35 183 202 / 50%) 75%);
+    background-repeat: no-repeat;
+    padding: 1rem;
+    background-size: 28rem;
+    background-position: center;
+    border-radius: 10px;
+    box-shadow: 0px 0px 0px 6px #00ffff26;
+    transition: all 0.5s;
+}
 
-    .Login-Page .container {
-        margin: 0 auto;
-        height: 29rem;
-        margin-top: 50%;
-        background: linear-gradient( 35deg, rgb(45 115 251 / 50%) 25%, rgb(39 152 224 / 50%) 50%, rgb(35 183 202 / 50%) 75%);
-        background-repeat: no-repeat;
-        padding: 1rem;
-        background-size: 28rem;
-        background-position: center;
-        border-radius: 10px;
-        box-shadow: 0px 0px 0px 6px #00ffff26;
-        transition: all 0.5s;
-    }
+.Login-Page .top {
+    margin: 0 auto;
+    width: min-content;
+    margin-top: 1rem;
+}
 
+.Login-Page .top .login-logo {
+    background: url("../Img/LightlogoSBO2.png");
+    background-repeat:no-repeat;
+    background-size: contain;
+    width: 18rem;
+    border-radius: 5px;
+    height: 4.4rem;
+}
 
+.Login-Page .middle {
+    margin-top: 2rem;
+}
 
+.Login-Page .middle .form-control {
+    width: 80%;
+    margin: 0 auto;
+    background: #00c4ff2e;
+    border: 2px solid transparent;
+    color: white;
+    transition: all 0.3s ease-in-out;
+    margin-top: 2rem;
+}
 
-    .Login-Page .top {
-        margin: 0 auto;
-        width: min-content;
-        margin-top: 1rem;
-    }
+.Login-Page .middle .form-control::-webkit-input-placeholder {
+    color: #ffffffb8;
+    transition: all 0.5s ease-in-out;
+}
 
-        .Login-Page .top .login-logo {
-            background: url("../Img/LightlogoSBO2.png");
-            background-repeat:no-repeat;
-            background-size: contain;
-            width: 18rem;
-            border-radius: 5px;
-            height: 4.4rem;
-        }
+.Login-Page .middle .form-control:hover::-webkit-input-placeholder,
+.Login-Page .middle .form-control:focus::-webkit-input-placeholder {
+    color: white;
+}
 
-    .Login-Page .middle {
-        margin-top: 2rem;
-    }
+.Login-Page .middle #username {
+    margin-bottom: 1rem;
+}
 
+.Login-Page .middle .CheckBox {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 1rem;
+    margin-top: 1rem;
+}
 
-        .Login-Page .middle .form-control {
-            width: 80%;
-            margin: 0 auto;
-            background: #00c4ff2e;
-            border: 2px solid transparent;
-            color: white;
-            transition: all 0.3s ease-in-out;
-            margin-top: 2rem;
-        }
+.Login-Page .middle .form-control:focus {
+    box-shadow: 0px 0px 0px 4px #00ffff5c;
+}
 
-            .Login-Page .middle .form-control::-webkit-input-placeholder {
-                color: #ffffffb8;
-                transition: all 0.5s ease-in-out;
-            }
+.Login-Page .middle .form-control:hover {
+    box-shadow: 0px 0px 0px 4px #00ffff5c;
+}
 
-            .Login-Page .middle .form-control:hover::-webkit-input-placeholder,
-            .Login-Page .middle .form-control:focus::-webkit-input-placeholder {
-                color: white;
-            }
+.Login-Page .middle .form-check {
+    margin-right: 10px;
+    margin-top: 1px;
+    width: 15px;
+    outline: none !important;
+}
 
-        .Login-Page .middle #username {
-            margin-bottom: 1rem;
-        }
+.Login-Page .bottom {
+    margin: 0 auto;
+    margin-top: 1rem;
+    max-width: min-content;
+}
 
-        .Login-Page .middle .CheckBox {
-            display: flex;
-            justify-content: flex-end;
-            margin-right: 1rem;
-            margin-top: 1rem;
-        }
+.Login-Page .bottom .btn {
+    font-weight: 100;
+    background: #00adff70;
+    border: none;
+    width: 17rem;
+    border-radius: 0px;
+    font-size: 20px;
+    padding: 0;
+    transition: all 0.5s ease-in-out;
+}
 
-        .Login-Page .middle .form-control:focus {
-            box-shadow: 0px 0px 0px 4px #00ffff5c;
-        }
+.Login-Page .bottom .btn:hover {
+    background: #00f3ff70;
+    box-shadow: 0px 0px 0px 4px #00ffff26;
+}
 
-        .Login-Page .middle .form-control:hover {
-            box-shadow: 0px 0px 0px 4px #00ffff5c;
-        }
+.Login-Page .bottom .btn:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
 
-        .Login-Page .middle .form-check {
-            margin-right: 10px;
-            margin-top: 1px;
-            width: 15px;
-            outline: none !important;
-        }
+.Login-Page .bottom .bottom-link {
+    float: right;
+    text-decoration: none;
+    color: white;
+    margin-top: 0.5rem;
+}
 
-    .Login-Page .bottom {
-        margin: 0 auto;
-        margin-top: 1rem;
-        max-width: min-content;
-    }
+.Login-Page .bottom .bottom-link .tooltip {
+    position: relative;
+    display: inline-block;
+    opacity: 1;
+}
 
-        .Login-Page .bottom .btn {
-            font-weight: 100;
-            background: #00adff70;
-            border: none;
-            width: 17rem;
-            border-radius: 0px;
-            font-size: 20px;
-            padding: 0;
-            transition: all 0.5s ease-in-out;
-        }
+.Login-Page .bottom .bottom-link .tooltip .tooltiptext {
+    visibility: hidden;
+    opacity: 0;
+    width: 130px;
+    margin-left: 1rem;
+    color: white;
+    text-align: center;
+    border: 3px solid transparent;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+    background: #00adff70;
+    z-index: 1;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 0px 0px 4px #00ffff26;
+}
 
-            .Login-Page .bottom .btn:hover {
-                background: #00f3ff70;
-                box-shadow: 0px 0px 0px 4px #00ffff26;
-            }
-
-            .Login-Page .bottom .btn:focus {
-                outline: none !important;
-                box-shadow: none !important;
-            }
-
-        .Login-Page .bottom .bottom-link {
-            float: right;
-            text-decoration: none;
-            color: white;
-            margin-top: 0.5rem;
-        }
-
-            .Login-Page .bottom .bottom-link .tooltip {
-                position: relative;
-                display: inline-block;
-                opacity: 1;
-            }
-
-                .Login-Page .bottom .bottom-link .tooltip .tooltiptext {
-                    visibility: hidden;
-                    opacity: 0;
-                    width: 130px;
-                    margin-left: 1rem;
-                    color: white;
-                    text-align: center;
-                    border: 3px solid transparent;
-                    padding: 5px 0;
-                    border-radius: 6px;
-                    position: absolute;
-                    background: #00adff70;
-                    z-index: 1;
-                    transition: all 0.3s ease-in-out;
-                    box-shadow: 0px 0px 0px 4px #00ffff26;
-                }
-
-                .Login-Page .bottom .bottom-link .tooltip:hover .tooltiptext {
-                    visibility: visible;
-                    opacity: 1;
-                }
+.Login-Page .bottom .bottom-link .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
 
 
+/*#endregion*/
+
+/*#region Nav*/
 
 
-/* Home Page
-------------------------------------------------------*/
+/*Nav bar*/
+.sidebar {
+    position: fixed;
+    width: 336px;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: #004f75;
+    padding: 1rem;
+    z-index: 2;
+}
+
+.sidebar .logo {
+    background: url("../Img/logoSBO.png");
+    background-size: contain;
+    height: 4.5rem;
+    width: 19rem;
+    background-repeat: no-repeat;
+    margin: 0 auto !important;
+}
 
 
+/*Collaps button*/
+.collapsNavBTN {
+    visibility: hidden;
+    background: #004f75;
+    position: absolute;
+    top: 0;
+    z-index: 3;
+}
+
+.collapsNavBTN svg {
+    height: 2.5rem;
+    width: 2.5rem;
+    color: white;
+}
+
+.show {
+    display: block !important;
+}
+
+
+/*Registery*/
 .sidebar #Oper-li .Oper-show #Fraværesanmodning {
     position: relative;
     display: inline-block;
@@ -562,7 +373,7 @@ nav ul li a span.rotate {
     width:-webkit-fill-available;
 }
 
-.sidebar #Oper-li .Oper-show #Registrering .tooltiptext #TimeBox {
+.sidebar #Oper-li .Oper-show .tooltiptext #TimeBox {
     background: #00405e;
     width: max-content;
     border-radius: 10px;
@@ -572,30 +383,31 @@ nav ul li a span.rotate {
     padding-left: 1rem;
     padding-right: 1rem;
 }
-.sidebar #Oper-li .Oper-show #Registrering .tooltiptext {
+
+.sidebar #Oper-li .Oper-show .tooltiptext {
     visibility: hidden;
     opacity: 0;
     width: 15rem;
     height: 15rem;
     margin: 0;
     color: white;
-    padding: 5px 0;
     position: absolute;
     background: #004f75;
     z-index: 1;
-    left: 20rem;
-    top: -8rem;
+    left: 4.5rem;
+    top: 34rem;
     text-align: -webkit-center;
     padding: 1rem;
     border: 8px solid #00405e;
 }
 
-.sidebar #Oper-li .Oper-show #RegiTooltip .show {
+.sidebar #Oper-li .Oper-show .show {
+    visibility:visible !important;
     display:block !important;
     opacity: 1 !important;
 }
 
-.sidebar #Oper-li .Oper-show #Registrering .tooltiptext input {
+.sidebar #Oper-li .Oper-show .tooltiptext input {
     background: #00405e;
     border: none;
     color: white;
@@ -609,52 +421,217 @@ nav ul li a span.rotate {
 }
 
 
+/*Decoretion*/
+a:hover {
+    text-decoration: none;
+    color: white !important;
+}
+
+nav svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 1rem;
+}
+
+nav .mainUl {
+    margin-top: 1rem;
+}
+
+nav ul {
+    height: 90%;
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+nav .nav-bottom {
+    margin-top: auto;
+    text-align: center;
+    transition: all 0.1s ease-in-out;
+    border-left: solid transparent 3px;
+    cursor: pointer;
+}
+
+nav .nav-bottom a {
+    padding: 0;
+    font-size: 20px;
+    transition: all 0.1s ease-in-out;
+    color: white !important;
+}
+
+nav .nav-bottom a svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 0;
+}
+
+nav .nav-bottom a:hover {
+    color: #ff3838 !important;
+    border-left: solid transparent 3px !important;
+}
+
+nav .nav-bottom:hover {
+    border-left: solid #ff3838 3px !important;
+}
+
+nav ul .nav-bottom:hover a {
+    border-left: solid 3px transparent !important;
+    color: #ff3838 !important;
+}
+
+nav ul li {
+    line-height: 60px;
+    background: #00405e;
+    margin-top: 0.5rem;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    padding-left: 40px;
+    font-weight: 500;
+    display: block;
+    width: 100%;
+    border-left: solid transparent 3px;
+    transition: all 0.1s ease-in-out;
+}
+
+nav ul li:hover a {
+    border-left: solid #0588c9 3px;
+}
+
+nav ul li.active a {
+    color: white;
+    border-left: solid #0588c9 3px;
+    text-decoration: none;
+}
+
+nav ul ul {
+    position: static;
+    display: none;
+}
+
+nav ul .Oper-show.show {
+    display: block;
+}
+
+nav ul .Vis-show.show1 {
+    display: block;
+}
+
+nav ul .Ops-show.show2 {
+    display: block;
+}
+
+nav ul ul li {
+    line-height: 42px;
+    border-bottom: none;
+    background: #2676a585;
+    margin: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+nav ul ul li a {
+    font-size: 17px;
+    padding-left: 15px;
+    color: white !important;
+}
+
+nav ul li.active ul li a {
+    color: white;
+    border-left: solid #0588c9 3px;
+    text-decoration: none;
+    border-left-color: transparent;
+    transition: all 0.1s ease-in-out;
+}
+
+nav ul ul li a:hover {
+    background: #0870a3;
+    border-left: solid 3px #0588c9 !important;
+    color: white !important;
+}
+
+nav ul ul li a:focus {
+    background: #0870a3;
+    border-left: solid 3px #0588c9 !important;
+    color: white !important;
+}
+
+nav ul li a span {
+    position: absolute;
+    right: 30px;
+    transform: translateY(-50%);
+    font-size: 22px;
+    transition: all 0.3s ease-in-out;
+    margin-top: 2rem;
+}
+
+nav ul li a span.rotate {
+    transform: translateY(-50%) rotate(-180deg);
+}
 
 
-/* Div styling
----------------*/
+/*#endregion*/
+
+/*#region Home Page*/
+
+
+/*Decoration*/
 .TimeCard {
     height: 100%;
-    width: 82.5%;
+    width: 100%;
 }
+
 .TimeCard .outer {
     width: max-content;
     margin: 0 auto;
-    margin-top: 5rem;
+    margin-top: 2rem;
     margin-left: 15rem;
 }
+
 .TimeCard .row {
     flex-wrap: nowrap;
     margin: 0 auto;
-    margin-bottom: 3rem;
 }
+
 .TimeCard .row p {
     width: max-content;
     line-height: 2rem;
     color: white;
 }
+
 .TimeCard form {
     width:max-content;
 }
 
 
-
-
 /* Table
 ---------------*/
+
+
+/*Decoration*/
 .TimeCard .outer table {
     color:white;
 }
 
 .TimeCard .outer .Table-Head {
-    position: fixed;
-    top: 14.2476%;
+    overflow: hidden;
+    position: sticky;
+}
+
+.TimeCard .outer .table {
+    border-top: 2px solid #00405e;
+    margin: 0;
 }
 
 .TimeCard .outer .Table-Gride {
     overflow: overlay;
     min-height: fit-content;
-    max-height: 42rem;
+    max-height: 41.5rem;
+    width: min-content;
 }
 
 .TimeCard .outer table thead {
@@ -695,53 +672,25 @@ nav ul li a span.rotate {
     border-top: solid #00405e00 2px;
 }
 
+
 /* Scrollbar for day grid*/
 .TimeCard .outer .Table-Gride::-webkit-scrollbar {
     width:5px !important;
     display: contents !important;
 }
+
 .TimeCard .outer .Table-Gride::-webkit-scrollbar-track {
     background: #00405e !important;
     border-radius: 15px !important;
     display: contents !important;
 }
+
 .TimeCard .outer .Table-Gride::-webkit-scrollbar-thumb {
     background: #0588c9 !important;
     border-radius: 15px !important;
     display: contents !important;
 }
 
-
-
-/* Table Items*/
-/*.TimeCard table thead {
-    position: absolute;
-    width: max-content;
-    top: 15%;
-}
-.TimeCard table thead tr th {
-    background: #004f75 !important;
-    color: white !important;
-    text-align: center;
-    height: 35px;
-    border-bottom: 2px solid #004f75 !important;
-}
-.TimeCard table tbody tr th {
-    background: #004f75 !important;
-    border-bottom: solid #004f75 2px;
-    color: white !important;
-    text-align: center;
-    border-top: solid #004f75 1.2px;
-}
-.TimeCard table tbody tr td {
-    background: #097eb7 !important;
-    border-bottom: solid #097eb7  2px;
-    color: white !important;
-    text-align: center;
-}
-.TimeCard table tbody, td, tfoot, th, thead, tr {
-    width: 10rem;
-}*/
 
 
 /* Date Picker
@@ -753,6 +702,7 @@ nav ul li a span.rotate {
 .TimeCard .outer .row #calendarBox input {
     display:block;
 }
+
 .TimeCard .outer .row #calendarBox a {
     padding-left: 2rem;
     padding-right: 2rem;
@@ -776,6 +726,7 @@ nav ul li a span.rotate {
     transition: all 0.3s ease-in-out;
     float:left;
 }
+
 .TimeCard .row .submitBTN {
     height: 1.5rem !important;
     border: none !important;
@@ -786,12 +737,11 @@ nav ul li a span.rotate {
     border-radius: 10px !important;
 }
 
-
-
 .TimeCard .row .form-control:hover {
     box-shadow:none;
     border: 2px solid #00000000;
 }
+
 .TimeCard .row .form-control:focus {
     box-shadow:none;
     border: 2px solid #00000000;
@@ -808,6 +758,7 @@ nav ul li a span.rotate {
     width: max-content;
     height: 40px;
 }
+
 .TimeCard .outer .row button i {
     color: #ffffff;
 }
@@ -824,16 +775,20 @@ nav ul li a span.rotate {
     padding: 1rem;
     box-shadow: 0px 0px 3px 2px #00000052;
 }
+
 .TimeCard .outer .row #calendarBox .HideShow {
     display:none;
 }
+
 .TimeCard .outer .row #calendarBox .showDiv .row {
     width: max-content;
 }
+
 .TimeCard .outer .row #calendarBox .showDiv{
     display:block !important;
     height:100%;
 }
+
 .TimeCard .outer .row #calendarBox .showDiv input {
     text-transform: capitalize;
     width: max-content;
@@ -843,9 +798,12 @@ nav ul li a span.rotate {
 }
 
 
-/* Admin Page
-------------------------------------------------------*/
+ /*#endregion*/
 
+/*#region Admin Page*/
+
+
+/*Admin page*/
 .AdminPage .row {
     --bs-gutter-x: 0;
 }
@@ -863,11 +821,14 @@ nav ul li a span.rotate {
    width: fit-content;
 }
 
+
+/*Decoration*/
 .AdminPage .container .OpdateTimeCard {
     min-height: 40rem !important;
     position:relative;
     padding-top: 1rem !important;
 }
+
 .AdminPage .container .OpdateTimeCard .OpdaterTimeCardRow {
     place-content:center;
 
@@ -884,22 +845,22 @@ nav ul li a span.rotate {
 }
 
 
+/*Abscense Decoration*/
 .AdminPage .container .OpdateTimeCard .Minnus{
     font-size: 20px !important;
     width: 14px;
 }
+
 .AdminPage .container .OpdateTimeCard .AbsHidden{
     display:none;
 }
+
 .AdminPage .container .OpdateTimeCard .AbsHide{
     position: absolute;
     top: 5rem;
     left: 0%;
     right: 0%;
 }
-
-
-
 
 .AdminPage .container .OpdateTimeCard .AbsenceOptions {
     border-bottom: #ffffff42 solid 3px;
@@ -915,21 +876,22 @@ nav ul li a span.rotate {
     border-color: #a7c0cc;
 }
 
-
-
 .AdminPage .container .OpdateTimeCard .row .HourClock {
     width: 8vh;
 }
+
 .AdminPage .container .OpdateTimeCard #usernbtn {
     float: left;
     margin-right: 1rem;
 }
+
 .AdminPage .container .OpdateTimeCard #Calendar {
     float: left;
     width: 10rem;
     margin-right: 1rem;
     margin-left: 1.4rem;
 }
+
 .AdminPage .container .OpdateTimeCard .submitBTN {
     float:left;
 }
@@ -952,7 +914,7 @@ nav ul li a span.rotate {
 }
 
 
-
+/*Container Decoration*/
 .AdminPage .container p {
     text-align: center;
     margin-top: 2.5rem;
@@ -996,11 +958,12 @@ nav ul li a span.rotate {
 }
 
 
-
+/*Admin navbar*/
 .AdminPage .container .CreateUser {
     min-height: 40rem !important;
     position:relative;
 }
+
 .AdminPage .container .CreateUser .createRow {
     padding-top: 2rem;
 }
@@ -1016,6 +979,8 @@ nav ul li a span.rotate {
     position:relative;
 }
 
+
+/*Submit Decoration*/
 .AdminPage .container .lower-container .submit-row {
     background: #00405e;
     width: 100%;
@@ -1039,6 +1004,8 @@ nav ul li a span.rotate {
     line-height: 0;
 }
 
+
+/*Input columns*/
 .AdminPage .container .lower-container .col-row {
     text-align: -webkit-center;
     width:100%;
@@ -1057,23 +1024,54 @@ nav ul li a span.rotate {
     color: white;
 }
 
+.AdminPage .container .lower-container .col-row .col-12 {
+    padding: 1rem;
+}
 
+.AdminPage .container .lower-container .row label {
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.AdminPage .container .lower-container .row .col-6 {
+    margin-bottom: 0.5rem;
+    margin-top: 1.5rem;
+}
+
+.AdminPage .container .lower-container .form-control {
+    width:max-content;
+}
+
+
+/*Delete Page Decoration*/
 .AdminPage .container .lower-container .col-row .delete {
     background: #00405e73;
     margin-top:1rem;
 }
 
+.AdminPage .container .lower-container .row .CreateUserError {
+    color: #c91325;
+    font-weight: 700;
+    font-size: 15px;
+    margin-left: 1.5rem;
+}
+
+
+/*Dropdwon Decoration*/
 .AdminPage .container .lower-container .col-row .col-12 .dropdown .dropdown-toggle {
     background: white;
 }
-    .AdminPage .container .lower-container .col-row .col-12 .dropdown .dropdown-toggle:hover {
-        border-color: transparent;
-        box-shadow: none;
-    }
-    .AdminPage .container .lower-container .col-row .col-12 .dropdown .dropdown-toggle:focus {
-        box-shadow: none;
-        border-color: transparent;
-    }
+
+.AdminPage .container .lower-container .col-row .col-12 .dropdown .dropdown-toggle:hover {
+    border-color: transparent;
+    box-shadow: none;
+}
+
+.AdminPage .container .lower-container .col-row .col-12 .dropdown .dropdown-toggle:focus {
+    box-shadow: none;
+    border-color: transparent;
+}
 
 .AdminPage .container .lower-container .col-row .col-12 .dropdown .dropdown-menu {
     width: auto !important;
@@ -1091,160 +1089,192 @@ nav ul li a span.rotate {
     border-radius: 0;
     background: white;
 }
-    .AdminPage .container .lower-container .col-row .col-12 .dropdown .dropdown-item:hover {
-        color: white !important;
-        background: #247bfb;
+
+.AdminPage .container .lower-container .col-row .col-12 .dropdown .dropdown-item:hover {
+    color: white !important;
+    background: #247bfb;
+}
+
+.AdminPage .container .lower-container .col-row .col-12 .dropdown .dropdown-item:focus {
+    color: black !important;
+    background: transparent;
+}
+
+
+/*#endregion*/
+
+/*#region Media Tags*/
+
+
+/*Height*/
+@media only screen and (max-height: 882px) {
+    .TimeCard .row {
+        margin-bottom:0;
     }
-    .AdminPage .container .lower-container .col-row .col-12 .dropdown .dropdown-item:focus {
-        color: black !important;
-        background: transparent;
-    }
-
-.AdminPage .container .lower-container .col-row .col-12 {
-    padding: 1rem;
 }
 
-.AdminPage .container .lower-container .row label {
-    color: white;
-    font-size: 20px;
-    font-weight: 500;
-}
-
-.AdminPage .container .lower-container .row .col-6 {
-    margin-bottom: 0.5rem;
-    margin-top: 1.5rem;
-}
-.AdminPage .container .lower-container .row .CreateUserError {
-    color: #c91325;
-    font-weight: 700;
-    font-size: 15px;
-    margin-left: 1.5rem;
-}
-
-.AdminPage .container .lower-container .form-control {
-    width:max-content;
-}
-
-@media only screen and (min-width: 650px) {
+@media only screen and (max-height: 835px) {
     .TimeCard .outer {
-        margin-left: 10rem;
+        margin-top: 1rem !important;
     }
-    .TimeCard table tbody, td, tfoot, th, thead, tr {
-        width: 3.88rem;
+    .TimeCard .outer .Table-Head {
+        top:0 !important;
+    }
+}
+
+@media only screen and (max-height: 770px) {
+    .TimeCard .outer .Table-Gride {
+        max-height: 34.5rem !important;
+    }
+}
+
+@media only screen and (max-height: 658px) {
+    .TimeCard .outer .Table-Gride {
+        max-height: 20.5rem !important;
+    }
+}
+
+
+/*Width*/
+@media only screen and (min-width: 500px) {
+    .TimeCard table {
+        width: 33rem;
     }
 
-    .sidebar {
-        width: 210px;
-    }
     .sidebar .logo {
-        width: 13rem;
-        background-repeat: no-repeat;
+        margin-top: 2rem !important;
     }
 
+    .TimeCard .outer .Table-Head {
+        top: 17.2476%;
+    }
 
+    .TimeCard .outer {
+        margin-top: 8rem;
+        margin-left: 0;
+    }
 
+    .sidebar ul {
+        height: 87%;
+    }
+}
+
+@media only screen and (min-width: 700px) {
+    .TimeCard table {
+        width: 42rem;
+    }
 }
 
 @media only screen and (min-width: 768px) {
-    .TimeCard .outer {
-        margin-left: 13rem;
+    .TimeCard table {
+        width: 42rem;
     }
+
+    .TimeCard .outer {
+        margin-top: 5rem;
+    }
+
+        .TimeCard .outer .Table-Head {
+            top: 15.2476%;
+        }
+}
+
+@media only screen and (max-width: 849px) {
+    .collapsNavBTN {
+        visibility: visible;
+    }
+
     .sidebar {
-        width: 235px;
+        display: none;
     }
 }
 
-
-@media only screen and (min-width: 845px) {
-    .TimeCard {
-        margin-left: 1rem;
-    }
-
-    .TimeCard table tbody, td, tfoot, th, thead, tr {
-        width: 3.88rem;;
-    }
-}
-
-
-@media only screen and (min-width: 985px) {
-    .TimeCard table tbody, td, tfoot, th, thead, tr {
-        width: 5rem;
-    }
+@media only screen and (min-width: 850px) {
     .TimeCard .outer {
-        margin-left: 9rem;
+        margin-top: 5rem;
+        margin-left: 12.5rem;
     }
+
+    .TimeCard table {
+        width: 34rem;
+    }
+
+    .sidebar {
+        width: 280px;
+    }
+
+        .sidebar .logo {
+            width: 15rem;
+            margin-top: 0 !important;
+        }
+
+        .sidebar #Oper-li .Oper-show #Fraværesanmodning {
+            font-size: 15px;
+        }
+
+        .sidebar #Oper-li .Oper-show .tooltiptext {
+            left: 1rem;
+        }
 }
+
 @media only screen and (min-width: 992px) {
     .TimeCard .outer {
-        margin-left: 16rem;
+        margin-left: 16.5rem;
+    }
+
+    .TimeCard table {
+        width: 40rem;
     }
 }
 
-
-@media only screen and (min-width: 1100px) {
-    .TimeCard table tbody, td, tfoot, th, thead, tr {
-        width: 5.5rem;
-    }
+@media only screen and (min-width: 1200px) {
     .TimeCard .outer {
-        margin-left: 16rem;
+        margin-left: 18.5rem;
+    }
+
+    .TimeCard table {
+        width: 52rem;
     }
 
     .sidebar {
         width: 336px;
     }
-    .sidebar .logo {
-        width: 19rem;
-        background-repeat: no-repeat;
-    }
 
-}
+        .sidebar .logo {
+            width: 19rem;
+        }
 
-@media only screen and (min-width: 1200px) {
-    .TimeCard .outer {
-        margin-left: 18rem;
-    }
-}
+        .sidebar #Oper-li .Oper-show #Fraværesanmodning {
+            font-size: 17px;
+        }
 
-@media only screen and (min-width: 1255px) {
-    .TimeCard table tbody, td, tfoot, th, thead, tr {
-        width: 6.5rem;
-    }
-    .TimeCard .outer {
-        margin-left: 18rem;
-    }
-}
-
-@media only screen and (min-width: 1380px) {
-    .TimeCard table tbody, td, tfoot, th, thead, tr {
-        width: 7.5rem;
-    }
-    .TimeCard .outer {
-        margin-left: 14rem;
-    }
+        .sidebar #Oper-li .Oper-show .tooltiptext {
+            left: 3rem;
+        }
 }
 
 @media only screen and (min-width: 1400px) {
     .TimeCard .outer {
-        margin-left: 18rem;
+        margin-left: 21rem;
+    }
+
+    .TimeCard table {
+        width: 60rem;
+    }
+
+    .TimeCard .outer .Table-Head {
+        left: 657px;
+        top: 134px;
     }
 }
 
-@media only screen and (min-width: 1500px) {
-    .TimeCard {
-        margin-left: 3rem;
-    }
-    .TimeCard table tbody, td, tfoot, th, thead, tr {
-        width: 8.5rem;
-    }
-    .TimeCard .outer {
-        margin: 0 auto;
-        margin-left: 14rem;
-        margin-top: 5rem;
-    }
-}
 
-/* Feature
-------------------------------------------------------*/
+/*#endregion*/
+
+/*#region Feature*/
+
+
+/*Normal Decoration*/
 .NormalButton {
     background: transparent;
     border: none;
@@ -1274,26 +1304,28 @@ nav ul li a span.rotate {
     background: #ff000026 !important;
 }
 
-    .NormalBtn:hover {
-        background: #ff000070 !important;
-        box-shadow: 0px 0px 0px 4px #ff000026 !important;
-    }
+.NormalBtn:hover {
+    background: #ff000070 !important;
+    box-shadow: 0px 0px 0px 4px #ff000026 !important;
+}
 
 .NormalInput {
     background: #ff00002e !important;
 }
 
-    .NormalInput:hover {
-        background: #ff00002e !important;
-        box-shadow: 0px 0px 0px 4px #ff00005c !important;
-    }
+.NormalInput:hover {
+    background: #ff00002e !important;
+    box-shadow: 0px 0px 0px 4px #ff00005c !important;
+}
 
-    .NormalInput:focus {
-        background: #ff00002e !important;
-        box-shadow: 0px 0px 0px 4px #ff00005c !important;
-    }
+.NormalInput:focus {
+    background: #ff00002e !important;
+    box-shadow: 0px 0px 0px 4px #ff00005c !important;
+}
 
 .NormalTooltip {
     box-shadow: 0px 0px 0px 4px #ff000026 !important;
     background: #ff000070 !important;
 }
+
+/*#endregion*/

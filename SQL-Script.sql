@@ -172,7 +172,7 @@ GO
 
 
 INSERT INTO [Days] ([User_ID], [Date], [AbscenseID], [AbscenceText], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalMin], [TotalHour], [TotalSaldo])
-VALUES (1, '220201 00:00:00 AM', 1, '', '220201 08:00:00 AM', '220130 15:24:00 PM',0 ,0, '00:00', 0, 0, '00:00')
+VALUES (1, '220203 00:00:00 AM', 1, '', '220201 08:00:00 AM', '220130 16:24:00 PM',0 ,1, '00:00', 36, 0, '00:36')
 GO
 
 
