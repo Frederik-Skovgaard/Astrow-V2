@@ -20,7 +20,7 @@
         <div class="container outer">
             <div class="row">
                 <p>Dato: </p>
-                <div style="width:max-content;">
+                <div class="DatePicker">
                     <input id="Calendar" value="@Model.CalendarValue" type="month" name="Calendar" class="form-control" min="@startDate" max="@endDate" required />
                     <button type="submit" asp-page-handler="Load" class="submitBTN">
                         <i class="fas fa-check"></i> Submit
@@ -45,14 +45,13 @@
                 <table>
                     <thead>
                         <tr>
-                            <th scope="col">Day</th>
-                            <th scope="col">Dato</th>
-                            <th scope="col">Fravær</th>
-                            <th scope="col">Login</th>
-                            <th scope="col">Logud</th>
-                            <th scope="col">TotFrv</th>
-                            <th scope="col">Saldo</th>
-                            <th scope="col">Saldo+</th>
+                            <th class="DayTh" scope="col">Day</th>
+                            <th class="DatoTh" scope="col">Dato</th>
+                            <th class="FraværTh" scope="col">Fravær</th>
+                            <th class="LoginTh" scope="col">Login</th>
+                            <th class="LogudTh" scope="col">Logud</th>
+                            <th class="SaldoTh" scope="col">Saldo</th>
+                            <th class="TotSaldoTh" scope="col">Saldo+</th>
                         </tr>
                     </thead>
                 </table>
@@ -86,14 +85,13 @@
                                             if (date.EndDay.ToString("HH:mm") == "00:00")
                                             {
                                                 <tr>
-                                                    <th scope="row">@day.ToString("dddd")  </th>
-                                                    <td class="@strClass">@day.ToString("yyyy-MM-dd")</td>
-                                                    <td class="@strClass"></td>
-                                                    <td class="@strClass">@date.StartDay.ToString("HH:mm")</td>
-                                                    <td class="@strClass"></td>
-                                                    <td class="@strClass"></td>
-                                                    <td class="@strClass">-7:24 </td>
-                                                    <td class="@strClass">@date.TotalSaldo</td>
+                                                    <th scope="row" class="Dayth">@day.ToString("dddd")  </th>
+                                                    <td class="@strClass Datetr">@day.ToString("yyyy-MM-dd")</td>
+                                                    <td class="@strClass Fraværtr"></td>
+                                                    <td class="@strClass Logintr">@date.StartDay.ToString("HH:mm")</td>
+                                                    <td class="@strClass Logudtr"></td>
+                                                    <td class="@strClass Saldotr">-7:24 </td>
+                                                    <td class="@strClass TotSaldotr">@date.TotalSaldo</td>
                                                 </tr>
 
                                                 strClass = "";
@@ -102,14 +100,13 @@
                                             else
                                             {
                                                 <tr>
-                                                    <th scope="row">@day.ToString("dddd")  </th>
-                                                    <td class="@strClass">@day.ToString("yyyy-MM-dd")</td>
-                                                    <td class="@strClass"></td>
-                                                    <td class="@strClass">@date.StartDay.ToString("HH:mm")</td>
-                                                    <td class="@strClass">@date.EndDay.ToString("HH:mm")</td>
-                                                    <td class="@strClass"></td>
-                                                    <td class="@strClass">@date.Saldo</td>
-                                                    <td class="@strClass">@date.TotalSaldo</td>
+                                                    <th scope="row" class="Dayth">@day.ToString("dddd")  </th>
+                                                    <td class="@strClass Datetr">@day.ToString("yyyy-MM-dd")</td>
+                                                    <td class="@strClass Fraværtr"></td>
+                                                    <td class="@strClass Logintr">@date.StartDay.ToString("HH:mm")</td>
+                                                    <td class="@strClass Logudtr">@date.EndDay.ToString("HH:mm")</td>
+                                                    <td class="@strClass Saldotr">@date.Saldo</td>
+                                                    <td class="@strClass TotSaldotr">@date.TotalSaldo</td>
                                                 </tr>
 
                                                 strClass = "";
@@ -127,14 +124,13 @@
                                     else if (day.ToString("dddd") == "lørdag" || day.ToString("dddd") == "søndag")
                                     {
                                         <tr>
-                                            <th scope="row">@day.ToString("dddd")  </th>
-                                            <td class="WeekdEnd @strClass">@day.ToString("yyyy-MM-dd")</td>
-                                            <td class="WeekdEnd @strClass"></td>
-                                            <td class="WeekdEnd @strClass"></td>
-                                            <td class="WeekdEnd @strClass"></td>
-                                            <td class="WeekdEnd @strClass"></td>
-                                            <td class="WeekdEnd @strClass"></td>
-                                            <td class="WeekdEnd @strClass"></td>
+                                            <th scope="row" class="Dayth">@day.ToString("dddd")  </th>
+                                            <td class="WeekdEnd @strClass Datetr">@day.ToString("yyyy-MM-dd")</td>
+                                            <td class="WeekdEnd @strClass Fraværtr"></td>
+                                            <td class="WeekdEnd @strClass Logintr"></td>
+                                            <td class="WeekdEnd @strClass Logudtr"></td>
+                                            <td class="WeekdEnd @strClass Saldotr"></td>
+                                            <td class="WeekdEnd @strClass TotSaldotr"></td>
                                         </tr>
 
                                         strClass = "";
@@ -142,14 +138,13 @@
                                     else
                                     {
                                         <tr>
-                                            <th scope="row">@day.ToString("dddd")  </th>
-                                            <td class="@strClass">@day.ToString("yyyy-MM-dd")</td>
-                                            <td class="@strClass"></td>
-                                            <td class="@strClass"></td>
-                                            <td class="@strClass"></td>
-                                            <td class="@strClass"></td>
-                                            <td class="@strClass"></td>
-                                            <td class="@strClass"></td>
+                                            <th scope="row" class="Dayth">@day.ToString("dddd")  </th>
+                                            <td class="@strClass Datetr">@day.ToString("yyyy-MM-dd")</td>
+                                            <td class="@strClass Fraværtr"></td>
+                                            <td class="@strClass Logintr"></td>
+                                            <td class="@strClass Logudtr"></td>
+                                            <td class="@strClass Saldotr"></td>
+                                            <td class="@strClass TotSaldotr"></td>
                                         </tr>
 
                                         strClass = "";
@@ -159,14 +154,13 @@
                                 else if (day.ToString("dddd") == "lørdag" || day.ToString("dddd") == "søndag")
                                 {
                                     <tr>
-                                        <th scope="row">@day.ToString("dddd")  </th>
-                                        <td class="WeekdEnd @strClass">@day.ToString("yyyy-MM-dd")</td>
-                                        <td class="WeekdEnd @strClass"></td>
-                                        <td class="WeekdEnd @strClass"></td>
-                                        <td class="WeekdEnd @strClass"></td>
-                                        <td class="WeekdEnd @strClass"></td>
-                                        <td class="WeekdEnd @strClass"></td>
-                                        <td class="WeekdEnd @strClass"></td>
+                                        <th scope="row" class="Dayth">@day.ToString("dddd")  </th>
+                                        <td class="WeekdEnd @strClass Datetr">@day.ToString("yyyy-MM-dd")</td>
+                                        <td class="WeekdEnd @strClass Fraværtr"></td>
+                                        <td class="WeekdEnd @strClass Logintr"></td>
+                                        <td class="WeekdEnd @strClass Logudtr"></td>
+                                        <td class="WeekdEnd @strClass Saldotr"></td>
+                                        <td class="WeekdEnd @strClass TotSaldotr"></td>
                                     </tr>
 
                                     strClass = "";
@@ -174,14 +168,13 @@
                                 else
                                 {
                                     <tr>
-                                        <th scope="row">@day.ToString("dddd")  </th>
-                                        <td class="@strClass">@day.ToString("yyyy-MM-dd")</td>
-                                        <td class="@strClass"></td>
-                                        <td class="@strClass"></td>
-                                        <td class="@strClass"></td>
-                                        <td class="@strClass"></td>
-                                        <td class="@strClass"></td>
-                                        <td class="@strClass"></td>
+                                        <th scope="row" class="Dayth">@day.ToString("dddd")  </th>
+                                        <td class="@strClass Datetr">@day.ToString("yyyy-MM-dd")</td>
+                                        <td class="@strClass Fraværtr"></td>
+                                        <td class="@strClass Logintr"></td>
+                                        <td class="@strClass Logudtr"></td>
+                                        <td class="@strClass Saldotr"></td>
+                                        <td class="@strClass TotSaldotr"></td>
                                     </tr>
 
                                     strClass = "";

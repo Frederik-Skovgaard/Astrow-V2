@@ -6,20 +6,28 @@
 }
 
 <div class="AdminPage">
+    <button class="AdminNavBTN" id="AdminNavBTN">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+        </svg>
+    </button>
+
     <div class="container">
-        <div class="row upper-row">
-            <a href="/AdminPage/Opret-Bruger" class="btn btn-lg btn-primary">
-                <i class="fas fa-plus-circle"></i> Opret bruger
-            </a>
-            <a href="/AdminPage/Opdater-Bruger" class="btn btn-lg btn-secondary">
-                <i class="fas fa-user-edit"></i> Opdater bruger
-            </a>
-            <a href="/AdminPage/Opdater-Timekort" class="btn btn-lg btn-secondary">
-                <i class="fas fa-user-clock"></i> Opdater Timekort
-            </a>
-            <a href="/AdminPage/Slet-Bruger" class="btn btn-lg btn-danger">
-                <i class="fas fa-minus-circle"></i> Fjern bruger
-            </a>
+        <div class="AdminNav">
+            <div class="row upper-row" id="AdminNav">
+                <a href="/AdminPage/Opret-Bruger" class="btn btn-lg btn-primary">
+                    <i class="fas fa-plus-circle"></i> Opret bruger
+                </a>
+                <a href="/AdminPage/Opdater-Bruger" class="btn btn-lg btn-secondary">
+                    <i class="fas fa-user-edit"></i> Opdater bruger
+                </a>
+                <a href="/AdminPage/Opdater-Timekort" class="btn btn-lg btn-secondary">
+                    <i class="fas fa-user-clock"></i> Opdater Timekort
+                </a>
+                <a href="/AdminPage/Brugere" class="btn btn-lg btn-secondary">
+                    <i class="fas fa-users"></i> Brugere
+                </a>
+            </div>
         </div>
         <p class="display-3">Opret Bruger</p>
         <div class="container lower-container CreateUser">
@@ -107,6 +115,11 @@
                             alert("End date should be greater than Start date");
                             document.getElementById("EndDate").value = "";
                         }
+                    });
+
+                    //Make Admin Nav apper and disapper, Magic!
+                    $('#AdminNavBTN').click(function() {
+                        $('#AdminNav').toggleClass("show")
                     });
                 </script>
 

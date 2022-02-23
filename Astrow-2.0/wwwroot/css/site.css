@@ -302,11 +302,12 @@ a.navbar-brand {
 
 /*Collaps button*/
 .collapsNavBTN {
-    visibility: hidden;
+    display:none;
     background: #004f75;
     position: absolute;
     top: 0;
     z-index: 3;
+    border: none;
 }
 
 .collapsNavBTN svg {
@@ -590,6 +591,7 @@ nav ul li a span.rotate {
     margin: 0 auto;
     margin-top: 2rem;
     margin-left: 15rem;
+    padding: 0;
 }
 
 .TimeCard .row {
@@ -613,6 +615,7 @@ nav ul li a span.rotate {
 
 
 /*Decoration*/
+
 .TimeCard .outer table {
     color:white;
 }
@@ -661,7 +664,7 @@ nav ul li a span.rotate {
 }
 
 .TimeCard table tbody tr .ToDayClass {
-    background: #ffffff8c !important;
+    background: #94e1ff9e !important;
     color: black !important;
     border-bottom: solid #ffffff00 2px !important;
 }
@@ -670,6 +673,64 @@ nav ul li a span.rotate {
     background: #00405e73 !important;
     border-bottom: solid #00405e00 2px;
     border-top: solid #00405e00 2px;
+}
+
+/*Table Head Decoration*/
+.TimeCard .outer table .DayTh {
+    width: 90px;
+}
+
+.TimeCard .outer table .DatoTh {
+    width: 126px;
+}
+
+.TimeCard .outer table .FraværTh {
+    width: 160px;
+}
+
+.TimeCard .outer table .LoginTh {
+    width: 130px;
+}
+
+.TimeCard .outer table .LogudTh {
+    width: 145px;
+}
+
+.TimeCard .outer table .SaldoTh {
+    width: 130px;
+}
+
+.TimeCard .outer table .TotSaldoTh {
+    width: 164.93px;
+}
+
+/*Table Body Decoration*/
+.TimeCard .outer table .Dayth {
+    width: 80.22px;
+}
+
+.TimeCard .outer table .Datetr {
+    width: 124.56px;
+}
+
+.TimeCard .outer table .Fraværtr {
+    width: 141.96px;
+}
+
+.TimeCard .outer table .Logintr {
+    width: 115.4px;
+}
+
+.TimeCard .outer table .Logudtr {
+    width: 128.49px;
+}
+
+.TimeCard .outer table .Saldotr {
+    width: 115.38px
+}
+
+.TimeCard .outer table .TotSaldotr {
+    width:146.46px
 }
 
 
@@ -711,6 +772,10 @@ nav ul li a span.rotate {
     background: #004f75;
     display: block;
     margin-bottom: 0.5rem;
+}
+
+.TimeCard .outer .DatePicker {
+    width:max-content;
 }
 
 
@@ -821,6 +886,11 @@ nav ul li a span.rotate {
    width: fit-content;
 }
 
+.AdminPage .container .AdminNav {
+    width: min-content;
+    margin: 0 auto;
+}
+
 
 /*Decoration*/
 .AdminPage .container .OpdateTimeCard {
@@ -906,6 +976,10 @@ nav ul li a span.rotate {
 
 }
 
+.AdminPage .container .OpdateTimeCard .AbsenceOptions {
+    margin-bottom: 0.89rem;
+}
+
 .AdminPage .container .OpdateTimeCard .AbsenceOptions .AbscenseTypeDrop {
     margin: 0;
     float: left;
@@ -924,7 +998,6 @@ nav ul li a span.rotate {
 }
 
 .AdminPage .container .upper-row {
-    margin: 0 auto;
     width: max-content;
     padding: 0.5rem;
 
@@ -962,10 +1035,7 @@ nav ul li a span.rotate {
 .AdminPage .container .CreateUser {
     min-height: 40rem !important;
     position:relative;
-}
-
-.AdminPage .container .CreateUser .createRow {
-    padding-top: 2rem;
+    position: absolute;
 }
 
 .AdminPage .container .UpdateUser {
@@ -977,6 +1047,41 @@ nav ul li a span.rotate {
     min-height: 40rem !important;
     max-height: fit-content !important;
     position:relative;
+}
+
+.AdminPage .AdminNavBTN {
+    display:none;
+    background: #004f75;
+    position: fixed;
+    top: 0;
+    right:0;
+    z-index: 3;
+    border: none;
+}
+
+.AdminPage .container .AdminNav .show {
+    display: flex !important;
+    flex-flow: column;
+    position: fixed;
+    z-index: 1;
+    right: 0;
+    top: 0;
+    height: 31%;
+}
+
+.AdminNavBTN svg {
+    height: 2.5rem;
+    width: 2.5rem;
+    color: white;
+}
+
+.AdminPage .container .UpdateUser .col-12 {
+    padding:0 !important;
+}
+
+.AdminPage .container .UpdateUser .col-6 {
+    margin-bottom:0 !important;
+    margin-top:0 !important;
 }
 
 
@@ -994,7 +1099,6 @@ nav ul li a span.rotate {
     position: absolute;
     bottom: 0;
     left: 0;
-    
 }
 
 .AdminPage .container .lower-container .submit-row button {
@@ -1032,6 +1136,10 @@ nav ul li a span.rotate {
     color: white;
     font-size: 20px;
     font-weight: 500;
+    width: max-content !important;
+    margin: 0;
+    max-width: max-content;
+    line-height: 3;
 }
 
 .AdminPage .container .lower-container .row .col-6 {
@@ -1043,11 +1151,57 @@ nav ul li a span.rotate {
     width:max-content;
 }
 
+.AdminPage .container .OpdateTimeCard .DateTimeUpdate {
+        width: 20rem;
+        align-items: center;
+}
+    
+.AdminPage .container .OpdateTimeCard .DateTimeUpdate .btn {
+    height: 4vh;
+}
+
+.AdminPage .container .OpdateTimeCard .OpdaterTimeCardRow {
+    align-items:center;
+}
+
+.AdminPage .container .OpdateTimeCard .row .HourClock {
+    width: 8vh;
+    height: 3vh;
+}
+
+.AdminPage .container .OpdateTimeCard .OpdaterTimeCardRow label {
+    font-size: 17px;
+    margin-right: 1rem;
+}
 
 /*Delete Page Decoration*/
-.AdminPage .container .lower-container .col-row .delete {
+.AdminPage .container .DeleteUser form {
     background: #00405e73;
-    margin-top:1rem;
+    margin-bottom: 0.5rem;
+    height: 4rem;
+    margin-top: 1rem;
+}
+
+.AdminPage .container .lower-container .col-row {
+    height: inherit;
+}
+
+.AdminPage .container .DeleteUser .Delete-Col {
+    padding: 1rem;
+    height: min-content;
+    margin:0 !important;
+}
+
+.AdminPage .container .DeleteUser label {
+    line-height:unset !important;
+}
+
+.AdminPage .container .DeleteUser .col-row .btn {
+    border-radius: 8px;
+    height: 2rem;
+    line-height: 1;
+    width: min-content;
+    margin-right: 0.5rem;
 }
 
 .AdminPage .container .lower-container .row .CreateUserError {
@@ -1105,6 +1259,7 @@ nav ul li a span.rotate {
 
 /*#region Media Tags*/
 
+/*#region Home Page/Nav Bar*/
 
 /*Height*/
 @media only screen and (max-height: 882px) {
@@ -1137,12 +1292,29 @@ nav ul li a span.rotate {
 
 /*Width*/
 @media only screen and (min-width: 500px) {
-    .TimeCard table {
-        width: 33rem;
+    .sidebar {
+        width: 280px;
     }
 
     .sidebar .logo {
-        margin-top: 2rem !important;
+        width: 15rem;
+        margin-top: 1rem !important;
+    }
+
+    .sidebar #Oper-li .Oper-show #Fraværesanmodning {
+        font-size: 15px;
+    }
+
+    .sidebar #Oper-li .Oper-show .tooltiptext {
+        left: 1rem;
+    }
+
+    .sidebar ul {
+        height: 87%;
+    }
+
+    .TimeCard table {
+        width: 29.5rem;
     }
 
     .TimeCard .outer .Table-Head {
@@ -1154,14 +1326,14 @@ nav ul li a span.rotate {
         margin-left: 0;
     }
 
-    .sidebar ul {
-        height: 87%;
+    .TimeCard .outer .DatePicker {
+        padding:0;
     }
 }
 
 @media only screen and (min-width: 700px) {
     .TimeCard table {
-        width: 42rem;
+        width: 33rem;
     }
 }
 
@@ -1181,7 +1353,7 @@ nav ul li a span.rotate {
 
 @media only screen and (max-width: 849px) {
     .collapsNavBTN {
-        visibility: visible;
+        display:block;
     }
 
     .sidebar {
@@ -1203,18 +1375,27 @@ nav ul li a span.rotate {
         width: 280px;
     }
 
-        .sidebar .logo {
-            width: 15rem;
-            margin-top: 0 !important;
-        }
+    .sidebar ul {
+        height: 90%;
+    }
 
-        .sidebar #Oper-li .Oper-show #Fraværesanmodning {
-            font-size: 15px;
-        }
+    .sidebar .logo {
+        width: 15rem;
+        margin-top: 0 !important;
+    }
 
-        .sidebar #Oper-li .Oper-show .tooltiptext {
-            left: 1rem;
-        }
+    .sidebar #Oper-li .Oper-show #Fraværesanmodning {
+        font-size: 15px;
+    }
+
+    .sidebar #Oper-li .Oper-show .tooltiptext {
+        left: 1rem;
+    }
+
+    .TimeCard .outer .DatePicker {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
 }
 
 @media only screen and (min-width: 992px) {
@@ -1266,14 +1447,258 @@ nav ul li a span.rotate {
         left: 657px;
         top: 134px;
     }
+
+}
+
+/*#endregion*/
+
+
+/*#region Admin Pages*/
+
+
+/*Width*/
+@media only screen and (min-width: 500px) {
+    .AdminPage {
+        left: 2% !important;
+    }
+
+    .AdminPage .container {
+        text-align:unset;
+    }
+
+
+    .AdminPage .container .CreateUser {
+        width: 30rem;
+        position: absolute;
+        left:0;
+    }
+
+    .AdminPage .container .UpdateUser {
+        width: 28rem;
+    }
+
+    .AdminPage .container .OpdateTimeCard {
+        width: 28rem;
+    }
+
+    .AdminPage .container .DeleteUser {
+        width:28rem;
+    }
+
+
+    .AdminPage .container .OpdateTimeCard .AbsenceOptions {
+        width:20rem;
+    }
+
+    .AdminPage .container .OpdateTimeCard .UserTimeUpdate {
+        width: 15rem;
+    }
+
+    .AdminPage .container .OpdateTimeCard .DateTimeUpdate {
+        width: 20rem;
+    }
+    
+    .AdminPage .container .lower-container .form-control {
+        width: 9rem;
+    }
+
+
+    .AdminPage .container .display-3 {
+        margin-left: 7rem;
+    }
+
+    .AdminPage .container .DeleteUser .col-row .btn {
+        width: 3rem !important;
+        font-size: 14px !important;
+        padding: 0 !important;
+    }
+}
+
+@media only screen and (min-width: 665px) {
+     .AdminPage {
+        left: 8% !important;
+    }
+
+    .AdminPage .container .CreateUser {
+        width: 34rem;
+    }
+    .AdminPage .container .UpdateUser {
+        width: 34rem;
+    }
+    .AdminPage .container .OpdateTimeCard {
+        width: 34rem;
+    }
+    .AdminPage .container .DeleteUser {
+        width: 34rem;
+    }
+
+    .AdminPage .container .DeleteUser .col-row .btn {
+        width: 4rem !important;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .AdminPage {
+        left: 8% !important;
+    }
+
+    .AdminPage .container .CreateUser {
+        width: 42rem;
+    }
+    .AdminPage .container .UpdateUser {
+        width: 42rem;
+    }
+    .AdminPage .container .OpdateTimeCard {
+        width: 42rem;
+    }
+    .AdminPage .container .DeleteUser {
+        width: 42rem;
+    }
+
+    .AdminPage .container .DeleteUser .col-row .btn {
+        width: 5rem !important;
+    }
+
+    .AdminPage .container .display-3 {
+        margin-left: 11rem;
+    }
+}
+
+@media only screen and (min-width: 849px) {
+    .AdminPage {
+        left: 39% !important;
+    }
+
+    .AdminPage .container .CreateUser {
+        width: 30rem;
+    }
+    .AdminPage .container .UpdateUser {
+        width: 30rem;
+    }
+    .AdminPage .container .OpdateTimeCard {
+         width: 30rem;
+    }
+    .AdminPage .container .DeleteUser {
+        width: 30rem;
+    }
+
+    .AdminPage .container .display-3{
+        margin-left: 6rem
+    }
+}
+
+@media only screen and (max-width:1100px) {
+    .AdminPage .AdminNavBTN {
+        display: flex;
+    }
+
+    .AdminPage .upper-row {
+        display: none;
+        border-radius: 0 !important;
+    }
+
+    .AdminPage .upper-row a {
+        font-size: 18.5px;
+        margin-top: 2rem;
+        border-radius: 0 !important;
+        margin-right: 0 !important;
+        width: auto !important;
+    }
+
+    .AdminPage .upper-row .btn-primary {
+        margin-top: 2rem !important;
+    }
+
+    .AdminPage .container .DeleteUser .col-row .btn {
+        width: 3rem !important;
+        font-size: 14px !important;
+        padding: 0 !important;
+    }
+}
+
+@media only screen and (min-width: 1100px) {
+    .AdminPage .container .display-3 {
+        margin: 0 auto;
+    }
+}
+
+@media only screen and (min-width:1080px) {
+    .AdminPage {
+        left: 30% !important;
+    }
+
+    .AdminPage .container .CreateUser {
+        width: 45rem;
+    }
+    .AdminPage .container .UpdateUser {
+        width: 45rem;
+    }
+    .AdminPage .container .OpdateTimeCard {
+         width: 45rem;
+    }
+    .AdminPage .container .DeleteUser {
+        width: 45rem;
+    }
+
+    .AdminPage .container .DeleteUser .col-row .btn {
+        width: 6rem !important;
+    }
+
+    .AdminPage .container .OpdateTimeCard .UserTimeUpdate {
+        width: 25%;
+    }
+
+    .AdminPage .container .OpdateTimeCard .DateTimeUpdate {
+        width: 50%;
+    }
+
+    .AdminPage .container .lower-container .form-control {
+        width:max-content;
+    }
+}
+
+@media only screen and (min-width:1315px) {
+    
+    .AdminPage {
+        left: 33% !important;
+    }
+
+    .AdminPage .container .CreateUser {
+        width: 49rem;
+    }
+    .AdminPage .container .UpdateUser {
+        width: 49rem;
+    }
+    .AdminPage .container .OpdateTimeCard {
+        width: 49rem;
+    }
+    .AdminPage .container .DeleteUser {
+        width: 49rem;
+    }
+
+    .AdminPage .container .OpdateTimeCard .AbsenceOptions {
+        width: 40rem;
+    }
+}
+
+@media only screen and (min-width:1665px) {
+
+    .AdminPage {
+        left: 35% !important;
+    }
+
+    .AdminPage .container .DeleteUser .col-row .btn {
+        width: min-content !important;
+        padding: 6px 19px !important;
+        font-size: 16px !important;
+    }
 }
 
 
 /*#endregion*/
+/*#endregion*/
 
 /*#region Feature*/
-
-
 /*Normal Decoration*/
 .NormalButton {
     background: transparent;

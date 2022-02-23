@@ -410,7 +410,7 @@ GO
 CREATE PROCEDURE [GetUserInfo]
 @fullName NVARCHAR(90)
 AS
-SELECT * FROM [Name]
+SELECT [Name_ID] FROM [Name]
 WHERE [FullName] = @fullName
 GO
 

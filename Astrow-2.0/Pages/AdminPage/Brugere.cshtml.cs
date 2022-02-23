@@ -89,7 +89,7 @@ namespace Astrow_2._0.Pages.AdminPage
             //Popup message for succes
             ViewData["Message"] = string.Format("Bruger blev slettet...");
 
-            return RedirectToPage("/AdminPage/Slet-Bruger");
+            return RedirectToPage("/AdminPage/Brugere");
         }
 
         /// <summary>
