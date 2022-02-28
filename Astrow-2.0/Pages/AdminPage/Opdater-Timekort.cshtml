@@ -17,38 +17,44 @@
 
         <div class="container">
             <div class="AdminNav">
-            <div class="row upper-row" id="AdminNav">
-                <a href="/AdminPage/Opret-Bruger" class="btn btn-lg btn-primary">
-                    <i class="fas fa-plus-circle"></i> Opret bruger
-                </a>
-                <a href="/AdminPage/Opdater-Bruger" class="btn btn-lg btn-secondary">
-                    <i class="fas fa-user-edit"></i> Opdater bruger
-                </a>
-                <a href="/AdminPage/Opdater-Timekort" class="btn btn-lg btn-secondary">
-                    <i class="fas fa-user-clock"></i> Opdater Timekort
-                </a>
-                <a href="/AdminPage/Brugere" class="btn btn-lg btn-secondary">
-                    <i class="fas fa-users"></i> Brugere
-                </a>
+                <div class="row upper-row" id="AdminNav">
+                    <a href="/AdminPage/Opret-Bruger" class="btn btn-lg btn-primary">
+                        <i class="fas fa-plus-circle"></i> Opret bruger
+                    </a>
+                    <a href="/AdminPage/Opdater-Bruger" class="btn btn-lg btn-secondary">
+                        <i class="fas fa-user-edit"></i> Opdater bruger
+                    </a>
+                    <a href="/AdminPage/Opdater-Timekort" class="btn btn-lg btn-secondary">
+                        <i class="fas fa-user-clock"></i> Opdater Timekort
+                    </a>
+                    <a href="/AdminPage/Brugere" class="btn btn-lg btn-secondary">
+                        <i class="fas fa-users"></i> Brugere
+                    </a>
+                </div>
             </div>
-        </div>
-            <p class="display-3">Opdater Timekort</p>
             <div class="container lower-container OpdateTimeCard">
-
+                <div class="box">
+                        <h3>Opdater Timekort</h3>
+                    </div>
                 <div class="row col-row">
-
                     <div class="col-3 UserTimeUpdate">
                         <label>User</label> <br />
-                        <select class="form-control" name="UserValue" asp-for="UserValue" id="usernbtn">
-                            @foreach (Model.Containers.Users user in Model.UserList)
-                            {
-                                    <option value="@user.User_ID">@user.UserName</option>
-                            }
-                        </select>
-
-                        <input type="submit" asp-page-handler="User" style="width: min-content;" id="SubmitBTN" value="Choose" class="form-control btn btn-primary" />
+                        <div class="dropdown">
+                            <button class="btn btn-p dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Users
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                @foreach (Model.Containers.Users user in Model.UserList)
+                                {
+                                    @*Dropdown with every user*@
+                                    <form asp-page-handler="User" method="post">
+                                        <input asp-for="ID" value="@user.User_ID" hidden />
+                                        <input class="dropdown-item" type="submit" asp-page-handler="User" id="usernbtn" value="@user.UserName" />
+                                    </form>
+                                }
+                            </div>
+                        </div>
                     </div>
-
                 </div>
 
 
@@ -58,13 +64,13 @@
 
                         @if (Model.DateBool == true)
                         {
-                                <input id="Calendar" value="@Model.CalenderValue" type="date" name="Calendar" class="form-control" min="@Model.StartDay" max="@Model.EndDay" oninvalid="this.setCustomValidity('Vælge en dato')" oninput="this.setCustomValidity('')" required />
-                                <input type="submit" asp-page-handler="Load" id="SubmitBTN" value="Choose" class="btn btn-primary" style="width: min-content;" />
+                            <input id="Calendar" value="@Model.CalenderValue" type="date" name="Calendar" class="form-control" min="@Model.StartDay" max="@Model.EndDay" oninvalid="this.setCustomValidity('Vælge en dato')" oninput="this.setCustomValidity('')" required />
+                            <input type="submit" asp-page-handler="Load" id="SubmitBTN" value="Choose" class="btn btn-primary" style="width: min-content;" />
                         }
                         else
                         {
-                                <input id="Calendar" value="@Model.CalenderValue" type="date" name="Calendar" class="form-control" min="@Model.StartDay" max="@Model.EndDay" oninvalid="this.setCustomValidity('Vælge en dato')" oninput="this.setCustomValidity('')" required disabled />
-                                <input type="submit" asp-page-handler="Load" id="SubmitBTN" value="Choose" class="btn btn-primary" style="width: min-content;" disabled />
+                            <input id="Calendar" value="@Model.CalenderValue" type="date" name="Calendar" class="form-control" min="@Model.StartDay" max="@Model.EndDay" oninvalid="this.setCustomValidity('Vælge en dato')" oninput="this.setCustomValidity('')" required disabled />
+                            <input type="submit" asp-page-handler="Load" id="SubmitBTN" value="Choose" class="btn btn-primary" style="width: min-content;" disabled />
                         }
                     </div>
 
@@ -73,33 +79,33 @@
 
                 @if (Model.TimeBool == true)
                 {
-                        <div class="row col-row">
-                            <div class="row col-6 OpdaterTimeCardRow">
-                                <label>Start dag tid</label> <br />
-                                <input class="HourClock" type="time" name="StartHour" value="@Model.StartHour" asp-for="StartHour">
-                            </div>
-
-
-                            <div class="row col-6 OpdaterTimeCardRow">
-                                <label>Slut dag tid</label> <br />
-                                <input class="HourClock" id="HourClock" type="time" name="EndHour" value="@Model.EndHour" asp-for="EndHour">
-                            </div>
+                    <div class="row col-row">
+                        <div class="row col-6 OpdaterTimeCardRow">
+                            <label>Start dag tid</label> <br />
+                            <input class="HourClock" type="time" name="StartHour" value="@Model.StartHour" asp-for="StartHour">
                         </div>
+
+
+                        <div class="row col-6 OpdaterTimeCardRow">
+                            <label>Slut dag tid</label> <br />
+                            <input class="HourClock" id="HourClock" type="time" name="EndHour" value="@Model.EndHour" asp-for="EndHour">
+                        </div>
+                    </div>
                 }
                 else
                 {
-                        <div class="row col-row">
-                            <div class="row col-6 OpdaterTimeCardRow">
-                                <label>Start dag tid</label> <br />
-                                <input class="HourClock" type="time" name="StartHour" value="@Model.StartHour" asp-for="StartHour" disabled>
-                            </div>
-
-
-                            <div class="row col-6 OpdaterTimeCardRow">
-                                <label>Slut dag tid</label> <br />
-                                <input class="HourClock" id="HourClock" type="time" name="EndHour" value="@Model.EndHour" asp-for="EndHour" disabled>
-                            </div>
+                    <div class="row col-row">
+                        <div class="row col-6 OpdaterTimeCardRow">
+                            <label>Start dag tid</label> <br />
+                            <input class="HourClock" type="time" name="StartHour" value="@Model.StartHour" asp-for="StartHour" disabled>
                         </div>
+
+
+                        <div class="row col-6 OpdaterTimeCardRow">
+                            <label>Slut dag tid</label> <br />
+                            <input class="HourClock" id="HourClock" type="time" name="EndHour" value="@Model.EndHour" asp-for="EndHour" disabled>
+                        </div>
+                    </div>
                 }
 
 
@@ -113,27 +119,27 @@
                                 <label>Fravær Grund</label> <br />
                                 @if (Model.TimeBool == true)
                                 {
-                                        <textarea type="text" class="form-control AbsenceText" name="AbscenseText" value="@Model.AbscenseText" asp-for="AbscenseText"></textarea>
+                                    <textarea type="text" class="form-control AbsenceText" name="AbscenseText" value="@Model.AbscenseText" asp-for="AbscenseText"></textarea>
                                 }
                                 else
                                 {
-                                        <textarea type="text" class="form-control AbsenceText" name="AbscenseText" value="@Model.AbscenseText" asp-for="AbscenseText" disabled></textarea>
+                                    <textarea type="text" class="form-control AbsenceText" name="AbscenseText" value="@Model.AbscenseText" asp-for="AbscenseText" disabled></textarea>
                                 }
 
                                 @if (Model.TimeBool == true)
                                 {
-                                        <select class="form-control AbscenseTypeDrop" name="AbsenceType" asp-for="AbsenceType" id="AbscenseDrop">
+                                    <select class="form-control AbscenseTypeDrop" name="AbsenceType" asp-for="AbsenceType" id="AbscenseDrop">
                                         @{
                                             foreach (Model.Items.AbscenseType type in Model.AbscenseType)
                                             {
-                                                            <option value="@type.ID">@type.Type</option>
+                                                <option value="@type.ID">@type.Type</option>
                                             }
                                         }
-                                        </select>
+                                    </select>
                                 }
                                 else
                                 {
-                                        <select class="form-control AbscenseTypeDrop" name="AbsenceType" asp-for="AbsenceType" id="AbscenseDrop" disabled></select>
+                                    <select class="form-control AbscenseTypeDrop" name="AbsenceType" asp-for="AbsenceType" id="AbscenseDrop" disabled></select>
                                 }
                             </div>
                         </div>
@@ -144,11 +150,11 @@
                 <div class="row submit-row">
                     @if (Model.TimeBool == true)
                     {
-                            <input value="Submit" id="SubmitButton" type="submit" asp-page-handler="Submit" class="btn btn-lg btn-primary" />
+                        <input value="Submit" id="SubmitButton" type="submit" asp-page-handler="Submit" class="btn btn-lg btn-primary" />
                     }
                     else
                     {
-                            <input value="Submit" id="SubmitButton" type="submit" asp-page-handler="Submit" class="btn btn-lg btn-primary" disabled />
+                        <input value="Submit" id="SubmitButton" type="submit" asp-page-handler="Submit" class="btn btn-lg btn-primary" disabled />
                     }
 
                 </div>

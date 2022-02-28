@@ -53,9 +53,6 @@ namespace Astrow_2._0.Pages.AdminPage
 
 
         [BindProperty]
-        public string UserValue { get; set; }
-
-        [BindProperty]
         public string AbsenceType { get; set; }
 
         [BindProperty]
@@ -63,6 +60,9 @@ namespace Astrow_2._0.Pages.AdminPage
 
         [BindProperty]
         public List<AbscenseType> AbscenseType { get; set; }
+
+        [BindProperty]
+        public int ID { get; set; }
 
         /// <summary>
         /// Check if user is logged and has premission
@@ -106,11 +106,9 @@ namespace Astrow_2._0.Pages.AdminPage
         /// </summary>
         public void OnPostUser()
         {
-            int id = Convert.ToInt32(UserValue);
-
-            if (id != 0)
+            if (ID != 0)
             {
-                List<Days> days = _userRepository.FindAllDaysByID(id);
+                List<Days> days = _userRepository.FindAllDaysByID(ID);
 
                 Days firstElement = days.First();
                 Days lastElement = days.Last();
@@ -138,21 +136,19 @@ namespace Astrow_2._0.Pages.AdminPage
         /// </summary>
         public void OnPostLoad()
         {
-            int id = Convert.ToInt32(UserValue);
-
             //Get abscense type
             AbscenseType = _userRepository.GetAllAbscenseType();
 
-            if (id != 0)
+            if (ID != 0)
             {
                 CalenderValue = Request.Form["Calendar"];
 
                 DateTime calenderValue = DateTime.Parse(CalenderValue);
 
-                Users user = _userRepository.FindUser(id);
-                Days day = _userRepository.FindDay(calenderValue, id);
+                Users user = _userRepository.FindUser(ID);
+                Days day = _userRepository.FindDay(calenderValue, ID);
 
-                List<Days> days = _userRepository.FindAllDaysByID(id);
+                List<Days> days = _userRepository.FindAllDaysByID(ID);
 
                 Days firstElement = days.First();
                 Days lastElement = days.Last();
@@ -182,12 +178,10 @@ namespace Astrow_2._0.Pages.AdminPage
 
         public IActionResult OnPostSubmit()
         {
-            int id = Convert.ToInt32(UserValue);
+            Days day = _userRepository.FindDayByID(ID);
+            Days dayBefore = _userRepository.FindDayByID((ID - 1));
 
-            Days day = _userRepository.FindDayByID(id);
-            Days dayBefore = _userRepository.FindDayByID((id - 1));
-
-            List<Days> daysList = _userRepository.FindAllDaysByID(id);
+            List<Days> daysList = _userRepository.FindAllDaysByID(ID);
 
 
             //Date picker value
@@ -202,12 +196,12 @@ namespace Astrow_2._0.Pages.AdminPage
             DateTime endHourDT = new DateTime(day.Date.Year, day.Date.Month, day.Date.Day, endHour.Hour, endHour.Minute, 0);
 
 
-            if (id != 0)
+            if (ID != 0)
             {
                
                 //Update Start and End of day
-                _userRepository.UpdateStartDay(startHourDT, id);
-                _userRepository.UpdateEndDay(endHourDT, id);
+                _userRepository.UpdateStartDay(startHourDT, ID);
+                _userRepository.UpdateEndDay(endHourDT, ID);
 
 
                 //-7:24
@@ -485,13 +479,13 @@ namespace Astrow_2._0.Pages.AdminPage
 
                 if (AbscenseText != null && AbsenceType != "1")
                 {
-                    _userRepository.UpdateAbsence(AbscenseText, id);
+                    _userRepository.UpdateAbsence(AbscenseText, ID);
                     _userRepository.UpdateAbsencseType(Convert.ToInt32(AbsenceType), day.Days_ID);
                 }
 
                 if (AbscenseText != null)
                 {
-                    _userRepository.UpdateAbsence(AbscenseText, id);
+                    _userRepository.UpdateAbsence(AbscenseText, ID);
                 }
                 if (AbsenceType != "1")
                 {

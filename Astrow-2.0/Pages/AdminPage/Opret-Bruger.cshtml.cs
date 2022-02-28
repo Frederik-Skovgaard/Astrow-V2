@@ -64,47 +64,6 @@ namespace Astrow_2._0.Pages.AdminPage
                 }
                 else
                 {
-                    UserPersonalInfo info = new UserPersonalInfo();
-
-                    Users users = new Users();
-
-                    for (int i = 0; i < 101; i++)
-                    {
-                        DateTime startDate = DateTime.Now;
-                        DateTime endDate = startDate.AddYears(5);
-
-                        //Generate salt
-                        string salt = _userRepository.CreateSalt(16);
-
-                        //Use salt to hash the password
-                        string hashPass = _userRepository.GenerateHash($"Pass{i}", salt);
-
-                        info = new UserPersonalInfo()
-                        {
-                            FirstName = $"Name {i}",
-                            MiddleName = $"",
-                            LastName = $"Last Name {i}",
-                            FullName = $"Name {i} Last Name {i}"
-                        };
-
-                        users = new Users()
-                        {
-                            UserName = $"User {i}",
-                            Password = hashPass,
-                            Name_ID = info.Name_ID,
-                            Status = "Elev",
-                            StartDate = startDate,
-                            EndDate = endDate,
-                            Salt = salt.ToString(),
-                            IsDeleted = false
-
-                        };
-
-
-                        //Create user with stored procedure
-                        _userRepository.CreateUser(users, info);
-                    }
-
                     return Page();
                 }
             }

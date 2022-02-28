@@ -953,6 +953,12 @@ nav ul li a span.rotate {
 .AdminPage .container .OpdateTimeCard #usernbtn {
     float: left;
     margin-right: 1rem;
+    transition:all 0.1s ease-in-out;
+}
+
+.AdminPage .container .OpdateTimeCard #usernbtn:hover {
+    background:#0e6efd;
+    color:white;
 }
 
 .AdminPage .container .OpdateTimeCard #Calendar {
@@ -1020,7 +1026,7 @@ nav ul li a span.rotate {
 }
 
 .AdminPage .container .lower-container {
-   margin-top: 3.5rem;
+    margin-top: 6.5rem;
     text-align: center;
     padding: 0;
     background: #00405e73 !important;
@@ -1033,14 +1039,14 @@ nav ul li a span.rotate {
 
 /*Admin navbar*/
 .AdminPage .container .CreateUser {
-    min-height: 40rem !important;
+    min-height: 44rem !important;
     position:relative;
     position: absolute;
 }
 
 .AdminPage .container .UpdateUser {
-    min-height: 40rem !important;
-    position:relative;
+    min-height: 44rem !important;
+    position: relative;
 }
 
 .AdminPage .container .DeleteUser {
@@ -1108,6 +1114,10 @@ nav ul li a span.rotate {
     line-height: 0;
 }
 
+.AdminPage .container .OpdateTimeCard {
+    padding: 0 !important;
+}
+
 
 /*Input columns*/
 .AdminPage .container .lower-container .col-row {
@@ -1117,6 +1127,24 @@ nav ul li a span.rotate {
 }
 
 .AdminPage .container .lower-container .col-row .box {
+    background: #00405e;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.AdminPage .container .CreateUser .box {
+    color: white;
+    background: #00405e;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.AdminPage .container .OpdateTimeCard .box {
+    color: white;
     background: #00405e;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
@@ -1174,6 +1202,7 @@ nav ul li a span.rotate {
     margin-right: 1rem;
 }
 
+
 /*Delete Page Decoration*/
 .AdminPage .container .DeleteUser form {
     background: #00405e73;
@@ -1209,6 +1238,30 @@ nav ul li a span.rotate {
     font-weight: 700;
     font-size: 15px;
     margin-left: 1.5rem;
+}
+
+.AdminPage .container .DeleteUser .row .Table-Gride {
+    overflow: overlay;
+    max-height: 40rem;
+}
+
+
+/* Scrollbar for day grid*/
+.AdminPage .container .DeleteUser .row .Table-Gride::-webkit-scrollbar {
+    width: 5px !important;
+    display: contents !important;
+}
+
+.AdminPage .container .DeleteUser .row .Table-Gride::-webkit-scrollbar-track {
+    background: #00405e !important;
+    border-radius: 15px !important;
+    display: contents !important;
+}
+
+.AdminPage .container .DeleteUser .row .Table-Gride::-webkit-scrollbar-thumb {
+    background: #0588c9 !important;
+    border-radius: 15px !important;
+    display: contents !important;
 }
 
 
@@ -1252,6 +1305,20 @@ nav ul li a span.rotate {
 .AdminPage .container .lower-container .col-row .col-12 .dropdown .dropdown-item:focus {
     color: black !important;
     background: transparent;
+}
+
+.AdminPage .UpdateUser .col-row .col-12 .dropdown .dropdown-menu.show {
+    overflow: overlay !important;
+    max-height: 39rem !important;
+}
+
+.AdminPage .OpdateTimeCard .col-row .dropdown .dropdown-menu.show {
+    overflow: overlay !important;
+    max-height: 39rem !important;
+}
+
+.AdminPage .OpdateTimeCard .col-row .dropdown .dropdown-toggle {
+    background: white;
 }
 
 
@@ -1678,6 +1745,10 @@ nav ul li a span.rotate {
 
     .AdminPage .container .OpdateTimeCard .AbsenceOptions {
         width: 40rem;
+    }
+
+    .AdminPage .container .CreateUser {
+        left: unset;
     }
 }
 

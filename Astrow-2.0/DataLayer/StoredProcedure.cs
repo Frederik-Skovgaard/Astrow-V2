@@ -43,7 +43,6 @@ namespace Astrow_2._0.DataLayer
         public void CreateUsers(Users user, UserPersonalInfo info)
         {
             info = CreateUserInfo(info);
-
             CreateUser(user, info);
         }
 
