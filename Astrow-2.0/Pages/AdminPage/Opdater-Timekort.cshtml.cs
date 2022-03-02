@@ -64,6 +64,7 @@ namespace Astrow_2._0.Pages.AdminPage
         [BindProperty]
         public int ID { get; set; }
 
+
         /// <summary>
         /// Check if user is logged and has premission
         /// </summary>
@@ -98,37 +99,45 @@ namespace Astrow_2._0.Pages.AdminPage
                     return Page();
                 }
             }
-            
+
         }
 
         /// <summary>
         /// Get user by id
         /// </summary>
-        public void OnPostUser()
+        public IActionResult OnPostUser()
         {
             if (ID != 0)
             {
                 List<Days> days = _userRepository.FindAllDaysByID(ID);
 
-                Days firstElement = days.First();
-                Days lastElement = days.Last();
+                if (days.Count != 0)
+                {
+                    Days firstElement = days.First();
+                    Days lastElement = days.Last();
 
-                StartDay = firstElement.Date.ToString("yyyy-MM-dd");
-                EndDay = lastElement.Date.ToString("yyyy-MM-dd");
+                    StartDay = firstElement.Date.ToString("yyyy-MM-dd");
+                    EndDay = lastElement.Date.ToString("yyyy-MM-dd");
 
-                DateBool = true;
+                    DateBool = true;
 
-                TimeBool = false;
+                    TimeBool = false;
 
-                //Fills dropdown with users
-                UserList = _userRepository.ReadAllUsers();
-
+                    //Fills dropdown with users
+                    UserList = _userRepository.ReadAllUsers();
+                }
+                else
+                {
+                    return RedirectToPage("/AdminPage/Opdater-Timekort");
+                }
             }
             else
             {
                 //Fills dropdown with users
                 UserList = _userRepository.ReadAllUsers();
             }
+
+            return Page();
         }
 
         /// <summary>
@@ -178,14 +187,17 @@ namespace Astrow_2._0.Pages.AdminPage
 
         public IActionResult OnPostSubmit()
         {
-            Days day = _userRepository.FindDayByID(ID);
-            Days dayBefore = _userRepository.FindDayByID((ID - 1));
+            //Date picker value
+            CalenderValue = Request.Form["Calendar"];
+
+            Days day = _userRepository.FindDay(DateTime.Parse(CalenderValue), ID);
+
+            Days dayBefore = _userRepository.FindDayByID((day.Days_ID - 1));
 
             List<Days> daysList = _userRepository.FindAllDaysByID(ID);
 
 
-            //Date picker value
-            CalenderValue = Request.Form["Calendar"];
+            
             DateTime calenderValue = DateTime.Parse(CalenderValue);
 
             //Set Start and End of day to datetime
@@ -198,10 +210,10 @@ namespace Astrow_2._0.Pages.AdminPage
 
             if (ID != 0)
             {
-               
+
                 //Update Start and End of day
-                _userRepository.UpdateStartDay(startHourDT, ID);
-                _userRepository.UpdateEndDay(endHourDT, ID);
+                _userRepository.UpdateStartDay(startHourDT, day.Days_ID);
+                _userRepository.UpdateEndDay(endHourDT, day.Days_ID);
 
 
                 //-7:24
@@ -249,243 +261,248 @@ namespace Astrow_2._0.Pages.AdminPage
                             dayBefore.TotalHour = dayBefore.TotalHour + 1;
                         }
                     }
+                }
 
+                string hour = "";
+                string minut = "";
 
-
-                    string hour = "";
-                    string minut = "";
-
-                    //If minut lenght equals to one add 0 infront  
-                    if (saldo.Minutes < 0)
+                //If minut lenght equals to one add 0 infront  
+                if (saldo.Minutes < 0)
+                {
+                    if ((saldo.Minutes * -1).ToString().Length == 1)
                     {
-                        if ((saldo.Minutes * -1).ToString().Length == 1)
-                        {
-                            minut = $"0{(saldo.Minutes * -1)}";
-                        }
-                        else
-                        {
-                            minut = (saldo.Minutes * -1).ToString();
-                        }
+                        minut = $"0{(saldo.Minutes * -1)}";
                     }
                     else
                     {
-                        if (saldo.Minutes.ToString().Length == 1)
-                        {
-                            minut = $"0{saldo.Minutes}";
-                        }
-                        else
-                        {
-                            minut = saldo.Minutes.ToString();
-                        }
+                        minut = (saldo.Minutes * -1).ToString();
                     }
-
-                    //If hours lenght equals to one add 0 infront  
-                    if (saldo.Hours < 0)
+                }
+                else
+                {
+                    if (saldo.Minutes.ToString().Length == 1)
                     {
-                        if ((saldo.Hours * -1).ToString().Length == 1)
-                        {
-                            hour = $"-0{(saldo.Hours * -1)}";
-                        }
-                        else
-                        {
-                            hour = $"0{saldo.Hours * -1}".ToString();
-                        }
+                        minut = $"0{saldo.Minutes}";
                     }
                     else
                     {
-                        if (saldo.Hours.ToString().Length == 1)
-                        {
-                            hour = $"0{saldo.Hours}".ToString();
-                        }
-                        else
-                        {
-                            hour = $"0{saldo.Hours}".ToString();
-                        }
+                        minut = saldo.Minutes.ToString();
                     }
+                }
 
-
-
-                    string totalHour = "";
-                    string totalMinut = "";
-
-                    //If minut lenght equals to one add 0 infront  
-                    if (dayBefore.TotalMin < 0)
+                //If hours lenght equals to one add 0 infront  
+                if (saldo.Hours < 0)
+                {
+                    if ((saldo.Hours * -1).ToString().Length == 1)
                     {
-                        if ((dayBefore.TotalMin * -1).ToString().Length == 1)
-                        {
-                            totalMinut = $"0{(dayBefore.TotalMin * -1)}";
-                        }
-                        else
-                        {
-                            totalMinut = (dayBefore.TotalMin * -1).ToString();
-                        }
+                        hour = $"-0{(saldo.Hours * -1)}";
                     }
                     else
                     {
-                        if (dayBefore.TotalMin.ToString().Length == 1)
-                        {
-                            totalMinut = $"0{dayBefore.TotalMin}";
-                        }
-                        else
-                        {
-                            totalMinut = dayBefore.TotalMin.ToString();
-                        }
+                        hour = $"0{saldo.Hours * -1}".ToString();
                     }
-
-                    //If hours lenght equals to one add 0 infront  
-                    if (dayBefore.TotalHour < 0)
+                }
+                else
+                {
+                    if (saldo.Hours.ToString().Length == 1)
                     {
-                        if ((dayBefore.TotalHour * -1).ToString().Length == 1)
-                        {
-                            totalHour = $"-0{(dayBefore.TotalHour * -1)}";
-                        }
-                        else
-                        {
-                            totalHour = (dayBefore.TotalHour * -1).ToString();
-                        }
+                        hour = $"0{saldo.Hours}".ToString();
                     }
                     else
                     {
-                        if (dayBefore.TotalHour.ToString().Length == 1)
-                        {
-                            totalHour = $"0{dayBefore.TotalHour}";
-                        }
-                        else
-                        {
-                            totalHour = dayBefore.TotalHour.ToString();
-                        }
+                        hour = $"0{saldo.Hours}".ToString();
                     }
+                }
 
 
 
-                    //Total saldo
-                    string totalSaldoStr = $"{totalHour}:{totalMinut}";
+                string totalHour = "";
+                string totalMinut = "";
 
-                    string saldoStr = $"{hour}:{minut}";
-
-
-                    //Update saldo and total saldo
-                    _userRepository.UpdateSaldo(saldo.Minutes, saldo.Hours, saldoStr, day.Days_ID);
-                    _userRepository.UpdateTotalSaldo(dayBefore.TotalMin, dayBefore.TotalHour, totalSaldoStr, day.Days_ID);
-
-
-                    //Foreach day 
-                    foreach (Days days in daysList)
+                //If minut lenght equals to one add 0 infront  
+                if (dayBefore.TotalMin < 0)
+                {
+                    if ((dayBefore.TotalMin * -1).ToString().Length == 1)
                     {
-                        if (days.Date > day.Date)
+                        totalMinut = $"0{(dayBefore.TotalMin * -1)}";
+                    }
+                    else
+                    {
+                        totalMinut = (dayBefore.TotalMin * -1).ToString();
+                    }
+                }
+                else
+                {
+                    if (dayBefore.TotalMin.ToString().Length == 1)
+                    {
+                        totalMinut = $"0{dayBefore.TotalMin}";
+                    }
+                    else
+                    {
+                        totalMinut = dayBefore.TotalMin.ToString();
+                    }
+                }
+
+                //If hours lenght equals to one add 0 infront  
+                if (dayBefore.TotalHour < 0)
+                {
+                    if ((dayBefore.TotalHour * -1).ToString().Length == 1)
+                    {
+                        totalHour = $"-0{(dayBefore.TotalHour * -1)}";
+                    }
+                    else
+                    {
+                        totalHour = (dayBefore.TotalHour * -1).ToString();
+                    }
+                }
+                else
+                {
+                    if (dayBefore.TotalHour.ToString().Length == 1)
+                    {
+                        totalHour = $"0{dayBefore.TotalHour}";
+                    }
+                    else
+                    {
+                        totalHour = dayBefore.TotalHour.ToString();
+                    }
+                }
+
+
+
+                //Total saldo
+                string totalSaldoStr = $"{totalHour}:{totalMinut}";
+
+                string saldoStr = $"{hour}:{minut}";
+
+
+                //Update saldo and total saldo
+                _userRepository.UpdateSaldo(saldo.Minutes, saldo.Hours, saldoStr, day.Days_ID);
+                _userRepository.UpdateTotalSaldo(dayBefore.TotalMin, dayBefore.TotalHour, totalSaldoStr, day.Days_ID);
+
+
+                Days tmp = new Days();
+
+                //Foreach day 
+                foreach (Days days in daysList)
+                {
+                    
+                    if (days.Days_ID != 0)
+                    {
+                        tmp = _userRepository.FindDayByID((days.Days_ID - 1));
+                    }
+                    
+
+                    if (days.Date > day.Date)
+                    {
+                        //New total saldo
+                        if (dayBefore.TotalHour <= 0)
                         {
-                            //New total saldo
-                            if (dayBefore.TotalHour <= 0)
-                            {
-                                days.TotalHour = days.TotalHour + dayBefore.TotalHour;
-                            }
-                            else if (dayBefore.TotalHour > 0)
-                            {
-                                days.TotalHour = dayBefore.TotalHour - days.TotalHour;
-                            }
+                            days.TotalHour = days.Hour + tmp.TotalHour;
+                        }
+                        else if (dayBefore.TotalHour > 0)
+                        {
+                            days.TotalHour = tmp.TotalHour - days.Hour;
+                        }
 
-                            if (dayBefore.TotalMin <= 0)
-                            {
-                                days.TotalMin = days.TotalMin + dayBefore.TotalMin;
-                            }
-                            else if (dayBefore.TotalMin > 0)
-                            {
-                                days.TotalMin = days.TotalMin + dayBefore.TotalMin;
-                            }
+                        if (dayBefore.TotalMin <= 0)
+                        {
+                            days.TotalMin = days.Min + tmp.TotalMin;
+                        }
+                        else if (dayBefore.TotalMin > 0)
+                        {
+                            days.TotalMin = days.Min + tmp.TotalMin;
+                        }
 
-                            //If hour > 0 && min < 0
-                            if (days.TotalHour > 0 && days.TotalMin < 0)
-                            {
-                                days.TotalMin = 60 + days.TotalMin;
-                                days.TotalHour = days.TotalHour - 1;
-                            }
+                        //If hour > 0 && min < 0
+                        if (days.TotalHour > 0 && days.TotalMin < 0)
+                        {
+                            days.TotalMin = 60 + days.TotalMin;
+                            days.TotalHour = days.TotalHour - 1;
+                        }
 
 
-                            //If minut reach 60 min
-                            if (days.TotalMin >= 60 || days.TotalMin <= -60)
-                            {
-                                //If hour is negative
-                                if (days.TotalMin < 0)
-                                {
-                                    days.TotalMin = days.TotalMin + 60;
-                                    days.TotalHour = days.TotalHour - 1;
-                                }
-                                else
-                                {
-                                    days.TotalMin = days.TotalMin - 60;
-                                    days.TotalHour = days.TotalHour + 1;
-                                }
-                            }
-
-                            string totalHourLoop = "";
-                            string totalMinutLoop = "";
-
-                            //If minut lenght equals to one add 0 infront  
+                        //If minut reach 60 min
+                        if (days.TotalMin >= 60 || days.TotalMin <= -60)
+                        {
+                            //If hour is negative
                             if (days.TotalMin < 0)
                             {
-                                if ((days.TotalMin * -1).ToString().Length == 1)
-                                {
-                                    totalMinutLoop = $"0{(days.TotalMin * -1)}";
-                                }
-                                else
-                                {
-                                    totalMinutLoop = (days.TotalMin * -1).ToString();
-                                }
+                                days.TotalMin = days.TotalMin + 60;
+                                days.TotalHour = days.TotalHour - 1;
                             }
                             else
                             {
-                                if (days.TotalMin.ToString().Length == 1)
-                                {
-                                    totalMinutLoop = $"0{days.TotalMin}";
-                                }
-                                else
-                                {
-                                    totalMinutLoop = days.TotalMin.ToString();
-                                }
+                                days.TotalMin = days.TotalMin - 60;
+                                days.TotalHour = days.TotalHour + 1;
                             }
-
-                            //If hours lenght equals to one add 0 infront  
-                            if (days.TotalHour < 0)
-                            {
-                                if ((days.TotalHour * -1).ToString().Length == 1)
-                                {
-                                    totalHourLoop = $"-0{(days.TotalHour * -1)}";
-                                }
-                                else
-                                {
-                                    totalHourLoop = (days.TotalHour * -1).ToString();
-                                }
-                            }
-                            else
-                            {
-                                if (days.TotalHour.ToString().Length == 1)
-                                {
-                                    totalHourLoop = $"0{days.TotalHour}";
-                                }
-                                else
-                                {
-                                    totalHourLoop = days.TotalHour.ToString();
-                                }
-                            }
-
-
-
-                            //Total saldo
-                            string updateSaldo = $"{totalHourLoop}:{totalMinutLoop}";
-                            _userRepository.UpdateTotalSaldo(days.TotalMin, days.TotalHour, updateSaldo, days.Days_ID);
                         }
+
+                        string totalHourLoop = "";
+                        string totalMinutLoop = "";
+
+                        //If minut lenght equals to one add 0 infront  
+                        if (days.TotalMin < 0)
+                        {
+                            if ((days.TotalMin * -1).ToString().Length == 1)
+                            {
+                                totalMinutLoop = $"0{(days.TotalMin * -1)}";
+                            }
+                            else
+                            {
+                                totalMinutLoop = (days.TotalMin * -1).ToString();
+                            }
+                        }
+                        else
+                        {
+                            if (days.TotalMin.ToString().Length == 1)
+                            {
+                                totalMinutLoop = $"0{days.TotalMin}";
+                            }
+                            else
+                            {
+                                totalMinutLoop = days.TotalMin.ToString();
+                            }
+                        }
+
+                        //If hours lenght equals to one add 0 infront  
+                        if (days.TotalHour < 0)
+                        {
+                            if ((days.TotalHour * -1).ToString().Length == 1)
+                            {
+                                totalHourLoop = $"-0{(days.TotalHour * -1)}";
+                            }
+                            else
+                            {
+                                totalHourLoop = (days.TotalHour * -1).ToString();
+                            }
+                        }
+                        else
+                        {
+                            if (days.TotalHour.ToString().Length == 1)
+                            {
+                                totalHourLoop = $"0{days.TotalHour}";
+                            }
+                            else
+                            {
+                                totalHourLoop = days.TotalHour.ToString();
+                            }
+                        }
+
+                        //Total saldo
+                        string updateSaldo = $"{totalHourLoop}:{totalMinutLoop}";
+                        _userRepository.UpdateTotalSaldo(days.TotalMin, days.TotalHour, updateSaldo, days.Days_ID);
                     }
                 }
 
                 if (AbscenseText != null && AbsenceType != "1")
                 {
-                    _userRepository.UpdateAbsence(AbscenseText, ID);
+                    _userRepository.UpdateAbsence(AbscenseText, day.Days_ID);
                     _userRepository.UpdateAbsencseType(Convert.ToInt32(AbsenceType), day.Days_ID);
                 }
 
                 if (AbscenseText != null)
                 {
-                    _userRepository.UpdateAbsence(AbscenseText, ID);
+                    _userRepository.UpdateAbsence(AbscenseText, day.Days_ID);
                 }
                 if (AbsenceType != "1")
                 {

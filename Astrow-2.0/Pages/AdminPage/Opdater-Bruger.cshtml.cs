@@ -121,7 +121,7 @@ namespace Astrow_2._0.Pages.AdminPage
         /// Update User's infomation
         /// </summary>
         /// <param name="id"></param>
-        public void OnPostUpdateUser(int id)
+        public IActionResult OnPostUpdateUser(int id)
         {
             //Get user salt
             Users user = _userRepository.FindUser(id);
@@ -171,8 +171,7 @@ namespace Astrow_2._0.Pages.AdminPage
             _userRepository.UpdateUser(user);
             _userRepository.UpdateUserInfo(userPersonalInfo);
 
-            //Popup message for succes
-            ViewData["Message"] = string.Format("Bruger blev opdateret...");
+            return RedirectToPage("/AdminPage/Opdater-Bruger");
         }
 
 

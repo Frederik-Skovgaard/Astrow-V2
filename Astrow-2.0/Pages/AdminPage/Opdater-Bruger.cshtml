@@ -31,11 +31,7 @@
             </div>
         </div>
         <div class="container lower-container UpdateUser">
-            <div class="row col-row">
-                <div class="box">
-                    <h3>Opdater Bruger</h3>
-                </div>
-
+            <div class="row col-row">             
                 <div class="col-12">
                     <label>Users</label> <br />
                     <div class="dropdown">
@@ -130,16 +126,6 @@
                     <input type="submit" asp-page-handler="UpdateUser" asp-route-id="@Model.ID" id="SubmitUser" class="btn btn-lg btn-primary" value="Submit" />
                 </div>
 
-
-                @*popup message on succesfull update*@
-                @if (ViewData["Message"] != null)
-                {
-                    <script type="text/javascript">
-                        window.onload = function () {
-                            alert("@ViewData["Message"]");
-                        };
-                    </script>
-                }
 
                 @*Endate validator*@
                 <script type="text/javascript">

@@ -6,6 +6,7 @@ using Astrow_2._0.Model.Items;
 using Astrow_2._0.Repository;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using System;
 
 namespace Astrow_2._0.Pages.AdminPage
 {
@@ -24,6 +25,15 @@ namespace Astrow_2._0.Pages.AdminPage
 
         [BindProperty]
         public List<PersonalInfo> People { get; set; }
+
+        [BindProperty]
+        public List<AbscenseType> AbscenseType { get; set; }
+
+        [BindProperty]
+        public string Abscense { get; set; }
+
+        [BindProperty]
+        public string AbscenseText { get; set; }
 
         [BindProperty]
         public int ID { get; set; }
@@ -47,6 +57,9 @@ namespace Astrow_2._0.Pages.AdminPage
                 }
                 else
                 {
+                    //Get abscense type
+                    AbscenseType = _userRepository.GetAllAbscenseType();
+
                     //Fills dropdown with users 
                     UserList = _userRepository.ReadAllUsers();
 
@@ -80,14 +93,58 @@ namespace Astrow_2._0.Pages.AdminPage
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public IActionResult OnPost()
+        public IActionResult OnPostDelete()
         {
             //Check user of as deleted in database
             _userRepository.DeleteUser(ID);
 
 
-            //Popup message for succes
-            ViewData["Message"] = string.Format("Bruger blev slettet...");
+            return RedirectToPage("/AdminPage/Brugere");
+        }
+
+        /// <summary>
+        /// Method for marking down a user as sick
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult OnPostSickNotice()
+        {
+            if (ID != 0)
+            {
+                if (Abscense != "1")
+                {
+                    if (AbscenseText == null)
+                    {
+                        AbscenseText = "";
+                    }
+
+                    Days day = _userRepository.FindDay(DateTime.Now.Date, ID);
+
+                    _userRepository.UpdateAbsence(AbscenseText, day.Days_ID);
+                    _userRepository.UpdateAbsencseType(Convert.ToInt32(Abscense), day.Days_ID);
+
+                }
+            }
+            
+
+            return RedirectToPage("/AdminPage/Brugere");
+        }
+
+        /// <summary>
+        /// Method for marking down a user as illegaly abscent 
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult OnPostIllegalNotice()
+        {
+            if (ID != 0)
+            {
+                Days day = _userRepository.FindDay(DateTime.Now.Date, ID);
+
+                AbscenseType abscense = _userRepository.FindAbscenseByText("Ulovligt fravær");
+
+                _userRepository.UpdateAbsencseType(abscense.ID, day.Days_ID);
+            }
+
+            
 
             return RedirectToPage("/AdminPage/Brugere");
         }

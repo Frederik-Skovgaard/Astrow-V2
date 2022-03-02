@@ -832,6 +832,72 @@ namespace Astrow_2._0.DataLayer
             }
         }
 
+        /// <summary>
+        /// Method for getting illegal abscense
+        /// </summary>
+        /// <returns></returns>
+        public AbscenseType FindAbscenseByText(string text)
+        {
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand cmd = new SqlCommand("FindAbscenseByText", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@Text", text);
+
+                AbscenseType abs = new AbscenseType();
+
+                using (SqlDataReader read = cmd.ExecuteReader())
+                {
+                    while (read.Read())
+                    {
+                        abs = new AbscenseType()
+                        {
+                            ID = read.GetInt32(0),
+                            Type= read.GetString(1)
+                        };
+                    }
+
+                    return abs;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Method for getting abscense type 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public List<AbscenseType> GetAbscenseText()
+        {
+            List<AbscenseType> list = new List<AbscenseType>();
+
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand cmd = new SqlCommand("GetAbscenseText", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                using (SqlDataReader read = cmd.ExecuteReader())
+                {
+                    while (read.Read())
+                    {
+                        AbscenseType abs = new AbscenseType
+                        { 
+                            ID = read.GetInt32(0),
+                            Type = read.GetString(1)
+                        };
+
+                        list.Add(abs);
+                    }
+                }
+
+                return list;                
+            }  
+        }
 
         #endregion 
 

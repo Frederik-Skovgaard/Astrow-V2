@@ -20,16 +20,16 @@ namespace Astrow_2._0.Pages.AdminPage
         }
 
         #region Properties
-        [BindProperty]
+        [BindProperty, MaxLength(20)]
         public string UserName { get; set; }
 
-        [BindProperty]
+        [BindProperty, MaxLength(30)]
         public string FirstName { get; set; }
 
-        [BindProperty]
+        [BindProperty, MaxLength(30)]
         public string MiddleName { get; set; }
 
-        [BindProperty]
+        [BindProperty, MaxLength(30)]
         public string LastName { get; set; }
 
         [BindProperty]
@@ -43,6 +43,24 @@ namespace Astrow_2._0.Pages.AdminPage
 
         [BindProperty]
         public string EndDate { get; set; }
+
+        [BindProperty]
+        public string FirstNameVal { get; set; }
+
+        [BindProperty]
+        public string MiddleNameVal { get; set; }
+
+        [BindProperty]
+        public string LastNameVal { get; set; }
+
+        [BindProperty]
+        public string UserNameVal { get; set; }
+
+        [BindProperty]
+        public string StartVal { get; set; }
+
+        [BindProperty]
+        public string EndVal { get; set; }
 
         #endregion
 
@@ -91,6 +109,7 @@ namespace Astrow_2._0.Pages.AdminPage
         /// </summary>
         public void OnPost()
         {
+            
             //Generate salt
             string salt = _userRepository.CreateSalt(16);
 
@@ -100,9 +119,9 @@ namespace Astrow_2._0.Pages.AdminPage
             //Perosnal info
             UserPersonalInfo person = new UserPersonalInfo()
             {
-                FirstName = FirstName,
-                MiddleName = MiddleName,
-                LastName = LastName,
+                FirstName = _userRepository.FirstCharToUpper(FirstName),
+                MiddleName = _userRepository.FirstCharToUpper(MiddleName),
+                LastName = _userRepository.FirstCharToUpper(LastName),
                 FullName = $"{FirstName} {MiddleName} {LastName}"
             };
 
@@ -121,6 +140,16 @@ namespace Astrow_2._0.Pages.AdminPage
 
             //Create user with stored procedure
             _userRepository.CreateUser(users, person);
+
+            FirstNameVal = "";
+            MiddleNameVal = "";
+            LastNameVal = "";
+            UserNameVal = "";
+            StartVal = "";
+            EndVal = "";
+
         }
-    }
+
+        
+    }    
 }

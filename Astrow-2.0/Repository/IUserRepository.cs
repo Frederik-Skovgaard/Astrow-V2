@@ -55,6 +55,10 @@ namespace Astrow_2._0.Repository
 
         Days FindDayByID(int id);
 
+        AbscenseType FindAbscenseByText(string text);
+
+        List<AbscenseType> GetAbscenseText();
+
         void UpdateDay(Days day);
 
         void UpdateStartDay(DateTime date, int id);
@@ -75,5 +79,7 @@ namespace Astrow_2._0.Repository
 
         IEnumerable<DateTime> EachYear(DateTime from, DateTime thru);
         #endregion
+
+        string FirstCharToUpper(string input);
     }
 }

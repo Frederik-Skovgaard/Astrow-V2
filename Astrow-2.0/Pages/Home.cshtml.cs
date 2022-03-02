@@ -36,6 +36,9 @@ namespace Astrow_2._0.Pages
         public string CalendarValue { get; set; }
 
 
+        [BindProperty]
+        public List<AbscenseType> AbscenseText { get; set; }
+
 
         //----------------------List for render days & years----------------------
         [BindProperty]
@@ -82,6 +85,8 @@ namespace Astrow_2._0.Pages
                     //Render days % year/month selector
                     Days = _userRepository.EachDay(StartDate, EndDate.AddDays(-1));
 
+                    AbscenseText = _userRepository.GetAbscenseText();
+
                     //List of all users days
                     daysList = _userRepository.FindAllDaysByID(logged.User_ID);
 
@@ -108,6 +113,8 @@ namespace Astrow_2._0.Pages
 
             //List of all users days
             daysList = _userRepository.FindAllDaysByID(logged.User_ID);
+
+            AbscenseText = _userRepository.GetAbscenseText();
 
             //Change values
             StartDate = DateTime.Parse(Calendar);
@@ -162,6 +169,8 @@ namespace Astrow_2._0.Pages
 
             //List of all users days
             daysList = _userRepository.FindAllDaysByID(logged.User_ID);
+
+            AbscenseText = _userRepository.GetAbscenseText();
 
             try
             {
@@ -227,6 +236,8 @@ namespace Astrow_2._0.Pages
 
             //List of all users days
             daysList = _userRepository.FindAllDaysByID(logged.User_ID);
+
+            AbscenseText = _userRepository.GetAbscenseText();
 
             //Bug forward when year only
 

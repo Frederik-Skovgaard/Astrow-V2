@@ -54,10 +54,10 @@ GO
 -- Users Name
 CREATE TABLE [Name] (
 [Name_ID] INT IDENTITY(1,1) NOT NULL,
-[FirstName] NVARCHAR(30) NOT NULL,
-[MiddleName] NVARCHAR(30),
-[LastName] NVARCHAR(30) NOT NULL,
-[FullName] NVARCHAR(90) NOT NULL
+[FirstName] NVARCHAR(15) NOT NULL,
+[MiddleName] NVARCHAR(15),
+[LastName] NVARCHAR(15) NOT NULL,
+[FullName] NVARCHAR(45) NOT NULL
 
 PRIMARY KEY ([Name_ID])
 )
@@ -67,7 +67,7 @@ GO
 -- User
 CREATE TABLE [User] (
 [User_ID] INT IDENTITY(1,1) NOT NULL,
-[UserName] NVARCHAR(50) NOT NULL,
+[UserName] NVARCHAR(20) NOT NULL,
 [Password] NVARCHAR(MAX) NOT NULL,
 [Name_ID] INT NOT NULL,
 [Status] NVARCHAR(25) NOT NULL,
@@ -160,20 +160,25 @@ INSERT INTO [AbscenseType] ([Type])
 VALUES ('COVID')
 GO
 
+INSERT INTO [AbscenseType] ([Type])
+VALUES ('Ulovligt fravær')
+GO
+
 -- Days
 
 INSERT INTO [Days] ([User_ID], [Date], [AbscenseID], [AbscenceText], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalMin], [TotalHour], [TotalSaldo])
-VALUES (1, '220201 00:00:00 AM', 1, '', '220201 08:00:00 AM', '220130 15:24:00 PM',0 ,0, '00:00', 0, 0, '00:00')
+VALUES (1, '220227 00:00:00 AM', 1, '', '220227 08:00:00 AM', '220227 15:24:00 PM',0 ,0, '00:00', 0, 0, '00:00')
 GO
 
 INSERT INTO [Days] ([User_ID], [Date], [AbscenseID], [AbscenceText], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalMin], [TotalHour], [TotalSaldo])
-VALUES (1, '220202 00:00:00 AM', 1, '', '220202 08:00:00 AM', '220202 15:00:00 PM', -24, 0, '-00:24', -24, 0, '-00:24')
+VALUES (1, '220228 00:00:00 AM', 1, '', '220228 08:00:00 AM', '220228 15:00:00 PM', -24, 0, '-00:24', -24, 0, '-00:24')
 GO
 
 
 INSERT INTO [Days] ([User_ID], [Date], [AbscenseID], [AbscenceText], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalMin], [TotalHour], [TotalSaldo])
-VALUES (1, '220203 00:00:00 AM', 1, '', '220201 08:00:00 AM', '220130 16:24:00 PM',0 ,1, '00:00', 36, 0, '00:36')
+VALUES (1, '220301 00:00:00 AM', 1, '', '220301 08:00:00 AM', '220301 16:24:00 PM',0 ,1, '01:00', 36, 0, '00:36')
 GO
+
 
 
 ---------------------------- Create Procedures ----------------------------
@@ -181,7 +186,7 @@ GO
 -- Create User
 CREATE PROCEDURE [CreateUser]
 @id INT,
-@UserName NVARCHAR(50),
+@UserName NVARCHAR(20),
 @Password NVARCHAR(MAX),
 @Status NVARCHAR(25),
 @salt NVARCHAR(max),
@@ -214,10 +219,10 @@ GO
 
 -- Create Name
 CREATE PROCEDURE [CreateName]
-@firstName NVARCHAR(30),
-@middleName NVARCHAR(30),
-@lastName NVARCHAR(30),
-@fullName NVARCHAR(90)
+@firstName NVARCHAR(15),
+@middleName NVARCHAR(15),
+@lastName NVARCHAR(15),
+@fullName NVARCHAR(45)
 AS
 INSERT INTO [Name] ([FirstName], [MiddleName], [LastName], [FullName])
 VALUES (@firstName, @middleName, @lastName, @firstName + ' ' + @middleName + ' ' + @lastName) 
@@ -260,7 +265,7 @@ GO
 -- Update
 CREATE PROCEDURE [UpdateUser]
 @id INT,
-@UserName NVARCHAR(50),
+@UserName NVARCHAR(20),
 @Password NVARCHAR(MAX),
 @Status NVARCHAR(25),
 @startDate DATETIME,
@@ -279,9 +284,9 @@ GO
 -- Update User info
 CREATE PROCEDURE [UpdateUserInfo]
 @id INT,
-@firstNavn NVARCHAR(30),
-@middleNavn NVARCHAR(30),
-@lastNavn NVARCHAR(30)
+@firstNavn NVARCHAR(15),
+@middleNavn NVARCHAR(15),
+@lastNavn NVARCHAR(15)
 AS
 UPDATE [Name]
 SET [FirstName] = @firstNavn,
@@ -296,7 +301,7 @@ CREATE PROCEDURE [UpdateAbscence]
 @AbscenceText NVARCHAR(100)
 AS
 UPDATE [Days]
-[AbscenceText] = @AbscenceText
+SET [AbscenceText] = @AbscenceText
 WHERE [Days_ID] = @id
 GO
 
@@ -391,7 +396,7 @@ GO
 
 -- Get by UserName
 CREATE PROCEDURE [GetByUserName]
-@UserName NVARCHAR(50)
+@UserName NVARCHAR(20)
 AS
 SELECT [salt], [User_ID] FROM [User]
 WHERE [UserName] = @UserName
@@ -399,7 +404,7 @@ GO
 
 -- Get User 
 CREATE PROCEDURE [GetUser]
-@userName NVARCHAR(50),
+@userName NVARCHAR(20),
 @password NVARCHAR(MAX)
 AS
 SELECT * FROM [User]
@@ -408,7 +413,7 @@ GO
 
 -- Get user info
 CREATE PROCEDURE [GetUserInfo]
-@fullName NVARCHAR(90)
+@fullName NVARCHAR(45)
 AS
 SELECT [Name_ID] FROM [Name]
 WHERE [FullName] = @fullName
@@ -472,4 +477,137 @@ SELECT * FROM [AbscenseType]
 GO
 
 
+-- Get Abscense type text from id
+CREATE PROCEDURE [GetAbscenseText]
+AS
+SELECT * FROM [AbscenseType]
+GO
 
+-- Find abscense by text
+CREATE PROCEDURE [FindAbscenseByText]
+@Text NVARCHAR(30)
+AS
+SELECT * FROM [AbscenseType]
+WHERE [Type] = @Text
+GO
+
+
+DECLARE @Users INT
+SET @Users = (SELECT DISTINCT MIN([User_ID]) FROM [Days] WHERE [Date] != GETDATE())
+
+WHILE (@Users <= (SELECT DISTINCT MAX([User_ID]) FROM [Days] WHERE [Date] != GETDATE()))
+	BEGIN
+	IF ((SELECT [Date] FROM [Days] WHERE [Date] = (SELECT CONVERT(DATETIME, FORMAT(getdate(), 'yyyy-MM-dd'))) AND [User_ID] = @Users) IS NULL)
+	 BEGIN
+			INSERT INTO [Days] ([User_ID], [Date], [AbscenseID], [AbscenceText], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalMin], [TotalHour], [TotalSaldo])
+			VALUES (@Users, (SELECT CONVERT(DATETIME, FORMAT(getdate(), 'yyyy-MM-dd'))), 1, '', (SELECT CONVERT(DATETIME, FORMAT(getdate(), 'yyyy-MM-dd'))), 
+			(SELECT CONVERT(DATETIME, FORMAT(getdate(), 'yyyy-MM-dd'))), 0, 0, '00:00', (SELECT [TotalMin] FROM [Days] WHERE [Days_ID] = 
+			(SELECT MAX([Days_ID]) FROM [Days])), (SELECT [TotalHour] FROM [Days] WHERE [Days_ID] = (SELECT MAX([Days_ID]) FROM [Days])), (SELECT [TotalSaldo] FROM [Days] WHERE [Days_ID] = (SELECT MAX([Days_ID]) FROM [Days])))
+	 END
+		SET @Users = @Users + 1
+	END
+GO
+
+DECLARE @Users INT,@TotalHour INT, @TotalMin INT, @MinHolder INT, @HourHolder INT, @HourStr NVARCHAR(10), @MinStr NVARCHAR(10)
+SET @Users = (SELECT DISTINCT MIN([User_ID]) FROM [Days] WHERE [StartDay] = (SELECT CONVERT(DATETIME, FORMAT(getdate(), 'yyyy-MM-dd'))))
+
+SET @TotalHour = (SELECT [TotalHour] FROM [Days] WHERE [Days_ID] = (SELECT MAX([Days_ID]) FROM [Days])) 
+SET @TotalMin = (SELECT [TotalMin] FROM [Days] WHERE [Days_ID] = (SELECT MAX([Days_ID]) FROM [Days]))
+
+SET @TotalMin = @TotalMin - 24
+SET @TotalHour = @TotalHour - 7
+
+
+-- If hour is less then 0 and min is more then 0
+IF (@TotalHour < 0 AND @TotalMin > 0)
+BEGIN
+	SET @TotalMin = @TotalMin - 60
+	SET @TotalHour = @TotalHour + 1
+END
+
+-- If min is greater or equal to 60 or if min is less or equal to 60
+IF (@TotalMin >= 60 OR @TotalMin <= -60)
+BEGIN
+	-- If min is less then 0 
+	IF (@TotalMin < 0)
+	BEGIN
+		-- Add 60 to min and subtract 1 from our
+		SET @TotalMin = @TotalMin + 60
+		SET @TotalHour = @TotalHour - 1
+	END
+	ELSE
+	BEGIN
+		-- Subtract 60 from min and add 1 to hour 
+		SET @TotalMin = @TotalMin - 60
+		SET @TotalHour = @TotalHour + 1
+	END
+END
+
+-- If min is less then 0 multiply min wiht -1 to remove the minus infront
+IF (@TotalMin < 0)
+BEGIN 
+	SET @MinHolder = @TotalMin * -1
+END
+
+-- If hour is less then 0 multiply hour wiht -1 to remove the hour infront
+IF (@TotalHour < 0)
+BEGIN
+	SET @HourHolder = @TotalHour * -1
+END
+
+-- If length of hour is 1 and is a negatvie number add -0 infront
+IF (LEN(@HourHolder) = 1)
+BEGIN
+	IF (@TotalHour < 0)
+	BEGIN 
+		SET @HourStr = '-0' + CAST(@HourHolder AS VARCHAR)
+	END
+END
+-- Else set string as hour cast as nvarchar
+ELSE
+BEGIN
+	SET @HourStr = CAST(@TotalHour AS NVARCHAR)
+END
+
+-- If length of min is 1 and is a negatvie number add -0 infront
+IF (LEN(@MinHolder) = 1)
+BEGIN
+	SET @MinStr = '0' + @MinHolder
+END
+-- Else set string as min cast as nvarchar
+ELSE
+BEGIN
+	SET @MinStr = CAST(@MinHolder AS NVARCHAR)
+END
+
+-- While user is less or equal to user_id where startday is equal to today
+WHILE (@Users <= (SELECT DISTINCT MIN([User_ID]) FROM [Days] WHERE [StartDay] = (SELECT CONVERT(DATETIME, FORMAT(getdate(), 'yyyy-MM-dd')))))
+	BEGIN
+		-- If abscense id from days where startday is equal to today
+		IF ((SELECT [AbscenseID] FROM [Days] WHERE [StartDay] = (SELECT CONVERT(DATETIME, FORMAT(getdate(), 'yyyy-MM-dd')))) = 1)
+		BEGIN
+			-- Update today with new total saldo where startday is equal to today
+			UPDATE [Days]
+			SET TotalSaldo = @HourStr + ':' + @MinStr,
+			TotalHour = @TotalHour,
+			TotalMin = @TotalMin,
+			AbscenseID = 10
+			WHERE [StartDay] = (SELECT CONVERT(DATETIME, FORMAT(getdate(), 'yyyy-MM-dd')))
+		END
+		SET @Users = @Users + 1
+	END
+GO
+
+DECLARE @SaldooHour INT, @SaldoMin INT, @Saldo NVARCHAR(10)
+
+SET @SaldooHour = -7
+SET @SaldoMin = -24
+
+SET @Saldo = '-0' + CAST((@SaldooHour * -1) AS NVARCHAR) + ':' + CAST((@SaldoMin * -1) AS NVARCHAR)
+
+UPDATE [Days]
+SET [Saldo] = @Saldo,
+[Hour] = @SaldooHour,
+[Min] = @SaldoMin
+WHERE [StartDay] = (SELECT CONVERT(DATETIME, FORMAT(getdate(), 'yyyy-MM-dd')))
+GO

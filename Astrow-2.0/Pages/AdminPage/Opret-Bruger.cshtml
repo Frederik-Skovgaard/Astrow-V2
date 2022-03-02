@@ -30,30 +30,26 @@
             </div>
         </div>
         <div class="container lower-container CreateUser">
-            <div class="box">
-                <h3>Opret Bruger</h3>
-            </div>
-
             <form method="post">
                 <div class="row col-row createRow">
                     <div class="col-4">
                         <label>Fornavn</label> <br />
 
-                        <input autocomplete="off" required asp-for="FirstName" id="FirstName" type="text" placeholder="Fornavn" class="form-control" oninvalid="this.setCustomValidity('Skriv fornavn her')" oninput="this.setCustomValidity('')" />
+                        <input value="@Model.FirstNameVal" autocomplete="off" maxlength="15" required asp-for="FirstName" id="FirstName" type="text" placeholder="Fornavn" class="form-control" oninvalid="this.setCustomValidity('Skriv fornavn her\n*Max 15 karakter')" oninput="this.setCustomValidity('')" />
                         <span asp-validation-for="FirstName" class="CreateUserError"></span>
                     </div>
 
                     <div class="col-4">
                         <label>Mellemnavn</label> <br />
 
-                        <input autocomplete="off" asp-for="MiddleName" id="MiddleName" type="text" placeholder="Mellemnavn" class="form-control" />
+                        <input value="@Model.MiddleNameVal" autocomplete="off" maxlength="15" asp-for="MiddleName" id="MiddleName" type="text" placeholder="Mellemnavn" class="form-control" />
                         <span asp-validation-for="MiddleName" class="CreateUserError"></span>
                     </div>
 
                     <div class="col-4">
                         <label>Efternavn</label> <br />
 
-                        <input autocomplete="off" required asp-for="LastName" id="LastName" type="text" placeholder="Efternavn" class="form-control" oninvalid="this.setCustomValidity('Skriv efternavn her')" oninput="this.setCustomValidity('')" />
+                        <input value="@Model.LastNameVal" autocomplete="off" maxlength="15" required asp-for="LastName" id="LastName" type="text" placeholder="Efternavn" class="form-control" oninvalid="this.setCustomValidity('Skriv efternavn her\n*Max 15 karakter')" oninput="this.setCustomValidity('')" />
                         <span asp-validation-for="LastName" class="CreateUserError"></span>
                     </div>
                 </div>
@@ -62,7 +58,7 @@
                     <div class="col-6">
                         <label>Brugernavn</label> <br />
 
-                        <input autocomplete="off" required asp-for="UserName" id="UserName" type="text" placeholder="Brugernavn" class="form-control" oninvalid="this.setCustomValidity('Skriv brugernavn her')" oninput="this.setCustomValidity('')" />
+                        <input value="@Model.UserNameVal" autocomplete="off" maxlength="15" required asp-for="UserName" id="UserName" type="text" placeholder="Brugernavn" class="form-control" oninvalid="this.setCustomValidity('Skriv brugernavn her\nMax 15 karakter')" oninput="this.setCustomValidity('')" />
                         <span asp-validation-for="UserName" class="CreateUserError"></span>
                     </div>
 
@@ -78,14 +74,14 @@
                     <div class="col-6">
                         <label>Start Dato</label> <br />
 
-                        <input asp-for="StartDate" required id="StartDate" type="date" autocomplete="off" class="form-control" oninvalid="this.setCustomValidity('Skriv start dato her')" oninput="this.setCustomValidity('')" />
+                        <input value="@Model.StartVal" asp-for="StartDate" required id="StartDate" type="date" autocomplete="off" class="form-control" oninvalid="this.setCustomValidity('Skriv start dato her')" oninput="this.setCustomValidity('')" />
                         <span asp-validation-for="StartDate" class="CreateUserError"></span>
                     </div>
 
                     <div class="col-6">
                         <label>Slut Dato</label> <br />
 
-                        <input asp-for="EndDate" required id="EndDate" type="date" autocomplete="off" class="form-control" oninvalid="this.setCustomValidity('Skriv slut dato her')" oninput="this.setCustomValidity('')" />
+                        <input value="@Model.EndVal" asp-for="EndDate" required id="EndDate" type="date" autocomplete="off" class="form-control" oninvalid="this.setCustomValidity('Skriv slut dato her')" oninput="this.setCustomValidity('')" />
                         <span asp-validation-for="EndDate" class="CreateUserError"></span>
                     </div>
 

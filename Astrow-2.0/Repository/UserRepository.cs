@@ -229,6 +229,17 @@ namespace Astrow_2._0.Repository
         }
 
         /// <summary>
+        /// Method for getting abscense type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public List<AbscenseType> GetAbscenseText()
+        {
+            List<AbscenseType> list = stored.GetAbscenseText();
+            return list;
+        }
+
+        /// <summary>
         /// Find day by id
         /// </summary>
         /// <param name="id"></param>
@@ -237,6 +248,16 @@ namespace Astrow_2._0.Repository
         {
             Days day = stored.FindDayByID(id);
             return day;
+        }
+
+        /// <summary>
+        /// Get AbscenseByText
+        /// </summary>
+        /// <returns></returns>
+        public AbscenseType FindAbscenseByText(string text)
+        {
+            AbscenseType abscense = stored.FindAbscenseByText(text);
+            return abscense;
         }
 
         /// <summary>
@@ -365,6 +386,11 @@ namespace Astrow_2._0.Repository
                     CreateDay(day, id);
 
 
+                }
+
+                else if (toDay.StartDay.ToString("HH:mm") == "00:00")
+                {
+                    UpdateStartDay(new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0), toDay.Days_ID);
                 }
 
                 //Eles if today isen't equal to Enday
@@ -608,5 +634,13 @@ namespace Astrow_2._0.Repository
                 CreateDay(day, id);
             }
         }
+
+        public string FirstCharToUpper(string input) =>
+        input switch
+        {
+            null => throw new ArgumentNullException(nameof(input)),
+            "" => throw new ArgumentException($"{nameof(input)} cannot be empty", nameof(input)),
+            _ => string.Concat(input[0].ToString().ToUpper(), input.AsSpan(1))
+        };
     }
 }

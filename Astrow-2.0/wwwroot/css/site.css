@@ -994,6 +994,22 @@ nav ul li a span.rotate {
 }
 
 
+/*Modal*/
+.AdminPage .container .DeleteUser .modal-header {
+    align-self: center;
+}
+
+.AdminPage .container .DeleteUser .modal-body {
+    place-self: center;
+}
+
+.AdminPage .container .DeleteUser .modal-body .AbsenceText {
+    min-height: 112px;
+    max-height: 331px;
+    width: inherit;
+}
+
+
 /*Container Decoration*/
 .AdminPage .container p {
     text-align: center;
@@ -1039,13 +1055,13 @@ nav ul li a span.rotate {
 
 /*Admin navbar*/
 .AdminPage .container .CreateUser {
-    min-height: 44rem !important;
+    min-height: 40rem !important;
     position:relative;
     position: absolute;
 }
 
 .AdminPage .container .UpdateUser {
-    min-height: 44rem !important;
+    min-height: 40rem !important;
     position: relative;
 }
 
@@ -1063,6 +1079,7 @@ nav ul li a span.rotate {
     right:0;
     z-index: 3;
     border: none;
+   cursor: pointer;
 }
 
 .AdminPage .container .AdminNav .show {
@@ -1204,7 +1221,7 @@ nav ul li a span.rotate {
 
 
 /*Delete Page Decoration*/
-.AdminPage .container .DeleteUser form {
+.AdminPage .container .DeleteUser .Table-Gride .col-row {
     background: #00405e73;
     margin-bottom: 0.5rem;
     height: 4rem;
@@ -1243,6 +1260,50 @@ nav ul li a span.rotate {
 .AdminPage .container .DeleteUser .row .Table-Gride {
     overflow: overlay;
     max-height: 40rem;
+}
+
+.AdminPage .container .DeleteUser ul {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.AdminPage .container .DeleteUser .box .col-2 {
+    float: left;
+    margin-left: 20rem;
+}
+
+.AdminPage .container .DeleteUser .box h3 {
+    float:right;
+}
+
+.AdminPage .container .DeleteUser .box .col-4 {
+    float: left;
+    margin-left: 4rem;
+    padding-top: 2px;
+}
+
+.AdminPage .container .DeleteUser .box input {
+    width: 13rem;
+    margin-right: 1rem;
+    background: white;
+    text-transform: capitalize;
+    background: #004f75;
+    border: 2px solid #00000000;
+    color: white;
+}
+
+.AdminPage .container .DeleteUser .box input::placeholder {
+    color:#c7c7c7;
+}
+
+.AdminPage .container .DeleteUser .box input:hover {
+    box-shadow:none;
+    border-color:transparent;
+}
+
+.AdminPage .container .DeleteUser .box input:focus {
+    box-shadow:none;
+    border-color:transparent;
 }
 
 
@@ -1414,7 +1475,7 @@ nav ul li a span.rotate {
     }
 
         .TimeCard .outer .Table-Head {
-            top: 15.2476%;
+            top: 14.2476%;
         }
 }
 
@@ -1579,6 +1640,10 @@ nav ul li a span.rotate {
         font-size: 14px !important;
         padding: 0 !important;
     }
+
+    .AdminPage .container .box .col-2 {
+        margin-left: 4rem !important;
+    }
 }
 
 @media only screen and (min-width: 665px) {
@@ -1722,6 +1787,11 @@ nav ul li a span.rotate {
     .AdminPage .container .lower-container .form-control {
         width:max-content;
     }
+
+    .AdminPage .container .box .col-2 {
+        margin-left: 18.5rem !important;
+    }
+
 }
 
 @media only screen and (min-width:1315px) {
@@ -1749,6 +1819,10 @@ nav ul li a span.rotate {
 
     .AdminPage .container .CreateUser {
         left: unset;
+    }
+
+    .AdminPage .container .box .col-2 {
+        margin-left: 20rem !important;
     }
 }
 

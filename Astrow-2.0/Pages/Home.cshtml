@@ -81,8 +81,57 @@
                                         //If day is equal to day from days lists
                                         if (date.Date.ToString("yyyy/MM/dd") == day.ToString("yyyy/MM/dd"))
                                         {
+                                            if (date.StartDay.ToString("HH:mm") == "00:00" && date.AbscenseID != 1)
+                                            {
+                                                Model.Items.AbscenseType abs = Model.AbscenseText.Find(x => x.ID == date.AbscenseID);
+                                                
+                                                <tr>
+                                                    <th scope="row" class="Dayth">@day.ToString("dddd")  </th>
+                                                    <td class="@strClass Datetr">@day.ToString("yyyy-MM-dd")</td>
+                                                    <td class="@strClass Fraværtr">@abs.Type</td>
+                                                    <td class="@strClass Logintr">@date.StartDay.ToString("HH:mm")</td>
+                                                    <td class="@strClass Logudtr">@date.EndDay.ToString("HH:mm")</td>
+                                                    <td class="@strClass Saldotr">@date.Saldo</td>
+                                                    <td class="@strClass TotSaldotr">@date.TotalSaldo</td>
+                                                </tr>
+
+                                                strClass = "";
+                                                trigger = true;
+                                            }
+                                            else if (date.StartDay.ToString("HH:mm") == "00:00")
+                                            {
+                                                <tr>
+                                                    <th scope="row" class="Dayth">@day.ToString("dddd")  </th>
+                                                    <td class="@strClass Datetr">@day.ToString("yyyy-MM-dd")</td>
+                                                    <td class="@strClass Fraværtr"></td>
+                                                    <td class="@strClass Logintr"></td>
+                                                    <td class="@strClass Logudtr"></td>
+                                                    <td class="@strClass Saldotr"></td>
+                                                    <td class="@strClass TotSaldotr"></td>
+                                                </tr>
+
+                                                strClass = "";
+                                                trigger = true;
+                                            }
                                             //If date enday is equal too 00:00 load without end day
-                                            if (date.EndDay.ToString("HH:mm") == "00:00")
+                                            else if (date.EndDay.ToString("HH:mm") == "00:00" && date.AbscenseID != 1)
+                                            {
+                                               Model.Items.AbscenseType abs = Model.AbscenseText.Find(x => x.ID == date.AbscenseID);
+                                                
+                                                <tr>
+                                                    <th scope="row" class="Dayth">@day.ToString("dddd")  </th>
+                                                    <td class="@strClass Datetr">@day.ToString("yyyy-MM-dd")</td>
+                                                    <td class="@strClass Fraværtr">@abs.Type</td>
+                                                    <td class="@strClass Logintr">@date.StartDay.ToString("HH:mm")</td>
+                                                    <td class="@strClass Logudtr">@date.EndDay.ToString("HH:mm")</td>
+                                                    <td class="@strClass Saldotr">@date.Saldo</td>
+                                                    <td class="@strClass TotSaldotr">@date.TotalSaldo</td>
+                                                </tr>
+
+                                                strClass = "";
+                                                trigger = true;
+                                            }
+                                            else if (date.EndDay.ToString("HH:mm") == "00:00")
                                             {
                                                 <tr>
                                                     <th scope="row" class="Dayth">@day.ToString("dddd")  </th>

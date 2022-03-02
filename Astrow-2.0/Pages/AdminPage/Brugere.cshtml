@@ -1,76 +1,136 @@
 ﻿@page "{handler?}"
 @model Astrow_2._0.Pages.AdminPage.DeleteUserModel
 @{
-    ViewData["Title"] = "Fjern | Page";
+    ViewData["Title"] = "Brugere | Page";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-
-<div class="AdminPage">
-    <button class="AdminNavBTN" id="AdminNavBTN">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
-        </svg>
-    </button>
-
-    <div class="container">
-        <div class="AdminNav">
-            <div class="row upper-row" id="AdminNav">
-                <a href="/AdminPage/Opret-Bruger" class="btn btn-lg btn-primary">
-                    <i class="fas fa-plus-circle"></i> Opret bruger
-                </a>
-                <a href="/AdminPage/Opdater-Bruger" class="btn btn-lg btn-secondary">
-                    <i class="fas fa-user-edit"></i> Opdater bruger
-                </a>
-                <a href="/AdminPage/Opdater-Timekort" class="btn btn-lg btn-secondary">
-                    <i class="fas fa-user-clock"></i> Opdater Timekort
-                </a>
-                <a href="/AdminPage/Brugere" class="btn btn-lg btn-secondary">
-                    <i class="fas fa-users"></i> Brugere
-                </a>
-            </div>
+<form method="post">
+    <div class="AdminPage">
+        <div class="AdminNavBTN" id="AdminNavBTN">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+            </svg>
         </div>
-        <div class="container lower-container DeleteUser">
-            <div class="row col-row">
-                <div class="box">
-                    <h3>Bruger</h3>
+
+        <div class="container">
+            <div class="AdminNav">
+                <div class="row upper-row" id="AdminNav">
+                    <a href="/AdminPage/Opret-Bruger" class="btn btn-lg btn-primary">
+                        <i class="fas fa-plus-circle"></i> Opret bruger
+                    </a>
+                    <a href="/AdminPage/Opdater-Bruger" class="btn btn-lg btn-secondary">
+                        <i class="fas fa-user-edit"></i> Opdater bruger
+                    </a>
+                    <a href="/AdminPage/Opdater-Timekort" class="btn btn-lg btn-secondary">
+                        <i class="fas fa-user-clock"></i> Opdater Timekort
+                    </a>
+                    <a href="/AdminPage/Brugere" class="btn btn-lg btn-secondary">
+                        <i class="fas fa-users"></i> Brugere
+                    </a>
                 </div>
-                <div class="Table-Gride">
-                    @foreach (Model.Containers.PersonalInfo user in Model.People)
-                    {
-                        <form method="post">
-                            <div class="row col-row">
+            </div>
+            <div class="container lower-container DeleteUser">
+                <div class="row col-row">
+                    <div class="box">
+                        <div class="col-2">
+                            <h3>Bruger</h3>
+                        </div>
+                        <div class="col-4">
+                            <input autocomplete="off" type="text" class="form-control" id="myInput" onkeyup="SearchFunction()" placeholder="Søg efter navn..." title="Type in a name">
+                        </div>
+                    </div>
+                    <div class="Table-Gride">
+                        <ul id="myUL">
+                            @foreach (Model.Containers.PersonalInfo user in Model.People)
+                            {
+                                <li>
+                                    <div class="row col-row">
+                                        <div class="col-6 Delete-Col">
+                                            <label class="UserLabel">@user.FirstName @user.MiddleName.Substring(0, 1).ToUpper(). @user.LastName.Substring(0, 1).ToUpper().</label>
+                                        </div>
+                                        <div class="col-6 Delete-Col">
+                                            <input asp-for="ID" value="@user.ID" hidden />
+                                            <input type="submit" asp-page-handler="Delete" asp-route-id="@user.ID" class="btn btn-danger col-4" id="DeleteBtn" value="Slet" onclick="return confirm('Er du sikker på du vil slette denne bruger?')" />
+                                            <input type="button" class="btn btn-warning" id="SickNoticeBtn" value="Fravære" data-toggle="modal" data-target="#SickModal" />
+                                            <input type="submit" asp-page-handler="IllegalNotice" asp-route-id="@user.ID" value="Ulovlig Fravære" class="btn btn-danger" onclick="return confirm('Er du sikker på du vil melde denne bruger ulovligt fraværende?')" />
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
 
-                                <div class="col-6 Delete-Col">
-                                    <label class="UserLabel">@user.FirstName @user.MiddleName @user.LastName</label>
+                <!-- Modal -->
+
+                <div class="modal fade" id="SickModal" tabindex="-1" role="dialog" aria-labelledby="SickModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Sygmelding</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row col-row">
+                                    <div class="col-12">
+                                        <select class="form-control AbscenseTypeDrop" asp-for="Abscense" name="Abscense" id="AbscenseDrop">
+                                            @{
+                                                foreach (Model.Items.AbscenseType type in Model.AbscenseType)
+                                                {
+                                                    <option value="@type.ID">@type.Type</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row col-row">
+                                    <div class="col-12">
+                                        <textarea type="text" class="form-control AbsenceText" name="AbscenseText" placeholder="* Valgfrit Fraværes oversag" asp-for="AbscenseText"></textarea>
+                                    </div>
+
                                 </div>
 
-                                <div class="col-6 Delete-Col">
-                                    <input asp-for="ID" value="@user.ID" hidden />
-                                    <input type="submit" class="btn btn-danger col-4" id="DeleteBtn" value="Slet" onclick="return confirm('Are you sure you want to delete this?')" />
-                                    <input type="submit" class="btn btn-warning" id="SickNoticeBtn" value="Fravære" onclick="return confirm('Are you sure you want to delete this?')" />
-                                    <input type="submit" class="btn btn-danger" id="SickNoticeBtn" value="Ulovlig Fravære" onclick="return confirm('Are you sure you want to delete this?')" />
-                                </div>
 
                             </div>
-                        </form>
-                    }
+                            <div class="modal-footer">
+                                <input type="submit"  value="Submit" asp-page-handler="SickNotice" class="btn btn-primary" onclick="return confirm('Er du sikker på du vil sygmeld denne bruger?')" />
+                                <input type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close" value="Close" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+
+                <script type="text/javascript">
+                    //Make Admin Nav apper and disapper, Magic!
+                        $('#AdminNavBTN').click(function() {
+                            $('#AdminNav').toggleClass("show")
+                        });
+
+                        $('#DeleteBtn').click(function() {
+                            alert("Wow");
+                        });
+                </script>
+
+                <script>
+                    function SearchFunction() {
+                        var input, filter, ul, li, a, i, txtValue;
+                        input = document.getElementById("myInput");
+                        filter = input.value.toUpperCase();
+                        ul = document.getElementById("myUL");
+                        li = ul.getElementsByTagName("li");
+                        for (i = 0; i < li.length; i++) {
+                            a = li[i].getElementsByTagName("label")[0];
+                            txtValue = a.textContent || a.innerText;
+                            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                li[i].style.display = "";
+                            } else {
+                                li[i].style.display = "none";
+                            }
+                        }
+                    }
+                </script>
             </div>
-
-            <script type="text/javascript">
-                $('#DeleteBtn').click(function() {
-                    alert("@ViewData["Message"]");
-                };
-            </script>
-
-            <script type="text/javascript">
-                //Make Admin Nav apper and disapper, Magic!
-                    $('#AdminNavBTN').click(function() {
-                        $('#AdminNav').toggleClass("show")
-                    });
-            </script>
         </div>
     </div>
-</div>
-
+</form>
