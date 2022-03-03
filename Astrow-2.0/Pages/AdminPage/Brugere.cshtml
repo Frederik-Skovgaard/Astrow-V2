@@ -1,4 +1,4 @@
-﻿@page "{handler?}"
+﻿@page "{handler?}/{id?}"
 @model Astrow_2._0.Pages.AdminPage.DeleteUserModel
 @{
     ViewData["Title"] = "Brugere | Page";
@@ -50,10 +50,10 @@
                                             <label class="UserLabel">@user.FirstName @user.MiddleName.Substring(0, 1).ToUpper(). @user.LastName.Substring(0, 1).ToUpper().</label>
                                         </div>
                                         <div class="col-6 Delete-Col">
-                                            <input asp-for="ID" value="@user.ID" hidden />
-                                            <input type="submit" asp-page-handler="Delete" asp-route-id="@user.ID" class="btn btn-danger col-4" id="DeleteBtn" value="Slet" onclick="return confirm('Er du sikker på du vil slette denne bruger?')" />
-                                            <input type="button" class="btn btn-warning" id="SickNoticeBtn" value="Fravære" data-toggle="modal" data-target="#SickModal" />
-                                            <input type="submit" asp-page-handler="IllegalNotice" asp-route-id="@user.ID" value="Ulovlig Fravære" class="btn btn-danger" onclick="return confirm('Er du sikker på du vil melde denne bruger ulovligt fraværende?')" />
+                                            <input id="ID" asp-for="ID" hidden>
+                                            <input type="submit" id="DeleteBtn" asp-page-handler="Delete"  class="btn btn-danger col-4" id="DeleteBtn" value="Slet" onclick="return confirm('Er du sikker på du vil slette denne bruger?'), MyTemp(@user.ID)" />
+                                            <input type="button" id="SickNoticeBtn" onclick="MyTemp(@user.ID)" value="Fravære" class="btn btn-warning" data-toggle="modal" data-target="#SickModal" />
+                                            <input type="submit" id="IlligalBtn" asp-page-handler="IllegalNotice"  value="Ulovlig Fravære" class="btn btn-danger" onclick="return confirm('Er du sikker på du vil melde denne bruger ulovligt fraværende?'), MyTemp(@user.ID)" />
                                         </div>
                                     </div>
                                 </li>
@@ -93,7 +93,7 @@
 
                             </div>
                             <div class="modal-footer">
-                                <input type="submit"  value="Submit" asp-page-handler="SickNotice" class="btn btn-primary" onclick="return confirm('Er du sikker på du vil sygmeld denne bruger?')" />
+                                <input type="submit" id="SubmitBtn" value="Submit" asp-page-handler="SickNotice" class="btn btn-primary" />
                                 <input type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close" value="Close" />
                             </div>
                         </div>
@@ -107,9 +107,11 @@
                             $('#AdminNav').toggleClass("show")
                         });
 
-                        $('#DeleteBtn').click(function() {
-                            alert("Wow");
-                        });
+                            
+                        function MyTemp(ish) {
+                            document.getElementById("ID").value = ish;
+                        }
+
                 </script>
 
                 <script>

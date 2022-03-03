@@ -108,6 +108,7 @@ namespace Astrow_2._0.Pages.AdminPage
         /// <returns></returns>
         public IActionResult OnPostSickNotice()
         {
+            
             if (ID != 0)
             {
                 if (Abscense != "1")
@@ -133,11 +134,11 @@ namespace Astrow_2._0.Pages.AdminPage
         /// Method for marking down a user as illegaly abscent 
         /// </summary>
         /// <returns></returns>
-        public IActionResult OnPostIllegalNotice()
+        public IActionResult OnPostIllegalNotice(int id)
         {
-            if (ID != 0)
+            if (id != 0)
             {
-                Days day = _userRepository.FindDay(DateTime.Now.Date, ID);
+                Days day = _userRepository.FindDay(DateTime.Now.Date, id);
 
                 AbscenseType abscense = _userRepository.FindAbscenseByText("Ulovligt fravær");
 

@@ -115,6 +115,11 @@
                         }
                     });
 
+                    $('#SubmitUser').click(function() {
+                        alert('Bruger blev oprettet');
+                        window.location.href='/AdminPage/Opdater-Bruger';
+                    });
+
                     //Make Admin Nav apper and disapper, Magic!
                     $('#AdminNavBTN').click(function() {
                         $('#AdminNav').toggleClass("show")

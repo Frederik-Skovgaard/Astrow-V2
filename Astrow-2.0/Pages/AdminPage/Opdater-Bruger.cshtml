@@ -33,6 +33,7 @@
         <div class="container lower-container UpdateUser">
             <div class="row col-row">             
                 <div class="col-12">
+
                     <label>Users</label> <br />
                     <div class="dropdown">
                         <button class="btn btn-p dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -49,9 +50,10 @@
                             }
                         </div>
                     </div>
+
                 </div>
             </div>
-
+            
             @*Update user*@
             <form asp-page-handler="UpdateUser" method="post">
                 <div class="row col-row">
@@ -123,7 +125,14 @@
                 </div>
 
                 <div class="row submit-row">
-                    <input type="submit" asp-page-handler="UpdateUser" asp-route-id="@Model.ID" id="SubmitUser" class="btn btn-lg btn-primary" value="Submit" />
+                    @if (@Model.Bit != false)
+                    {
+                        <input type="submit" asp-page-handler="UpdateUser" asp-route-id="@Model.ID" id="SubmitUser" class="btn btn-lg btn-primary" value="Submit" />
+                    }
+                    else
+                    {
+                        <input type="submit" asp-page-handler="UpdateUser" asp-route-id="@Model.ID" id="SubmitUser" class="btn btn-lg btn-primary" value="Submit" disabled />
+                    }
                 </div>
 
 
@@ -137,6 +146,11 @@
                             alert("End date should be greater than Start date");
                             document.getElementById("EndDate").value = "";
                         }
+                    });
+
+                    $('#SubmitUser').click(function() {
+                        alert('Bruger blev opdateret');
+                        window.location.href='/AdminPage/Opdater-Bruger';
                     });
 
                     //Make Admin Nav apper and disapper, Magic!

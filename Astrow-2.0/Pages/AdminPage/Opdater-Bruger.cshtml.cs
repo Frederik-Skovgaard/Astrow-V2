@@ -54,6 +54,9 @@ namespace Astrow_2._0.Pages.AdminPage
 
         [BindProperty]
         public int ID { get; set; }
+
+        [BindProperty]
+        public bool Bit { get; set; }
         #endregion
 
 
@@ -78,6 +81,8 @@ namespace Astrow_2._0.Pages.AdminPage
                 {
                     //Fills dropdown with users 
                     UserList = _userRepository.ReadAllUsers();
+
+                    Bit = false;
 
                     return Page();
                 }
@@ -106,6 +111,8 @@ namespace Astrow_2._0.Pages.AdminPage
                 EndDate = user.EndDate.ToString("yyyy/MM/dd");
 
                 Role = user.Status.ToString();
+
+                Bit = true;
 
                 //Fills dropdown with users
                 UserList = _userRepository.ReadAllUsers();
@@ -140,7 +147,7 @@ namespace Astrow_2._0.Pages.AdminPage
                     Status = Role,
                     StartDate = DateTime.Parse(StartDate),
                     EndDate = DateTime.Parse(EndDate)
-                    
+
                 };
             }
             else
@@ -154,7 +161,7 @@ namespace Astrow_2._0.Pages.AdminPage
                     Status = Role,
                     StartDate = DateTime.Parse(StartDate),
                     EndDate = DateTime.Parse(EndDate)
-                    
+
                 };
             }
 
@@ -170,6 +177,8 @@ namespace Astrow_2._0.Pages.AdminPage
             //Update users info
             _userRepository.UpdateUser(user);
             _userRepository.UpdateUserInfo(userPersonalInfo);
+
+            Bit = false;
 
             return RedirectToPage("/AdminPage/Opdater-Bruger");
         }
