@@ -13,5 +13,6 @@ namespace Astrow_2._0.Pages.Shared
 {
     public class _Layout : PageModel
     {
+        
     }
 }

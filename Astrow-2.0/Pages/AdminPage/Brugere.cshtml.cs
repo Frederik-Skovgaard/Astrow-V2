@@ -27,7 +27,7 @@ namespace Astrow_2._0.Pages.AdminPage
         public List<PersonalInfo> People { get; set; }
 
         [BindProperty]
-        public List<AbscenseType> AbscenseType { get; set; }
+        public List<AbscenseType> Abscenses { get; set; }
 
         [BindProperty]
         public string Abscense { get; set; }
@@ -37,6 +37,39 @@ namespace Astrow_2._0.Pages.AdminPage
 
         [BindProperty]
         public int ID { get; set; }
+
+        //------------------------ AbsRequest ------------------------
+
+        [BindProperty]
+        public List<AbscenseType> AbscensesRequest { get; set; }
+
+        [BindProperty]
+        public string AbsCal { get; set; }
+
+        [BindProperty]
+        public string AbsCalTwo { get; set; }
+
+        [BindProperty]
+        public string AbsCalThree { get; set; }
+
+        [BindProperty]
+        public string Hour { get; set; }
+
+        [BindProperty]
+        public string HourTwo { get; set; }
+
+        [BindProperty]
+        public string HourThree { get; set; }
+
+        [BindProperty]
+        public int AbsenceType { get; set; }
+
+        [BindProperty]
+        public string AbscText { get; set; }
+
+        [BindProperty]
+        public int Bit { get; set; }
+
 
         /// <summary>
         /// Check if users has rights to be on side
@@ -58,7 +91,10 @@ namespace Astrow_2._0.Pages.AdminPage
                 else
                 {
                     //Get abscense type
-                    AbscenseType = _userRepository.GetAllAbscenseType();
+                    AbscensesRequest = _userRepository.GettAbscenseTypeUserView();
+
+                    //Get abscense type
+                    Abscenses = _userRepository.GetAllAbscenseType();
 
                     //Fills dropdown with users 
                     UserList = _userRepository.ReadAllUsers();
@@ -164,6 +200,94 @@ namespace Astrow_2._0.Pages.AdminPage
 
             //Return to home page
             return RedirectToPage("/AdminPage/Slet-Bruger");
+        }
+
+        /// <summary>
+        /// Get Start & End date for rendering years
+        /// </summary>
+        /// <returns></returns>
+        public LogedUser GetDate()
+        {
+            string name = HttpContext.Session.GetString("_Username");
+
+            LogedUser logedUser = new LogedUser();
+
+            if (name != null)
+            {
+                return logedUser = new LogedUser
+                {
+                    UserName = name,
+                    Status = HttpContext.Session.GetString("_Status"),
+                    User_ID = (int)HttpContext.Session.GetInt32("_UserID"),
+                    StartDate = DateTime.Parse(HttpContext.Session.GetString("_StartDate")),
+                    EndDate = DateTime.Parse(HttpContext.Session.GetString("_EndDate"))
+                };
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
+        public IActionResult OnPostAbscenseRequest()
+        {
+            LogedUser log = GetDate();
+
+            if (log != null)
+            {
+                if (Bit != 2)
+                {
+                    if (AbscText == null)
+                    {
+                        AbscText = "";
+                    }
+
+                    DateTime temp = DateTime.Parse(AbsCal);
+                    DateTime HourDT = DateTime.Parse(Hour);
+                    DateTime date = new DateTime(temp.Year, temp.Month, temp.Day, HourDT.Hour, HourDT.Minute, 0, 0);
+
+                    Request request = new Request()
+                    {
+                        UserID = log.User_ID,
+                        AbsID = AbsenceType,
+                        Text = AbscText,
+                        Date = date
+                    };
+
+                    _userRepository.CreateRequest(request);
+                }
+                else
+                {
+                    if (AbscText == null)
+                    {
+                        AbscText = "";
+                    }
+
+                    DateTime CalOne = DateTime.Parse(AbsCalTwo);
+                    DateTime CalTwo = DateTime.Parse(AbsCalThree);
+
+                    DateTime HourOne = DateTime.Parse(HourTwo);
+                    DateTime HourSec = DateTime.Parse(HourThree);
+
+                    DateTime date = new DateTime(CalOne.Year, CalOne.Month, CalOne.Day, HourOne.Hour, HourOne.Minute, 0, 0);
+                    DateTime dateTwo = new DateTime(CalTwo.Year, CalTwo.Month, CalTwo.Day, HourSec.Hour, HourSec.Minute, 0, 0);
+
+                    Request request = new Request()
+                    {
+                        UserID = log.User_ID,
+                        AbsID = AbsenceType,
+                        Text = AbscText,
+                        Date = date,
+                        SecDate = dateTwo
+                    };
+
+                    _userRepository.CreateRequestTwoDates(request);
+                }
+            }
+
+            //Return to home page
+            return RedirectToPage("/AdminPage/Brugere");
         }
     }
 }

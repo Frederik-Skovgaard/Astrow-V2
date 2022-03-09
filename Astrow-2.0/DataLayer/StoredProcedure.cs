@@ -140,7 +140,11 @@ namespace Astrow_2._0.DataLayer
             }
         }
 
-
+        /// <summary>
+        /// Method for creating user in name table
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
         public UserPersonalInfo CreateUserInfo(UserPersonalInfo info)
         {
             if (info.MiddleName == null)
@@ -187,9 +191,53 @@ namespace Astrow_2._0.DataLayer
             }
         }
 
+        /// <summary>
+        /// Create a request for abscense
+        /// </summary>
+        /// <returns></returns>
+        public void CreateRequest(Request request)
+        {
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand cmd = new SqlCommand("CreateRequest", sql);
+                cmd.CommandType= CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@UserID", request.UserID);
+                cmd.Parameters.AddWithValue("@AbsID", request.AbsID);
+                cmd.Parameters.AddWithValue("@Text", request.Text);
+                cmd.Parameters.AddWithValue("@Date", request.Date);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// Create a request with two dates for abscense
+        /// </summary>
+        /// <returns></returns>
+        public void CreateRequestTwoDates(Request request)
+        {
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand cmd = new SqlCommand("CreateRequestTwoDates", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@UserID", request.UserID);
+                cmd.Parameters.AddWithValue("@AbsID", request.AbsID);
+                cmd.Parameters.AddWithValue("@Text", request.Text);
+                cmd.Parameters.AddWithValue("@Date", request.Date);
+                cmd.Parameters.AddWithValue("@SecDate", request.SecDate);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
         #endregion
 
-        
+
         #region Update
 
         /// <summary>
@@ -276,6 +324,70 @@ namespace Astrow_2._0.DataLayer
             }
         }
 
+        /// <summary>
+        /// Update request with one date
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="id"></param>
+        public void UpdateRequest(Request request, int id)
+        {
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand cmd = new SqlCommand("UpdateRequest", sql);
+                cmd.CommandType= CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@ID", id);
+                cmd.Parameters.AddWithValue("@UserID", request.UserID);
+                cmd.Parameters.AddWithValue("@AbsID", request.AbsID);
+                cmd.Parameters.AddWithValue("@Text", request.Text);
+                cmd.Parameters.AddWithValue("@Date", request.Date);
+            }
+        }
+
+        /// <summary>
+        /// Update request with two dates
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="id"></param>
+        public void UpdateRequestTwoDates(Request request, int id)
+        {
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand cmd = new SqlCommand("UpdateRequestTwoDates", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@ID", id);
+                cmd.Parameters.AddWithValue("@UserID", request.UserID);
+                cmd.Parameters.AddWithValue("@AbsID", request.AbsID);
+                cmd.Parameters.AddWithValue("@Text", request.Text);
+                cmd.Parameters.AddWithValue("@Date", request.Date);
+                cmd.Parameters.AddWithValue("@SecDate", request.SecDate);
+
+            }
+        }
+
+        /// <summary>
+        /// Update answer of request
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="bit"></param>
+        public void UpdateRequestAnswered(int id, bool bit)
+        {
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand cmd = new SqlCommand("UpdateRequestAnswered", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@ID", id);
+                cmd.Parameters.AddWithValue("@Answered", bit);
+            }
+        }
 
         /// <summary>
         /// Set abscens
@@ -410,6 +522,44 @@ namespace Astrow_2._0.DataLayer
 
 
         #region Read
+
+        /// <summary>
+        /// Get request by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Request FindRequest(int id)
+        {
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand cmd = new SqlCommand("FindRequest", sql);
+                cmd.CommandType= CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@ID", id);
+
+                Request request = new Request();
+
+                using (SqlDataReader read = cmd.ExecuteReader())
+                {
+                    while (read.Read())
+                    {
+                        request = new Request()
+                        {
+                            RequestID = read.GetInt32(0),
+                            UserID = read.GetInt32(1),
+                            AbsID = read.GetInt32(2),
+                            Text = read.GetString(3),
+                            Date = read.GetDateTime(4),
+                            Answer = read.GetBoolean(5),
+                            SecDate = read.GetDateTime(6)
+                        };
+                    }
+                    return request;
+                }
+            }
+        }
 
         /// <summary>
         /// Read all users from database
@@ -600,6 +750,12 @@ namespace Astrow_2._0.DataLayer
             return days;
         }
 
+        /// <summary>
+        /// Fidning day by date and id
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Days FindDay(DateTime date, int id)
         {
             using (sql = new SqlConnection(connectionString))

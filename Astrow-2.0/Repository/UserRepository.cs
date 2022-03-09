@@ -170,6 +170,36 @@ namespace Astrow_2._0.Repository
         }
 
         /// <summary>
+        /// Create a abscense request
+        /// </summary>
+        /// <param name="request"></param>
+        public void CreateRequest(Request request)
+        {
+            stored.CreateRequest(request);
+        }
+
+        /// <summary>
+        /// Creates a abscense request with two dates
+        /// </summary>
+        /// <param name="request"></param>
+        public void CreateRequestTwoDates(Request request) 
+        {
+            stored.CreateRequestTwoDates(request);
+        }
+
+        /// <summary>
+        /// Find request by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Request FindRequest(int id)
+        {
+            Request request = stored.FindRequest(id);
+
+            return request;
+        }
+
+        /// <summary>
         /// Method for finding all days by date
         /// </summary>
         /// <param name="day"></param>
@@ -229,6 +259,19 @@ namespace Astrow_2._0.Repository
         }
 
         /// <summary>
+        /// Get list of abscense user can pick
+        /// </summary>
+        /// <returns></returns>
+        public List<AbscenseType> GettAbscenseTypeUserView()
+        {
+            List<AbscenseType> abscenses = stored.GetAllAbscenseType();
+            abscenses.Remove(abscenses.Find(x => x.Type == "COVID"));
+            abscenses.Remove(abscenses.Find(x => x.Type == "Ulovligt fravær"));
+            abscenses.Remove(abscenses.Find(x => x.Type == "Igen"));
+            return abscenses;
+        }
+
+        /// <summary>
         /// Method for getting abscense type
         /// </summary>
         /// <param name="id"></param>
@@ -268,6 +311,37 @@ namespace Astrow_2._0.Repository
         {
             stored.UpdateDay(day);
         }
+
+        /// <summary>
+        /// Update request
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="id"></param>
+        public void UpdateRequest(Request request, int id)
+        {
+            stored.UpdateRequest(request, id);
+        }
+
+        /// <summary>
+        /// Update request with two dates
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="id"></param>
+        public void UpdateRequestTwoDates(Request request, int id)
+        {
+            stored.UpdateRequestTwoDates(request, id);
+        }
+
+        /// <summary>
+        /// Update request answer
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="bit"></param>
+        public void UpdateRequestAnswered(int id, bool bit)
+        {
+            stored.UpdateRequestAnswered(id, bit);
+        }
+
 
         /// <summary>
         /// Update the start of day column in Day

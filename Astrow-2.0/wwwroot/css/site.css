@@ -318,6 +318,7 @@ a.navbar-brand {
 
 .show {
     display: block !important;
+    visibility:visible !important;
 }
 
 
@@ -865,9 +866,72 @@ nav ul li a span.rotate {
 
  /*#endregion*/
 
+/*#region Module*/
+
+.modal .modal-body {
+    place-self: unset !important;
+}
+
+.modal .modal-body .Hour {
+    align-self: center !important;
+}
+
+.modal .modal-body .Abscense {
+    margin: 0 auto !important;
+}
+
+.modal .modal-body .TextRow {
+    margin-top: 2rem !important;
+}
+
+.modal .modal-body .TextCol {
+    margin: 0 auto !important;
+}
+
+.modal .modal-body .Date {
+    padding-right: 1rem !important;
+    padding-left: 1rem !important;
+    margin-top: 2rem !important;
+
+    height: auto !important;
+    text-align: unset !important;
+    width: 100% !important;
+    justify-content: unset !important;
+}
+
+.modal .modal-body .Calendar {
+    margin:0 !important;
+    margin-left: 4.5rem !important;
+}
+
+.modal .modal-body .AbsenceText {
+    min-height: 110px !important;
+    max-height: 20rem !important;
+    width: -webkit-fill-available !important;
+}
+
+
+.modal .modal-body .TwoDates {
+    display: none;
+    visibility: hidden;
+}
+
+.modal .modal-body .TwoDate {
+    margin: 0 auto !important;
+    width: max-content !important;
+}
+
+.modal .modal-body .Clock {
+    margin-top: 1rem !important;
+}
+
+.Hide {
+    display:none !important;
+    visibility:hidden !important;
+}
+
+/*#endregion*/
 /*#region Admin Page*/
-
-
 /*Admin page*/
 .AdminPage .row {
     --bs-gutter-x: 0;

@@ -90,6 +90,21 @@ PRIMARY KEY([AbscenseID])
 )
 GO
 
+CREATE TABLE [RequestAbscense] (
+[RequestID] INT IDENTITY(1,1) NOT NULL,
+[User_ID] INT NOT NULL,
+[AbscenseID] INT NOT NULL,
+[Text] NVARCHAR(MAX),
+[Date] DATETIME NOT NULL,
+[Answered] BIT,
+[SecDate] DATETIME
+
+PRIMARY KEY([RequestID]),
+FOREIGN KEY ([AbscenseID]) REFERENCES [AbscenseType]([AbscenseID]),
+FOREIGN KEY ([User_ID]) REFERENCES [User]([User_ID])
+)
+GO
+
 -- Days
 CREATE TABLE [Days] (
 [Days_ID] INT IDENTITY(1,1) NOT NULL,
@@ -228,9 +243,75 @@ INSERT INTO [Name] ([FirstName], [MiddleName], [LastName], [FullName])
 VALUES (@firstName, @middleName, @lastName, @firstName + ' ' + @middleName + ' ' + @lastName) 
 GO
 
+-- Create Request
+CREATE PROCEDURE [CreateRequest]
+@UserID INT,
+@AbsID INT,
+@Text NVARCHAR(MAX),
+@Date DATETIME
+AS
+INSERT INTO [RequestAbscense] ([User_ID], [AbscenseID], [Text], [Date])
+VALUES (@UserID, @AbsID, @Text, @Date)
+GO
+
+-- Create Request with two dates
+CREATE PROCEDURE [CreateRequestTwoDates]
+@UserID INT,
+@AbsID INT,
+@Text NVARCHAR(MAX),
+@Date DATETIME,
+@SecDate DATETIME
+AS
+INSERT INTO [RequestAbscense] ([User_ID], [AbscenseID], [Text], [Date], [SecDate])
+VALUES (@UserID, @AbsID, @Text, @Date, @secDate)
+GO
 
 
 ---------------------------- Update ----------------------------
+
+-- Update request with one date
+CREATE PROCEDURE [UpdateRequest]
+@ID INT,
+@UserID INT,
+@AbsID INT,
+@Text NVARCHAR(MAX),
+@Date DATETIME
+AS
+UPDATE [RequestAbscense] 
+SET [User_ID] = @UserID,
+[AbscenseID] = @AbsID,
+[Text] = @Text,
+[Date] = @Date
+WHERE [RequestID] = @ID
+GO
+
+-- Update request with two dates 
+CREATE PROCEDURE [UpdateRequestTwoDates]
+@ID INT,
+@UserID INT,
+@AbsID INT,
+@Text NVARCHAR(MAX),
+@Date DATETIME,
+@SecDate DATETIME
+AS
+UPDATE [RequestAbscense] 
+SET [User_ID] = @UserID,
+[AbscenseID] = @AbsID,
+[Text] = @Text,
+[Date] = @Date,
+[SecDate] = @SecDate
+WHERE [RequestID] = @ID
+GO
+
+-- Update request answer
+CREATE PROCEDURE [UpdateRequestAnswered]
+@ID INT,
+@Answered BIT
+AS
+UPDATE [RequestAbscense]
+SET [Answered] = @Answered
+WHERE [RequestID] = @ID
+GO
 
 --Upate day
 CREATE PROCEDURE [UpdateDay]
@@ -378,6 +459,14 @@ GO
 
 
 ---------------------------- Read ----------------------------
+
+-- Find request by id
+CREATE PROCEDURE [FindRequest]
+@ID INT
+AS
+SELECT * FROM [RequestAbscense]
+WHERE [RequestID] = @ID
+GO
 
 -- Read All
 CREATE PROCEDURE [ReadAllUsers]

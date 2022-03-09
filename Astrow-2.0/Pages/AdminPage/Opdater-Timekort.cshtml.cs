@@ -53,16 +53,49 @@ namespace Astrow_2._0.Pages.AdminPage
 
 
         [BindProperty]
-        public string AbsenceType { get; set; }
+        public string AbsenceTypeStr { get; set; }
 
         [BindProperty]
         public string CalenderValue { get; set; }
 
         [BindProperty]
-        public List<AbscenseType> AbscenseType { get; set; }
+        public List<AbscenseType> Abscenses { get; set; }
 
         [BindProperty]
         public int ID { get; set; }
+
+        //------------------------ AbsRequest ------------------------
+        
+        [BindProperty]
+        public List<AbscenseType> AbscensesRequest { get; set; }
+
+        [BindProperty]
+        public string AbsCal { get; set; }
+
+        [BindProperty]
+        public string AbsCalTwo { get; set; }
+
+        [BindProperty]
+        public string AbsCalThree { get; set; }
+
+        [BindProperty]
+        public string Hour { get; set; }
+
+        [BindProperty]
+        public string HourTwo { get; set; }
+
+        [BindProperty]
+        public string HourThree { get; set; }
+
+        [BindProperty]
+        public int AbsenceType { get; set; }
+
+        [BindProperty]
+        public string AbscText { get; set; }
+
+        [BindProperty]
+        public int Bit { get; set; }
+
 
 
         /// <summary>
@@ -83,6 +116,9 @@ namespace Astrow_2._0.Pages.AdminPage
                 }
                 else
                 {
+                    //Get abscense type
+                    AbscensesRequest = _userRepository.GettAbscenseTypeUserView();
+
                     StartDay = $"{DateTime.Now.Year}-{DateTime.Now.Month}";
                     EndDay = $"{DateTime.Now.Year}-{DateTime.Now.Month}";
 
@@ -107,6 +143,9 @@ namespace Astrow_2._0.Pages.AdminPage
         /// </summary>
         public IActionResult OnPostUser()
         {
+            //Get abscense type
+            AbscensesRequest = _userRepository.GettAbscenseTypeUserView();
+
             if (ID != 0)
             {
                 List<Days> days = _userRepository.FindAllDaysByID(ID);
@@ -146,7 +185,11 @@ namespace Astrow_2._0.Pages.AdminPage
         public void OnPostLoad()
         {
             //Get abscense type
-            AbscenseType = _userRepository.GetAllAbscenseType();
+            AbscensesRequest = _userRepository.GettAbscenseTypeUserView();
+           
+
+            //Get abscense type
+            Abscenses = _userRepository.GetAllAbscenseType();
 
             if (ID != 0)
             {
@@ -169,7 +212,7 @@ namespace Astrow_2._0.Pages.AdminPage
                 EndHour = day.EndDay.ToString("HH:mm");
 
 
-                AbsenceType = day.AbscenseID.ToString();
+                AbsenceTypeStr = day.AbscenseID.ToString();
 
                 DateBool = true;
 
@@ -492,7 +535,7 @@ namespace Astrow_2._0.Pages.AdminPage
                         }
                     }
 
-                    if (AbscenseText != null && AbsenceType != "1")
+                    if (AbscenseText != null && AbsenceTypeStr != "1")
                     {
                         _userRepository.UpdateAbsence(AbscenseText, day.Days_ID);
                         _userRepository.UpdateAbsencseType(Convert.ToInt32(AbsenceType), day.Days_ID);
@@ -502,7 +545,7 @@ namespace Astrow_2._0.Pages.AdminPage
                     {
                         _userRepository.UpdateAbsence(AbscenseText, day.Days_ID);
                     }
-                    if (AbsenceType != "1")
+                    if (AbsenceTypeStr != "1")
                     {
                         _userRepository.UpdateAbsencseType(Convert.ToInt32(AbsenceType), day.Days_ID);
                     }
@@ -523,6 +566,94 @@ namespace Astrow_2._0.Pages.AdminPage
 
             //Method for registry
             _userRepository.Registrer(id);
+
+            //Return to home page
+            return RedirectToPage("/AdminPage/Opdater-Timekort");
+        }
+
+        /// <summary>
+        /// Get Start & End date for rendering years
+        /// </summary>
+        /// <returns></returns>
+        public LogedUser GetDate()
+        {
+            string name = HttpContext.Session.GetString("_Username");
+
+            LogedUser logedUser = new LogedUser();
+
+            if (name != null)
+            {
+                return logedUser = new LogedUser
+                {
+                    UserName = name,
+                    Status = HttpContext.Session.GetString("_Status"),
+                    User_ID = (int)HttpContext.Session.GetInt32("_UserID"),
+                    StartDate = DateTime.Parse(HttpContext.Session.GetString("_StartDate")),
+                    EndDate = DateTime.Parse(HttpContext.Session.GetString("_EndDate"))
+                };
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
+        public IActionResult OnPostAbscenseRequest()
+        {
+            LogedUser log = GetDate();
+
+            if (log != null)
+            {
+                if (Bit != 2)
+                {
+                    if (AbscText == null)
+                    {
+                        AbscText = "";
+                    }
+
+                    DateTime temp = DateTime.Parse(AbsCal);
+                    DateTime HourDT = DateTime.Parse(Hour);
+                    DateTime date = new DateTime(temp.Year, temp.Month, temp.Day, HourDT.Hour, HourDT.Minute, 0, 0);
+
+                    Request request = new Request()
+                    {
+                        UserID = log.User_ID,
+                        AbsID = AbsenceType,
+                        Text = AbscText,
+                        Date = date
+                    };
+
+                    _userRepository.CreateRequest(request);
+                }
+                else
+                {
+                    if (AbscText == null)
+                    {
+                        AbscText = "";
+                    }
+
+                    DateTime CalOne = DateTime.Parse(AbsCalTwo);
+                    DateTime CalTwo = DateTime.Parse(AbsCalThree);
+
+                    DateTime HourOne = DateTime.Parse(HourTwo);
+                    DateTime HourSec = DateTime.Parse(HourThree);
+
+                    DateTime date = new DateTime(CalOne.Year, CalOne.Month, CalOne.Day, HourOne.Hour, HourOne.Minute, 0, 0);
+                    DateTime dateTwo = new DateTime(CalTwo.Year, CalTwo.Month, CalTwo.Day, HourSec.Hour, HourSec.Minute, 0, 0);
+
+                    Request request = new Request()
+                    {
+                        UserID = log.User_ID,
+                        AbsID = AbsenceType,
+                        Text = AbscText,
+                        Date = date,
+                        SecDate = dateTwo
+                    };
+
+                    _userRepository.CreateRequestTwoDates(request);
+                }
+            }
 
             //Return to home page
             return RedirectToPage("/AdminPage/Opdater-Timekort");

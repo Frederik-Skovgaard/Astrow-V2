@@ -56,6 +56,41 @@ namespace Astrow_2._0.Pages
         [BindProperty]
         public List<Days> daysList { get; set; }
 
+        [BindProperty]
+        public List<AbscenseType> Abscenses { get; set; }
+
+        
+        //------------------------ AbsRequest ------------------------
+
+        [BindProperty]
+        public string AbsCal { get; set; }
+
+        [BindProperty]
+        public string AbsCalTwo { get; set; }
+
+        [BindProperty]
+        public string AbsCalThree { get; set; }
+
+        [BindProperty]
+        public string Hour { get; set; }
+
+        [BindProperty]
+        public string HourTwo { get; set; }
+
+        [BindProperty]
+        public string HourThree { get; set; }
+
+        [BindProperty]
+        public int AbsenceType { get; set; }
+
+        [BindProperty]
+        public string AbscText { get; set; }
+
+        [BindProperty]
+        public int Bit { get; set; }
+
+
+
 
         /// <summary>
         /// On load cheack if logged in. If logged render days & years.
@@ -69,6 +104,10 @@ namespace Astrow_2._0.Pages
             }
             else
             {
+                //Get abscense type
+                Abscenses = _userRepository.GettAbscenseTypeUserView();
+                
+
                 //To get start & end date of user
                 logged = GetDate();
                 if (logged != null)
@@ -336,6 +375,66 @@ namespace Astrow_2._0.Pages
                 return null;
             }
 
+        }
+
+        public IActionResult OnPostAbscenseRequest()
+        {
+            LogedUser log = GetDate();
+
+            if (log != null)
+            {
+                if (Bit != 2)
+                {
+                    if (AbscText == null)
+                    {
+                        AbscText = "";
+                    }
+
+                    DateTime temp = DateTime.Parse(AbsCal);
+                    DateTime HourDT = DateTime.Parse(Hour);
+                    DateTime date = new DateTime(temp.Year, temp.Month, temp.Day, HourDT.Hour, HourDT.Minute, 0, 0);
+
+                    Request request = new Request()
+                    {
+                        UserID = log.User_ID,
+                        AbsID = AbsenceType,
+                        Text = AbscText,
+                        Date = date
+                    };
+
+                    _userRepository.CreateRequest(request);
+                }
+                else
+                {
+                    if (AbscText == null)
+                    {
+                        AbscText = "";
+                    }
+
+                    DateTime CalOne = DateTime.Parse(AbsCalTwo);
+                    DateTime CalTwo = DateTime.Parse(AbsCalThree);
+
+                    DateTime HourOne = DateTime.Parse(HourTwo);
+                    DateTime HourSec = DateTime.Parse(HourThree);
+
+                    DateTime date = new DateTime(CalOne.Year, CalOne.Month, CalOne.Day, HourOne.Hour, HourOne.Minute, 0, 0);
+                    DateTime dateTwo = new DateTime(CalTwo.Year, CalTwo.Month, CalTwo.Day, HourSec.Hour, HourSec.Minute, 0, 0);
+
+                    Request request = new Request()
+                    {
+                        UserID = log.User_ID,
+                        AbsID = AbsenceType,
+                        Text = AbscText,
+                        Date = date,
+                        SecDate = dateTwo
+                    };
+
+                    _userRepository.CreateRequestTwoDates(request);
+                }
+            }
+
+            //Return to home page
+            return RedirectToPage("/Home");
         }
     }
 }
