@@ -30,6 +30,9 @@
                     <a href="/AdminPage/Brugere" class="btn btn-lg btn-secondary">
                         <i class="fas fa-users"></i> Brugere
                     </a>
+                    <a href="/AdminPage/Fraværes-Anmodninger" class="btn btn-lg btn-secondary bottom">
+                        <i class="fa-solid fa-calendar-day"></i> Anmodniger
+                    </a>
                 </div>
             </div>
             <div class="container lower-container OpdateTimeCard">
@@ -232,7 +235,7 @@
                             <input id="AbsCalendar" value="@DateTime.Now.ToString("yyyy/MM/dd")" type="date" name="AbsCal" class="form-control" min="@DateTime.Now.ToString("yyyy/MM/dd")" oninvalid="this.setCustomValidity('Vælge en dato')" oninput="this.setCustomValidity('')" required />
                         </div>
                         <div class="col-2 Hour">
-                            <input class="HourClock" value="@DateTime.Now.ToString("hh:mm")" min="08:00" max="15:24" type="time" name="Hour" required>
+                            <input class="HourClock" value="@DateTime.Now.ToString("HH:mm")" min="08:00" max="15:24" type="time" name="Hour" required>
                         </div>
                     </div>
                     <div class="TwoDates" id="TwoDatesDiv">
@@ -246,10 +249,10 @@
                         </div>
                         <div class="row col-row Clock">
                             <div class="col-6 TwoDate">
-                                <input class="HourClockTwo" id="HourTwo" value="@DateTime.Now.ToString("hh:mm")" min="08:00" max="15:24" type="time" name="HourTwo">
+                                <input class="HourClockTwo" id="HourTwo" value="@DateTime.Now.ToString("HH:mm")" min="08:00" max="15:24" type="time" name="HourTwo">
                             </div>
                             <div class="col-6 TwoDate">
-                                <input class="HourClockTwo" id="HourThree" value="@DateTime.Now.ToString("hh:mm")" min="08:00" max="15:24" type="time" name="HourThree">
+                                <input class="HourClockTwo" id="HourThree" value="@DateTime.Now.ToString("HH:mm")" min="08:00" max="15:24" type="time" name="HourThree">
                             </div>
                         </div>
                     </div>

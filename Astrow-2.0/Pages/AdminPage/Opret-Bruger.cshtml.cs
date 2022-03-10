@@ -21,6 +21,9 @@ namespace Astrow_2._0.Pages.AdminPage
         }
 
         #region Properties
+
+        //------------------------ Opret-Bruger Page ------------------------//
+
         [BindProperty, MaxLength(20)]
         public string UserName { get; set; }
 
@@ -63,7 +66,7 @@ namespace Astrow_2._0.Pages.AdminPage
         [BindProperty]
         public string EndVal { get; set; }
 
-        //------------------------ AbsRequest ------------------------
+        //------------------------ AbsRequest ------------------------//
 
         [BindProperty]
         public List<AbscenseType> Abscenses { get; set; }
@@ -97,6 +100,8 @@ namespace Astrow_2._0.Pages.AdminPage
 
         #endregion
 
+        //------------------------ Methods ------------------------//
+
         /// <summary>
         /// Check if users has rights to be on side
         /// </summary>
@@ -121,22 +126,6 @@ namespace Astrow_2._0.Pages.AdminPage
                     return Page();
                 }
             }
-        }
-
-        /// <summary>
-        /// Method for clocking in and out
-        /// </summary>
-        /// <returns></returns>
-        public IActionResult OnPostRegistrering()
-        {
-            //User ID
-            int id = (int)HttpContext.Session.GetInt32("_UserID");
-
-            //Method for registry
-            _userRepository.Registrer(id);
-
-            //Return to home page
-            return RedirectToPage("/AdminPage/Opret-Bruger");
         }
 
 
@@ -173,7 +162,7 @@ namespace Astrow_2._0.Pages.AdminPage
                 StartDate = DateTime.Parse(StartDate),
                 EndDate = DateTime.Parse(EndDate),
                 Salt = salt.ToString(),
-                IsDeleted = false                
+                IsDeleted = false
             };
 
             //Create user with stored procedure
@@ -185,6 +174,25 @@ namespace Astrow_2._0.Pages.AdminPage
             UserNameVal = "";
             StartVal = "";
             EndVal = "";
+        }
+
+
+        //------------------------ Nav Methods ------------------------//
+
+        /// <summary>
+        /// Method for clocking in and out
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult OnPostRegistrering()
+        {
+            //User ID
+            int id = (int)HttpContext.Session.GetInt32("_UserID");
+
+            //Method for registry
+            _userRepository.Registrer(id);
+
+            //Return to home page
+            return RedirectToPage("/AdminPage/Opret-Bruger");
         }
 
         /// <summary>
@@ -215,6 +223,10 @@ namespace Astrow_2._0.Pages.AdminPage
 
         }
 
+        /// <summary>
+        /// Method for requesting abscense
+        /// </summary>
+        /// <returns></returns>
         public IActionResult OnPostAbscenseRequest()
         {
             LogedUser log = GetDate();
@@ -237,7 +249,8 @@ namespace Astrow_2._0.Pages.AdminPage
                         UserID = log.User_ID,
                         AbsID = AbsenceType,
                         Text = AbscText,
-                        Date = date
+                        Date = date,
+                        SecDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0)
                     };
 
                     _userRepository.CreateRequest(request);
@@ -267,7 +280,7 @@ namespace Astrow_2._0.Pages.AdminPage
                         SecDate = dateTwo
                     };
 
-                    _userRepository.CreateRequestTwoDates(request);
+                    _userRepository.CreateRequest(request);
                 }
             }
 

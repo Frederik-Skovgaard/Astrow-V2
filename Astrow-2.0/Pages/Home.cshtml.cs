@@ -19,7 +19,7 @@ namespace Astrow_2._0.Pages
         }
 
 
-        //------------------------Start date | End date------------------------ 
+        //------------------------ Start date | End date ------------------------// 
         [BindProperty]
         public DateTime StartDate { get; set; }
 
@@ -27,7 +27,7 @@ namespace Astrow_2._0.Pages
         public DateTime EndDate { get; set; }
 
 
-        //------------------------Input value & current value------------------------
+        //------------------------ Input value & current value ------------------------//
         [BindProperty]
         public string Calendar { get; set; }
 
@@ -40,7 +40,7 @@ namespace Astrow_2._0.Pages
         public List<AbscenseType> AbscenseText { get; set; }
 
 
-        //----------------------List for render days & years----------------------
+        //------------------------ List for render days & years ------------------------//
         [BindProperty]
         public IEnumerable<DateTime> Days { get; set; }
 
@@ -49,7 +49,7 @@ namespace Astrow_2._0.Pages
         public IEnumerable<DateTime> Years { get; set; }
 
 
-        //------------------------User info------------------------
+        //------------------------ User info ------------------------//
         [BindProperty]
         public LogedUser logged { get; set; }
 
@@ -59,8 +59,8 @@ namespace Astrow_2._0.Pages
         [BindProperty]
         public List<AbscenseType> Abscenses { get; set; }
 
-        
-        //------------------------ AbsRequest ------------------------
+
+        //------------------------ AbsRequest ------------------------//
 
         [BindProperty]
         public string AbsCal { get; set; }
@@ -90,7 +90,7 @@ namespace Astrow_2._0.Pages
         public int Bit { get; set; }
 
 
-
+        //------------------------ Methods ------------------------//
 
         /// <summary>
         /// On load cheack if logged in. If logged render days & years.
@@ -323,6 +323,9 @@ namespace Astrow_2._0.Pages
             }
         }
 
+
+        //------------------------ Nav Methods ------------------------//
+
         /// <summary>
         /// Method for clocking in and out
         /// </summary>
@@ -347,7 +350,6 @@ namespace Astrow_2._0.Pages
                 return RedirectToPage("/Home");
             }
         }
-
 
         /// <summary>
         /// Get Start & End date for rendering years
@@ -377,6 +379,10 @@ namespace Astrow_2._0.Pages
 
         }
 
+        /// <summary>
+        /// Method for requesting abscense
+        /// </summary>
+        /// <returns></returns>
         public IActionResult OnPostAbscenseRequest()
         {
             LogedUser log = GetDate();
@@ -399,7 +405,8 @@ namespace Astrow_2._0.Pages
                         UserID = log.User_ID,
                         AbsID = AbsenceType,
                         Text = AbscText,
-                        Date = date
+                        Date = date,
+                        SecDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0)
                     };
 
                     _userRepository.CreateRequest(request);
@@ -429,7 +436,7 @@ namespace Astrow_2._0.Pages
                         SecDate = dateTwo
                     };
 
-                    _userRepository.CreateRequestTwoDates(request);
+                    _userRepository.CreateRequest(request);
                 }
             }
 

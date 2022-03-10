@@ -182,16 +182,16 @@ GO
 -- Days
 
 INSERT INTO [Days] ([User_ID], [Date], [AbscenseID], [AbscenceText], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalMin], [TotalHour], [TotalSaldo])
-VALUES (1, '220227 00:00:00 AM', 1, '', '220227 08:00:00 AM', '220227 15:24:00 PM',0 ,0, '00:00', 0, 0, '00:00')
+VALUES (1, '220306 00:00:00 AM', 1, '', '220306 08:00:00 AM', '220306 15:24:00 PM',0 ,0, '00:00', 0, 0, '00:00')
 GO
 
 INSERT INTO [Days] ([User_ID], [Date], [AbscenseID], [AbscenceText], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalMin], [TotalHour], [TotalSaldo])
-VALUES (1, '220228 00:00:00 AM', 1, '', '220228 08:00:00 AM', '220228 15:00:00 PM', -24, 0, '-00:24', -24, 0, '-00:24')
+VALUES (1, '220307 00:00:00 AM', 1, '', '220307 08:00:00 AM', '220307 15:00:00 PM', -24, 0, '-00:24', -24, 0, '-00:24')
 GO
 
 
 INSERT INTO [Days] ([User_ID], [Date], [AbscenseID], [AbscenceText], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalMin], [TotalHour], [TotalSaldo])
-VALUES (1, '220301 00:00:00 AM', 1, '', '220301 08:00:00 AM', '220301 16:24:00 PM',0 ,1, '01:00', 36, 0, '00:36')
+VALUES (1, '220308 00:00:00 AM', 1, '', '220308 08:00:00 AM', '220308 16:24:00 PM',0 ,1, '01:00', 36, 0, '00:36')
 GO
 
 
@@ -269,24 +269,8 @@ GO
 
 ---------------------------- Update ----------------------------
 
--- Update request with one date
+-- Update request
 CREATE PROCEDURE [UpdateRequest]
-@ID INT,
-@UserID INT,
-@AbsID INT,
-@Text NVARCHAR(MAX),
-@Date DATETIME
-AS
-UPDATE [RequestAbscense] 
-SET [User_ID] = @UserID,
-[AbscenseID] = @AbsID,
-[Text] = @Text,
-[Date] = @Date
-WHERE [RequestID] = @ID
-GO
-
--- Update request with two dates 
-CREATE PROCEDURE [UpdateRequestTwoDates]
 @ID INT,
 @UserID INT,
 @AbsID INT,
@@ -467,6 +451,15 @@ AS
 SELECT * FROM [RequestAbscense]
 WHERE [RequestID] = @ID
 GO
+
+
+-- Get all request
+CREATE PROCEDURE [GetRequests]
+AS
+SELECT [RequestID], [User_ID], [AbscenseID], [Text], [Date], [SecDate] FROM [RequestAbscense]
+WHERE [Answered] = NULL
+GO
+
 
 -- Read All
 CREATE PROCEDURE [ReadAllUsers]

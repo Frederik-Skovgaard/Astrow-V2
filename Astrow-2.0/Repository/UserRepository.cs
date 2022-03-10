@@ -132,7 +132,6 @@ namespace Astrow_2._0.Repository
         #endregion
 
 
-
         #region Encryption
 
         public string CreateSalt(int size)
@@ -179,12 +178,13 @@ namespace Astrow_2._0.Repository
         }
 
         /// <summary>
-        /// Creates a abscense request with two dates
+        /// Method for getting all request with one date
         /// </summary>
-        /// <param name="request"></param>
-        public void CreateRequestTwoDates(Request request) 
+        /// <returns></returns>
+        public List<Request> GetRequests()
         {
-            stored.CreateRequestTwoDates(request);
+            List<Request> list = stored.GetRequests();
+            return list;
         }
 
         /// <summary>
@@ -323,16 +323,6 @@ namespace Astrow_2._0.Repository
         }
 
         /// <summary>
-        /// Update request with two dates
-        /// </summary>
-        /// <param name="request"></param>
-        /// <param name="id"></param>
-        public void UpdateRequestTwoDates(Request request, int id)
-        {
-            stored.UpdateRequestTwoDates(request, id);
-        }
-
-        /// <summary>
         /// Update request answer
         /// </summary>
         /// <param name="id"></param>
@@ -410,6 +400,7 @@ namespace Astrow_2._0.Repository
         }
 
         #endregion
+
 
         /// <summary>
         ///  Method for checking user in/out

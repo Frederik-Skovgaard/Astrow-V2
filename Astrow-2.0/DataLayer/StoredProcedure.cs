@@ -208,33 +208,12 @@ namespace Astrow_2._0.DataLayer
                 cmd.Parameters.AddWithValue("@AbsID", request.AbsID);
                 cmd.Parameters.AddWithValue("@Text", request.Text);
                 cmd.Parameters.AddWithValue("@Date", request.Date);
-
-                cmd.ExecuteNonQuery();
-            }
-        }
-
-        /// <summary>
-        /// Create a request with two dates for abscense
-        /// </summary>
-        /// <returns></returns>
-        public void CreateRequestTwoDates(Request request)
-        {
-            using (sql = new SqlConnection(connectionString))
-            {
-                sql.Open();
-
-                SqlCommand cmd = new SqlCommand("CreateRequestTwoDates", sql);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("@UserID", request.UserID);
-                cmd.Parameters.AddWithValue("@AbsID", request.AbsID);
-                cmd.Parameters.AddWithValue("@Text", request.Text);
-                cmd.Parameters.AddWithValue("@Date", request.Date);
                 cmd.Parameters.AddWithValue("@SecDate", request.SecDate);
 
                 cmd.ExecuteNonQuery();
             }
         }
+
         #endregion
 
 
@@ -343,32 +322,12 @@ namespace Astrow_2._0.DataLayer
                 cmd.Parameters.AddWithValue("@AbsID", request.AbsID);
                 cmd.Parameters.AddWithValue("@Text", request.Text);
                 cmd.Parameters.AddWithValue("@Date", request.Date);
-            }
-        }
-
-        /// <summary>
-        /// Update request with two dates
-        /// </summary>
-        /// <param name="request"></param>
-        /// <param name="id"></param>
-        public void UpdateRequestTwoDates(Request request, int id)
-        {
-            using (sql = new SqlConnection(connectionString))
-            {
-                sql.Open();
-
-                SqlCommand cmd = new SqlCommand("UpdateRequestTwoDates", sql);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("@ID", id);
-                cmd.Parameters.AddWithValue("@UserID", request.UserID);
-                cmd.Parameters.AddWithValue("@AbsID", request.AbsID);
-                cmd.Parameters.AddWithValue("@Text", request.Text);
-                cmd.Parameters.AddWithValue("@Date", request.Date);
                 cmd.Parameters.AddWithValue("@SecDate", request.SecDate);
 
+                cmd.ExecuteNonQuery();
             }
         }
+
 
         /// <summary>
         /// Update answer of request
@@ -386,6 +345,8 @@ namespace Astrow_2._0.DataLayer
 
                 cmd.Parameters.AddWithValue("@ID", id);
                 cmd.Parameters.AddWithValue("@Answered", bit);
+
+                cmd.ExecuteNonQuery();
             }
         }
 
@@ -558,6 +519,43 @@ namespace Astrow_2._0.DataLayer
                     }
                     return request;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Get all request from database
+        /// </summary>
+        /// <returns></returns>
+        public List<Request> GetRequests()
+        {
+            List<Request> list = new List<Request>();
+
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand cmd = new SqlCommand("GetRequests", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                Request request = new Request();
+
+                using (SqlDataReader read = cmd.ExecuteReader())
+                {
+                    while (read.Read()) {
+                        request = new Request()
+                        {
+                            RequestID = read.GetInt32(0),
+                            UserID = read.GetInt32(1),
+                            AbsID = read.GetInt32(2),
+                            Text = read.GetString(3),
+                            Date= read.GetDateTime(4),
+                        };
+
+                        list.Add(request);
+                    }
+                }
+                
+                return list;
             }
         }
 

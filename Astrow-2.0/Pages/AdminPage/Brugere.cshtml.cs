@@ -20,6 +20,8 @@ namespace Astrow_2._0.Pages.AdminPage
             _userRepository = userRepository;
         }
 
+        //------------------------ Brugere Page ------------------------//
+
         [BindProperty]
         public List<Users> UserList { get; set; }
 
@@ -38,7 +40,7 @@ namespace Astrow_2._0.Pages.AdminPage
         [BindProperty]
         public int ID { get; set; }
 
-        //------------------------ AbsRequest ------------------------
+        //------------------------ AbsRequest ------------------------//
 
         [BindProperty]
         public List<AbscenseType> AbscensesRequest { get; set; }
@@ -70,6 +72,8 @@ namespace Astrow_2._0.Pages.AdminPage
         [BindProperty]
         public int Bit { get; set; }
 
+
+        //------------------------ Methods ------------------------//
 
         /// <summary>
         /// Check if users has rights to be on side
@@ -186,6 +190,11 @@ namespace Astrow_2._0.Pages.AdminPage
             return RedirectToPage("/AdminPage/Brugere");
         }
 
+
+
+
+        //------------------------ Nav Methods ------------------------//
+
         /// <summary>
         /// Method for clocking in and out
         /// </summary>
@@ -230,6 +239,10 @@ namespace Astrow_2._0.Pages.AdminPage
 
         }
 
+        /// <summary>
+        /// Method for requesting abscense
+        /// </summary>
+        /// <returns></returns>
         public IActionResult OnPostAbscenseRequest()
         {
             LogedUser log = GetDate();
@@ -252,7 +265,8 @@ namespace Astrow_2._0.Pages.AdminPage
                         UserID = log.User_ID,
                         AbsID = AbsenceType,
                         Text = AbscText,
-                        Date = date
+                        Date = date,
+                        SecDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0)
                     };
 
                     _userRepository.CreateRequest(request);
@@ -282,7 +296,7 @@ namespace Astrow_2._0.Pages.AdminPage
                         SecDate = dateTwo
                     };
 
-                    _userRepository.CreateRequestTwoDates(request);
+                    _userRepository.CreateRequest(request);
                 }
             }
 

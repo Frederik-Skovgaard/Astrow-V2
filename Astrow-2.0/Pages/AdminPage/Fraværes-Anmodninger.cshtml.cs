@@ -1,70 +1,40 @@
-using Astrow_2._0.Model.Containers;
 using Astrow_2._0.Model.Items;
+using Astrow_2._0.Model.Containers;
 using Astrow_2._0.Repository;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using Microsoft.AspNetCore.Http;
+using System;
 
 namespace Astrow_2._0.Pages.AdminPage
 {
-    public class UpdateUserModel : PageModel
+    public class Fraværes_AnmodningerModel : PageModel
     {
-
         private readonly IUserRepository _userRepository;
 
-        public UpdateUserModel(IUserRepository userRepository)
+        public Fraværes_AnmodningerModel(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
 
 
-        #region Properties
-
-        //------------------------ Opdater-Brugere Page ------------------------//
-
-        [BindProperty]
-        public List<Users> UserList { get; set; }
-
-        [BindProperty]
-        public string UserName { get; set; }
+        //------------------------ RequestPage ------------------------//
 
 
         [BindProperty]
-        public string FirstName { get; set; }
+        public List<Request> Requests { get; set; }
 
         [BindProperty]
-        public string MiddleName { get; set; }
-
-        [BindProperty]
-        public string LastName { get; set; }
-
-
-        [BindProperty]
-        public string Password { get; set; }
-
-
-        [BindProperty]
-        public string Role { get; set; }
-
-        [BindProperty]
-        public string StartDate { get; set; }
-
-        [BindProperty]
-        public string EndDate { get; set; }
+        public List<PersonalInfo> People { get; set; }
 
         [BindProperty]
         public int ID { get; set; }
 
-        [BindProperty]
-        public bool Bool { get; set; }
-
         //------------------------ AbsRequest ------------------------//
 
         [BindProperty]
-        public List<AbscenseType> Abscenses { get; set; }
+        public List<AbscenseType> AbscensesRequest { get; set; }
 
         [BindProperty]
         public string AbsCal { get; set; }
@@ -92,140 +62,64 @@ namespace Astrow_2._0.Pages.AdminPage
 
         [BindProperty]
         public int Bit { get; set; }
-        #endregion
 
 
-        //------------------------ Methods ------------------------//
+        //------------------------ Method ------------------------//
 
         /// <summary>
-        /// On load fill out dropdown with all users
+        /// Check if users has rights to be on side
         /// </summary>
         /// <returns></returns>
         public IActionResult OnGet()
         {
-            //Check if user has "Instruct�r" rights
+            //Check if user has "Instructør" rights
             if (HttpContext.Session.GetInt32("_UserID") == 0)
             {
                 return RedirectToPage("/Login");
             }
             else
             {
-                if (HttpContext.Session.GetString("_Status") != "Instruct�r")
+                if (HttpContext.Session.GetString("_Status") != "Instructør")
                 {
                     return RedirectToPage("/Home");
                 }
                 else
                 {
                     //Get abscense type
-                    Abscenses = _userRepository.GettAbscenseTypeUserView();
+                    AbscensesRequest = _userRepository.GettAbscenseTypeUserView();
+
+                    //Get all requests
+                    Requests = _userRepository.GetRequests();
 
                     //Fills dropdown with users 
-                    UserList = _userRepository.ReadAllUsers();
+                    List<Users> UserList = _userRepository.ReadAllUsers();
 
-                    Bool = false;
+                    People = new List<PersonalInfo>();
+
+                    foreach (Users item in UserList)
+                    {
+                        UserPersonalInfo person = _userRepository.FindUserInfo(item.User_ID);
+
+                        PersonalInfo personalInfo = new PersonalInfo()
+                        {
+                            ID = item.User_ID,
+                            UserName = item.UserName,
+                            Status = item.Status,
+                            FirstName = person.FirstName,
+                            MiddleName = person.MiddleName,
+                            LastName = person.LastName
+                        };
+
+                        People.Add(personalInfo);
+                    }
 
                     return Page();
                 }
             }
+
         }
 
-        /// <summary>
-        /// When admin clicks on a name in the list, this filles out the fields with the user's info
-        /// </summary>
-        public void OnPostUser()
-        {
-            //Get abscense type
-            Abscenses = _userRepository.GettAbscenseTypeUserView();
 
-            if (ID != 0)
-            {
-                Users user = _userRepository.FindUser(ID);
-
-                UserPersonalInfo person = _userRepository.FindUserInfo(ID);
-
-                //Fill fields with user's info
-                FirstName = person.FirstName;
-                MiddleName = person.MiddleName;
-                LastName = person.LastName;
-
-                UserName = user.UserName;
-
-                StartDate = user.StartDate.ToString("yyyy/MM/dd");
-                EndDate = user.EndDate.ToString("yyyy/MM/dd");
-
-                Role = user.Status.ToString();
-
-                Bool = true;
-
-                //Fills dropdown with users
-                UserList = _userRepository.ReadAllUsers();
-            }
-            else
-            {
-                //Fills dropdown with users
-                UserList = _userRepository.ReadAllUsers();
-            }
-        }
-
-        /// <summary>
-        /// Update User's infomation
-        /// </summary>
-        /// <param name="id"></param>
-        public IActionResult OnPostUpdateUser(int id)
-        {
-
-            //Get user salt
-            Users user = _userRepository.FindUser(id);
-
-            if (Password != null)
-            {
-                //Use salt to hash the password
-                string hashPass = _userRepository.GenerateHash(Password, user.Salt);
-
-                //Fill user with new data
-                user = new Users
-                {
-                    User_ID = id,
-                    UserName = UserName,
-                    Password = hashPass,
-                    Status = Role,
-                    StartDate = DateTime.Parse(StartDate),
-                    EndDate = DateTime.Parse(EndDate)
-
-                };
-            }
-            else
-            {
-                //Fill user with new data and old password
-                user = new Users
-                {
-                    User_ID = id,
-                    UserName = UserName,
-                    Password = user.Password,
-                    Status = Role,
-                    StartDate = DateTime.Parse(StartDate),
-                    EndDate = DateTime.Parse(EndDate)
-
-                };
-            }
-
-            //Fill personal info with new data
-            UserPersonalInfo userPersonalInfo = new UserPersonalInfo()
-            {
-                Name_ID = ID,
-                FirstName = FirstName,
-                MiddleName = MiddleName,
-                LastName = LastName
-            };
-
-            //Update users info
-            _userRepository.UpdateUser(user);
-            _userRepository.UpdateUserInfo(userPersonalInfo);
-
-            Bool = false;
-
-            return RedirectToPage("/AdminPage/Opdater-Bruger");
-        }
 
 
 
@@ -244,7 +138,7 @@ namespace Astrow_2._0.Pages.AdminPage
             _userRepository.Registrer(id);
 
             //Return to home page
-            return RedirectToPage("/AdminPage/Opdater-Bruger");
+            return RedirectToPage("/AdminPage/Slet-Bruger");
         }
 
         /// <summary>
@@ -337,9 +231,7 @@ namespace Astrow_2._0.Pages.AdminPage
             }
 
             //Return to home page
-            return RedirectToPage("/AdminPage/Opdater-Bruger");
+            return RedirectToPage("/AdminPage/Fraværes-Anmodninger");
         }
-
-
     }
 }

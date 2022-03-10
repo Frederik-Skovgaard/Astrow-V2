@@ -931,6 +931,7 @@ nav ul li a span.rotate {
 }
 
 /*#endregion*/
+
 /*#region Admin Page*/
 /*Admin page*/
 .AdminPage .row {
@@ -1105,6 +1106,10 @@ nav ul li a span.rotate {
     font-size: 18.5px;
 }
 
+.AdminPage .container .row .bottom {
+    margin: 0 !important;
+}
+
 .AdminPage .container .lower-container {
     margin-top: 6.5rem;
     text-align: center;
@@ -1153,7 +1158,7 @@ nav ul li a span.rotate {
     z-index: 1;
     right: 0;
     top: 0;
-    height: 31%;
+    height: 40%;
 }
 
 .AdminNavBTN svg {
@@ -1283,6 +1288,23 @@ nav ul li a span.rotate {
     margin-right: 1rem;
 }
 
+/*Request Page*/
+
+.AdminPage .container .AbscenseRequest .Table-Gride .col-row {
+    height: 5rem !important;
+}
+
+.AdminPage .container .AbscenseRequest p {
+    color: #e5e5e5 !important;
+    text-align: unset !important;
+    margin: 0 !important;
+    width: unset !important;
+    font-family: unset !important;
+}
+
+.AdminPage .container .AbscenseRequest .col-btn {
+    margin-bottom: 1.5rem;
+}
 
 /*Delete Page Decoration*/
 .AdminPage .container .DeleteUser .Table-Gride .col-row {
@@ -1340,10 +1362,10 @@ nav ul li a span.rotate {
     float:right;
 }
 
-.AdminPage .container .DeleteUser .box .col-4 {
+.AdminPage .container .DeleteUser .box .col-3 {
     float: left;
-    margin-left: 4rem;
-    padding-top: 2px;
+    margin-left: 7.7rem;
+    margin-top: 2px;
 }
 
 .AdminPage .container .DeleteUser .box input {
@@ -1369,6 +1391,7 @@ nav ul li a span.rotate {
     box-shadow:none;
     border-color:transparent;
 }
+
 
 
 /* Scrollbar for day grid*/
@@ -1886,7 +1909,7 @@ nav ul li a span.rotate {
     }
 
     .AdminPage .container .box .col-2 {
-        margin-left: 20rem !important;
+        margin-left: 20rem;
     }
 }
 

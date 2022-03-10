@@ -20,6 +20,7 @@ namespace Astrow_2._0.Pages.AdminPage
             _userRepository = userRepository;
         }
 
+        //------------------------ Opdater-Timekort Page ------------------------//
 
         [BindProperty]
         public bool DateBool { get; set; }
@@ -97,6 +98,7 @@ namespace Astrow_2._0.Pages.AdminPage
         public int Bit { get; set; }
 
 
+        //------------------------ Methods ------------------------//
 
         /// <summary>
         /// Check if user is logged and has premission
@@ -555,6 +557,11 @@ namespace Astrow_2._0.Pages.AdminPage
             return RedirectToPage("/AdminPage/Opdater-Timekort");
         }
 
+
+
+        //------------------------ Nav Methods ------------------------//
+
+
         /// <summary>
         /// Method for clocking in and out
         /// </summary>
@@ -599,6 +606,10 @@ namespace Astrow_2._0.Pages.AdminPage
 
         }
 
+        /// <summary>
+        /// Method for requesting abscense
+        /// </summary>
+        /// <returns></returns>
         public IActionResult OnPostAbscenseRequest()
         {
             LogedUser log = GetDate();
@@ -621,7 +632,8 @@ namespace Astrow_2._0.Pages.AdminPage
                         UserID = log.User_ID,
                         AbsID = AbsenceType,
                         Text = AbscText,
-                        Date = date
+                        Date = date,
+                        SecDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0)
                     };
 
                     _userRepository.CreateRequest(request);
@@ -651,7 +663,7 @@ namespace Astrow_2._0.Pages.AdminPage
                         SecDate = dateTwo
                     };
 
-                    _userRepository.CreateRequestTwoDates(request);
+                    _userRepository.CreateRequest(request);
                 }
             }
 
