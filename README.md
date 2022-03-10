@@ -1,14 +1,24 @@
 # Introduction
-Astrow 2.0 remake of Astrow with new quality of life features, like
-- Request flex that can be accepted or declinet (*Request can only happen every 20 mins E.g. 
-10:00 - 10:20 - 10:40 - 11:00*) 
+Astrow 2.0 remake of Astrow with new quality of life features
+- Request flex that can be accepted or declinet 
 - Easier way to register absence & flex
 - (*Ask instructor's if there is anything else they would like too see*)
+
 # Shortcuts
 *  **Change Log Updates**
 	* [Change log](#Change-log)
 		* [Unreleased](#Unreleased)
-			*  [Version 0.4.0](#Version-0.4.0)
+			* [Version 0.7.0](#Version-0.7.0)
+				* [Added](#Version-0.7.0\Added)
+				* [Updated](#Version-0.7.0\Updated)
+			*  [Version 0.6.0](#Version-0.6.0)
+				* [Added](#Version-0.6.0\Added)
+				* [Updated](#Version-0.6.0\Updated)
+				* [Removed](#Version-0.6.0\Removed)
+			*  [Version 0.5.0](#Version-0.5.0)
+				* [Added](#Version-0.5.0\Added)
+				* [Updated](#Version-0.5.0\Updated)
+			* [Version 0.4.0](#Version-0.4.0)
 				* [Added](#Version-0.4.0\Added)
 				* [Updated](#Version-0.4.0\Updated)
 			* [Version 0.3.0](#Version-0.3.0)
@@ -22,9 +32,9 @@ Astrow 2.0 remake of Astrow with new quality of life features, like
 *  **Infomation**
 	* [Compatibility](#Compatibility)
 		* [Browser Compatibility](#Browser-Compatibility)
-	* [Item's & Container's](#Item's-&-Container's)
-		* [Container's](#Container's)
-		* [Item's](#Item's)
+	* [Core Functions](#Core-Functions)
+		* [Admins](#Admins)
+		* [Users](#Users)
 	* [ToDO's](#ToDO's)
 
 # Compatibility
@@ -33,30 +43,72 @@ Astrow 2.0 remake of Astrow with new quality of life features, like
 - [x] Google Chrome
 - [x] Microsoft Edge
 
-# Item's & Container's
-### Container's
-*  **LogedUser**
-(Short description)
-*  **Users**
-(Short description)
-### Item's
-*  **Abscense Type**
-(Short description)
-*  **Day's**
-(Short description)
-*  **UserPersonalinfo** 
-(Short description)
+# Core Functions
+## Admins
+### Create User's
+* Short description
+### Edit User
+* Short description
+### Edit Time Card
+* Short description
+### Delete User
+* Short description
+###  Mark As Abscent
+* Short description
+### Mark As Illegally Absent
+* Short description
+### Accept Requests From User
+* Short description
+## Users
+### Clock In & Out
+* Short description
+### Request Abscens
+* Short description
+### TimeCard 
+* To kepp track of abscens & flex
+
 # ToDO's
 - [x] Admin page (*Create, Delete, Update User & Update User's Timecard*)
 - [x] Time kort (dynamiclly add month's from user start/end date) & add registration
-- [ ] Side Fraværsanmodning
-- [ ] Side Godkend period
+- [x] Site Fraværsanmodning
+- [ ] Site Godkend period (Accepted and Denyed, request)
 
-- [ ] Side Indstillinger
-- [ ] Side Ændre kodeord
+- [ ] Site Indstillinger (Change background idk)
+- [ ] Site Ændre kodeord (Change password)
 
 # Change log
 # [Unreleased]
+## Version 0.7.0 ( User Page / Abscens Request)
+### Added
+- [x]  Admin page for, Deleting/Mark as absent/Mark as illegally absent, users
+- [x] - [x] Functionality to User page 
+- [x] Button funinality to request abscens e.g Flex, Sickness, Driving lessons...
+- [x] Admin page to handle request
+### Updated
+- [x] Use of Opret Fraværes button
+- [x] Styling of Opret Fraværes button
+## Version 0.6.0 ( Admin Page Functionality)
+### Added
+- [x] Functionality to Create user page
+- [x] Functionality to Update user page
+- [x] Functionality to Update TimeCard page
+### Updated
+- [x] Styling for admin page's
+- [x] Generally made more responsive
+## Version 0.5.0 ( Clocking in & out)
+### Added
+- [x] On button press a small window opens, with the current time & a button for clocking in or out
+- [x] Functionality behind clocking in & out for C# 
+- [x] Functionality behind clocking in & out for SQL 
+- [x] Functionality to live update current time disaply
+### Updated
+- [x] Register button use & styling
+### Removed
+- [x] Sorten buttons & dropdowns that wasn't needed
+- [x] Classes that wasn't needed
+- [x] Tables from SQL that wasn't needed
+- [x] Procedures from SQL that wasn't needed
+
 ## Version 0.4.0 ( Time Card / Cleaning)
 ### Added
 - [x] TimeCard functionality
