@@ -57,7 +57,7 @@ CREATE TABLE [Name] (
 [FirstName] NVARCHAR(15) NOT NULL,
 [MiddleName] NVARCHAR(15),
 [LastName] NVARCHAR(15) NOT NULL,
-[FullName] NVARCHAR(45) NOT NULL
+[FullName] NVARCHAR(50) NOT NULL
 
 PRIMARY KEY ([Name_ID])
 )
@@ -237,25 +237,15 @@ CREATE PROCEDURE [CreateName]
 @firstName NVARCHAR(15),
 @middleName NVARCHAR(15),
 @lastName NVARCHAR(15),
-@fullName NVARCHAR(45)
+@fullName NVARCHAR(50)
 AS
 INSERT INTO [Name] ([FirstName], [MiddleName], [LastName], [FullName])
 VALUES (@firstName, @middleName, @lastName, @firstName + ' ' + @middleName + ' ' + @lastName) 
 GO
 
+
 -- Create Request
 CREATE PROCEDURE [CreateRequest]
-@UserID INT,
-@AbsID INT,
-@Text NVARCHAR(MAX),
-@Date DATETIME
-AS
-INSERT INTO [RequestAbscense] ([User_ID], [AbscenseID], [Text], [Date])
-VALUES (@UserID, @AbsID, @Text, @Date)
-GO
-
--- Create Request with two dates
-CREATE PROCEDURE [CreateRequestTwoDates]
 @UserID INT,
 @AbsID INT,
 @Text NVARCHAR(MAX),
@@ -452,12 +442,10 @@ SELECT * FROM [RequestAbscense]
 WHERE [RequestID] = @ID
 GO
 
-
 -- Get all request
 CREATE PROCEDURE [GetRequests]
 AS
 SELECT [RequestID], [User_ID], [AbscenseID], [Text], [Date], [SecDate] FROM [RequestAbscense]
-WHERE [Answered] = NULL
 GO
 
 
@@ -495,7 +483,7 @@ GO
 
 -- Get user info
 CREATE PROCEDURE [GetUserInfo]
-@fullName NVARCHAR(45)
+@fullName NVARCHAR(50)
 AS
 SELECT [Name_ID] FROM [Name]
 WHERE [FullName] = @fullName
@@ -574,6 +562,10 @@ WHERE [Type] = @Text
 GO
 
 
+
+
+-- Astrow-Create-Day
+
 DECLARE @Users INT
 SET @Users = (SELECT DISTINCT MIN([User_ID]) FROM [Days] WHERE [Date] != GETDATE())
 
@@ -589,6 +581,8 @@ WHILE (@Users <= (SELECT DISTINCT MAX([User_ID]) FROM [Days] WHERE [Date] != GET
 		SET @Users = @Users + 1
 	END
 GO
+
+-- Astrow-Auto-Abscense
 
 DECLARE @Users INT,@TotalHour INT, @TotalMin INT, @MinHolder INT, @HourHolder INT, @HourStr NVARCHAR(10), @MinStr NVARCHAR(10)
 SET @Users = (SELECT DISTINCT MIN([User_ID]) FROM [Days] WHERE [StartDay] = (SELECT CONVERT(DATETIME, FORMAT(getdate(), 'yyyy-MM-dd'))))
@@ -661,6 +655,8 @@ ELSE
 BEGIN
 	SET @MinStr = CAST(@MinHolder AS NVARCHAR)
 END
+
+-- Step 2
 
 -- While user is less or equal to user_id where startday is equal to today
 WHILE (@Users <= (SELECT DISTINCT MIN([User_ID]) FROM [Days] WHERE [StartDay] = (SELECT CONVERT(DATETIME, FORMAT(getdate(), 'yyyy-MM-dd')))))

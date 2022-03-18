@@ -294,7 +294,7 @@
             }
         });
 
-         $('#submit').click(function() {
+        $('#submit').click(function() {
             if (document.getElementById('AbscenseRequest').classList.contains("show")) {
 
                 $('#FirstName').prop('required',false);
@@ -303,6 +303,8 @@
                 $('#Password').prop('required',false);
                 $('#StartDate').prop('required',false);
                 $('#EndDate').prop('required',false);
+
+                document.getElementById('submit').style.pointerEvents = "none";
             }
             else {
 
@@ -313,7 +315,7 @@
                 $('#StartDate').prop('required',true);
                 $('#EndDate').prop('required',true);
             }
-        });
+    });
 
         document.getElementById('AbsCalendarTwo').onchange = function () {
             var input = document.getElementById('AbsCalendarThree');

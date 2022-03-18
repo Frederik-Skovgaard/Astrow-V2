@@ -143,14 +143,32 @@ namespace Astrow_2._0.Pages.AdminPage
             //Use salt to hash the password
             string hashPass = _userRepository.GenerateHash(Password, salt);
 
-            //Perosnal info
-            UserPersonalInfo person = new UserPersonalInfo()
+            UserPersonalInfo person = new UserPersonalInfo();
+
+            if (MiddleName != null)
             {
-                FirstName = _userRepository.FirstCharToUpper(FirstName),
-                MiddleName = _userRepository.FirstCharToUpper(MiddleName),
-                LastName = _userRepository.FirstCharToUpper(LastName),
-                FullName = $"{FirstName} {MiddleName} {LastName}"
-            };
+                //Perosnal info
+                person = new UserPersonalInfo()
+                {
+                    FirstName = _userRepository.FirstCharToUpper(FirstName),
+                    MiddleName = _userRepository.FirstCharToUpper(MiddleName),
+                    LastName = _userRepository.FirstCharToUpper(LastName),
+                    FullName = $"{FirstName} {MiddleName} {LastName}"
+                };
+            }
+            else
+            {
+                //Perosnal info
+                person = new UserPersonalInfo()
+                {
+                    FirstName = _userRepository.FirstCharToUpper(FirstName),
+                    MiddleName = MiddleName,
+                    LastName = _userRepository.FirstCharToUpper(LastName),
+                    FullName = $"{FirstName} {MiddleName} {LastName}"
+                };
+            }
+
+           
 
             //User info
             Users users = new Users()

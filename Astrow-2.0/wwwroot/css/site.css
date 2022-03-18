@@ -906,8 +906,9 @@ nav ul li a span.rotate {
 
 .modal .modal-body .AbsenceText {
     min-height: 110px !important;
-    max-height: 20rem !important;
-    width: -webkit-fill-available !important;
+    max-height: 35rem !important;
+    width: 15rem !important;
+    height: 10rem;
 }
 
 
@@ -1290,8 +1291,37 @@ nav ul li a span.rotate {
 
 /*Request Page*/
 
-.AdminPage .container .AbscenseRequest .Table-Gride .col-row {
-    height: 5rem !important;
+.AdminPage .container .AbscenseRequest {
+    min-height: 40rem !important;
+    max-height: fit-content !important;
+    position: relative;
+}
+
+.AdminPage .container .AbscenseRequest .Table-Gride .RequestTable {
+    background: #00405e73;
+    margin-bottom: 0.5rem;
+    height: 5rem;
+    margin-top: 1rem;
+}
+
+.AdminPage .container .AbscenseRequest .modal label {
+    color:black !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.AdminPage .container .AbscenseRequest .modal .AbsenceText {
+    cursor:auto;
+    resize: none;
+}
+
+.AdminPage .container .AbscenseRequest .modal .AbsenceText:hover {
+    box-shadow: none;
+    border-color: #a7c0cc;
+}
+
+.AdminPage .container .AbscenseRequest .modal .AbsenceText:focus {
+    box-shadow: none;
+    border-color: #a7c0cc;
 }
 
 .AdminPage .container .AbscenseRequest p {
@@ -1305,6 +1335,79 @@ nav ul li a span.rotate {
 .AdminPage .container .AbscenseRequest .col-btn {
     margin-bottom: 1.5rem;
 }
+
+.AdminPage .container .AbscenseRequest .btn-Request {
+    border-radius: 8px;
+    height: 2rem;
+    line-height: 1;
+    width: min-content;
+    margin-right: 0.5rem;
+}
+
+.AdminPage .container .AbscenseRequest .Delete-Col {
+    padding: 1rem;
+    height: min-content;
+    margin: 0 !important;
+}
+
+.AdminPage .container .AbscenseRequest label {
+    line-height: unset !important;
+}
+
+
+.AdminPage .container .AbscenseRequest .row .Table-Gride {
+    overflow: overlay;
+    max-height: 40rem;
+}
+
+.AdminPage .container .AbscenseRequest ul {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.AdminPage .container .AbscenseRequest .box .col-2 {
+    float: left;
+    margin-left: 20rem !important;
+}
+
+.AdminPage .container .AbscenseRequest .box h3 {
+    float: right;
+}
+
+.AdminPage .container .AbscenseRequest .box .col-3 {
+    float: left;
+    margin-left: 6.3rem;
+    margin-top: 2px;
+}
+
+.AdminPage .container .AbscenseRequest .box input {
+    width: 13rem;
+    margin-right: 1rem;
+    background: white;
+    text-transform: capitalize;
+    background: #004f75;
+    border: 2px solid #00000000;
+    color: white;
+}
+
+.AdminPage .container .AbscenseRequest .box input::placeholder {
+    color: #c7c7c7;
+}
+
+.AdminPage .container .AbscenseRequest .box input:hover {
+    box-shadow: none;
+    border-color: transparent;
+}
+
+.AdminPage .container .AbscenseRequest .box input:focus {
+    box-shadow: none;
+    border-color: transparent;
+}
+
+.AdminPage .container .AbscenseRequest .modal p {
+    color:black !important;
+}
+
 
 /*Delete Page Decoration*/
 .AdminPage .container .DeleteUser .Table-Gride .col-row {
@@ -1328,7 +1431,7 @@ nav ul li a span.rotate {
     line-height:unset !important;
 }
 
-.AdminPage .container .DeleteUser .col-row .btn {
+.AdminPage .container .DeleteUser .col-row .btn-brugere {
     border-radius: 8px;
     height: 2rem;
     line-height: 1;
@@ -1355,7 +1458,7 @@ nav ul li a span.rotate {
 
 .AdminPage .container .DeleteUser .box .col-2 {
     float: left;
-    margin-left: 20rem;
+    margin-left: 20rem !important;
 }
 
 .AdminPage .container .DeleteUser .box h3 {
@@ -1364,7 +1467,7 @@ nav ul li a span.rotate {
 
 .AdminPage .container .DeleteUser .box .col-3 {
     float: left;
-    margin-left: 7.7rem;
+    margin-left: 6.3rem;
     margin-top: 2px;
 }
 
@@ -1722,7 +1825,7 @@ nav ul li a span.rotate {
         margin-left: 7rem;
     }
 
-    .AdminPage .container .DeleteUser .col-row .btn {
+    .AdminPage .container .DeleteUser .col-row .btn-brugere {
         width: 3rem !important;
         font-size: 14px !important;
         padding: 0 !important;
@@ -1751,7 +1854,7 @@ nav ul li a span.rotate {
         width: 34rem;
     }
 
-    .AdminPage .container .DeleteUser .col-row .btn {
+    .AdminPage .container .DeleteUser .col-row .btn-brugere {
         width: 4rem !important;
     }
 }
@@ -1774,7 +1877,7 @@ nav ul li a span.rotate {
         width: 42rem;
     }
 
-    .AdminPage .container .DeleteUser .col-row .btn {
+    .AdminPage .container .DeleteUser .col-row .btn-brugere {
         width: 5rem !important;
     }
 
@@ -1828,7 +1931,7 @@ nav ul li a span.rotate {
         margin-top: 2rem !important;
     }
 
-    .AdminPage .container .DeleteUser .col-row .btn {
+    .AdminPage .container .DeleteUser .col-row .btn-brugere {
         width: 3rem !important;
         font-size: 14px !important;
         padding: 0 !important;
@@ -1859,7 +1962,7 @@ nav ul li a span.rotate {
         width: 45rem;
     }
 
-    .AdminPage .container .DeleteUser .col-row .btn {
+    .AdminPage .container .DeleteUser .col-row .btn-brugere {
         width: 6rem !important;
     }
 
@@ -1919,7 +2022,7 @@ nav ul li a span.rotate {
         left: 35% !important;
     }
 
-    .AdminPage .container .DeleteUser .col-row .btn {
+    .AdminPage .container .DeleteUser .col-row .btn-brugere {
         width: min-content !important;
         padding: 6px 19px !important;
         font-size: 16px !important;

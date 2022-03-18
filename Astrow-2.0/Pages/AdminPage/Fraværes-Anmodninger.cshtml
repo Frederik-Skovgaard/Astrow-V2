@@ -33,7 +33,7 @@
                     </a>
                 </div>
             </div>
-            <div class="container lower-container DeleteUser AbscenseRequest">
+            <div class="container lower-container AbscenseRequest">
                 <div class="row col-row">
                     <div class="box">
                         <div class="col-2">
@@ -47,24 +47,80 @@
                         <ul id="myUL">
                             @foreach (Model.Items.Request requests in Model.Requests)
                             {
+
                                 Model.Containers.PersonalInfo user = Model.People.Find(x => x.ID == requests.UserID);
                                 Model.Items.AbscenseType abscencseType = Model.AbscensesRequest.Find(x => x.ID == requests.AbsID);
 
+                                string middleName = "";
+
+                                if(user.MiddleName != "")
+                                {
+                                    middleName = $"{user.MiddleName.Substring(0, 1).ToUpper()}.";
+                                }
+
                                 <li>
-                                    <div class="row col-row">
+                                    <div class="row col-row RequestTable">
                                         <div class="col-6 Delete-Col">
-                                            <label class="UserLabel">@user.FirstName @user.MiddleName.Substring(0, 1).ToUpper(). @user.LastName.Substring(0, 1).ToUpper().</label>
+                                            <label class="UserLabel">@user.FirstName @middleName @user.LastName.Substring(0, 1).ToUpper().</label>
                                             <p>@abscencseType.Type</p>
                                         </div>
                                         <div class="col-6 col-btn">
                                             <input id="ID" asp-for="ID" hidden />
-                                            <input type="submit" class="btn btn-primary" value="Godkend" asp-page-handler="Accept" />
-                                            <input type="submit" class="btn btn-danger" value="Afvis" asp-page-handler="Deny" />
-                                            <input type="submit" class="btn btn-secondary" value="Info" />
-
+                                            <input type="submit" class="btn btn-primary btn-Request" value="Godkend" asp-page-handler="Accept" />
+                                            <input type="submit" class="btn btn-danger btn-Request" value="Afvis" asp-page-handler="Deny" />
+                                            <input type="button" class="btn btn-secondary btn-Request" value="Info" data-toggle="modal" data-target="#InfoModal @requests.RequestID" />
                                         </div>
                                     </div>
                                 </li>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="InfoModal @requests.RequestID" tabindex="-1" role="dialog" aria-labelledby="InfoModal" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">@user.FirstName @user.MiddleName.Substring(0, 1).ToUpper(). @user.LastName.Substring(0, 1).ToUpper().</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row col-row">
+                                                    <div class="col-6 TextCol">
+                                                        <label>@abscencseType.Type</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row col-row">
+                                                    <div class="col-6 TextCol">
+                                                        <textarea readonly type="text" class="form-control AbsenceText" name="AbscText" >@requests.Text</textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="row col-row">
+                                                    @if (requests.SecDate.ToString("HH:mm") == "00:00")
+                                                        {
+                                                            <div class="col-6"> 
+                                                                <p type="text" class="form-control">@requests.Date</p>
+                                                            </div>
+                                                            
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="col-6"> 
+                                                                <p class="form-control">@requests.Date</p>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <p class="form-control">@requests.SecDate</p>
+                                                            </div>
+                                                        }
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Close" />
+                                                <input type="submit" class="btn btn-primary" value="Godkend" asp-page-handler="Accept" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             }
                         </ul>
                     </div>
@@ -208,6 +264,8 @@
                 $('#Password').prop('required',false);
                 $('#StartDate').prop('required',false);
                 $('#EndDate').prop('required',false);
+
+                document.getElementById('submit').style.pointerEvents = "none";
             }
             else {
 
@@ -218,6 +276,24 @@
                 $('#StartDate').prop('required',true);
                 $('#EndDate').prop('required',true);
             }
+
+             if (document.getElementById('TwoDatesDiv').classList.contains("show")) {
+                 var currentStartTimeValue = document.getElementById("HourTwo").value;
+                 var currentEndTimeValue = document.getElementById("HourThree").value;
+
+                     if (!currentStartTimeValue) {
+                         alert('Vægle en start tid!');
+                         return false;
+                     }
+                     else if (!currentEndTimeValue) {
+                         alert('Vægle en slut tid!');
+                         return false;
+                     }
+                     else if (currentStartTimeValue >= currentEndTimeValue) {
+                         alert('Slut tiden må ikke være før start tiden!');
+                         return false;
+                     }
+            }
         });
 
         document.getElementById('AbsCalendarTwo').onchange = function () {
@@ -226,25 +302,9 @@
             input.setAttribute("min", otherInput)
         }
 
-        $('#submit').click(function () {
-            if (document.getElementById('TwoDatesDiv').classList.contains("show")) {
-             var currentStartTimeValue = document.getElementById("HourTwo").value;
-             var currentEndTimeValue = document.getElementById("HourThree").value;
-
-                 if (!currentStartTimeValue) {
-                     alert('Vægle en start tid!');
-                         return false;
-                 }
-                 else if (!currentEndTimeValue) {
-                     alert('Vægle en slut tid!');
-                         return false;
-                 }
-                 else if (currentStartTimeValue >= currentEndTimeValue) {
-                     alert('Slut tiden må ikke være før start tiden!');
-                         return false;
-                 }
-            }
-        });
+        //$('#submit').click(function () {
+           
+        //});
 
         $("#EndDate").change(function () {
             var startDate = document.getElementById("StartDate").value;

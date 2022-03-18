@@ -549,6 +549,7 @@ namespace Astrow_2._0.DataLayer
                             AbsID = read.GetInt32(2),
                             Text = read.GetString(3),
                             Date= read.GetDateTime(4),
+                            SecDate = read.GetDateTime(5)
                         };
 
                         list.Add(request);
