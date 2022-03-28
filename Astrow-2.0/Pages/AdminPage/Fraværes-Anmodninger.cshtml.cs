@@ -31,6 +31,7 @@ namespace Astrow_2._0.Pages.AdminPage
         [BindProperty]
         public int ID { get; set; }
 
+
         //------------------------ AbsRequest ------------------------//
 
         [BindProperty]
@@ -90,28 +91,12 @@ namespace Astrow_2._0.Pages.AdminPage
 
                     //Get all requests
                     Requests = _userRepository.GetRequests();
+                    Requests = Requests.FindAll(x => x.Answer == 3);
 
                     //Fills dropdown with users 
                     List<Users> UserList = _userRepository.ReadAllUsers();
 
-                    People = new List<PersonalInfo>();
-
-                    foreach (Users item in UserList)
-                    {
-                        UserPersonalInfo person = _userRepository.FindUserInfo(item.User_ID);
-
-                        PersonalInfo personalInfo = new PersonalInfo()
-                        {
-                            ID = item.User_ID,
-                            UserName = item.UserName,
-                            Status = item.Status,
-                            FirstName = person.FirstName,
-                            MiddleName = person.MiddleName,
-                            LastName = person.LastName
-                        };
-
-                        People.Add(personalInfo);
-                    }
+                    People = _userRepository.GetPeople();
 
                     return Page();
                 }
@@ -119,9 +104,106 @@ namespace Astrow_2._0.Pages.AdminPage
 
         }
 
+        public IActionResult OnPostDeny()
+        {
+            //Deny request
+            _userRepository.UpdateRequestAnswered(ID, 0);
 
+            //Return to page
+            return RedirectToPage("/AdminPage/Fraværes-Anmodninger");
+        }
 
+        public IActionResult OnPostAccept()
+        {
+            Request req = _userRepository.FindRequest(ID);
 
+            //Update TimeCard
+            switch (req.AbsID)
+            {
+                case 2:
+                    UpdateAbscens(req.AbsID);
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    UpdateAbscens(req.AbsID);
+                    break;
+                case 6:
+                    UpdateAbscens(req.AbsID);
+                    break;
+                case 7:
+                    UpdateAbscens(req.AbsID);
+                    break;
+                case 8:
+                    UpdateAbscens(req.AbsID);
+                    break;
+                case 9:
+                    UpdateAbscens(req.AbsID);
+                    break;
+                case 10:
+                    UpdateAbscens(req.AbsID);
+                    break;
+                default:
+                    break;
+
+            }
+
+            //Approve request
+            _userRepository.UpdateRequestAnswered(ID, 1);
+
+            //Return to page
+            return RedirectToPage("/AdminPage/Fraværes-Anmodninger");
+        }
+
+        /// <summary>
+        /// Updated abscense of today
+        /// </summary>
+        /// <param name="id"></param>
+        public void UpdateAbscens(int id)
+        {
+            People = _userRepository.GetPeople();
+
+            Request req = _userRepository.FindRequest(ID);
+            PersonalInfo user = People.Find(x => x.ID == req.UserID);
+            
+            Days day = _userRepository.FindDay(req.Date, user.ID);
+
+            if (day.Days_ID == 0)
+            {
+                //Variable datetime now
+                DateTime now = DateTime.Now;
+
+                //Find date with Startday time and id
+                Days toDay = _userRepository.FindDay(new DateTime(now.Year, now.Month, (now.Day - 1), 0, 0, 0), user.ID);
+
+                //Create a Day object
+                day = new Days()
+                {
+                    Date = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0),
+                    AbscenseID = 1,
+                    UserID = user.ID,
+                    AbsenceText = "",
+                    StartDay = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0),
+                    EndDay = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0),
+                    Min = 0,
+                    Hour = 0,
+                    Saldo = "00:00",
+                    TotalSaldo = toDay.TotalSaldo
+                };
+
+                _userRepository.CreateDay(day, user.ID);
+            }
+
+            if (AbscText == null)
+            {
+                AbscText = "";
+            }
+
+            _userRepository.UpdateAbsence(AbscText, day.Days_ID);
+            _userRepository.UpdateAbsencseType(id, day.Days_ID);
+        }
 
         //------------------------ Nav Methods ------------------------//
 
@@ -137,8 +219,8 @@ namespace Astrow_2._0.Pages.AdminPage
             //Method for registry
             _userRepository.Registrer(id);
 
-            //Return to home page
-            return RedirectToPage("/AdminPage/Slet-Bruger");
+            //Return to page
+            return RedirectToPage("/AdminPage/Fraværes-Anmodninger");
         }
 
         /// <summary>
@@ -196,6 +278,7 @@ namespace Astrow_2._0.Pages.AdminPage
                         AbsID = AbsenceType,
                         Text = AbscText,
                         Date = date,
+                        Answer = 3,
                         SecDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0)
                     };
 
@@ -223,6 +306,7 @@ namespace Astrow_2._0.Pages.AdminPage
                         AbsID = AbsenceType,
                         Text = AbscText,
                         Date = date,
+                        Answer = 3,
                         SecDate = dateTwo
                     };
 

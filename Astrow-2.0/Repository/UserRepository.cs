@@ -70,6 +70,32 @@ namespace Astrow_2._0.Repository
             return userList;
         }
 
+        public List<PersonalInfo> GetPeople()
+        {
+            List<Users> UserList = ReadAllUsers();
+
+            List<PersonalInfo> People = new List<PersonalInfo>();
+
+            foreach (Users item in UserList)
+            {
+                UserPersonalInfo person = FindUserInfo(item.User_ID);
+
+                PersonalInfo personalInfo = new PersonalInfo()
+                {
+                    ID = item.User_ID,
+                    UserName = item.UserName,
+                    Status = item.Status,
+                    FirstName = person.FirstName,
+                    MiddleName = person.MiddleName,
+                    LastName = person.LastName
+                };
+
+                People.Add(personalInfo);
+            }
+
+            return People;
+        }
+
         /// <summary>
         /// Find User by id
         /// </summary>
@@ -327,9 +353,9 @@ namespace Astrow_2._0.Repository
         /// </summary>
         /// <param name="id"></param>
         /// <param name="bit"></param>
-        public void UpdateRequestAnswered(int id, bool bit)
+        public void UpdateRequestAnswered(int id, int ans)
         {
-            stored.UpdateRequestAnswered(id, bit);
+            stored.UpdateRequestAnswered(id, ans);
         }
 
 

@@ -267,21 +267,21 @@
 
     $('#submit').click(function () {
         if (document.getElementById('TwoDatesDiv').classList.contains("show")) {
-         var currentStartTimeValue = document.getElementById("HourTwo").value;
-         var currentEndTimeValue = document.getElementById("HourThree").value;
+            var currentStartTimeValue = document.getElementById("HourTwo").value;
+            var currentEndTimeValue = document.getElementById("HourThree").value;
 
-             if (!currentStartTimeValue) {
-                 alert('Vægle en start tid!');
-                     return false;
-             }
-             else if (!currentEndTimeValue) {
-                 alert('Vægle en slut tid!');
-                     return false;
-             }
-             else if (currentStartTimeValue >= currentEndTimeValue) {
-                 alert('Slut tiden må ikke være før start tiden!');
-                     return false;
-             }
+            if (!currentStartTimeValue) {
+                alert('Vægle en start tid!');
+                    return false;
+            }
+            else if (!currentEndTimeValue) {
+                alert('Vægle en slut tid!');
+                    return false;
+            }
+            else if (currentStartTimeValue >= currentEndTimeValue) {
+                alert('Slut tiden må ikke være før start tiden!');
+                    return false;
+            }
         }
     });
 

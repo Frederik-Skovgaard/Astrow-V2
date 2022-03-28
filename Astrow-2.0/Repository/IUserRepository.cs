@@ -20,6 +20,8 @@ namespace Astrow_2._0.Repository
 
         List<Users> ReadAllUsers();
 
+        List<PersonalInfo> GetPeople();
+
         Users FindUser(int id);
 
         Users FindByUserName(string username);
@@ -72,7 +74,7 @@ namespace Astrow_2._0.Repository
 
         void UpdateRequest(Request request, int id);
 
-        void UpdateRequestAnswered(int id, bool bit);
+        void UpdateRequestAnswered(int id, int ans);
 
         void UpdateStartDay(DateTime date, int id);
 

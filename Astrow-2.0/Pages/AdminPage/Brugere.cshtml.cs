@@ -266,6 +266,7 @@ namespace Astrow_2._0.Pages.AdminPage
                         AbsID = AbsenceType,
                         Text = AbscText,
                         Date = date,
+                        Answer = 3,
                         SecDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0)
                     };
 
@@ -293,6 +294,7 @@ namespace Astrow_2._0.Pages.AdminPage
                         AbsID = AbsenceType,
                         Text = AbscText,
                         Date = date,
+                        Answer = 3,
                         SecDate = dateTwo
                     };
 

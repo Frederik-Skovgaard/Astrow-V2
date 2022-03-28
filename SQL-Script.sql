@@ -2,9 +2,6 @@
 USE master
 GO
 
---Create User
-CREATE LOGIN [Astrow-v2] WITH PASSWORD=N'Albinolover69', DEFAULT_DATABASE=[master], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF
-GO
 
 --Drop Database
 ALTER  DATABASE  [Astrow-2.0] SET SINGLE_USER WITH ROLLBACK IMMEDIATE
@@ -17,6 +14,10 @@ GO
 
 -- Use Astrow-2.0
 USE [Astrow-2.0]
+GO
+
+--Create User
+CREATE LOGIN [Astrow-v2] WITH PASSWORD=N'Albinolover69', DEFAULT_DATABASE=[master], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF
 GO
 
 CREATE USER [Astrow-v2] FOR LOGIN [Astrow-v2]
@@ -48,6 +49,7 @@ GO
 
 ALTER ROLE [db_securityadmin] ADD MEMBER [Astrow-v2]
 GO
+
 
 -------------- Create Table --------------
 
@@ -96,7 +98,7 @@ CREATE TABLE [RequestAbscense] (
 [AbscenseID] INT NOT NULL,
 [Text] NVARCHAR(MAX),
 [Date] DATETIME NOT NULL,
-[Answered] BIT,
+[Answered] INT,
 [SecDate] DATETIME
 
 PRIMARY KEY([RequestID]),
@@ -182,16 +184,16 @@ GO
 -- Days
 
 INSERT INTO [Days] ([User_ID], [Date], [AbscenseID], [AbscenceText], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalMin], [TotalHour], [TotalSaldo])
-VALUES (1, '220306 00:00:00 AM', 1, '', '220306 08:00:00 AM', '220306 15:24:00 PM',0 ,0, '00:00', 0, 0, '00:00')
+VALUES (1, '220319 00:00:00 AM', 1, '', '220319 08:00:00 AM', '220319 15:24:00 PM',0 ,0, '00:00', 0, 0, '00:00')
 GO
 
 INSERT INTO [Days] ([User_ID], [Date], [AbscenseID], [AbscenceText], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalMin], [TotalHour], [TotalSaldo])
-VALUES (1, '220307 00:00:00 AM', 1, '', '220307 08:00:00 AM', '220307 15:00:00 PM', -24, 0, '-00:24', -24, 0, '-00:24')
+VALUES (1, '220320 00:00:00 AM', 1, '', '220320 08:00:00 AM', '220320 15:00:00 PM', -24, 0, '-00:24', -24, 0, '-00:24')
 GO
 
 
 INSERT INTO [Days] ([User_ID], [Date], [AbscenseID], [AbscenceText], [StartDay], [EndDay], [Min], [Hour], [Saldo], [TotalMin], [TotalHour], [TotalSaldo])
-VALUES (1, '220308 00:00:00 AM', 1, '', '220308 08:00:00 AM', '220308 16:24:00 PM',0 ,1, '01:00', 36, 0, '00:36')
+VALUES (1, '220321 00:00:00 AM', 1, '', '220321 08:00:00 AM', '220321 16:24:00 PM',24 ,1, '01:24', 0, 1, '01:00')
 GO
 
 
@@ -250,10 +252,11 @@ CREATE PROCEDURE [CreateRequest]
 @AbsID INT,
 @Text NVARCHAR(MAX),
 @Date DATETIME,
+@Answer INT,
 @SecDate DATETIME
 AS
-INSERT INTO [RequestAbscense] ([User_ID], [AbscenseID], [Text], [Date], [SecDate])
-VALUES (@UserID, @AbsID, @Text, @Date, @secDate)
+INSERT INTO [RequestAbscense] ([User_ID], [AbscenseID], [Text], [Date],[Answered], [SecDate])
+VALUES (@UserID, @AbsID, @Text, @Date, @Answer, @secDate)
 GO
 
 
@@ -280,7 +283,7 @@ GO
 -- Update request answer
 CREATE PROCEDURE [UpdateRequestAnswered]
 @ID INT,
-@Answered BIT
+@Answered INT
 AS
 UPDATE [RequestAbscense]
 SET [Answered] = @Answered
@@ -445,7 +448,7 @@ GO
 -- Get all request
 CREATE PROCEDURE [GetRequests]
 AS
-SELECT [RequestID], [User_ID], [AbscenseID], [Text], [Date], [SecDate] FROM [RequestAbscense]
+SELECT [RequestID], [User_ID], [AbscenseID], [Text], [Date], [Answered], [SecDate] FROM [RequestAbscense]
 GO
 
 
@@ -675,6 +678,8 @@ WHILE (@Users <= (SELECT DISTINCT MIN([User_ID]) FROM [Days] WHERE [StartDay] = 
 		SET @Users = @Users + 1
 	END
 GO
+
+
 
 DECLARE @SaldooHour INT, @SaldoMin INT, @Saldo NVARCHAR(10)
 

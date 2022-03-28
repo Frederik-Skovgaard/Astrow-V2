@@ -208,6 +208,7 @@ namespace Astrow_2._0.DataLayer
                 cmd.Parameters.AddWithValue("@AbsID", request.AbsID);
                 cmd.Parameters.AddWithValue("@Text", request.Text);
                 cmd.Parameters.AddWithValue("@Date", request.Date);
+                cmd.Parameters.AddWithValue("@Answer", request.Answer);
                 cmd.Parameters.AddWithValue("@SecDate", request.SecDate);
 
                 cmd.ExecuteNonQuery();
@@ -328,13 +329,12 @@ namespace Astrow_2._0.DataLayer
             }
         }
 
-
         /// <summary>
-        /// Update answer of request
+        /// Method for updating request anser
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="bit"></param>
-        public void UpdateRequestAnswered(int id, bool bit)
+        /// <param name="ans"></param>
+        public void UpdateRequestAnswered(int id, int ans)
         {
             using (sql = new SqlConnection(connectionString))
             {
@@ -344,7 +344,7 @@ namespace Astrow_2._0.DataLayer
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@ID", id);
-                cmd.Parameters.AddWithValue("@Answered", bit);
+                cmd.Parameters.AddWithValue("@Answered", ans);
 
                 cmd.ExecuteNonQuery();
             }
@@ -513,7 +513,7 @@ namespace Astrow_2._0.DataLayer
                             AbsID = read.GetInt32(2),
                             Text = read.GetString(3),
                             Date = read.GetDateTime(4),
-                            Answer = read.GetBoolean(5),
+                            Answer = read.GetInt32(5),
                             SecDate = read.GetDateTime(6)
                         };
                     }
@@ -549,7 +549,8 @@ namespace Astrow_2._0.DataLayer
                             AbsID = read.GetInt32(2),
                             Text = read.GetString(3),
                             Date= read.GetDateTime(4),
-                            SecDate = read.GetDateTime(5)
+                            Answer= read.GetInt32(5),
+                            SecDate = read.GetDateTime(6)
                         };
 
                         list.Add(request);

@@ -65,8 +65,9 @@ namespace Astrow_2._0.Pages.AdminPage
         [BindProperty]
         public int ID { get; set; }
 
+
         //------------------------ AbsRequest ------------------------
-        
+
         [BindProperty]
         public List<AbscenseType> AbscensesRequest { get; set; }
 
@@ -219,6 +220,8 @@ namespace Astrow_2._0.Pages.AdminPage
                 DateBool = true;
 
                 TimeBool = true;
+
+                
 
                 //Fills dropdown with users
                 UserList = _userRepository.ReadAllUsers();
@@ -633,6 +636,7 @@ namespace Astrow_2._0.Pages.AdminPage
                         AbsID = AbsenceType,
                         Text = AbscText,
                         Date = date,
+                        Answer = 3,
                         SecDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0)
                     };
 
@@ -660,6 +664,7 @@ namespace Astrow_2._0.Pages.AdminPage
                         AbsID = AbsenceType,
                         Text = AbscText,
                         Date = date,
+                        Answer = 3,
                         SecDate = dateTwo
                     };
 

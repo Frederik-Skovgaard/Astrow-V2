@@ -128,7 +128,7 @@
 
                                 @if (Model.TimeBool == true)
                                 {
-                                    <select class="form-control AbscenseTypeDrop" name="AbsenceType" asp-for="AbsenceType" id="AbscenseDrop">
+                                    <select asp-for="AbsenceTypeStr" class="form-control AbscenseTypeDrop" name="AbsenceType" asp-for="AbsenceType" id="AbscenseDrop">
                                         @{
                                             foreach (Model.Items.AbscenseType type in Model.Abscenses)
                                             {
