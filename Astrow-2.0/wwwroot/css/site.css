@@ -1408,6 +1408,22 @@ nav ul li a span.rotate {
     color:black !important;
 }
 
+/*Scroll Wheel*/
+.AdminPage .container .AbscenseRequest .Table-Gride::-webkit-scrollbar-thumb {
+    background: #0588c9 !important;
+    border-radius: 15px !important;
+    display: contents !important;
+}
+.AdminPage .container .AbscenseRequest .Table-Gride::-webkit-scrollbar-track {
+    background: #00405e !important;
+    border-radius: 15px !important;
+    display: contents !important;
+}
+.AdminPage .container .AbscenseRequest .Table-Gride::-webkit-scrollbar {
+    width: 5px !important;
+    display: contents !important;
+}
+
 
 /*Delete Page Decoration*/
 .AdminPage .container .DeleteUser .Table-Gride .col-row {

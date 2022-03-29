@@ -302,90 +302,94 @@
     </div>
 
     <script type="text/javascript">
-        $('#TwoDates').click(function() {
-            $('.TwoDates').toggleClass("show");
-            $('#Date').toggleClass("Hide");
+            $('#TwoDates').click(function() {
+                $('.TwoDates').toggleClass("show");
+                $('#Date').toggleClass("Hide");
 
-            if (document.getElementById('AbsCalendar').hasAttribute("Required")) {
-                document.getElementById('Bit').setAttribute('value','2')
+                if (document.getElementById('AbsCalendar').hasAttribute("Required")) {
+                    document.getElementById('Bit').setAttribute('value','2')
 
-                $('#AbsCalendar').prop('required',false);
-                $('.HourClock').prop('required',false);
+                    $('#AbsCalendar').prop('required',false);
+                    $('.HourClock').prop('required',false);
 
-                $('#AbsCalendarTwo').prop('required',true);
-                $('#AbsCalendarThree').prop('required',true);
-                $('.HourClockTwo').prop('required',true);
+                    $('#AbsCalendarTwo').prop('required',true);
+                    $('#AbsCalendarThree').prop('required',true);
+                    $('.HourClockTwo').prop('required',true);
+                }
+                else {
+                    document.getElementById('Bit').setAttribute('value','1')
+
+                    $('#AbsCalendar').prop('required',true);
+                    $('.HourClock').prop('required',true);
+
+                    $('#AbsCalendarTwo').prop('required',false);
+                    $('#AbsCalendarThree').prop('required',false);
+                    $('.HourClockTwo').prop('required',false);
+                }
+            });
+
+            $('#submit').click(function() {
+                if (document.getElementById('AbscenseRequest').classList.contains("show")) {
+
+                    $('#FirstName').prop('required',false);
+                    $('#LastName').prop('required',false);
+                    $('#UserName').prop('required',false);
+                    $('#Password').prop('required',false);
+                    $('#StartDate').prop('required',false);
+                    $('#EndDate').prop('required',false);
+
+                    
+                }
+                else {
+
+                    $('#FirstName').prop('required',true);
+                    $('#LastName').prop('required',true);
+                    $('#UserName').prop('required',true);
+                    $('#Password').prop('required',true);
+                    $('#StartDate').prop('required',true);
+                    $('#EndDate').prop('required',true);
+                }
+            });
+
+            document.getElementById('AbsCalendarTwo').onchange = function () {
+                var input = document.getElementById('AbsCalendarThree');
+                var otherInput = document.getElementById('AbsCalendarTwo').value;
+                input.setAttribute("min", otherInput)
             }
-            else {
-                document.getElementById('Bit').setAttribute('value','1')
 
-                $('#AbsCalendar').prop('required',true);
-                $('.HourClock').prop('required',true);
+            $('#submit').click(function () {
+                if (document.getElementById('TwoDatesDiv').classList.contains("show")) {
+                        var currentStartTimeValue = document.getElementById("HourTwo").value;
+                        var currentEndTimeValue = document.getElementById("HourThree").value;
 
-                $('#AbsCalendarTwo').prop('required',false);
-                $('#AbsCalendarThree').prop('required',false);
-                $('.HourClockTwo').prop('required',false);
-            }
-        });
+                        if (!currentStartTimeValue) {
+                            alert('Vægle en start tid!');
+                                return false;
+                        }
+                        else if (!currentEndTimeValue) {
+                            alert('Vægle en slut tid!');
+                                return false;
+                        }
+                        else if (currentStartTimeValue >= currentEndTimeValue || currentStartDateValue > currentEndDateValue) {
+                            if(currentStartDateValue >= currentEndDateValue) {
+                                alert('Slut tiden må ikke være før start tiden!');
+                                return false;
+                            }
+                        }
 
-        $('#submit').click(function() {
-            if (document.getElementById('AbscenseRequest').classList.contains("show")) {
+                        document.getElementById('submit').style.pointerEvents = "none";
+                }
+            });
 
-                $('#FirstName').prop('required',false);
-                $('#LastName').prop('required',false);
-                $('#UserName').prop('required',false);
-                $('#Password').prop('required',false);
-                $('#StartDate').prop('required',false);
-                $('#EndDate').prop('required',false);
+            $("#EndDate").change(function () {
+                var startDate = document.getElementById("StartDate").value;
+                var endDate = document.getElementById("EndDate").value;
 
-                document.getElementById('submit').style.pointerEvents = "none";
-            }
-            else {
-
-                $('#FirstName').prop('required',true);
-                $('#LastName').prop('required',true);
-                $('#UserName').prop('required',true);
-                $('#Password').prop('required',true);
-                $('#StartDate').prop('required',true);
-                $('#EndDate').prop('required',true);
-            }
-    });
-
-        document.getElementById('AbsCalendarTwo').onchange = function () {
-            var input = document.getElementById('AbsCalendarThree');
-            var otherInput = document.getElementById('AbsCalendarTwo').value;
-            input.setAttribute("min", otherInput)
-        }
-
-        $('#submit').click(function () {
-            if (document.getElementById('TwoDatesDiv').classList.contains("show")) {
-                 var currentStartTimeValue = document.getElementById("HourTwo").value;
-                 var currentEndTimeValue = document.getElementById("HourThree").value;
-
-                 if (!currentStartTimeValue) {
-                     alert('Vægle en start tid!');
-                         return false;
-                 }
-                 else if (!currentEndTimeValue) {
-                     alert('Vægle en slut tid!');
-                         return false;
-                 }
-                 else if (currentStartTimeValue >= currentEndTimeValue) {
-                     alert('Slut tiden må ikke være før start tiden!');
-                         return false;
-                 }
-            }
-    });
-
-        $("#EndDate").change(function () {
-            var startDate = document.getElementById("StartDate").value;
-            var endDate = document.getElementById("EndDate").value;
-
-            if ((Date.parse(endDate) <= Date.parse(startDate))) {
-                alert("End date should be greater than Start date");
-                document.getElementById("EndDate").value = "";
-            }
-        });    
+                if ((Date.parse(endDate) <= Date.parse(startDate))) {
+                    alert("End date should be greater than Start date");
+                    document.getElementById("EndDate").value = "";
+                }
+            });
     </script>
 
 </form>

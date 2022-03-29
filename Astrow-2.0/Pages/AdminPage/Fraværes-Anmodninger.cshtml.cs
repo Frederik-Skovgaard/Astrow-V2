@@ -181,11 +181,11 @@ namespace Astrow_2._0.Pages.AdminPage
                 //Create a Day object
                 day = new Days()
                 {
-                    Date = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0),
-                    AbscenseID = 1,
+                    Date = req.Date,
+                    AbscenseID = req.AbsID,
                     UserID = user.ID,
                     AbsenceText = "",
-                    StartDay = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0),
+                    StartDay = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0),
                     EndDay = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0),
                     Min = 0,
                     Hour = 0,
