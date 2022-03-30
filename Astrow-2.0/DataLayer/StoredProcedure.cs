@@ -46,8 +46,6 @@ namespace Astrow_2._0.DataLayer
             CreateUser(user, info);
         }
 
-        //--------- Container ---------
-
         /// <summary>
         /// Create user
         /// </summary>
@@ -105,8 +103,6 @@ namespace Astrow_2._0.DataLayer
             }
         }
 
-        //--------- Items -------------
-
         /// <summary>
         /// Creating calendar
         /// </summary>
@@ -141,6 +137,11 @@ namespace Astrow_2._0.DataLayer
         }
 
 
+        /// <summary>
+        /// Method for creating user in name table
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
         public UserPersonalInfo CreateUserInfo(UserPersonalInfo info)
         {
             if (info.MiddleName == null)
@@ -187,9 +188,33 @@ namespace Astrow_2._0.DataLayer
             }
         }
 
+        /// <summary>
+        /// Create a request for abscense
+        /// </summary>
+        /// <returns></returns>
+        public void CreateRequest(Request request)
+        {
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand cmd = new SqlCommand("CreateRequest", sql);
+                cmd.CommandType= CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@UserID", request.UserID);
+                cmd.Parameters.AddWithValue("@AbsID", request.AbsID);
+                cmd.Parameters.AddWithValue("@Text", request.Text);
+                cmd.Parameters.AddWithValue("@Date", request.Date);
+                cmd.Parameters.AddWithValue("@Answer", request.Answer);
+                cmd.Parameters.AddWithValue("@SecDate", request.SecDate);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+
         #endregion
 
-        
+
         #region Update
 
         /// <summary>
@@ -276,6 +301,51 @@ namespace Astrow_2._0.DataLayer
             }
         }
 
+        /// <summary>
+        /// Update request with one date
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="id"></param>
+        public void UpdateRequest(Request request, int id)
+        {
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand cmd = new SqlCommand("UpdateRequest", sql);
+                cmd.CommandType= CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@ID", id);
+                cmd.Parameters.AddWithValue("@UserID", request.UserID);
+                cmd.Parameters.AddWithValue("@AbsID", request.AbsID);
+                cmd.Parameters.AddWithValue("@Text", request.Text);
+                cmd.Parameters.AddWithValue("@Date", request.Date);
+                cmd.Parameters.AddWithValue("@SecDate", request.SecDate);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// Method for updating request anser
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="ans"></param>
+        public void UpdateRequestAnswered(int id, int ans)
+        {
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand cmd = new SqlCommand("UpdateRequestAnswered", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@ID", id);
+                cmd.Parameters.AddWithValue("@Answered", ans);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
 
         /// <summary>
         /// Set abscens
@@ -410,6 +480,83 @@ namespace Astrow_2._0.DataLayer
 
 
         #region Read
+
+        /// <summary>
+        /// Get request by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Request FindRequest(int id)
+        {
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand cmd = new SqlCommand("FindRequest", sql);
+                cmd.CommandType= CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@ID", id);
+
+                Request request = new Request();
+
+                using (SqlDataReader read = cmd.ExecuteReader())
+                {
+                    while (read.Read())
+                    {
+                        request = new Request()
+                        {
+                            RequestID = read.GetInt32(0),
+                            UserID = read.GetInt32(1),
+                            AbsID = read.GetInt32(2),
+                            Text = read.GetString(3),
+                            Date = read.GetDateTime(4),
+                            Answer = read.GetInt32(5),
+                            SecDate = read.GetDateTime(6)
+                        };
+                    }
+                    return request;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get all request from database
+        /// </summary>
+        /// <returns></returns>
+        public List<Request> GetRequests()
+        {
+            List<Request> list = new List<Request>();
+
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand cmd = new SqlCommand("GetRequests", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                Request request = new Request();
+
+                using (SqlDataReader read = cmd.ExecuteReader())
+                {
+                    while (read.Read()) {
+                        request = new Request()
+                        {
+                            RequestID = read.GetInt32(0),
+                            UserID = read.GetInt32(1),
+                            AbsID = read.GetInt32(2),
+                            Text = read.GetString(3),
+                            Date= read.GetDateTime(4),
+                            Answer= read.GetInt32(5),
+                            SecDate = read.GetDateTime(6)
+                        };
+
+                        list.Add(request);
+                    }
+                }
+                
+                return list;
+            }
+        }
 
         /// <summary>
         /// Read all users from database
@@ -600,6 +747,12 @@ namespace Astrow_2._0.DataLayer
             return days;
         }
 
+        /// <summary>
+        /// Fidning day by date and id
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Days FindDay(DateTime date, int id)
         {
             using (sql = new SqlConnection(connectionString))
@@ -832,6 +985,103 @@ namespace Astrow_2._0.DataLayer
             }
         }
 
+        /// <summary>
+        /// Method for getting illegal abscense
+        /// </summary>
+        /// <returns></returns>
+        public AbscenseType FindAbscenseByText(string text)
+        {
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand cmd = new SqlCommand("FindAbscenseByText", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@Text", text);
+
+                AbscenseType abs = new AbscenseType();
+
+                using (SqlDataReader read = cmd.ExecuteReader())
+                {
+                    while (read.Read())
+                    {
+                        abs = new AbscenseType()
+                        {
+                            ID = read.GetInt32(0),
+                            Type= read.GetString(1)
+                        };
+                    }
+
+                    return abs;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Method for getting abscense type 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public List<AbscenseType> GetAbscenseText()
+        {
+            List<AbscenseType> list = new List<AbscenseType>();
+
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand cmd = new SqlCommand("GetAbscenseText", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                using (SqlDataReader read = cmd.ExecuteReader())
+                {
+                    while (read.Read())
+                    {
+                        AbscenseType abs = new AbscenseType
+                        { 
+                            ID = read.GetInt32(0),
+                            Type = read.GetString(1)
+                        };
+
+                        list.Add(abs);
+                    }
+                }
+
+                return list;                
+            }  
+        }
+
+        public bool UsernameAvailable(string username)
+        {
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand cmd = new SqlCommand("UsernameAvailable", sql);
+                cmd.CommandType= CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@Username", username);
+
+                bool exists;
+
+                using (SqlDataReader read = cmd.ExecuteReader())
+                {
+                    if(read.HasRows)
+                    {
+                        exists = true;
+
+                    }
+                    else
+                    {
+                        exists = false;
+                    }
+                }
+
+
+                return exists;
+            }
+        }
 
         #endregion 
 

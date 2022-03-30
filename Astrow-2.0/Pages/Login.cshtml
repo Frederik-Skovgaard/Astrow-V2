@@ -20,15 +20,11 @@
             <div class="middle">
                 <div>
                     <span asp-validation-for="UserName" class="ErrorUsername"></span>
-                    <input type="text" class="form-control" asp-for="UserName" id="username" autocomplete="off" placeholder="Username" />
+                    <input type="text" class="form-control" asp-for="UserName" id="username" placeholder="Username" />
                 </div>
                 <div>
-                    <input type="password" id="pswd" class="form-control" asp-for="Password" autocomplete="off" placeholder="Password" />
+                    <input type="password" id="pswd" class="form-control" asp-for="Password" placeholder="Password" />
                     <span asp-validation-for="Password" class="Error"></span>
-                </div>
-                <div class="CheckBox">
-                    <input type="checkbox" class="form-check" />
-                    <p>Remember me</p>
                 </div>
             </div>
             <div class="bottom">
@@ -41,7 +37,7 @@
                     </div>
                 </div>
                 <div class="copy">
-                    <p>© 2016 Microsoft</p>
+                    <p>© 2022 PC-Syd</p>
                     <a target="_blank" class="microBTN" href="https://pcsyd.dk/">Home</a>
                     <a target="_blank" class="microBTN" href="https://pcsyd.topdesk.net/">Help</a>
                 </div>
@@ -52,5 +48,14 @@
 
     <script src="~/js/site.js" type="text/javascript"></script>
    
+    @if(ViewData["Message"] != null)
+{
+    <script type="text/javascript">
+         window.onload = function () {
+                alert("@ViewData["Message"]");
+            };
+    </script>
+}
+
 </div>
 

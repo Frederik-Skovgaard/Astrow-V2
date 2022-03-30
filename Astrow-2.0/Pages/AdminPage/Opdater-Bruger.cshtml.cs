@@ -22,6 +22,9 @@ namespace Astrow_2._0.Pages.AdminPage
 
 
         #region Properties
+
+        //------------------------ Opdater-Brugere Page ------------------------//
+
         [BindProperty]
         public List<Users> UserList { get; set; }
 
@@ -54,8 +57,45 @@ namespace Astrow_2._0.Pages.AdminPage
 
         [BindProperty]
         public int ID { get; set; }
+
+        [BindProperty]
+        public bool Bool { get; set; }
+
+        //------------------------ AbsRequest ------------------------//
+
+        [BindProperty]
+        public List<AbscenseType> Abscenses { get; set; }
+
+        [BindProperty]
+        public string AbsCal { get; set; }
+
+        [BindProperty]
+        public string AbsCalTwo { get; set; }
+
+        [BindProperty]
+        public string AbsCalThree { get; set; }
+
+        [BindProperty]
+        public string Hour { get; set; }
+
+        [BindProperty]
+        public string HourTwo { get; set; }
+
+        [BindProperty]
+        public string HourThree { get; set; }
+
+        [BindProperty]
+        public int AbsenceType { get; set; }
+
+        [BindProperty]
+        public string AbscText { get; set; }
+
+        [BindProperty]
+        public int Bit { get; set; }
         #endregion
 
+
+        //------------------------ Methods ------------------------//
 
         /// <summary>
         /// On load fill out dropdown with all users
@@ -76,8 +116,13 @@ namespace Astrow_2._0.Pages.AdminPage
                 }
                 else
                 {
+                    //Get abscense type
+                    Abscenses = _userRepository.GettAbscenseTypeUserView();
+
                     //Fills dropdown with users 
                     UserList = _userRepository.ReadAllUsers();
+
+                    Bool = false;
 
                     return Page();
                 }
@@ -89,6 +134,9 @@ namespace Astrow_2._0.Pages.AdminPage
         /// </summary>
         public void OnPostUser()
         {
+            //Get abscense type
+            Abscenses = _userRepository.GettAbscenseTypeUserView();
+
             if (ID != 0)
             {
                 Users user = _userRepository.FindUser(ID);
@@ -107,6 +155,8 @@ namespace Astrow_2._0.Pages.AdminPage
 
                 Role = user.Status.ToString();
 
+                Bool = true;
+
                 //Fills dropdown with users
                 UserList = _userRepository.ReadAllUsers();
             }
@@ -121,8 +171,9 @@ namespace Astrow_2._0.Pages.AdminPage
         /// Update User's infomation
         /// </summary>
         /// <param name="id"></param>
-        public void OnPostUpdateUser(int id)
+        public IActionResult OnPostUpdateUser(int id)
         {
+
             //Get user salt
             Users user = _userRepository.FindUser(id);
 
@@ -140,7 +191,7 @@ namespace Astrow_2._0.Pages.AdminPage
                     Status = Role,
                     StartDate = DateTime.Parse(StartDate),
                     EndDate = DateTime.Parse(EndDate)
-                    
+
                 };
             }
             else
@@ -154,7 +205,7 @@ namespace Astrow_2._0.Pages.AdminPage
                     Status = Role,
                     StartDate = DateTime.Parse(StartDate),
                     EndDate = DateTime.Parse(EndDate)
-                    
+
                 };
             }
 
@@ -171,10 +222,14 @@ namespace Astrow_2._0.Pages.AdminPage
             _userRepository.UpdateUser(user);
             _userRepository.UpdateUserInfo(userPersonalInfo);
 
-            //Popup message for succes
-            ViewData["Message"] = string.Format("Bruger blev opdateret...");
+            Bool = false;
+
+            return RedirectToPage("/AdminPage/Opdater-Bruger");
         }
 
+
+
+        //------------------------ Nav Methods ------------------------//
 
         /// <summary>
         /// Method for clocking in and out
@@ -187,6 +242,101 @@ namespace Astrow_2._0.Pages.AdminPage
 
             //Method for registry
             _userRepository.Registrer(id);
+
+            //Return to home page
+            return RedirectToPage("/AdminPage/Opdater-Bruger");
+        }
+
+        /// <summary>
+        /// Get Start & End date for rendering years
+        /// </summary>
+        /// <returns></returns>
+        public LogedUser GetDate()
+        {
+            string name = HttpContext.Session.GetString("_Username");
+
+            LogedUser logedUser = new LogedUser();
+
+            if (name != null)
+            {
+                return logedUser = new LogedUser
+                {
+                    UserName = name,
+                    Status = HttpContext.Session.GetString("_Status"),
+                    User_ID = (int)HttpContext.Session.GetInt32("_UserID"),
+                    StartDate = DateTime.Parse(HttpContext.Session.GetString("_StartDate")),
+                    EndDate = DateTime.Parse(HttpContext.Session.GetString("_EndDate"))
+                };
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
+        /// <summary>
+        /// Method for requesting abscense
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult OnPostAbscenseRequest()
+        {
+            LogedUser log = GetDate();
+
+            if (log != null)
+            {
+                if (Bit != 2)
+                {
+                    if (AbscText == null)
+                    {
+                        AbscText = "";
+                    }
+
+                    DateTime temp = DateTime.Parse(AbsCal);
+                    DateTime HourDT = DateTime.Parse(Hour);
+                    DateTime date = new DateTime(temp.Year, temp.Month, temp.Day, HourDT.Hour, HourDT.Minute, 0, 0);
+
+                    Request request = new Request()
+                    {
+                        UserID = log.User_ID,
+                        AbsID = AbsenceType,
+                        Text = AbscText,
+                        Date = date,
+                        Answer = 3,
+                        SecDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0)
+                    };
+
+                    _userRepository.CreateRequest(request);
+                }
+                else
+                {
+                    if (AbscText == null)
+                    {
+                        AbscText = "";
+                    }
+
+                    DateTime CalOne = DateTime.Parse(AbsCalTwo);
+                    DateTime CalTwo = DateTime.Parse(AbsCalThree);
+
+                    DateTime HourOne = DateTime.Parse(HourTwo);
+                    DateTime HourSec = DateTime.Parse(HourThree);
+
+                    DateTime date = new DateTime(CalOne.Year, CalOne.Month, CalOne.Day, HourOne.Hour, HourOne.Minute, 0, 0);
+                    DateTime dateTwo = new DateTime(CalTwo.Year, CalTwo.Month, CalTwo.Day, HourSec.Hour, HourSec.Minute, 0, 0);
+
+                    Request request = new Request()
+                    {
+                        UserID = log.User_ID,
+                        AbsID = AbsenceType,
+                        Text = AbscText,
+                        Date = date,
+                        Answer = 3,
+                        SecDate = dateTwo
+                    };
+
+                    _userRepository.CreateRequest(request);
+                }
+            }
 
             //Return to home page
             return RedirectToPage("/AdminPage/Opdater-Bruger");

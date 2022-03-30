@@ -133,7 +133,7 @@ a.navbar-brand {
 
 .Login-Page .container {
     margin: 0 auto;
-    height: 29rem;
+    height: 28rem;
     margin-top: 50%;
     background: linear-gradient( 35deg, rgb(45 115 251 / 50%) 25%, rgb(39 152 224 / 50%) 50%, rgb(35 183 202 / 50%) 75%);
     background-repeat: no-repeat;
@@ -212,7 +212,7 @@ a.navbar-brand {
 
 .Login-Page .bottom {
     margin: 0 auto;
-    margin-top: 1rem;
+    margin-top: 3rem;
     max-width: min-content;
 }
 
@@ -318,6 +318,7 @@ a.navbar-brand {
 
 .show {
     display: block !important;
+    visibility:visible !important;
 }
 
 
@@ -865,9 +866,74 @@ nav ul li a span.rotate {
 
  /*#endregion*/
 
+/*#region Module*/
+
+.modal .modal-body {
+    place-self: unset !important;
+}
+
+.modal .modal-body .Hour {
+    align-self: center !important;
+}
+
+.modal .modal-body .Abscense {
+    margin: 0 auto !important;
+}
+
+.modal .modal-body .TextRow {
+    margin-top: 2rem !important;
+}
+
+.modal .modal-body .TextCol {
+    margin: 0 auto !important;
+}
+
+.modal .modal-body .Date {
+    padding-right: 1rem !important;
+    padding-left: 1rem !important;
+    margin-top: 2rem !important;
+
+    height: auto !important;
+    text-align: unset !important;
+    width: 100% !important;
+    justify-content: unset !important;
+}
+
+.modal .modal-body .Calendar {
+    margin:0 !important;
+    margin-left: 4.5rem !important;
+}
+
+.modal .modal-body .AbsenceText {
+    min-height: 110px !important;
+    max-height: 35rem !important;
+    width: 15rem !important;
+    height: 10rem;
+}
+
+
+.modal .modal-body .TwoDates {
+    display: none;
+    visibility: hidden;
+}
+
+.modal .modal-body .TwoDate {
+    margin: 0 auto !important;
+    width: max-content !important;
+}
+
+.modal .modal-body .Clock {
+    margin-top: 1rem !important;
+}
+
+.Hide {
+    display:none !important;
+    visibility:hidden !important;
+}
+
+/*#endregion*/
+
 /*#region Admin Page*/
-
-
 /*Admin page*/
 .AdminPage .row {
     --bs-gutter-x: 0;
@@ -994,6 +1060,22 @@ nav ul li a span.rotate {
 }
 
 
+/*Modal*/
+.AdminPage .container .DeleteUser .modal-header {
+    align-self: center;
+}
+
+.AdminPage .container .DeleteUser .modal-body {
+    place-self: center;
+}
+
+.AdminPage .container .DeleteUser .modal-body .AbsenceText {
+    min-height: 112px;
+    max-height: 331px;
+    width: inherit;
+}
+
+
 /*Container Decoration*/
 .AdminPage .container p {
     text-align: center;
@@ -1025,6 +1107,10 @@ nav ul li a span.rotate {
     font-size: 18.5px;
 }
 
+.AdminPage .container .row .bottom {
+    margin: 0 !important;
+}
+
 .AdminPage .container .lower-container {
     margin-top: 6.5rem;
     text-align: center;
@@ -1039,13 +1125,13 @@ nav ul li a span.rotate {
 
 /*Admin navbar*/
 .AdminPage .container .CreateUser {
-    min-height: 44rem !important;
+    min-height: 40rem !important;
     position:relative;
     position: absolute;
 }
 
 .AdminPage .container .UpdateUser {
-    min-height: 44rem !important;
+    min-height: 40rem !important;
     position: relative;
 }
 
@@ -1063,6 +1149,7 @@ nav ul li a span.rotate {
     right:0;
     z-index: 3;
     border: none;
+   cursor: pointer;
 }
 
 .AdminPage .container .AdminNav .show {
@@ -1072,7 +1159,7 @@ nav ul li a span.rotate {
     z-index: 1;
     right: 0;
     top: 0;
-    height: 31%;
+    height: 40%;
 }
 
 .AdminNavBTN svg {
@@ -1202,9 +1289,144 @@ nav ul li a span.rotate {
     margin-right: 1rem;
 }
 
+/*Request Page*/
+
+.AdminPage .container .AbscenseRequest {
+    min-height: 40rem !important;
+    max-height: fit-content !important;
+    position: relative;
+}
+
+.AdminPage .container .AbscenseRequest .Table-Gride .RequestTable {
+    background: #00405e73;
+    margin-bottom: 0.5rem;
+    height: 5rem;
+    margin-top: 1rem;
+}
+
+.AdminPage .container .AbscenseRequest .modal label {
+    color:black !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.AdminPage .container .AbscenseRequest .modal .AbsenceText {
+    cursor:auto;
+    resize: none;
+}
+
+.AdminPage .container .AbscenseRequest .modal .AbsenceText:hover {
+    box-shadow: none;
+    border-color: #a7c0cc;
+}
+
+.AdminPage .container .AbscenseRequest .modal .AbsenceText:focus {
+    box-shadow: none;
+    border-color: #a7c0cc;
+}
+
+.AdminPage .container .AbscenseRequest p {
+    color: #e5e5e5 !important;
+    text-align: unset !important;
+    margin: 0 !important;
+    width: unset !important;
+    font-family: unset !important;
+}
+
+.AdminPage .container .AbscenseRequest .col-btn {
+    margin-bottom: 1.5rem;
+}
+
+.AdminPage .container .AbscenseRequest .btn-Request {
+    border-radius: 8px;
+    height: 2rem;
+    line-height: 1;
+    width: min-content;
+    margin-right: 0.5rem;
+}
+
+.AdminPage .container .AbscenseRequest .Delete-Col {
+    padding: 1rem;
+    height: min-content;
+    margin: 0 !important;
+}
+
+.AdminPage .container .AbscenseRequest label {
+    line-height: unset !important;
+}
+
+
+.AdminPage .container .AbscenseRequest .row .Table-Gride {
+    overflow: overlay;
+    max-height: 40rem;
+}
+
+.AdminPage .container .AbscenseRequest ul {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.AdminPage .container .AbscenseRequest .box .col-2 {
+    float: left;
+    margin-left: 20rem !important;
+}
+
+.AdminPage .container .AbscenseRequest .box h3 {
+    float: right;
+}
+
+.AdminPage .container .AbscenseRequest .box .col-3 {
+    float: left;
+    margin-left: 6.3rem;
+    margin-top: 2px;
+}
+
+.AdminPage .container .AbscenseRequest .box input {
+    width: 13rem;
+    margin-right: 1rem;
+    background: white;
+    text-transform: capitalize;
+    background: #004f75;
+    border: 2px solid #00000000;
+    color: white;
+}
+
+.AdminPage .container .AbscenseRequest .box input::placeholder {
+    color: #c7c7c7;
+}
+
+.AdminPage .container .AbscenseRequest .box input:hover {
+    box-shadow: none;
+    border-color: transparent;
+}
+
+.AdminPage .container .AbscenseRequest .box input:focus {
+    box-shadow: none;
+    border-color: transparent;
+}
+
+.AdminPage .container .AbscenseRequest .modal p {
+    color:black !important;
+}
+
+/*Scroll Wheel*/
+.AdminPage .container .AbscenseRequest .Table-Gride::-webkit-scrollbar-thumb {
+    background: #0588c9 !important;
+    border-radius: 15px !important;
+    display: contents !important;
+}
+.AdminPage .container .AbscenseRequest .Table-Gride::-webkit-scrollbar-track {
+    background: #00405e !important;
+    border-radius: 15px !important;
+    display: contents !important;
+}
+.AdminPage .container .AbscenseRequest .Table-Gride::-webkit-scrollbar {
+    width: 5px !important;
+    display: contents !important;
+}
+
 
 /*Delete Page Decoration*/
-.AdminPage .container .DeleteUser form {
+.AdminPage .container .DeleteUser .Table-Gride .col-row {
     background: #00405e73;
     margin-bottom: 0.5rem;
     height: 4rem;
@@ -1225,7 +1447,7 @@ nav ul li a span.rotate {
     line-height:unset !important;
 }
 
-.AdminPage .container .DeleteUser .col-row .btn {
+.AdminPage .container .DeleteUser .col-row .btn-brugere {
     border-radius: 8px;
     height: 2rem;
     line-height: 1;
@@ -1244,6 +1466,51 @@ nav ul li a span.rotate {
     overflow: overlay;
     max-height: 40rem;
 }
+
+.AdminPage .container .DeleteUser ul {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.AdminPage .container .DeleteUser .box .col-2 {
+    float: left;
+    margin-left: 20rem !important;
+}
+
+.AdminPage .container .DeleteUser .box h3 {
+    float:right;
+}
+
+.AdminPage .container .DeleteUser .box .col-3 {
+    float: left;
+    margin-left: 6.3rem;
+    margin-top: 2px;
+}
+
+.AdminPage .container .DeleteUser .box input {
+    width: 13rem;
+    margin-right: 1rem;
+    background: white;
+    text-transform: capitalize;
+    background: #004f75;
+    border: 2px solid #00000000;
+    color: white;
+}
+
+.AdminPage .container .DeleteUser .box input::placeholder {
+    color:#c7c7c7;
+}
+
+.AdminPage .container .DeleteUser .box input:hover {
+    box-shadow:none;
+    border-color:transparent;
+}
+
+.AdminPage .container .DeleteUser .box input:focus {
+    box-shadow:none;
+    border-color:transparent;
+}
+
 
 
 /* Scrollbar for day grid*/
@@ -1414,7 +1681,7 @@ nav ul li a span.rotate {
     }
 
         .TimeCard .outer .Table-Head {
-            top: 15.2476%;
+            top: 14.2476%;
         }
 }
 
@@ -1574,10 +1841,14 @@ nav ul li a span.rotate {
         margin-left: 7rem;
     }
 
-    .AdminPage .container .DeleteUser .col-row .btn {
+    .AdminPage .container .DeleteUser .col-row .btn-brugere {
         width: 3rem !important;
         font-size: 14px !important;
         padding: 0 !important;
+    }
+
+    .AdminPage .container .box .col-2 {
+        margin-left: 4rem !important;
     }
 }
 
@@ -1599,7 +1870,7 @@ nav ul li a span.rotate {
         width: 34rem;
     }
 
-    .AdminPage .container .DeleteUser .col-row .btn {
+    .AdminPage .container .DeleteUser .col-row .btn-brugere {
         width: 4rem !important;
     }
 }
@@ -1622,7 +1893,7 @@ nav ul li a span.rotate {
         width: 42rem;
     }
 
-    .AdminPage .container .DeleteUser .col-row .btn {
+    .AdminPage .container .DeleteUser .col-row .btn-brugere {
         width: 5rem !important;
     }
 
@@ -1676,7 +1947,7 @@ nav ul li a span.rotate {
         margin-top: 2rem !important;
     }
 
-    .AdminPage .container .DeleteUser .col-row .btn {
+    .AdminPage .container .DeleteUser .col-row .btn-brugere {
         width: 3rem !important;
         font-size: 14px !important;
         padding: 0 !important;
@@ -1707,7 +1978,7 @@ nav ul li a span.rotate {
         width: 45rem;
     }
 
-    .AdminPage .container .DeleteUser .col-row .btn {
+    .AdminPage .container .DeleteUser .col-row .btn-brugere {
         width: 6rem !important;
     }
 
@@ -1722,6 +1993,11 @@ nav ul li a span.rotate {
     .AdminPage .container .lower-container .form-control {
         width:max-content;
     }
+
+    .AdminPage .container .box .col-2 {
+        margin-left: 18.5rem !important;
+    }
+
 }
 
 @media only screen and (min-width:1315px) {
@@ -1750,6 +2026,10 @@ nav ul li a span.rotate {
     .AdminPage .container .CreateUser {
         left: unset;
     }
+
+    .AdminPage .container .box .col-2 {
+        margin-left: 20rem;
+    }
 }
 
 @media only screen and (min-width:1665px) {
@@ -1758,7 +2038,7 @@ nav ul li a span.rotate {
         left: 35% !important;
     }
 
-    .AdminPage .container .DeleteUser .col-row .btn {
+    .AdminPage .container .DeleteUser .col-row .btn-brugere {
         width: min-content !important;
         padding: 6px 19px !important;
         font-size: 16px !important;

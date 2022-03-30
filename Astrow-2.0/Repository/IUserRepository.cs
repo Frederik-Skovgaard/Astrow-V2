@@ -20,6 +20,8 @@ namespace Astrow_2._0.Repository
 
         List<Users> ReadAllUsers();
 
+        List<PersonalInfo> GetPeople();
+
         Users FindUser(int id);
 
         Users FindByUserName(string username);
@@ -27,6 +29,8 @@ namespace Astrow_2._0.Repository
         UserPersonalInfo FindUserInfo(int id);
 
         LogedUser Login(string username, string password);
+
+        bool UsernameAvailable(string username);
 
         #endregion
 
@@ -40,10 +44,17 @@ namespace Astrow_2._0.Repository
 
         #endregion
 
+
         #region Days
         void CreateDay(Days day, int id);
 
+        void CreateRequest(Request request);
+
         List<AbscenseType> GetAllAbscenseType();
+
+        List<Request> GetRequests();
+
+        Request FindRequest(int id);
 
         List<Days> FindAllDays(int id, DateTime date);
 
@@ -55,7 +66,17 @@ namespace Astrow_2._0.Repository
 
         Days FindDayByID(int id);
 
+        AbscenseType FindAbscenseByText(string text);
+
+        List<AbscenseType> GetAbscenseText();
+
+        List<AbscenseType> GettAbscenseTypeUserView();
+
         void UpdateDay(Days day);
+
+        void UpdateRequest(Request request, int id);
+
+        void UpdateRequestAnswered(int id, int ans);
 
         void UpdateStartDay(DateTime date, int id);
 
@@ -75,5 +96,7 @@ namespace Astrow_2._0.Repository
 
         IEnumerable<DateTime> EachYear(DateTime from, DateTime thru);
         #endregion
+
+        string FirstCharToUpper(string input);
     }
 }

@@ -19,7 +19,7 @@ namespace Astrow_2._0.Pages
         }
 
 
-        //------------------------Start date | End date------------------------ 
+        //------------------------ Start date | End date ------------------------// 
         [BindProperty]
         public DateTime StartDate { get; set; }
 
@@ -27,7 +27,7 @@ namespace Astrow_2._0.Pages
         public DateTime EndDate { get; set; }
 
 
-        //------------------------Input value & current value------------------------
+        //------------------------ Input value & current value ------------------------//
         [BindProperty]
         public string Calendar { get; set; }
 
@@ -36,8 +36,11 @@ namespace Astrow_2._0.Pages
         public string CalendarValue { get; set; }
 
 
+        [BindProperty]
+        public List<AbscenseType> AbscenseText { get; set; }
 
-        //----------------------List for render days & years----------------------
+
+        //------------------------ List for render days & years ------------------------//
         [BindProperty]
         public IEnumerable<DateTime> Days { get; set; }
 
@@ -46,13 +49,48 @@ namespace Astrow_2._0.Pages
         public IEnumerable<DateTime> Years { get; set; }
 
 
-        //------------------------User info------------------------
+        //------------------------ User info ------------------------//
         [BindProperty]
         public LogedUser logged { get; set; }
 
         [BindProperty]
         public List<Days> daysList { get; set; }
 
+        [BindProperty]
+        public List<AbscenseType> AbscensesRequest { get; set; }
+
+
+        //------------------------ AbsRequest ------------------------//
+
+        [BindProperty]
+        public string AbsCal { get; set; }
+
+        [BindProperty]
+        public string AbsCalTwo { get; set; }
+
+        [BindProperty]
+        public string AbsCalThree { get; set; }
+
+        [BindProperty]
+        public string Hour { get; set; }
+
+        [BindProperty]
+        public string HourTwo { get; set; }
+
+        [BindProperty]
+        public string HourThree { get; set; }
+
+        [BindProperty]
+        public int AbsenceType { get; set; }
+
+        [BindProperty]
+        public string AbscText { get; set; }
+
+        [BindProperty]
+        public int Bit { get; set; }
+
+
+        //------------------------ Methods ------------------------//
 
         /// <summary>
         /// On load cheack if logged in. If logged render days & years.
@@ -66,6 +104,10 @@ namespace Astrow_2._0.Pages
             }
             else
             {
+                //Get abscense type
+                AbscensesRequest = _userRepository.GettAbscenseTypeUserView();
+
+
                 //To get start & end date of user
                 logged = GetDate();
                 if (logged != null)
@@ -81,6 +123,8 @@ namespace Astrow_2._0.Pages
 
                     //Render days % year/month selector
                     Days = _userRepository.EachDay(StartDate, EndDate.AddDays(-1));
+
+                    AbscenseText = _userRepository.GetAbscenseText();
 
                     //List of all users days
                     daysList = _userRepository.FindAllDaysByID(logged.User_ID);
@@ -108,6 +152,8 @@ namespace Astrow_2._0.Pages
 
             //List of all users days
             daysList = _userRepository.FindAllDaysByID(logged.User_ID);
+
+            AbscenseText = _userRepository.GetAbscenseText();
 
             //Change values
             StartDate = DateTime.Parse(Calendar);
@@ -162,6 +208,8 @@ namespace Astrow_2._0.Pages
 
             //List of all users days
             daysList = _userRepository.FindAllDaysByID(logged.User_ID);
+
+            AbscenseText = _userRepository.GetAbscenseText();
 
             try
             {
@@ -228,6 +276,8 @@ namespace Astrow_2._0.Pages
             //List of all users days
             daysList = _userRepository.FindAllDaysByID(logged.User_ID);
 
+            AbscenseText = _userRepository.GetAbscenseText();
+
             //Bug forward when year only
 
             try
@@ -273,6 +323,9 @@ namespace Astrow_2._0.Pages
             }
         }
 
+
+        //------------------------ Nav Methods ------------------------//
+
         /// <summary>
         /// Method for clocking in and out
         /// </summary>
@@ -297,7 +350,6 @@ namespace Astrow_2._0.Pages
                 return RedirectToPage("/Home");
             }
         }
-
 
         /// <summary>
         /// Get Start & End date for rendering years
@@ -325,6 +377,73 @@ namespace Astrow_2._0.Pages
                 return null;
             }
 
+        }
+
+        /// <summary>
+        /// Method for requesting abscense
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult OnPostAbscenseRequest()
+        {
+            LogedUser log = GetDate();
+
+            if (log != null)
+            {
+                if (Bit != 2)
+                {
+                    if (AbscText == null)
+                    {
+                        AbscText = "";
+                    }
+
+                    DateTime temp = DateTime.Parse(AbsCal);
+                    DateTime HourDT = DateTime.Parse(Hour);
+                    DateTime date = new DateTime(temp.Year, temp.Month, temp.Day, HourDT.Hour, HourDT.Minute, 0, 0);
+
+                    Request request = new Request()
+                    {
+                        UserID = log.User_ID,
+                        AbsID = AbsenceType,
+                        Text = AbscText,
+                        Date = date,
+                        Answer = 3,
+                        SecDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0)
+                    };
+
+                    _userRepository.CreateRequest(request);
+                }
+                else
+                {
+                    if (AbscText == null)
+                    {
+                        AbscText = "";
+                    }
+
+                    DateTime CalOne = DateTime.Parse(AbsCalTwo);
+                    DateTime CalTwo = DateTime.Parse(AbsCalThree);
+
+                    DateTime HourOne = DateTime.Parse(HourTwo);
+                    DateTime HourSec = DateTime.Parse(HourThree);
+
+                    DateTime date = new DateTime(CalOne.Year, CalOne.Month, CalOne.Day, HourOne.Hour, HourOne.Minute, 0, 0);
+                    DateTime dateTwo = new DateTime(CalTwo.Year, CalTwo.Month, CalTwo.Day, HourSec.Hour, HourSec.Minute, 0, 0);
+
+                    Request request = new Request()
+                    {
+                        UserID = log.User_ID,
+                        AbsID = AbsenceType,
+                        Text = AbscText,
+                        Date = date,
+                        Answer = 3,
+                        SecDate = dateTwo
+                    };
+
+                    _userRepository.CreateRequest(request);
+                }
+            }
+
+            //Return to home page
+            return RedirectToPage("/Home");
         }
     }
 }

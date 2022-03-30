@@ -1,76 +1,300 @@
-﻿@page "{handler?}"
+﻿@page "{handler?}/{id?}"
 @model Astrow_2._0.Pages.AdminPage.DeleteUserModel
 @{
-    ViewData["Title"] = "Fjern | Page";
+    ViewData["Title"] = "Brugere | Page";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+<form method="post">
+    <div class="AdminPage">
+        <div class="AdminNavBTN" id="AdminNavBTN">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+            </svg>
+        </div>
+        <div class="container">
+            <div class="AdminNav">
+                <div class="row upper-row" id="AdminNav">
+                    <a href="/AdminPage/Opret-Bruger" class="btn btn-lg btn-primary">
+                        <i class="fas fa-plus-circle"></i> Opret bruger
+                    </a>
+                    <a href="/AdminPage/Opdater-Bruger" class="btn btn-lg btn-secondary">
+                        <i class="fas fa-user-edit"></i> Opdater bruger
+                    </a>
+                    <a href="/AdminPage/Opdater-Timekort" class="btn btn-lg btn-secondary">
+                        <i class="fas fa-user-clock"></i> Opdater Timekort
+                    </a>
+                    <a href="/AdminPage/Brugere" class="btn btn-lg btn-secondary">
+                        <i class="fas fa-users"></i> Brugere
+                    </a>
+                    <a href="/AdminPage/Fraværes-Anmodninger" class="btn btn-lg btn-secondary bottom">
+                        <i class="fa-solid fa-calendar-day"></i> Anmodniger
+                    </a>
+                </div>
+            </div>
+            <div class="container lower-container DeleteUser">
+                <div class="row col-row">
+                    <div class="box">
+                        <div class="col-2">
+                            <h3>Bruger</h3>
+                        </div>
+                        <div class="col-3">
+                            <input autocomplete="off" type="text" class="form-control" id="myInput" onkeyup="SearchFunction()" placeholder="Søg efter navn..." title="Type in a name">
+                        </div>
+                    </div>
+                    <div class="Table-Gride">
+                        <ul id="myUL">
 
-<div class="AdminPage">
-    <button class="AdminNavBTN" id="AdminNavBTN">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
-        </svg>
-    </button>
 
-    <div class="container">
-        <div class="AdminNav">
-            <div class="row upper-row" id="AdminNav">
-                <a href="/AdminPage/Opret-Bruger" class="btn btn-lg btn-primary">
-                    <i class="fas fa-plus-circle"></i> Opret bruger
-                </a>
-                <a href="/AdminPage/Opdater-Bruger" class="btn btn-lg btn-secondary">
-                    <i class="fas fa-user-edit"></i> Opdater bruger
-                </a>
-                <a href="/AdminPage/Opdater-Timekort" class="btn btn-lg btn-secondary">
-                    <i class="fas fa-user-clock"></i> Opdater Timekort
-                </a>
-                <a href="/AdminPage/Brugere" class="btn btn-lg btn-secondary">
-                    <i class="fas fa-users"></i> Brugere
-                </a>
+                            @foreach (Model.Containers.PersonalInfo user in Model.People)
+                            {
+                                string middleName = "";
+
+                                if(user.MiddleName != "")
+                                {
+                                    middleName = $"{user.MiddleName.Substring(0, 1).ToUpper()}.";
+                                }
+
+                                <li>
+                                    <div class="row col-row">
+                                        <div class="col-6 Delete-Col">
+                                            <label class="UserLabel">@user.FirstName @middleName @user.LastName.Substring(0, 1).ToUpper().</label>
+                                        </div>
+                                        <div class="col-6 Delete-Col">
+                                            <input id="ID" asp-for="ID" hidden>
+                                            <input type="submit" id="DeleteBtn" asp-page-handler="Delete" class="btn btn-danger col-4 btn-brugere" id="DeleteBtn" value="Slet" onclick="return confirm('Er du sikker på du vil slette denne bruger?'), MyTemp(@user.ID)" />
+                                            <input type="button" id="SickNoticeBtn" onclick="MyTemp(@user.ID)" value="Fravære" class="btn btn-warning btn-brugere" data-toggle="modal" data-target="#SickModal" />
+                                            <input type="submit" id="IlligalBtn" asp-page-handler="IllegalNotice" value="Ulovlig Fravære" class="btn btn-danger btn-brugere" onclick="return confirm('Er du sikker på du vil melde denne bruger ulovligt fraværende?'), MyTemp(@user.ID)" />
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Modal -->
+
+                <div class="modal fade" id="SickModal" tabindex="-1" role="dialog" aria-labelledby="SickModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Sygmelding</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row col-row">
+                                    <div class="col-12">
+                                        <select class="form-control AbscenseTypeDrop" asp-for="Abscense" name="Abscense" id="AbscenseDrop">
+                                            @{
+                                                foreach (Model.Items.AbscenseType type in Model.Abscenses)
+                                                {
+                                                    <option value="@type.ID">@type.Type</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row col-row">
+                                    <div class="col-12">
+                                        <textarea type="text" class="form-control AbsenceText" name="AbscenseText" placeholder="* Valgfrit Fraværes oversag" asp-for="AbscenseText"></textarea>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" id="SubmitBtn" value="Submit" asp-page-handler="SickNotice" class="btn btn-primary" />
+                                <input type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close" value="Close" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="container lower-container DeleteUser">
-            <div class="row col-row">
-                <div class="box">
-                    <h3>Bruger</h3>
+    </div>
+</form>
+
+<script type="text/javascript">
+    //Make Admin Nav apper and disapper, Magic!
+    $('#AdminNavBTN').click(function() {
+        $('#AdminNav').toggleClass("show")
+    });
+
+
+    function MyTemp(ish) {
+        document.getElementById("ID").value = ish;
+    }
+
+    function SearchFunction() {
+        var input, filter, ul, li, a, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        ul = document.getElementById("myUL");
+        li = ul.getElementsByTagName("li");
+        for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName("label")[0];
+            txtValue = a.textContent || a.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+            } else {
+                li[i].style.display = "none";
+            }
+        }
+    }
+</script>
+
+
+<!--#region FraværesAnmodning  -->
+<!-- Modal -->
+<div class="modal fade" id="AbscenseRequest" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Fraværsanmodning</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row col-row">
+                    <div class="col-6 Abscense">
+                        <select class="form-control AbscenseTypeDrop" asp-for="AbsenceType" name="AbsenceType" id="AbscenseDrop">
+                            @{
+                                foreach (Model.Items.AbscenseType type in Model.AbscensesRequest)
+                                {
+                                    <option value="@type.ID">@type.Type</option>
+                                }
+                            }
+                        </select>
+                    </div>
                 </div>
-                <div class="Table-Gride">
-                    @foreach (Model.Containers.PersonalInfo user in Model.People)
-                    {
-                        <form method="post">
-                            <div class="row col-row">
-
-                                <div class="col-6 Delete-Col">
-                                    <label class="UserLabel">@user.FirstName @user.MiddleName @user.LastName</label>
-                                </div>
-
-                                <div class="col-6 Delete-Col">
-                                    <input asp-for="ID" value="@user.ID" hidden />
-                                    <input type="submit" class="btn btn-danger col-4" id="DeleteBtn" value="Slet" onclick="return confirm('Are you sure you want to delete this?')" />
-                                    <input type="submit" class="btn btn-warning" id="SickNoticeBtn" value="Fravære" onclick="return confirm('Are you sure you want to delete this?')" />
-                                    <input type="submit" class="btn btn-danger" id="SickNoticeBtn" value="Ulovlig Fravære" onclick="return confirm('Are you sure you want to delete this?')" />
-                                </div>
-
-                            </div>
-                        </form>
-                    }
+                <div class="row col-row TextRow">
+                    <div class="col-6 TextCol">
+                        <textarea type="text" class="form-control AbsenceText" name="AbscText" placeholder="* Valgfrit Fraværes oversag" asp-for="AbscText"></textarea>
+                    </div>
+                </div>
+                <div class="row col-row Date" id="Date">
+                    <div class="col-6 Calendar">
+                        <input id="AbsCalendar" value="@DateTime.Now.ToString("yyyy/MM/dd")" type="date" name="AbsCal" class="form-control" min="@DateTime.Now.ToString("yyyy/MM/dd")" oninvalid="this.setCustomValidity('Vælge en dato')" oninput="this.setCustomValidity('')" required />
+                    </div>
+                    <div class="col-2 Hour">
+                        <input class="HourClock" value="@DateTime.Now.ToString("HH:mm")" min="08:00" max="15:24" type="time" name="Hour" required>
+                    </div>
+                </div>
+                <div class="TwoDates" id="TwoDatesDiv">
+                    <div class="row col-row Date">
+                        <div class="col-6">
+                            <input id="AbsCalendarTwo" value="@DateTime.Now.ToString("yyyy/MM/dd")" type="date" name="AbsCalTwo" class="form-control" min="@DateTime.Now.ToString("yyyy/MM/dd")" oninvalid="this.setCustomValidity('Skriv start dato her')" oninput="this.setCustomValidity('')" />
+                        </div>
+                        <div class="col-6">
+                            <input id="AbsCalendarThree" value="@DateTime.Now.ToString("yyyy/MM/dd")" type="date" name="AbsCalThree" class="form-control" min="@DateTime.Now.ToString("yyyy/MM/dd")" oninvalid="this.setCustomValidity('Skriv end dato her')" oninput="this.setCustomValidity('')" />
+                        </div>
+                    </div>
+                    <div class="row col-row Clock">
+                        <div class="col-6 TwoDate">
+                            <input class="HourClockTwo" id="HourTwo" value="@DateTime.Now.ToString("HH:mm")" min="08:00" max="15:24" type="time" name="HourTwo">
+                        </div>
+                        <div class="col-6 TwoDate">
+                            <input class="HourClockTwo" id="HourThree" value="@DateTime.Now.ToString("HH:mm")" min="08:00" max="15:24" type="time" name="HourThree">
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <script type="text/javascript">
-                $('#DeleteBtn').click(function() {
-                    alert("@ViewData["Message"]");
-                };
-            </script>
-
-            <script type="text/javascript">
-                //Make Admin Nav apper and disapper, Magic!
-                    $('#AdminNavBTN').click(function() {
-                        $('#AdminNav').toggleClass("show")
-                    });
-            </script>
+            <div class="modal-footer">
+                <input value="1" id="Bit" asp-for="Bit" hidden />
+                <input type="button" id="TwoDates" class="btn btn-secondary" value="Længer period" />
+                <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Close" />
+                <input type="submit" id="submit" class="btn btn-primary" asp-page-handler="AbscenseRequest" value="Save changes" />
+            </div>
         </div>
     </div>
 </div>
 
+<script type="text/javascript">
+    $('#TwoDates').click(function() {
+        $('.TwoDates').toggleClass("show");
+        $('#Date').toggleClass("Hide");
+
+        if (document.getElementById('AbsCalendar').hasAttribute("Required")) {
+            document.getElementById('Bit').setAttribute('value','2')
+
+            $('#AbsCalendar').prop('required',false);
+            $('.HourClock').prop('required',false);
+
+            $('#AbsCalendarTwo').prop('required',true);
+            $('#AbsCalendarThree').prop('required',true);
+            $('.HourClockTwo').prop('required',true);
+        }
+        else {
+            document.getElementById('Bit').setAttribute('value','1')
+
+            $('#AbsCalendar').prop('required',true);
+            $('.HourClock').prop('required',true);
+
+            $('#AbsCalendarTwo').prop('required',false);
+            $('#AbsCalendarThree').prop('required',false);
+            $('.HourClockTwo').prop('required',false);
+        }
+    });
+
+        $('#submit').click(function() {
+            if (document.getElementById('AbscenseRequest').classList.contains("show")) {
+
+                $('#FirstName').prop('required',false);
+                $('#LastName').prop('required',false);
+                $('#UserName').prop('required',false);
+                $('#Password').prop('required',false);
+                $('#StartDate').prop('required',false);
+                $('#EndDate').prop('required',false);
+            }
+            else {
+
+                $('#FirstName').prop('required',true);
+                $('#LastName').prop('required',true);
+                $('#UserName').prop('required',true);
+                $('#Password').prop('required',true);
+                $('#StartDate').prop('required',true);
+                $('#EndDate').prop('required',true);
+            }
+    });
+
+    document.getElementById('AbsCalendarTwo').onchange = function () {
+        var input = document.getElementById('AbsCalendarThree');
+        var otherInput = document.getElementById('AbsCalendarTwo').value;
+        input.setAttribute("min", otherInput)
+    }
+
+    $('#submit').click(function () {
+        if (document.getElementById('TwoDatesDiv').classList.contains("show")) {
+            var currentStartTimeValue = document.getElementById("HourTwo").value;
+            var currentEndTimeValue = document.getElementById("HourThree").value;
+
+            if (!currentStartTimeValue) {
+                alert('Vægle en start tid!');
+                    return false;
+            }
+            else if (!currentEndTimeValue) {
+                alert('Vægle en slut tid!');
+                    return false;
+            }
+            else if (currentStartTimeValue >= currentEndTimeValue || currentStartDateValue > currentEndDateValue) {
+                if(currentStartDateValue >= currentEndDateValue) {
+                    alert('Slut tiden må ikke være før start tiden!');
+                    return false;
+                }
+            }
+
+             document.getElementById('submit').style.pointerEvents = "none";
+        }
+    });
+
+    $("#EndDate").change(function () {
+        var startDate = document.getElementById("StartDate").value;
+        var endDate = document.getElementById("EndDate").value;
+
+        if ((Date.parse(endDate) <= Date.parse(startDate))) {
+            alert("End date should be greater than Start date");
+            document.getElementById("EndDate").value = "";
+        }
+    });
+</script>
+<!--#endregion -->

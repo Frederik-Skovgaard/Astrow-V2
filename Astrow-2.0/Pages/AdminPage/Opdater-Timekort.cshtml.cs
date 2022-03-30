@@ -20,6 +20,7 @@ namespace Astrow_2._0.Pages.AdminPage
             _userRepository = userRepository;
         }
 
+        //------------------------ Opdater-Timekort Page ------------------------//
 
         [BindProperty]
         public bool DateBool { get; set; }
@@ -53,16 +54,52 @@ namespace Astrow_2._0.Pages.AdminPage
 
 
         [BindProperty]
-        public string AbsenceType { get; set; }
+        public string AbsenceTypeStr { get; set; }
 
         [BindProperty]
         public string CalenderValue { get; set; }
 
         [BindProperty]
-        public List<AbscenseType> AbscenseType { get; set; }
+        public List<AbscenseType> Abscenses { get; set; }
 
         [BindProperty]
         public int ID { get; set; }
+
+
+        //------------------------ AbsRequest ------------------------
+
+        [BindProperty]
+        public List<AbscenseType> AbscensesRequest { get; set; }
+
+        [BindProperty]
+        public string AbsCal { get; set; }
+
+        [BindProperty]
+        public string AbsCalTwo { get; set; }
+
+        [BindProperty]
+        public string AbsCalThree { get; set; }
+
+        [BindProperty]
+        public string Hour { get; set; }
+
+        [BindProperty]
+        public string HourTwo { get; set; }
+
+        [BindProperty]
+        public string HourThree { get; set; }
+
+        [BindProperty]
+        public int AbsenceType { get; set; }
+
+        [BindProperty]
+        public string AbscText { get; set; }
+
+        [BindProperty]
+        public int Bit { get; set; }
+
+
+        //------------------------ Methods ------------------------//
 
         /// <summary>
         /// Check if user is logged and has premission
@@ -82,6 +119,9 @@ namespace Astrow_2._0.Pages.AdminPage
                 }
                 else
                 {
+                    //Get abscense type
+                    AbscensesRequest = _userRepository.GettAbscenseTypeUserView();
+
                     StartDay = $"{DateTime.Now.Year}-{DateTime.Now.Month}";
                     EndDay = $"{DateTime.Now.Year}-{DateTime.Now.Month}";
 
@@ -98,37 +138,48 @@ namespace Astrow_2._0.Pages.AdminPage
                     return Page();
                 }
             }
-            
+
         }
 
         /// <summary>
         /// Get user by id
         /// </summary>
-        public void OnPostUser()
+        public IActionResult OnPostUser()
         {
+            //Get abscense type
+            AbscensesRequest = _userRepository.GettAbscenseTypeUserView();
+
             if (ID != 0)
             {
                 List<Days> days = _userRepository.FindAllDaysByID(ID);
 
-                Days firstElement = days.First();
-                Days lastElement = days.Last();
+                if (days.Count != 0)
+                {
+                    Days firstElement = days.First();
+                    Days lastElement = days.Last();
 
-                StartDay = firstElement.Date.ToString("yyyy-MM-dd");
-                EndDay = lastElement.Date.ToString("yyyy-MM-dd");
+                    StartDay = firstElement.Date.ToString("yyyy-MM-dd");
+                    EndDay = lastElement.Date.ToString("yyyy-MM-dd");
 
-                DateBool = true;
+                    DateBool = true;
 
-                TimeBool = false;
+                    TimeBool = false;
 
-                //Fills dropdown with users
-                UserList = _userRepository.ReadAllUsers();
-
+                    //Fills dropdown with users
+                    UserList = _userRepository.ReadAllUsers();
+                }
+                else
+                {
+                    return RedirectToPage("/AdminPage/Opdater-Timekort");
+                }
             }
             else
             {
                 //Fills dropdown with users
                 UserList = _userRepository.ReadAllUsers();
             }
+
+            return Page();
         }
 
         /// <summary>
@@ -137,7 +188,11 @@ namespace Astrow_2._0.Pages.AdminPage
         public void OnPostLoad()
         {
             //Get abscense type
-            AbscenseType = _userRepository.GetAllAbscenseType();
+            AbscensesRequest = _userRepository.GettAbscenseTypeUserView();
+           
+
+            //Get abscense type
+            Abscenses = _userRepository.GetAllAbscenseType();
 
             if (ID != 0)
             {
@@ -160,11 +215,13 @@ namespace Astrow_2._0.Pages.AdminPage
                 EndHour = day.EndDay.ToString("HH:mm");
 
 
-                AbsenceType = day.AbscenseID.ToString();
+                AbsenceTypeStr = day.AbscenseID.ToString();
 
                 DateBool = true;
 
                 TimeBool = true;
+
+                
 
                 //Fills dropdown with users
                 UserList = _userRepository.ReadAllUsers();
@@ -178,15 +235,15 @@ namespace Astrow_2._0.Pages.AdminPage
 
         public IActionResult OnPostSubmit()
         {
-            Days day = _userRepository.FindDayByID(ID);
-            Days dayBefore = _userRepository.FindDayByID((ID - 1));
+            //Date picker value
+            CalenderValue = Request.Form["Calendar"];
+
+            Days day = _userRepository.FindDay(DateTime.Parse(CalenderValue), ID);
+
+            Days dayBefore = _userRepository.FindDayByID((day.Days_ID - 1));
 
             List<Days> daysList = _userRepository.FindAllDaysByID(ID);
 
-
-            //Date picker value
-            CalenderValue = Request.Form["Calendar"];
-            DateTime calenderValue = DateTime.Parse(CalenderValue);
 
             //Set Start and End of day to datetime
             DateTime startHour = DateTime.Parse(StartHour);
@@ -198,59 +255,59 @@ namespace Astrow_2._0.Pages.AdminPage
 
             if (ID != 0)
             {
-               
-                //Update Start and End of day
-                _userRepository.UpdateStartDay(startHourDT, ID);
-                _userRepository.UpdateEndDay(endHourDT, ID);
-
-
-                //-7:24
-                TimeSpan workHours = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0) - new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 24, 0);
-
-                //Start day minus end day 
-                TimeSpan workTime = endHourDT - startHourDT;
-
-                //Time between start and end date plus -7:24 
-                TimeSpan saldo = workTime + workHours;
-
                 if (day.StartDay != startHourDT || day.EndDay != endHourDT)
                 {
-                    //New total saldo
-                    if (dayBefore.TotalHour <= 0 && saldo.Hours <= 0 || dayBefore.TotalHour >= 0 && saldo.Hours >= 0)
-                    {
-                        dayBefore.TotalHour = dayBefore.TotalHour + saldo.Hours;
-                    }
-                    else if (dayBefore.TotalHour < 0 && saldo.Hours > 0 || dayBefore.TotalHour > 0 && saldo.Hours < 0)
-                    {
-                        dayBefore.TotalHour = saldo.Hours - dayBefore.TotalHour;
-                    }
+                    //Update Start and End of day
+                    _userRepository.UpdateStartDay(startHourDT, day.Days_ID);
+                    _userRepository.UpdateEndDay(endHourDT, day.Days_ID);
 
-                    if (dayBefore.TotalMin <= 0 && saldo.Minutes <= 0)
-                    {
-                        dayBefore.TotalMin = dayBefore.TotalMin + saldo.Minutes;
-                    }
-                    else if (dayBefore.TotalMin < 0 && saldo.Minutes > 0 || dayBefore.TotalMin > 0 && saldo.Minutes < 0)
-                    {
-                        dayBefore.TotalMin = saldo.Minutes + dayBefore.TotalMin;
-                    }
 
-                    //If minut reach 60 min
-                    if (dayBefore.TotalMin >= 60 || dayBefore.TotalMin <= -60)
+                    //-7:24
+                    TimeSpan workHours = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0) - new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 24, 0);
+
+                    //Start day minus end day 
+                    TimeSpan workTime = endHourDT - startHourDT;
+
+                    //Time between start and end date plus -7:24 
+                    TimeSpan saldo = workTime + workHours;
+
+                    if (day.StartDay == startHourDT || day.EndDay == endHourDT)
                     {
-                        //If hour is negative
-                        if (dayBefore.TotalMin < 0)
+                        //New total saldo
+                        if (dayBefore.TotalHour <= 0 && saldo.Hours <= 0 || dayBefore.TotalHour >= 0 && saldo.Hours >= 0)
                         {
-                            dayBefore.TotalMin = dayBefore.TotalMin + 60;
-                            dayBefore.TotalHour = dayBefore.TotalHour - 1;
+                            dayBefore.TotalHour = dayBefore.TotalHour + saldo.Hours;
                         }
-                        else
+                        else if (dayBefore.TotalHour < 0 && saldo.Hours > 0 || dayBefore.TotalHour > 0 && saldo.Hours < 0)
                         {
-                            dayBefore.TotalMin = dayBefore.TotalMin - 60;
-                            dayBefore.TotalHour = dayBefore.TotalHour + 1;
+                            dayBefore.TotalHour = saldo.Hours - dayBefore.TotalHour;
+                        }
+
+                        if (dayBefore.TotalMin <= 0 && saldo.Minutes <= 0)
+                        {
+                            dayBefore.TotalMin = dayBefore.TotalMin + saldo.Minutes;
+                        }
+                        else if (dayBefore.TotalMin <= 0 && saldo.Minutes >= 0 || dayBefore.TotalMin >= 0 && saldo.Minutes <= 0)
+                        {
+                            dayBefore.TotalMin = saldo.Minutes + dayBefore.TotalMin;
+                        }
+
+                        //If minut reach 60 min
+                        if (dayBefore.TotalMin >= 60 || dayBefore.TotalMin <= -60)
+                        {
+                            //If hour is negative
+                            if (dayBefore.TotalMin < 0)
+                            {
+                                dayBefore.TotalMin = dayBefore.TotalMin + 60;
+                                dayBefore.TotalHour = dayBefore.TotalHour - 1;
+                            }
+                            else
+                            {
+                                dayBefore.TotalMin = dayBefore.TotalMin - 60;
+                                dayBefore.TotalHour = dayBefore.TotalHour + 1;
+                            }
                         }
                     }
-
-
 
                     string hour = "";
                     string minut = "";
@@ -369,28 +426,37 @@ namespace Astrow_2._0.Pages.AdminPage
                     _userRepository.UpdateTotalSaldo(dayBefore.TotalMin, dayBefore.TotalHour, totalSaldoStr, day.Days_ID);
 
 
+                    Days tmp = new Days();
+
                     //Foreach day 
                     foreach (Days days in daysList)
                     {
+
+                        if (days.Days_ID != 0)
+                        {
+                            tmp = _userRepository.FindDayByID((days.Days_ID - 1));
+                        }
+
+
                         if (days.Date > day.Date)
                         {
                             //New total saldo
-                            if (dayBefore.TotalHour <= 0)
+                            if (tmp.TotalHour <= 0)
                             {
-                                days.TotalHour = days.TotalHour + dayBefore.TotalHour;
+                                days.TotalHour = days.Hour + tmp.TotalHour;
                             }
-                            else if (dayBefore.TotalHour > 0)
+                            else if (tmp.TotalHour > 0)
                             {
-                                days.TotalHour = dayBefore.TotalHour - days.TotalHour;
+                                days.TotalHour = days.Hour + tmp.TotalHour;
                             }
 
-                            if (dayBefore.TotalMin <= 0)
+                            if (tmp.TotalMin <= 0)
                             {
-                                days.TotalMin = days.TotalMin + dayBefore.TotalMin;
+                                days.TotalMin = days.Min + tmp.TotalMin;
                             }
-                            else if (dayBefore.TotalMin > 0)
+                            else if (tmp.TotalMin > 0)
                             {
-                                days.TotalMin = days.TotalMin + dayBefore.TotalMin;
+                                days.TotalMin = days.Min + tmp.TotalMin;
                             }
 
                             //If hour > 0 && min < 0
@@ -468,39 +534,36 @@ namespace Astrow_2._0.Pages.AdminPage
                                 }
                             }
 
-
-
                             //Total saldo
                             string updateSaldo = $"{totalHourLoop}:{totalMinutLoop}";
                             _userRepository.UpdateTotalSaldo(days.TotalMin, days.TotalHour, updateSaldo, days.Days_ID);
                         }
                     }
-                }
 
-                if (AbscenseText != null && AbsenceType != "1")
-                {
-                    _userRepository.UpdateAbsence(AbscenseText, ID);
-                    _userRepository.UpdateAbsencseType(Convert.ToInt32(AbsenceType), day.Days_ID);
-                }
+                    if (AbscenseText != null && AbsenceTypeStr != "1")
+                    {
+                        _userRepository.UpdateAbsence(AbscenseText, day.Days_ID);
+                        _userRepository.UpdateAbsencseType(Convert.ToInt32(AbsenceType), day.Days_ID);
+                    }
 
-                if (AbscenseText != null)
-                {
-                    _userRepository.UpdateAbsence(AbscenseText, ID);
+                    if (AbscenseText != null)
+                    {
+                        _userRepository.UpdateAbsence(AbscenseText, day.Days_ID);
+                    }
+                    if (AbsenceTypeStr != "1")
+                    {
+                        _userRepository.UpdateAbsencseType(Convert.ToInt32(AbsenceType), day.Days_ID);
+                    }
                 }
-                if (AbsenceType != "1")
-                {
-                    _userRepository.UpdateAbsencseType(Convert.ToInt32(AbsenceType), day.Days_ID);
-                }
-
-
-                return RedirectToPage("/AdminPage/Opdater-Timekort");
-            }
-            else
-            {
-                return RedirectToPage("/AdminPage/Opdater-Timekort");
             }
 
+            return RedirectToPage("/AdminPage/Opdater-Timekort");
         }
+
+
+
+        //------------------------ Nav Methods ------------------------//
+
 
         /// <summary>
         /// Method for clocking in and out
@@ -513,6 +576,101 @@ namespace Astrow_2._0.Pages.AdminPage
 
             //Method for registry
             _userRepository.Registrer(id);
+
+            //Return to home page
+            return RedirectToPage("/AdminPage/Opdater-Timekort");
+        }
+
+        /// <summary>
+        /// Get Start & End date for rendering years
+        /// </summary>
+        /// <returns></returns>
+        public LogedUser GetDate()
+        {
+            string name = HttpContext.Session.GetString("_Username");
+
+            LogedUser logedUser = new LogedUser();
+
+            if (name != null)
+            {
+                return logedUser = new LogedUser
+                {
+                    UserName = name,
+                    Status = HttpContext.Session.GetString("_Status"),
+                    User_ID = (int)HttpContext.Session.GetInt32("_UserID"),
+                    StartDate = DateTime.Parse(HttpContext.Session.GetString("_StartDate")),
+                    EndDate = DateTime.Parse(HttpContext.Session.GetString("_EndDate"))
+                };
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
+        /// <summary>
+        /// Method for requesting abscense
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult OnPostAbscenseRequest()
+        {
+            LogedUser log = GetDate();
+
+            if (log != null)
+            {
+                if (Bit != 2)
+                {
+                    if (AbscText == null)
+                    {
+                        AbscText = "";
+                    }
+
+                    DateTime temp = DateTime.Parse(AbsCal);
+                    DateTime HourDT = DateTime.Parse(Hour);
+                    DateTime date = new DateTime(temp.Year, temp.Month, temp.Day, HourDT.Hour, HourDT.Minute, 0, 0);
+
+                    Request request = new Request()
+                    {
+                        UserID = log.User_ID,
+                        AbsID = AbsenceType,
+                        Text = AbscText,
+                        Date = date,
+                        Answer = 3,
+                        SecDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0)
+                    };
+
+                    _userRepository.CreateRequest(request);
+                }
+                else
+                {
+                    if (AbscText == null)
+                    {
+                        AbscText = "";
+                    }
+
+                    DateTime CalOne = DateTime.Parse(AbsCalTwo);
+                    DateTime CalTwo = DateTime.Parse(AbsCalThree);
+
+                    DateTime HourOne = DateTime.Parse(HourTwo);
+                    DateTime HourSec = DateTime.Parse(HourThree);
+
+                    DateTime date = new DateTime(CalOne.Year, CalOne.Month, CalOne.Day, HourOne.Hour, HourOne.Minute, 0, 0);
+                    DateTime dateTwo = new DateTime(CalTwo.Year, CalTwo.Month, CalTwo.Day, HourSec.Hour, HourSec.Minute, 0, 0);
+
+                    Request request = new Request()
+                    {
+                        UserID = log.User_ID,
+                        AbsID = AbsenceType,
+                        Text = AbscText,
+                        Date = date,
+                        Answer = 3,
+                        SecDate = dateTwo
+                    };
+
+                    _userRepository.CreateRequest(request);
+                }
+            }
 
             //Return to home page
             return RedirectToPage("/AdminPage/Opdater-Timekort");

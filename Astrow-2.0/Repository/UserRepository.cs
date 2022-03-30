@@ -70,6 +70,32 @@ namespace Astrow_2._0.Repository
             return userList;
         }
 
+        public List<PersonalInfo> GetPeople()
+        {
+            List<Users> UserList = ReadAllUsers();
+
+            List<PersonalInfo> People = new List<PersonalInfo>();
+
+            foreach (Users item in UserList)
+            {
+                UserPersonalInfo person = FindUserInfo(item.User_ID);
+
+                PersonalInfo personalInfo = new PersonalInfo()
+                {
+                    ID = item.User_ID,
+                    UserName = item.UserName,
+                    Status = item.Status,
+                    FirstName = person.FirstName,
+                    MiddleName = person.MiddleName,
+                    LastName = person.LastName
+                };
+
+                People.Add(personalInfo);
+            }
+
+            return People;
+        }
+
         /// <summary>
         /// Find User by id
         /// </summary>
@@ -129,6 +155,12 @@ namespace Astrow_2._0.Repository
                 return logedUser;
             }
         }
+
+        public bool UsernameAvailable(string username)
+        {
+            bool exists = stored.UsernameAvailable(username);
+            return exists;
+        }
         #endregion
 
 
@@ -167,6 +199,37 @@ namespace Astrow_2._0.Repository
         public void CreateDay(Days day, int id)
         {
             stored.CreateDay(day, id);
+        }
+
+        /// <summary>
+        /// Create a abscense request
+        /// </summary>
+        /// <param name="request"></param>
+        public void CreateRequest(Request request)
+        {
+            stored.CreateRequest(request);
+        }
+
+        /// <summary>
+        /// Method for getting all request with one date
+        /// </summary>
+        /// <returns></returns>
+        public List<Request> GetRequests()
+        {
+            List<Request> list = stored.GetRequests();
+            return list;
+        }
+
+        /// <summary>
+        /// Find request by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Request FindRequest(int id)
+        {
+            Request request = stored.FindRequest(id);
+
+            return request;
         }
 
         /// <summary>
@@ -229,6 +292,30 @@ namespace Astrow_2._0.Repository
         }
 
         /// <summary>
+        /// Get list of abscense user can pick
+        /// </summary>
+        /// <returns></returns>
+        public List<AbscenseType> GettAbscenseTypeUserView()
+        {
+            List<AbscenseType> abscenses = stored.GetAllAbscenseType();
+            abscenses.Remove(abscenses.Find(x => x.Type == "COVID"));
+            abscenses.Remove(abscenses.Find(x => x.Type == "Ulovligt fravær"));
+            abscenses.Remove(abscenses.Find(x => x.Type == "Igen"));
+            return abscenses;
+        }
+
+        /// <summary>
+        /// Method for getting abscense type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public List<AbscenseType> GetAbscenseText()
+        {
+            List<AbscenseType> list = stored.GetAbscenseText();
+            return list;
+        }
+
+        /// <summary>
         /// Find day by id
         /// </summary>
         /// <param name="id"></param>
@@ -240,6 +327,16 @@ namespace Astrow_2._0.Repository
         }
 
         /// <summary>
+        /// Get AbscenseByText
+        /// </summary>
+        /// <returns></returns>
+        public AbscenseType FindAbscenseByText(string text)
+        {
+            AbscenseType abscense = stored.FindAbscenseByText(text);
+            return abscense;
+        }
+
+        /// <summary>
         /// Update day
         /// </summary>
         /// <param name="day"></param>
@@ -247,6 +344,27 @@ namespace Astrow_2._0.Repository
         {
             stored.UpdateDay(day);
         }
+
+        /// <summary>
+        /// Update request
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="id"></param>
+        public void UpdateRequest(Request request, int id)
+        {
+            stored.UpdateRequest(request, id);
+        }
+
+        /// <summary>
+        /// Update request answer
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="bit"></param>
+        public void UpdateRequestAnswered(int id, int ans)
+        {
+            stored.UpdateRequestAnswered(id, ans);
+        }
+
 
         /// <summary>
         /// Update the start of day column in Day
@@ -316,6 +434,7 @@ namespace Astrow_2._0.Repository
 
         #endregion
 
+
         /// <summary>
         ///  Method for checking user in/out
         /// </summary>
@@ -365,6 +484,11 @@ namespace Astrow_2._0.Repository
                     CreateDay(day, id);
 
 
+                }
+
+                else if (toDay.StartDay.ToString("HH:mm") == "00:00")
+                {
+                    UpdateStartDay(new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0), toDay.Days_ID);
                 }
 
                 //Eles if today isen't equal to Enday
@@ -608,5 +732,13 @@ namespace Astrow_2._0.Repository
                 CreateDay(day, id);
             }
         }
+
+        public string FirstCharToUpper(string input) =>
+        input switch
+        {
+            null => throw new ArgumentNullException(nameof(input)),
+            "" => throw new ArgumentException($"{nameof(input)} cannot be empty", nameof(input)),
+            _ => string.Concat(input[0].ToString().ToUpper(), input.AsSpan(1))
+        };
     }
 }

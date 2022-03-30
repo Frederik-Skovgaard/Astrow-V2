@@ -52,6 +52,9 @@ namespace Astrow_2._0.Pages
         [BindProperty]
         public bool LoginMessage { get; set; }
 
+        [BindProperty]
+        public bool CheckBox { get; set; }
+
         //-------------------Methods-----------------------
 
 
@@ -84,6 +87,8 @@ namespace Astrow_2._0.Pages
                 //Login the user and save the necesary data as LogedUser
                 LogedUser = _userRepository.Login(UserName, hashPass);
 
+                
+
                 //If LogedUser isen't null redirect to home page
                 if (LogedUser.Status != null)
                 {
@@ -97,7 +102,7 @@ namespace Astrow_2._0.Pages
                 }
                 else
                 {
-                    LoginMessage = true;
+                    ViewData["Message"] = "Brugernavn eller kodeord er forket!";
 
                     return Page();
                 }
@@ -105,12 +110,10 @@ namespace Astrow_2._0.Pages
             else
             {
 
-                LoginMessage = true;
+                ViewData["Message"] = "Brugernavn eller kodeord er forket!";
 
                 return Page();
             }
-
-
         }
     }
 }

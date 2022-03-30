@@ -17,7 +17,6 @@ namespace Astrow_2._0.Model.Items
             this.UserID = userID;
             this.Date = date;
 
-            this.AbsenceDate = abscenseDate;
             this.AbsenceText = abscenseText;
             this.AbscenseID = abscenseID;
 

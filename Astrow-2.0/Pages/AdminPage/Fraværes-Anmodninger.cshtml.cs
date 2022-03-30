@@ -1,76 +1,41 @@
-using Microsoft.AspNetCore.Http;
+using Astrow_2._0.Model.Items;
+using Astrow_2._0.Model.Containers;
+using Astrow_2._0.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Astrow_2._0.Model.Containers;
-using Astrow_2._0.Model.Items;
-using Astrow_2._0.Repository;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
+using System;
 
 namespace Astrow_2._0.Pages.AdminPage
 {
-    public class CreateUsersModel : PageModel
+    public class Fraværes_AnmodningerModel : PageModel
     {
         private readonly IUserRepository _userRepository;
 
-        public CreateUsersModel(IUserRepository userRepository)
+        public Fraværes_AnmodningerModel(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
 
-        #region Properties
 
-        //------------------------ Opret-Bruger Page ------------------------//
+        //------------------------ RequestPage ------------------------//
 
-        [BindProperty, MaxLength(20)]
-        public string UserName { get; set; }
-
-        [BindProperty, MaxLength(30)]
-        public string FirstName { get; set; }
-
-        [BindProperty, MaxLength(30)]
-        public string MiddleName { get; set; }
-
-        [BindProperty, MaxLength(30)]
-        public string LastName { get; set; }
 
         [BindProperty]
-        public string Password { get; set; }
+        public List<Request> Requests { get; set; }
 
         [BindProperty]
-        public string Role { get; set; }
+        public List<PersonalInfo> People { get; set; }
 
         [BindProperty]
-        public string StartDate { get; set; }
-
-        [BindProperty]
-        public string EndDate { get; set; }
-
-        [BindProperty]
-        public string FirstNameVal { get; set; }
-
-        [BindProperty]
-        public string MiddleNameVal { get; set; }
-
-        [BindProperty]
-        public string LastNameVal { get; set; }
-
-        [BindProperty]
-        public string UserNameVal { get; set; }
-
-        [BindProperty]
-        public string StartVal { get; set; }
-
-        [BindProperty]
-        public string EndVal { get; set; }
+        public int ID { get; set; }
 
 
         //------------------------ AbsRequest ------------------------//
 
         [BindProperty]
-        public List<AbscenseType> Abscenses { get; set; }
+        public List<AbscenseType> AbscensesRequest { get; set; }
 
         [BindProperty]
         public string AbsCal { get; set; }
@@ -99,9 +64,8 @@ namespace Astrow_2._0.Pages.AdminPage
         [BindProperty]
         public int Bit { get; set; }
 
-        #endregion
 
-        //------------------------ Methods ------------------------//
+        //------------------------ Method ------------------------//
 
         /// <summary>
         /// Check if users has rights to be on side
@@ -109,126 +73,137 @@ namespace Astrow_2._0.Pages.AdminPage
         /// <returns></returns>
         public IActionResult OnGet()
         {
+            //Check if user has "Instructør" rights
             if (HttpContext.Session.GetInt32("_UserID") == 0)
             {
                 return RedirectToPage("/Login");
             }
             else
             {
-                if (HttpContext.Session.GetString("_Status") != "Instruct�r")
+                if (HttpContext.Session.GetString("_Status") != "Instructør")
                 {
                     return RedirectToPage("/Home");
                 }
                 else
                 {
                     //Get abscense type
-                    Abscenses = _userRepository.GettAbscenseTypeUserView();
+                    AbscensesRequest = _userRepository.GettAbscenseTypeUserView();
+
+                    //Get all requests
+                    Requests = _userRepository.GetRequests();
+                    Requests = Requests.FindAll(x => x.Answer == 3);
+
+                    //Fills dropdown with users 
+                    List<Users> UserList = _userRepository.ReadAllUsers();
+
+                    People = _userRepository.GetPeople();
 
                     return Page();
                 }
             }
+
         }
 
+        public IActionResult OnPostDeny()
+        {
+            //Deny request
+            _userRepository.UpdateRequestAnswered(ID, 0);
+
+            //Return to page
+            return RedirectToPage("/AdminPage/Fraværes-Anmodninger");
+        }
+
+        public IActionResult OnPostAccept()
+        {
+            Request req = _userRepository.FindRequest(ID);
+
+            //Update TimeCard
+            switch (req.AbsID)
+            {
+                case 2:
+                    UpdateAbscens(req.AbsID);
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    UpdateAbscens(req.AbsID);
+                    break;
+                case 6:
+                    UpdateAbscens(req.AbsID);
+                    break;
+                case 7:
+                    UpdateAbscens(req.AbsID);
+                    break;
+                case 8:
+                    UpdateAbscens(req.AbsID);
+                    break;
+                case 9:
+                    UpdateAbscens(req.AbsID);
+                    break;
+                case 10:
+                    UpdateAbscens(req.AbsID);
+                    break;
+                default:
+                    break;
+
+            }
+
+            //Approve request
+            _userRepository.UpdateRequestAnswered(ID, 1);
+
+            //Return to page
+            return RedirectToPage("/AdminPage/Fraværes-Anmodninger");
+        }
 
         /// <summary>
-        /// Create User
+        /// Updated abscense of today
         /// </summary>
-        public void OnPost()
+        /// <param name="id"></param>
+        public void UpdateAbscens(int id)
         {
-            bool exists = _userRepository.UsernameAvailable(UserName);
+            People = _userRepository.GetPeople();
 
-            if(!exists)
+            Request req = _userRepository.FindRequest(ID);
+            PersonalInfo user = People.Find(x => x.ID == req.UserID);
+            
+            Days day = _userRepository.FindDay(req.Date, user.ID);
+
+            if (day.Days_ID == 0)
             {
-                //Get abscense type
-                Abscenses = _userRepository.GettAbscenseTypeUserView();
-
-                //Generate salt
-                string salt = _userRepository.CreateSalt(16);
-
-                //Use salt to hash the password
-                string hashPass = _userRepository.GenerateHash(Password, salt);
-
-                UserPersonalInfo person = new UserPersonalInfo();
-
-                if (MiddleName != null)
-                {
-                    //Perosnal info
-                    person = new UserPersonalInfo()
-                    {
-                        FirstName = _userRepository.FirstCharToUpper(FirstName),
-                        MiddleName = _userRepository.FirstCharToUpper(MiddleName),
-                        LastName = _userRepository.FirstCharToUpper(LastName),
-                        FullName = $"{FirstName} {MiddleName} {LastName}"
-                    };
-                }
-                else
-                {
-                    //Perosnal info
-                    person = new UserPersonalInfo()
-                    {
-                        FirstName = _userRepository.FirstCharToUpper(FirstName),
-                        MiddleName = MiddleName,
-                        LastName = _userRepository.FirstCharToUpper(LastName),
-                        FullName = $"{FirstName} {MiddleName} {LastName}"
-                    };
-                }
-
-
-
-                //User info
-                Users users = new Users()
-                {
-                    UserName = UserName,
-                    Password = hashPass,
-                    Name_ID = person.Name_ID,
-                    Status = Role,
-                    StartDate = DateTime.Parse(StartDate),
-                    EndDate = DateTime.Parse(EndDate),
-                    Salt = salt.ToString(),
-                    IsDeleted = false
-                };
-
-                //Create user with stored procedure
-                _userRepository.CreateUser(users, person);
-
-                users = _userRepository.FindByUserName(users.UserName);
-
+                //Variable datetime now
                 DateTime now = DateTime.Now;
 
-                for (DateTime i = DateTime.Parse(StartDate); DateTime.Now.CompareTo(i) > 0; i = i.AddDays(1.0))
+                //Find date with Startday time and id
+                Days toDay = _userRepository.FindDay(new DateTime(now.Year, now.Month, (now.Day - 1), 0, 0, 0), user.ID);
+
+                //Create a Day object
+                day = new Days()
                 {
-                    Days day = new Days()
-                    {
-                        Date = new DateTime(i.Year, i.Month, i.Day, 0, 0, 0),
-                        AbscenseID = 1,
-                        UserID = users.User_ID,
-                        AbsenceText = "",
-                        StartDay = new DateTime(i.Year, i.Month, i.Day, 0, 0, 0),
-                        EndDay = new DateTime(i.Year, i.Month, i.Day, 0, 0, 0),
-                        Min = 0,
-                        Hour = 0,
-                        Saldo = "00:00",
-                        TotalSaldo = "00:00"
-                    };
+                    Date = req.Date,
+                    AbscenseID = req.AbsID,
+                    UserID = user.ID,
+                    AbsenceText = "",
+                    StartDay = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0),
+                    EndDay = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0),
+                    Min = 0,
+                    Hour = 0,
+                    Saldo = "00:00",
+                    TotalSaldo = toDay.TotalSaldo
+                };
 
-                    _userRepository.CreateDay(day, users.User_ID);
-                }
-
-                ViewData["Message"] = "Brugen blev oprettet!";
+                _userRepository.CreateDay(day, user.ID);
             }
-            else
+
+            if (AbscText == null)
             {
-                FirstNameVal = FirstName;
-                MiddleNameVal = MiddleName;
-                LastNameVal = LastName;
-                UserNameVal = UserName;
-                StartVal = StartDate;
-                EndVal = EndDate;
-
-                ViewData["Message"] = "Brugernavn er i brug!";
+                AbscText = "";
             }
-        }
 
+            _userRepository.UpdateAbsence(AbscText, day.Days_ID);
+            _userRepository.UpdateAbsencseType(id, day.Days_ID);
+        }
 
         //------------------------ Nav Methods ------------------------//
 
@@ -244,8 +219,8 @@ namespace Astrow_2._0.Pages.AdminPage
             //Method for registry
             _userRepository.Registrer(id);
 
-            //Return to home page
-            return RedirectToPage("/AdminPage/Opret-Bruger");
+            //Return to page
+            return RedirectToPage("/AdminPage/Fraværes-Anmodninger");
         }
 
         /// <summary>
@@ -340,8 +315,7 @@ namespace Astrow_2._0.Pages.AdminPage
             }
 
             //Return to home page
-            return RedirectToPage("/AdminPage/Opret-Bruger");
+            return RedirectToPage("/AdminPage/Fraværes-Anmodninger");
         }
-
-    }    
+    }
 }
