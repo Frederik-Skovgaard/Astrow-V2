@@ -57,7 +57,7 @@ namespace Astrow_2._0.Pages
         public List<Days> daysList { get; set; }
 
         [BindProperty]
-        public List<AbscenseType> Abscenses { get; set; }
+        public List<AbscenseType> AbscensesRequest { get; set; }
 
 
         //------------------------ AbsRequest ------------------------//
@@ -105,8 +105,8 @@ namespace Astrow_2._0.Pages
             else
             {
                 //Get abscense type
-                Abscenses = _userRepository.GettAbscenseTypeUserView();
-                
+                AbscensesRequest = _userRepository.GettAbscenseTypeUserView();
+
 
                 //To get start & end date of user
                 logged = GetDate();

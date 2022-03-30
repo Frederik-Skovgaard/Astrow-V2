@@ -27,7 +27,6 @@
                     </button>
                 </div>
 
-
                 @*one month back | Now | one month front*@
                 <button type="submit" asp-page-handler="Back">
                     <i style="font-size: 25px;" class="fas fa-chevron-circle-left"></i>
@@ -38,8 +37,6 @@
                 <button type="submit" asp-page-handler="Forward">
                     <i style="font-size: 25px;" class="fas fa-chevron-circle-right"></i>
                 </button>
-
-
             </div>
             <div class="Table-Head">
                 <table>
@@ -235,8 +232,9 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal -->
+</form>
+<form method="post">
+ <!-- Modal -->
     <div class="modal fade" id="AbscenseRequest" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -251,7 +249,7 @@
                         <div class="col-6 Abscense">
                             <select class="form-control AbscenseTypeDrop" asp-for="AbsenceType" name="AbsenceType" id="AbscenseDrop">
                                 @{
-                                    foreach (Model.Items.AbscenseType type in Model.Abscenses)
+                                    foreach (Model.Items.AbscenseType type in Model.AbscensesRequest)
                                     {
                                         <option value="@type.ID">@type.Type</option>
                                     }
@@ -302,94 +300,94 @@
     </div>
 
     <script type="text/javascript">
-            $('#TwoDates').click(function() {
-                $('.TwoDates').toggleClass("show");
-                $('#Date').toggleClass("Hide");
+        $('#TwoDates').click(function() {
+            $('.TwoDates').toggleClass("show");
+            $('#Date').toggleClass("Hide");
 
-                if (document.getElementById('AbsCalendar').hasAttribute("Required")) {
-                    document.getElementById('Bit').setAttribute('value','2')
+            if (document.getElementById('AbsCalendar').hasAttribute("Required")) {
+                document.getElementById('Bit').setAttribute('value','2')
 
-                    $('#AbsCalendar').prop('required',false);
-                    $('.HourClock').prop('required',false);
+                $('#AbsCalendar').prop('required',false);
+                $('.HourClock').prop('required',false);
 
-                    $('#AbsCalendarTwo').prop('required',true);
-                    $('#AbsCalendarThree').prop('required',true);
-                    $('.HourClockTwo').prop('required',true);
-                }
-                else {
-                    document.getElementById('Bit').setAttribute('value','1')
-
-                    $('#AbsCalendar').prop('required',true);
-                    $('.HourClock').prop('required',true);
-
-                    $('#AbsCalendarTwo').prop('required',false);
-                    $('#AbsCalendarThree').prop('required',false);
-                    $('.HourClockTwo').prop('required',false);
-                }
-            });
-
-            $('#submit').click(function() {
-                if (document.getElementById('AbscenseRequest').classList.contains("show")) {
-
-                    $('#FirstName').prop('required',false);
-                    $('#LastName').prop('required',false);
-                    $('#UserName').prop('required',false);
-                    $('#Password').prop('required',false);
-                    $('#StartDate').prop('required',false);
-                    $('#EndDate').prop('required',false);
-
-                    
-                }
-                else {
-
-                    $('#FirstName').prop('required',true);
-                    $('#LastName').prop('required',true);
-                    $('#UserName').prop('required',true);
-                    $('#Password').prop('required',true);
-                    $('#StartDate').prop('required',true);
-                    $('#EndDate').prop('required',true);
-                }
-            });
-
-            document.getElementById('AbsCalendarTwo').onchange = function () {
-                var input = document.getElementById('AbsCalendarThree');
-                var otherInput = document.getElementById('AbsCalendarTwo').value;
-                input.setAttribute("min", otherInput)
+                $('#AbsCalendarTwo').prop('required',true);
+                $('#AbsCalendarThree').prop('required',true);
+                $('.HourClockTwo').prop('required',true);
             }
+            else {
+                document.getElementById('Bit').setAttribute('value','1')
 
-            $('#submit').click(function () {
-                if (document.getElementById('TwoDatesDiv').classList.contains("show")) {
-                        var currentStartTimeValue = document.getElementById("HourTwo").value;
-                        var currentEndTimeValue = document.getElementById("HourThree").value;
+                $('#AbsCalendar').prop('required',true);
+                $('.HourClock').prop('required',true);
 
-                        if (!currentStartTimeValue) {
-                            alert('Vægle en start tid!');
-                                return false;
+                $('#AbsCalendarTwo').prop('required',false);
+                $('#AbsCalendarThree').prop('required',false);
+                $('.HourClockTwo').prop('required',false);
+            }
+        });
+
+        $('#submit').click(function() {
+            if (document.getElementById('AbscenseRequest').classList.contains("show")) {
+
+                $('#FirstName').prop('required',false);
+                $('#LastName').prop('required',false);
+                $('#UserName').prop('required',false);
+                $('#Password').prop('required',false);
+                $('#StartDate').prop('required',false);
+                $('#EndDate').prop('required',false);
+
+
+            }
+            else {
+
+                $('#FirstName').prop('required',true);
+                $('#LastName').prop('required',true);
+                $('#UserName').prop('required',true);
+                $('#Password').prop('required',true);
+                $('#StartDate').prop('required',true);
+                $('#EndDate').prop('required',true);
+            }
+        });
+
+        document.getElementById('AbsCalendarTwo').onchange = function () {
+            var input = document.getElementById('AbsCalendarThree');
+            var otherInput = document.getElementById('AbsCalendarTwo').value;
+            input.setAttribute("min", otherInput)
+        }
+
+        $('#submit').click(function () {
+            if (document.getElementById('TwoDatesDiv').classList.contains("show")) {
+                    var currentStartTimeValue = document.getElementById("HourTwo").value;
+                    var currentEndTimeValue = document.getElementById("HourThree").value;
+
+                    if (!currentStartTimeValue) {
+                        alert('Vægle en start tid!');
+                            return false;
+                    }
+                    else if (!currentEndTimeValue) {
+                        alert('Vægle en slut tid!');
+                            return false;
+                    }
+                    else if (currentStartTimeValue >= currentEndTimeValue || currentStartDateValue > currentEndDateValue) {
+                        if(currentStartDateValue >= currentEndDateValue) {
+                            alert('Slut tiden må ikke være før start tiden!');
+                            return false;
                         }
-                        else if (!currentEndTimeValue) {
-                            alert('Vægle en slut tid!');
-                                return false;
-                        }
-                        else if (currentStartTimeValue >= currentEndTimeValue || currentStartDateValue > currentEndDateValue) {
-                            if(currentStartDateValue >= currentEndDateValue) {
-                                alert('Slut tiden må ikke være før start tiden!');
-                                return false;
-                            }
-                        }
+                    }
 
-                        document.getElementById('submit').style.pointerEvents = "none";
-                }
-            });
+                    document.getElementById('submit').style.pointerEvents = "none";
+            }
+        });
 
-            $("#EndDate").change(function () {
-                var startDate = document.getElementById("StartDate").value;
-                var endDate = document.getElementById("EndDate").value;
+        $("#EndDate").change(function () {
+            var startDate = document.getElementById("StartDate").value;
+            var endDate = document.getElementById("EndDate").value;
 
-                if ((Date.parse(endDate) <= Date.parse(startDate))) {
-                    alert("End date should be greater than Start date");
-                    document.getElementById("EndDate").value = "";
-                }
-            });
+            if ((Date.parse(endDate) <= Date.parse(startDate))) {
+                alert("End date should be greater than Start date");
+                document.getElementById("EndDate").value = "";
+            }
+        });
     </script>
 
 </form>

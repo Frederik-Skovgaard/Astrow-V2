@@ -133,7 +133,7 @@ a.navbar-brand {
 
 .Login-Page .container {
     margin: 0 auto;
-    height: 29rem;
+    height: 28rem;
     margin-top: 50%;
     background: linear-gradient( 35deg, rgb(45 115 251 / 50%) 25%, rgb(39 152 224 / 50%) 50%, rgb(35 183 202 / 50%) 75%);
     background-repeat: no-repeat;
@@ -212,7 +212,7 @@ a.navbar-brand {
 
 .Login-Page .bottom {
     margin: 0 auto;
-    margin-top: 1rem;
+    margin-top: 3rem;
     max-width: min-content;
 }
 

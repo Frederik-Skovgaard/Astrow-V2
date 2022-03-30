@@ -564,6 +564,15 @@ SELECT * FROM [AbscenseType]
 WHERE [Type] = @Text
 GO
 
+-- Check if username is available
+CREATE PROCEDURE [UsernameAvailable]
+@Username NVARCHAR(20)
+AS
+SELECT [UserName] FROM [User]
+WHERE [UserName] = @Username
+GO
+
+
 
 
 

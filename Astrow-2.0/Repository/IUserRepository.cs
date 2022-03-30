@@ -30,6 +30,8 @@ namespace Astrow_2._0.Repository
 
         LogedUser Login(string username, string password);
 
+        bool UsernameAvailable(string username);
+
         #endregion
 
 

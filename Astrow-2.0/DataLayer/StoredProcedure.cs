@@ -46,8 +46,6 @@ namespace Astrow_2._0.DataLayer
             CreateUser(user, info);
         }
 
-        //--------- Container ---------
-
         /// <summary>
         /// Create user
         /// </summary>
@@ -105,8 +103,6 @@ namespace Astrow_2._0.DataLayer
             }
         }
 
-        //--------- Items -------------
-
         /// <summary>
         /// Creating calendar
         /// </summary>
@@ -139,6 +135,7 @@ namespace Astrow_2._0.DataLayer
 
             }
         }
+
 
         /// <summary>
         /// Method for creating user in name table
@@ -1053,6 +1050,37 @@ namespace Astrow_2._0.DataLayer
 
                 return list;                
             }  
+        }
+
+        public bool UsernameAvailable(string username)
+        {
+            using (sql = new SqlConnection(connectionString))
+            {
+                sql.Open();
+
+                SqlCommand cmd = new SqlCommand("UsernameAvailable", sql);
+                cmd.CommandType= CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@Username", username);
+
+                bool exists;
+
+                using (SqlDataReader read = cmd.ExecuteReader())
+                {
+                    if(read.HasRows)
+                    {
+                        exists = true;
+
+                    }
+                    else
+                    {
+                        exists = false;
+                    }
+                }
+
+
+                return exists;
+            }
         }
 
         #endregion 

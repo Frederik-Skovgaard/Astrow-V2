@@ -66,6 +66,7 @@ namespace Astrow_2._0.Pages.AdminPage
         [BindProperty]
         public string EndVal { get; set; }
 
+
         //------------------------ AbsRequest ------------------------//
 
         [BindProperty]
@@ -134,64 +135,98 @@ namespace Astrow_2._0.Pages.AdminPage
         /// </summary>
         public void OnPost()
         {
-            //Get abscense type
-            Abscenses = _userRepository.GettAbscenseTypeUserView();
+            bool exists = _userRepository.UsernameAvailable(UserName);
 
-            //Generate salt
-            string salt = _userRepository.CreateSalt(16);
-
-            //Use salt to hash the password
-            string hashPass = _userRepository.GenerateHash(Password, salt);
-
-            UserPersonalInfo person = new UserPersonalInfo();
-
-            if (MiddleName != null)
+            if(!exists)
             {
-                //Perosnal info
-                person = new UserPersonalInfo()
+                //Get abscense type
+                Abscenses = _userRepository.GettAbscenseTypeUserView();
+
+                //Generate salt
+                string salt = _userRepository.CreateSalt(16);
+
+                //Use salt to hash the password
+                string hashPass = _userRepository.GenerateHash(Password, salt);
+
+                UserPersonalInfo person = new UserPersonalInfo();
+
+                if (MiddleName != null)
                 {
-                    FirstName = _userRepository.FirstCharToUpper(FirstName),
-                    MiddleName = _userRepository.FirstCharToUpper(MiddleName),
-                    LastName = _userRepository.FirstCharToUpper(LastName),
-                    FullName = $"{FirstName} {MiddleName} {LastName}"
+                    //Perosnal info
+                    person = new UserPersonalInfo()
+                    {
+                        FirstName = _userRepository.FirstCharToUpper(FirstName),
+                        MiddleName = _userRepository.FirstCharToUpper(MiddleName),
+                        LastName = _userRepository.FirstCharToUpper(LastName),
+                        FullName = $"{FirstName} {MiddleName} {LastName}"
+                    };
+                }
+                else
+                {
+                    //Perosnal info
+                    person = new UserPersonalInfo()
+                    {
+                        FirstName = _userRepository.FirstCharToUpper(FirstName),
+                        MiddleName = MiddleName,
+                        LastName = _userRepository.FirstCharToUpper(LastName),
+                        FullName = $"{FirstName} {MiddleName} {LastName}"
+                    };
+                }
+
+
+
+                //User info
+                Users users = new Users()
+                {
+                    UserName = UserName,
+                    Password = hashPass,
+                    Name_ID = person.Name_ID,
+                    Status = Role,
+                    StartDate = DateTime.Parse(StartDate),
+                    EndDate = DateTime.Parse(EndDate),
+                    Salt = salt.ToString(),
+                    IsDeleted = false
                 };
+
+                //Create user with stored procedure
+                _userRepository.CreateUser(users, person);
+
+                users = _userRepository.FindByUserName(users.UserName);
+
+                DateTime now = DateTime.Now;
+
+                for (DateTime i = DateTime.Parse(StartDate); DateTime.Now.CompareTo(i) > 0; i = i.AddDays(1.0))
+                {
+                    Days day = new Days()
+                    {
+                        Date = new DateTime(i.Year, i.Month, i.Day, 0, 0, 0),
+                        AbscenseID = 1,
+                        UserID = users.User_ID,
+                        AbsenceText = "",
+                        StartDay = new DateTime(i.Year, i.Month, i.Day, 0, 0, 0),
+                        EndDay = new DateTime(i.Year, i.Month, i.Day, 0, 0, 0),
+                        Min = 0,
+                        Hour = 0,
+                        Saldo = "00:00",
+                        TotalSaldo = "00:00"
+                    };
+
+                    _userRepository.CreateDay(day, users.User_ID);
+                }
+
+                ViewData["Message"] = "Brugen blev oprettet!";
             }
             else
             {
-                //Perosnal info
-                person = new UserPersonalInfo()
-                {
-                    FirstName = _userRepository.FirstCharToUpper(FirstName),
-                    MiddleName = MiddleName,
-                    LastName = _userRepository.FirstCharToUpper(LastName),
-                    FullName = $"{FirstName} {MiddleName} {LastName}"
-                };
+                FirstNameVal = FirstName;
+                MiddleNameVal = MiddleName;
+                LastNameVal = LastName;
+                UserNameVal = UserName;
+                StartVal = StartDate;
+                EndVal = EndDate;
+
+                ViewData["Message"] = "Brugernavn er i brug!";
             }
-
-           
-
-            //User info
-            Users users = new Users()
-            {
-                UserName = UserName,
-                Password = hashPass,
-                Name_ID = person.Name_ID,
-                Status = Role,
-                StartDate = DateTime.Parse(StartDate),
-                EndDate = DateTime.Parse(EndDate),
-                Salt = salt.ToString(),
-                IsDeleted = false
-            };
-
-            //Create user with stored procedure
-            _userRepository.CreateUser(users, person);
-
-            FirstNameVal = "";
-            MiddleNameVal = "";
-            LastNameVal = "";
-            UserNameVal = "";
-            StartVal = "";
-            EndVal = "";
         }
 
 

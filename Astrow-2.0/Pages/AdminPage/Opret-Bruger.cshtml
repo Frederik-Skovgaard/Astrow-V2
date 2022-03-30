@@ -107,6 +107,14 @@
     </div>
 </div>
 
+@if(ViewData["Message"] != null)
+{
+    <script type="text/javascript">
+         window.onload = function () {
+                alert("@ViewData["Message"]");
+            };
+    </script>
+}
 
 @*Endate validator*@
 <script type="text/javascript">
@@ -123,14 +131,25 @@
     document.getElementById('StartDate').onchange = function () {
         var input = document.getElementById('EndDate');
         var otherInput = document.getElementById('StartDate').value;
-        input.setAttribute("min", otherInput)
+
+        var d = new Date(otherInput),
+        month = '' + (d.getMonth() + 1),
+        day = '' + (d.getDate() + 1),
+        year = d.getFullYear();
+
+        if (month.length < 2) 
+            month = '0' + month;
+        if (day.length < 2) 
+            day = '0' + day;
+
+        input.setAttribute("min", [year, month, day].join('-'))
     }
 
     $('#SubmitUser').click(function() {
         var textbox = document.getElementById('Password');
         if (textbox.value.length >= 8) {
-            alert('Bruger blev oprettet');
-            window.location.href='/AdminPage/Opdater-Bruger';
+            //alert('Bruger blev oprettet');
+            //window.location.href='/AdminPage/Opdater-Bruger';
         }
         else {
             alert("Kodeord skal have minst 8 karater")

@@ -29,8 +29,8 @@
                     <i class="fas fa-users"></i> Brugere
                 </a>
                 <a href="/AdminPage/Fraværes-Anmodninger" class="btn btn-lg btn-secondary bottom">
-                        <i class="fa-solid fa-calendar-day"></i> Anmodniger
-                    </a>
+                    <i class="fa-solid fa-calendar-day"></i> Anmodniger
+                </a>
             </div>
         </div>
         <div class="container lower-container UpdateUser">
@@ -102,7 +102,7 @@
                     <div class="col-6">
                         <label>Start Dato</label> <br />
 
-                        <input asp-for="StartDate" required id="StartDate" type="date" autocomplete="off" class="form-control" oninvalid="this.setCustomValidity('Skriv start dato her')" oninput="this.setCustomValidity('')" />
+                        <input asp-for="StartDate" onchange="DateValidator" required id="StartDate" type="date" autocomplete="off" class="form-control" oninvalid="this.setCustomValidity('Skriv start dato her')" oninput="this.setCustomValidity('')" />
                         <span asp-validation-for="StartDate" class="CreateUserError"></span>
                     </div>
 
@@ -138,168 +138,192 @@
                     }
                 </div>
 
-                <!--#region FraværesAnmodning  -->
-                <!-- Modal -->
-                <div class="modal fade" id="AbscenseRequest" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Fraværsanmodning</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row col-row">
-                                    <div class="col-6 Abscense">
-                                        <select class="form-control AbscenseTypeDrop" asp-for="AbsenceType" name="AbsenceType" id="AbscenseDrop">
-                                            @{
-                                                foreach (Model.Items.AbscenseType type in Model.Abscenses)
-                                                {
-                                                    <option value="@type.ID">@type.Type</option>
-                                                }
-                                            }
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row col-row TextRow">
-                                    <div class="col-6 TextCol">
-                                        <textarea type="text" class="form-control AbsenceText" name="AbscText" placeholder="* Valgfrit Fraværes oversag" asp-for="AbscText"></textarea>
-                                    </div>
-                                </div>
-                                <div class="row col-row Date" id="Date">
-                                    <div class="col-6 Calendar">
-                                        <input id="AbsCalendar" value="@DateTime.Now.ToString("yyyy/MM/dd")" type="date" name="AbsCal" class="form-control" min="@DateTime.Now.ToString("yyyy/MM/dd")" oninvalid="this.setCustomValidity('Vælge en dato')" oninput="this.setCustomValidity('')" required />
-                                    </div>
-                                    <div class="col-2 Hour">
-                                        <input class="HourClock" value="@DateTime.Now.ToString("HH:mm")" min="08:00" max="15:24" type="time" name="Hour" required>
-                                    </div>
-                                </div>
-                                <div class="TwoDates" id="TwoDatesDiv">
-                                    <div class="row col-row Date">
-                                        <div class="col-6">
-                                            <input id="AbsCalendarTwo" value="@DateTime.Now.ToString("yyyy/MM/dd")" type="date" name="AbsCalTwo" class="form-control" min="@DateTime.Now.ToString("yyyy/MM/dd")" oninvalid="this.setCustomValidity('Skriv start dato her')" oninput="this.setCustomValidity('')" />
-                                        </div>
-                                        <div class="col-6">
-                                            <input id="AbsCalendarThree" value="@DateTime.Now.ToString("yyyy/MM/dd")" type="date" name="AbsCalThree" class="form-control" min="@DateTime.Now.ToString("yyyy/MM/dd")" oninvalid="this.setCustomValidity('Skriv end dato her')" oninput="this.setCustomValidity('')" />
-                                        </div>
-                                    </div>
-                                    <div class="row col-row Clock">
-                                        <div class="col-6 TwoDate">
-                                            <input class="HourClockTwo" id="HourTwo" value="@DateTime.Now.ToString("HH:mm")" min="08:00" max="15:24" type="time" name="HourTwo">
-                                        </div>
-                                        <div class="col-6 TwoDate">
-                                            <input class="HourClockTwo" id="HourThree" value="@DateTime.Now.ToString("HH:mm")" min="08:00" max="15:24" type="time" name="HourThree">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <input value="1" id="Bit" asp-for="Bit" hidden />
-                                <input type="button" id="TwoDates" class="btn btn-secondary" value="Længer period" />
-                                <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Close" />
-                                <input type="submit" id="submit" class="btn btn-primary" asp-page-handler="AbscenseRequest" value="Save changes" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <script type="text/javascript">
-                        $('#TwoDates').click(function() {
-                            $('.TwoDates').toggleClass("show");
-                            $('#Date').toggleClass("Hide");
-
-                            if (document.getElementById('AbsCalendar').hasAttribute("Required")) {
-                                document.getElementById('Bit').setAttribute('value','2')
-
-                                $('#AbsCalendar').prop('required',false);
-                                $('.HourClock').prop('required',false);
-
-                                $('#AbsCalendarTwo').prop('required',true);
-                                $('#AbsCalendarThree').prop('required',true);
-                                $('.HourClockTwo').prop('required',true);
-                            }
-                            else {
-                                document.getElementById('Bit').setAttribute('value','1')
-
-                                $('#AbsCalendar').prop('required',true);
-                                $('.HourClock').prop('required',true);
-
-                                $('#AbsCalendarTwo').prop('required',false);
-                                $('#AbsCalendarThree').prop('required',false);
-                                $('.HourClockTwo').prop('required',false);
-                            }
-                        });
-
-
-                        $('#submit').click(function() {
-                            if (document.getElementById('AbscenseRequest').classList.contains("show")) {
-
-                                $('#FirstName').prop('required',false);
-                                $('#LastName').prop('required',false);
-                                $('#UserName').prop('required',false);
-                                $('#Password').prop('required',false);
-                                $('#StartDate').prop('required',false);
-                                $('#EndDate').prop('required',false);
-                            }
-                            else {
-
-                                $('#FirstName').prop('required',true);
-                                $('#LastName').prop('required',true);
-                                $('#UserName').prop('required',true);
-                                $('#Password').prop('required',true);
-                                $('#StartDate').prop('required',true);
-                                $('#EndDate').prop('required',true);
-                            }
-                    });
-
-                        document.getElementById('AbsCalendarTwo').onchange = function () {
-                            var input = document.getElementById('AbsCalendarThree');
-                            var otherInput = document.getElementById('AbsCalendarTwo').value;
-                            input.setAttribute("min", otherInput)
-                        }
-
-                        $('#submit').click(function () {
-                            if (document.getElementById('TwoDatesDiv').classList.contains("show")) {
-                                var currentStartTimeValue = document.getElementById("HourTwo").value;
-                                var currentEndTimeValue = document.getElementById("HourThree").value;
-
-                                if (!currentStartTimeValue) {
-                                    alert('Vægle en start tid!');
-                                        return false;
-                                }
-                                else if (!currentEndTimeValue) {
-                                    alert('Vægle en slut tid!');
-                                        return false;
-                                }
-                                else if (currentStartTimeValue >= currentEndTimeValue || currentStartDateValue > currentEndDateValue) {
-                                    if(currentStartDateValue >= currentEndDateValue) {
-                                        alert('Slut tiden må ikke være før start tiden!');
-                                        return false;
-                                    }
-                                }
-
-                                document.getElementById('submit').style.pointerEvents = "none";
-                                
-                            }
-                        });
-
-
-                        $("#EndDate").change(function () {
-                            var startDate = document.getElementById("StartDate").value;
-                            var endDate = document.getElementById("EndDate").value;
-
-                            if ((Date.parse(endDate) <= Date.parse(startDate))) {
-                                alert("End date should be greater than Start date");
-                                document.getElementById("EndDate").value = "";
-                            }
-                        });
-                </script>
-                <!--#endregion -->
-
-
-
             </form>
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+
+     window.onload = function () {
+                DateValidator();
+            };
+
+    function DateValidator () {
+        var input = document.getElementById('EndDate');
+        var otherInput = document.getElementById('StartDate').value;
+
+        var d = new Date(otherInput),
+        month = '' + (d.getMonth() + 1),
+        day = '' + (d.getDate() + 1),
+        year = d.getFullYear();
+
+        if (month.length < 2) 
+            month = '0' + month;
+        if (day.length < 2) 
+            day = '0' + day;
+
+        input.setAttribute("min", [year, month, day].join('-'))
+    }
+ </script>
+
+<!--#region FraværesAnmodning  -->
+    <!-- Modal -->
+    <form method="post">
+        <div class="modal fade" id="AbscenseRequest" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Fraværsanmodning</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row col-row">
+                            <div class="col-6 Abscense">
+                                <select class="form-control AbscenseTypeDrop" asp-for="AbsenceType" name="AbsenceType" id="AbscenseDrop">
+                                    @{
+                                        foreach (Model.Items.AbscenseType type in Model.Abscenses)
+                                        {
+                                            <option value="@type.ID">@type.Type</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row col-row TextRow">
+                            <div class="col-6 TextCol">
+                                <textarea type="text" class="form-control AbsenceText" name="AbscText" placeholder="* Valgfrit Fraværes oversag" asp-for="AbscText"></textarea>
+                            </div>
+                        </div>
+                        <div class="row col-row Date" id="Date">
+                            <div class="col-6 Calendar">
+                                <input id="AbsCalendar" value="@DateTime.Now.ToString("yyyy/MM/dd")" type="date" name="AbsCal" class="form-control" min="@DateTime.Now.ToString("yyyy/MM/dd")" oninvalid="this.setCustomValidity('Vælge en dato')" oninput="this.setCustomValidity('')" required />
+                            </div>
+                            <div class="col-2 Hour">
+                                <input class="HourClock" value="@DateTime.Now.ToString("HH:mm")" min="08:00" max="15:24" type="time" name="Hour" required>
+                            </div>
+                        </div>
+                        <div class="TwoDates" id="TwoDatesDiv">
+                            <div class="row col-row Date">
+                                <div class="col-6">
+                                    <input id="AbsCalendarTwo" value="@DateTime.Now.ToString("yyyy/MM/dd")" type="date" name="AbsCalTwo" class="form-control" min="@DateTime.Now.ToString("yyyy/MM/dd")" oninvalid="this.setCustomValidity('Skriv start dato her')" oninput="this.setCustomValidity('')" />
+                                </div>
+                                <div class="col-6">
+                                    <input id="AbsCalendarThree" value="@DateTime.Now.ToString("yyyy/MM/dd")" type="date" name="AbsCalThree" class="form-control" min="@DateTime.Now.ToString("yyyy/MM/dd")" oninvalid="this.setCustomValidity('Skriv end dato her')" oninput="this.setCustomValidity('')" />
+                                </div>
+                            </div>
+                            <div class="row col-row Clock">
+                                <div class="col-6 TwoDate">
+                                    <input class="HourClockTwo" id="HourTwo" value="@DateTime.Now.ToString("HH:mm")" min="08:00" max="15:24" type="time" name="HourTwo">
+                                </div>
+                                <div class="col-6 TwoDate">
+                                    <input class="HourClockTwo" id="HourThree" value="@DateTime.Now.ToString("HH:mm")" min="08:00" max="15:24" type="time" name="HourThree">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input value="1" id="Bit" asp-for="Bit" hidden />
+                        <input type="button" id="TwoDates" class="btn btn-secondary" value="Længer period" />
+                        <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Close" />
+                        <input type="submit" id="submit" class="btn btn-primary" asp-page-handler="AbscenseRequest" value="Save changes" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            $('#TwoDates').click(function() {
+                $('.TwoDates').toggleClass("show");
+                $('#Date').toggleClass("Hide");
+
+                if (document.getElementById('AbsCalendar').hasAttribute("Required")) {
+                    document.getElementById('Bit').setAttribute('value','2')
+
+                    $('#AbsCalendar').prop('required',false);
+                    $('.HourClock').prop('required',false);
+
+                    $('#AbsCalendarTwo').prop('required',true);
+                    $('#AbsCalendarThree').prop('required',true);
+                    $('.HourClockTwo').prop('required',true);
+                }
+                else {
+                    document.getElementById('Bit').setAttribute('value','1')
+
+                    $('#AbsCalendar').prop('required',true);
+                    $('.HourClock').prop('required',true);
+
+                    $('#AbsCalendarTwo').prop('required',false);
+                    $('#AbsCalendarThree').prop('required',false);
+                    $('.HourClockTwo').prop('required',false);
+                }
+            });
+
+
+            $('#submit').click(function() {
+                if (document.getElementById('AbscenseRequest').classList.contains("show")) {
+
+                    $('#FirstName').prop('required',false);
+                    $('#LastName').prop('required',false);
+                    $('#UserName').prop('required',false);
+                    $('#Password').prop('required',false);
+                    $('#StartDate').prop('required',false);
+                    $('#EndDate').prop('required',false);
+                }
+                else {
+
+                    $('#FirstName').prop('required',true);
+                    $('#LastName').prop('required',true);
+                    $('#UserName').prop('required',true);
+                    $('#Password').prop('required',true);
+                    $('#StartDate').prop('required',true);
+                    $('#EndDate').prop('required',true);
+                }
+            });
+
+            document.getElementById('AbsCalendarTwo').onchange = function () {
+                    var input = document.getElementById('AbsCalendarThree');
+                    var otherInput = document.getElementById('AbsCalendarTwo').value;
+                    input.setAttribute("min", otherInput)
+            }
+
+            $('#submit').click(function () {
+                if (document.getElementById('TwoDatesDiv').classList.contains("show")) {
+                    var currentStartTimeValue = document.getElementById("HourTwo").value;
+                    var currentEndTimeValue = document.getElementById("HourThree").value;
+
+                    if (!currentStartTimeValue) {
+                        alert('Vægle en start tid!');
+                            return false;
+                    }
+                    else if (!currentEndTimeValue) {
+                        alert('Vægle en slut tid!');
+                            return false;
+                    }
+                    else if (currentStartTimeValue >= currentEndTimeValue || currentStartDateValue > currentEndDateValue) {
+                        if(currentStartDateValue >= currentEndDateValue) {
+                            alert('Slut tiden må ikke være før start tiden!');
+                            return false;
+                        }
+                    }
+
+                    document.getElementById('submit').style.pointerEvents = "none";
+
+                }
+            });
+
+
+            $("#EndDate").change(function () {
+                var startDate = document.getElementById("StartDate").value;
+                var endDate = document.getElementById("EndDate").value;
+
+                if ((Date.parse(endDate) <= Date.parse(startDate))) {
+                    alert("End date should be greater than Start date");
+                    document.getElementById("EndDate").value = "";
+                }
+            });
+        </script>
+    </form>
+<!--#endregion -->

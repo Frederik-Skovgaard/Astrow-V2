@@ -155,7 +155,14 @@ namespace Astrow_2._0.Repository
                 return logedUser;
             }
         }
+
+        public bool UsernameAvailable(string username)
+        {
+            bool exists = stored.UsernameAvailable(username);
+            return exists;
+        }
         #endregion
+
 
 
         #region Encryption
