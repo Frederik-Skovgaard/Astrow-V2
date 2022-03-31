@@ -75,6 +75,8 @@ Astrow 2.0 remake of Astrow with new quality of life features
 - [ ] Site for scanning in with a card scanner
 - [ ] Change how scanning works soo it's possible to scan in and out multipul time
 - [ ] Change abscense time for the abscent reasons 
+- [ ] Site Indstillinger (Change background idk)
+- [ ] Site Ændre kodeord (Change password)
 
 # Version 1 ToDO's
 - [x] Admin page (*Create, Delete, Update User & Update User's Timecard*)
@@ -82,8 +84,7 @@ Astrow 2.0 remake of Astrow with new quality of life features
 - [x] Site Fraværsanmodning
 - [x] Site Godkend period (Accepted and Denyed, request)
 
-- [ ] Site Indstillinger (Change background idk)
-- [ ] Site Ændre kodeord (Change password)
+
 
 # Change log
 # Version 2
