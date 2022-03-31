@@ -1313,6 +1313,12 @@ nav ul li a span.rotate {
     cursor:auto;
     resize: none;
 }
+.AdminPage .container .AbscenseRequest .modal .AbsenceText .form-control:disabled, .form-control[readonly] {
+    background-color: #ffffff !important;
+    opacity: 1;
+}
+
+
 
 .AdminPage .container .AbscenseRequest .modal .AbsenceText:hover {
     box-shadow: none;

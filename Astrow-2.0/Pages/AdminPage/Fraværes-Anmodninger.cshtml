@@ -103,17 +103,17 @@
                                                     @if (requests.SecDate.ToString("HH:mm") == "00:00")
                                                     {
                                                         <div class="col-6">
-                                                            <p type="text" class="form-control">@requests.Date</p>
+                                                            <p type="text" class="form-control">@requests.Date.ToString("dd-MM-yyyy HH:mm")</p>
                                                         </div>
 
                                                     }
                                                     else
                                                     {
                                                         <div class="col-6">
-                                                            <p class="form-control">@requests.Date</p>
+                                                            <p class="form-control">@requests.Date.ToString("dd-MM-yyyy HH:mm")</p>
                                                         </div>
                                                         <div class="col-6">
-                                                            <p class="form-control">@requests.SecDate</p>
+                                                            <p class="form-control">@requests.SecDate.ToString("dd-MM-yyyy HH:mm")</p>
                                                         </div>
                                                     }
 
