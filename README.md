@@ -8,6 +8,9 @@ Astrow 2.0 remake of Astrow with new quality of life features
 *  **Change Log Updates**
 	* [Change log](#Change-log)
 		* [Unreleased](#Unreleased)
+			* [Version 0.8.0](#Version-0.8.0)
+				* [Added](#Version-0.8.0\Added)
+				* [Updated](#Version-0.8.0\Updated)
 			* [Version 0.7.0](#Version-0.7.0)
 				* [Added](#Version-0.7.0\Added)
 				* [Updated](#Version-0.7.0\Updated)
@@ -46,43 +49,63 @@ Astrow 2.0 remake of Astrow with new quality of life features
 # Core Functions
 ## Admins
 ### Create User's
-* Short description
+* Page for creating user, users requires the following parameters.
+ Firstame, Middlename, Lastname, Username, Password, Startdate and Endate (Middle name not required)
 ### Edit User
-* Short description
+* Page for editing users parameter.
 ### Edit Time Card
-* Short description
+* Page for changing a days, scan ind, scan out and abscense parameter
 ### Delete User
-* Short description
+* Page for deleting users
 ###  Mark As Abscent
-* Short description
-### Mark As Illegally Absent
-* Short description
-### Accept Requests From User
-* Short description
+* Mark user as abscent
+### Mark As Illegally Abscent
+* Mark user as Illegally abscent
+### Requests From User
+* Page to accpet or deny request from user conserning abscens
 ## Users
 ### Clock In & Out
-* Short description
+* Button on the nav bar for clocking in and out
 ### Request Abscens
-* Short description
+* Button on the nav bar for requesting absense
 ### TimeCard 
 * To kepp track of abscens & flex
 
-# ToDO's
+# Version 2 ToDo's
+- [ ] Site for scanning in with a card scanner
+- [ ] Change how scanning works soo it's possible to scan in and out multipul time
+- [ ] Change abscense time for the abscent reasons 
+
+# Version 1 ToDO's
 - [x] Admin page (*Create, Delete, Update User & Update User's Timecard*)
 - [x] Time kort (dynamiclly add month's from user start/end date) & add registration
 - [x] Site Fraværsanmodning
-- [ ] Site Godkend period (Accepted and Denyed, request)
+- [x] Site Godkend period (Accepted and Denyed, request)
 
 - [ ] Site Indstillinger (Change background idk)
 - [ ] Site Ændre kodeord (Change password)
 
 # Change log
-# [Unreleased]
+# Version 2
+## Version 1.0.0 
+### Added
+# Version 1
+## Version 0.8.0 ( Abscense Request / Small Fixes)
+### Added
+- [x]  Functionality to Request Abs page
+- [x] Create sql table for requests
+- [x] Create stored procedure to handle functionality of request page
+- [x] SQL job that creates a day with that days date at 6 am every day
+- [x] SQL Job that automatilcy marks users that hasn't scanned in as illeglay abscent at 9 am every day
+### Updated
+- [x] Check if username is available when making user
+- [x] Create days between user start date and todays date
+- [x] When accepting request update/create day
 ## Version 0.7.0 ( User Page / Abscens Request)
 ### Added
 - [x]  Admin page for, Deleting/Mark as absent/Mark as illegally absent, users
-- [x] - [x] Functionality to User page 
-- [x] Button funinality to request abscens e.g Flex, Sickness, Driving lessons...
+- [x]  Functionality to User page 
+- [x] Button functionality to request abscens e.g Flex, Sickness, Driving lessons...
 - [x] Admin page to handle request
 ### Updated
 - [x] Use of Opret Fraværes button
