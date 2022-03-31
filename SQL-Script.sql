@@ -142,7 +142,7 @@ GO
 
 -- Abscense types
 INSERT INTO [AbscenseType] ([Type])
-VALUES ('Igen')
+VALUES ('Ingen')
 GO
 
 INSERT INTO [AbscenseType] ([Type])
