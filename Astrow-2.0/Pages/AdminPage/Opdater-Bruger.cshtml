@@ -236,30 +236,39 @@
 
         <script type="text/javascript">
             $('#TwoDates').click(function() {
-                $('.TwoDates').toggleClass("show");
-                $('#Date').toggleClass("Hide");
+            $('.TwoDates').toggleClass("show");
+            $('#Date').toggleClass("Hide");
 
-                if (document.getElementById('AbsCalendar').hasAttribute("Required")) {
-                    document.getElementById('Bit').setAttribute('value','2')
+            if (document.getElementById('AbsCalendar').hasAttribute("Required")) {
+                document.getElementById('Bit').setAttribute('value','2')
 
-                    $('#AbsCalendar').prop('required',false);
-                    $('.HourClock').prop('required',false);
+                $('#AbsCalendar').prop('required',false);
+                $('#HourClock').prop('required',false);
 
-                    $('#AbsCalendarTwo').prop('required',true);
-                    $('#AbsCalendarThree').prop('required',true);
-                    $('.HourClockTwo').prop('required',true);
-                }
-                else {
-                    document.getElementById('Bit').setAttribute('value','1')
+                $('#AbsCalendarTwo').prop('required',true);
+                $('#AbsCalendarThree').prop('required',true);
+                $('#HourTwo').prop('required',true);
+                 $('#HourTwo').attr('min', '8');
 
-                    $('#AbsCalendar').prop('required',true);
-                    $('.HourClock').prop('required',true);
+                $('#HourThree').prop('required',true);
+                $('#HourThree').attr('min', '8');
+            }
+            else {
+                document.getElementById('Bit').setAttribute('value','1')
 
-                    $('#AbsCalendarTwo').prop('required',false);
-                    $('#AbsCalendarThree').prop('required',false);
-                    $('.HourClockTwo').prop('required',false);
-                }
-            });
+                $('#AbsCalendar').prop('required',true);
+                $('#HourClock').prop('required',true);
+
+                $('#AbsCalendarTwo').prop('required',false);
+                $('#AbsCalendarThree').prop('required',false);
+
+                $('#HourTwo').prop('required',false);
+                $('#HourTwo').removeAttr('min');
+
+                $('#HourThree').prop('required',false);
+                $('#HourThree').removeAttr('min');
+            }
+        });
 
 
             $('#submit').click(function() {

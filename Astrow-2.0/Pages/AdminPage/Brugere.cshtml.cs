@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Astrow_2._0.Model.Containers;
 using Astrow_2._0.Model.Items;
 using Astrow_2._0.Repository;
-using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using System;
 
@@ -207,8 +206,8 @@ namespace Astrow_2._0.Pages.AdminPage
             //Method for registry
             _userRepository.Registrer(id);
 
-            //Return to home page
-            return RedirectToPage("/AdminPage/Slet-Bruger");
+            //Return to page
+            return RedirectToPage("/AdminPage/Fraværes-Anmodninger");
         }
 
         /// <summary>
@@ -303,7 +302,7 @@ namespace Astrow_2._0.Pages.AdminPage
             }
 
             //Return to home page
-            return RedirectToPage("/AdminPage/Brugere");
+            return RedirectToPage("/AdminPage/Fraværes-Anmodninger");
         }
     }
 }

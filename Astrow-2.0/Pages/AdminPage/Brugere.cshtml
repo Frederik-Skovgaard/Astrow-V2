@@ -142,73 +142,75 @@
     }
 </script>
 
-
 <!--#region FraværesAnmodning  -->
     <!-- Modal -->
-    <div class="modal fade" id="AbscenseRequest" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Fraværsanmodning</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row col-row">
-                        <div class="col-6 Abscense">
-                            <select class="form-control AbscenseTypeDrop" asp-for="AbsenceType" name="AbsenceType" id="AbscenseDrop">
-                                @{
-                                    foreach (Model.Items.AbscenseType type in Model.AbscensesRequest)
-                                    {
-                                        <option value="@type.ID">@type.Type</option>
+    <form method="post">
+        <div class="modal fade" id="AbscenseRequest" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Fraværsanmodning</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row col-row">
+                            <div class="col-6 Abscense">
+                                <select class="form-control AbscenseTypeDrop" asp-for="AbsenceType" name="AbsenceType" id="AbscenseDrop">
+                                    @{
+                                        foreach (Model.Items.AbscenseType type in Model.AbscensesRequest)
+                                        {
+                                            <option value="@type.ID">@type.Type</option>
+                                        }
                                     }
-                                }
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row col-row TextRow">
-                        <div class="col-6 TextCol">
-                            <textarea type="text" class="form-control AbsenceText" name="AbscText" placeholder="* Valgfrit Fraværes oversag" asp-for="AbscText"></textarea>
-                        </div>
-                    </div>
-                    <div class="row col-row Date" id="Date">
-                        <div class="col-6 Calendar">
-                            <input id="AbsCalendar" value="@DateTime.Now.ToString("yyyy/MM/dd")" type="date" name="AbsCal" class="form-control" min="@DateTime.Now.ToString("yyyy/MM/dd")" oninvalid="this.setCustomValidity('Vælge en dato')" oninput="this.setCustomValidity('')" required />
-                        </div>
-                        <div class="col-2 Hour">
-                            <input class="HourClock" value="@DateTime.Now.ToString("HH:mm")" min="08:00" max="15:24" type="time" name="Hour" required>
-                        </div>
-                    </div>
-                    <div class="TwoDates" id="TwoDatesDiv">
-                        <div class="row col-row Date">
-                            <div class="col-6">
-                                <input id="AbsCalendarTwo" value="@DateTime.Now.ToString("yyyy/MM/dd")" type="date" name="AbsCalTwo" class="form-control" min="@DateTime.Now.ToString("yyyy/MM/dd")" oninvalid="this.setCustomValidity('Skriv start dato her')" oninput="this.setCustomValidity('')" />
-                            </div>
-                            <div class="col-6">
-                                <input id="AbsCalendarThree" value="@DateTime.Now.ToString("yyyy/MM/dd")" type="date" name="AbsCalThree" class="form-control" min="@DateTime.Now.ToString("yyyy/MM/dd")" oninvalid="this.setCustomValidity('Skriv end dato her')" oninput="this.setCustomValidity('')" />
+                                </select>
                             </div>
                         </div>
-                        <div class="row col-row Clock">
-                            <div class="col-6 TwoDate">
-                                <input class="HourClockTwo" id="HourTwo" value="@DateTime.Now.ToString("HH:mm")" min="08:00" max="15:24" type="time" name="HourTwo">
+                        <div class="row col-row TextRow">
+                            <div class="col-6 TextCol">
+                                <textarea type="text" class="form-control AbsenceText" name="AbscText" placeholder="* Valgfrit Fraværes oversag" asp-for="AbscText"></textarea>
                             </div>
-                            <div class="col-6 TwoDate">
-                                <input class="HourClockTwo" id="HourThree" value="@DateTime.Now.ToString("HH:mm")" min="08:00" max="15:24" type="time" name="HourThree">
+                        </div>
+                        <div class="row col-row Date" id="Date">
+                            <div class="col-6 Calendar">
+                                <input id="AbsCalendar" value="@DateTime.Now.ToString("yyyy/MM/dd")" type="date" name="AbsCal" class="form-control" min="@DateTime.Now.ToString("yyyy/MM/dd")" oninvalid="this.setCustomValidity('Vælge en dato')" oninput="this.setCustomValidity('')" required />
+                            </div>
+                            <div class="col-2 Hour">
+                                <input class="HourClock" value="@DateTime.Now.ToString("HH:mm")" min="08:00" max="15:24" type="time" name="Hour" required>
+                            </div>
+                        </div>
+                        <div class="TwoDates" id="TwoDatesDiv">
+                            <div class="row col-row Date">
+                                <div class="col-6">
+                                    <input id="AbsCalendarTwo" value="@DateTime.Now.ToString("yyyy/MM/dd")" type="date" name="AbsCalTwo" class="form-control" min="@DateTime.Now.ToString("yyyy/MM/dd")" oninvalid="this.setCustomValidity('Skriv start dato her')" oninput="this.setCustomValidity('')" />
+                                </div>
+                                <div class="col-6">
+                                    <input id="AbsCalendarThree" value="@DateTime.Now.ToString("yyyy/MM/dd")" type="date" name="AbsCalThree" class="form-control" min="@DateTime.Now.ToString("yyyy/MM/dd")" oninvalid="this.setCustomValidity('Skriv end dato her')" oninput="this.setCustomValidity('')" />
+                                </div>
+                            </div>
+                            <div class="row col-row Clock">
+                                <div class="col-6 TwoDate">
+                                    <input class="HourClockTwo" id="HourTwo" value="@DateTime.Now.ToString("HH:mm")" min="08:00" max="15:24" type="time" name="HourTwo">
+                                </div>
+                                <div class="col-6 TwoDate">
+                                    <input class="HourClockTwo" id="HourThree" value="@DateTime.Now.ToString("HH:mm")" min="08:00" max="15:24" type="time" name="HourThree">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <input value="1" id="Bit" asp-for="Bit" hidden />
-                    <input type="button" id="TwoDates" class="btn btn-secondary" value="Længer period" />
-                    <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Close" />
-                    <input type="submit" id="submit" class="btn btn-primary" asp-page-handler="AbscenseRequest" value="Save changes" />
+                    <div class="modal-footer">
+                        <input value="1" id="Bit" asp-for="Bit" hidden />
+                        <input type="button" id="TwoDates" class="btn btn-secondary" value="Længer period" />
+                        <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Close" />
+                        <input type="submit" id="submit" class="btn btn-primary" asp-page-handler="AbscenseRequest" value="Save changes" />
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 
+    
     <script type="text/javascript">
         $('#TwoDates').click(function() {
             $('.TwoDates').toggleClass("show");
@@ -218,21 +220,30 @@
                 document.getElementById('Bit').setAttribute('value','2')
 
                 $('#AbsCalendar').prop('required',false);
-                $('.HourClock').prop('required',false);
+                $('#HourClock').prop('required',false);
 
                 $('#AbsCalendarTwo').prop('required',true);
                 $('#AbsCalendarThree').prop('required',true);
-                $('.HourClockTwo').prop('required',true);
+                $('#HourTwo').prop('required',true);
+                 $('#HourTwo').attr('min', '8');
+
+                $('#HourThree').prop('required',true);
+                $('#HourThree').attr('min', '8');
             }
             else {
                 document.getElementById('Bit').setAttribute('value','1')
 
                 $('#AbsCalendar').prop('required',true);
-                $('.HourClock').prop('required',true);
+                $('#HourClock').prop('required',true);
 
                 $('#AbsCalendarTwo').prop('required',false);
                 $('#AbsCalendarThree').prop('required',false);
-                $('.HourClockTwo').prop('required',false);
+
+                $('#HourTwo').prop('required',false);
+                $('#HourTwo').removeAttr('min');
+
+                $('#HourThree').prop('required',false);
+                $('#HourThree').removeAttr('min');
             }
         });
 

@@ -268,7 +268,7 @@
     </div>
 
     <script type="text/javascript">
-        $('#TwoDates').click(function() {
+       $('#TwoDates').click(function() {
             $('.TwoDates').toggleClass("show");
             $('#Date').toggleClass("Hide");
 
@@ -276,21 +276,30 @@
                 document.getElementById('Bit').setAttribute('value','2')
 
                 $('#AbsCalendar').prop('required',false);
-                $('.HourClock').prop('required',false);
+                $('#HourClock').prop('required',false);
 
                 $('#AbsCalendarTwo').prop('required',true);
                 $('#AbsCalendarThree').prop('required',true);
-                $('.HourClockTwo').prop('required',true);
+                $('#HourTwo').prop('required',true);
+                 $('#HourTwo').attr('min', '8');
+
+                $('#HourThree').prop('required',true);
+                $('#HourThree').attr('min', '8');
             }
             else {
                 document.getElementById('Bit').setAttribute('value','1')
 
                 $('#AbsCalendar').prop('required',true);
-                $('.HourClock').prop('required',true);
+                $('#HourClock').prop('required',true);
 
                 $('#AbsCalendarTwo').prop('required',false);
                 $('#AbsCalendarThree').prop('required',false);
-                $('.HourClockTwo').prop('required',false);
+
+                $('#HourTwo').prop('required',false);
+                $('#HourTwo').removeAttr('min');
+
+                $('#HourThree').prop('required',false);
+                $('#HourThree').removeAttr('min');
             }
         });
 

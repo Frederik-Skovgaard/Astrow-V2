@@ -38,6 +38,8 @@ namespace Astrow_2._0
                 options.Conventions.AddPageRoute("/Login", "");
             });
 
+            services.AddServerSideBlazor();
+
             services
                 .AddMvc()
                 .AddRazorPagesOptions(options =>
@@ -80,6 +82,7 @@ namespace Astrow_2._0
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapBlazorHub();
             });
         }
     }

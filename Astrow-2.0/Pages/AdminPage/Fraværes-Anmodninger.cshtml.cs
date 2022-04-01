@@ -173,10 +173,15 @@ namespace Astrow_2._0.Pages.AdminPage
             if (day.Days_ID == 0)
             {
                 //Variable datetime now
-                DateTime now = DateTime.Now;
+                DateTime now = DateTime.Now.AddDays(-1);
+
+                req.Date = req.Date.AddDays(-1);
+                req.Date = new DateTime(req.Date.Year, req.Date.Month, req.Date.Day, 0, 0, 0);
 
                 //Find date with Startday time and id
-                Days toDay = _userRepository.FindDay(new DateTime(now.Year, now.Month, (now.Day - 1), 0, 0, 0), user.ID);
+                Days toDay = _userRepository.FindDay(req.Date, user.ID);
+
+                req.Date = req.Date.AddDays(1);
 
                 //Create a Day object
                 day = new Days()

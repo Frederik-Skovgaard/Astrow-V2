@@ -300,7 +300,7 @@ namespace Astrow_2._0.Repository
             List<AbscenseType> abscenses = stored.GetAllAbscenseType();
             abscenses.Remove(abscenses.Find(x => x.Type == "COVID"));
             abscenses.Remove(abscenses.Find(x => x.Type == "Ulovligt fravær"));
-            abscenses.Remove(abscenses.Find(x => x.Type == "Igen"));
+            abscenses.Remove(abscenses.Find(x => x.Type == "Ingen"));
             return abscenses;
         }
 
