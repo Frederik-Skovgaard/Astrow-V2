@@ -958,6 +958,7 @@ nav ul li a span.rotate {
 }
 
 
+
 /*Decoration*/
 .AdminPage .container .OpdateTimeCard {
     min-height: 40rem !important;
@@ -1130,9 +1131,14 @@ nav ul li a span.rotate {
     position: absolute;
 }
 
+
 .AdminPage .container .UpdateUser {
     min-height: 40rem !important;
     position: relative;
+}
+
+.AdminPage .container .UpdateUser .datePickerCol {
+    display:none;
 }
 
 .AdminPage .container .DeleteUser {

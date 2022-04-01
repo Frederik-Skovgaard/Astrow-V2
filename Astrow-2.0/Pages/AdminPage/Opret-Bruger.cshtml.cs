@@ -173,7 +173,12 @@ namespace Astrow_2._0.Pages.AdminPage
                     };
                 }
 
-
+                if (StartDate == null)
+                {
+                    DateTime tm = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+                    StartDate = $"{tm}";
+                    EndDate = $"{tm}";
+                }
 
                 //User info
                 Users users = new Users()

@@ -13,7 +13,7 @@
     <div class="container">
         <div class="AdminNav">
             <div class="row upper-row" id="AdminNav">
-                <a href="/AdminPage/Opret-Bruger" class="btn btn-lg btn-primary">
+                <a href="/AdminPage/Opret-Bruger" class="btn btn-lg btn-primary" >
                     <i class="fas fa-plus-circle"></i> Opret bruger
                 </a>
                 <a href="/AdminPage/Opdater-Bruger" class="btn btn-lg btn-secondary">
@@ -72,14 +72,14 @@
                 </div>
 
                 <div class="row col-row">
-                    <div class="col-6">
+                    <div class="col-6" id="datePickerCol">
                         <label>Start Dato</label> <br />
 
                         <input value="@Model.StartVal" asp-for="StartDate" required id="StartDate" type="date" autocomplete="off" class="form-control" oninvalid="this.setCustomValidity('Skriv start dato her')" oninput="this.setCustomValidity('')" />
                         <span asp-validation-for="StartDate" class="CreateUserError"></span>
                     </div>
 
-                    <div class="col-6">
+                    <div class="col-6" id="datePickerColl">
                         <label>Slut Dato</label> <br />
 
                         <input value="@Model.EndVal" asp-for="EndDate" required id="EndDate" type="date" autocomplete="off" class="form-control" oninvalid="this.setCustomValidity('Skriv slut dato her')" oninput="this.setCustomValidity('')" />
@@ -126,6 +126,36 @@
                 alert("End date should be greater than Start date");
                 document.getElementById("EndDate").value = "";
             }
+    });
+
+    window.onload = function () {
+                 if(document.getElementById("Role").value == "Instructør") {
+                    document.getElementById("datePickerCol").classList.add("datePickerCol");
+                    document.getElementById("datePickerColl").classList.add("datePickerCol");
+
+                    $('#StartDate').prop('required',false);
+                    $('#EndDate').prop('required',false);
+                }
+
+
+            };
+
+
+    $("#Role").change(function () {
+        if(document.getElementById("Role").value == "Instructør") {
+            document.getElementById("datePickerCol").classList.add("datePickerCol");
+            document.getElementById("datePickerColl").classList.add("datePickerCol");
+
+            $('#StartDate').prop('required',false);
+            $('#EndDate').prop('required',false);
+        }
+        else {
+            document.getElementById("datePickerCol").classList.remove("datePickerCol");
+            document.getElementById("datePickerColl").classList.remove("datePickerCol");
+
+            $('#StartDate').prop('required',true);
+            $('#EndDate').prop('required',true);
+        }
     });
 
     document.getElementById('StartDate').onchange = function () {
