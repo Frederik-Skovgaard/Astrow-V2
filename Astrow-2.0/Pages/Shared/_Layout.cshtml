@@ -1,50 +1,311 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Astrow_2._0</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <title>@ViewData["Title"] - Astrow</title>
+    <link rel="shortcut icon" href="~/Img/Fav.png" />
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <link src="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/css/fontawesome-free-5.15.4-web/css/all.css" rel="stylesheet" />
+
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/7bc5a71156.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" type="text/css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js" type="text/javascript"></script>
+
+
+
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">Astrow_2._0</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+<body onload="startTime()">
+    @{
+        Context.Session.TryGetValue("_Status", out var test);
+    }
+
+    <button class="collapsNavBTN" id="collapsNavBTN">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+        </svg>
+    </button>
+    <nav class="sidebar" id="sidebar">
+        <a href="/Home">
+            <div class="logo"></div>
+        </a>
+        <ul class="mainUl">
+            @*Operatiner sider*@
+            <li id="Oper-li">
+                <a href="#" class="Oper-btn">Operationer <span class="fas fa-caret-down first"></span></a>
+                <ul id="Oper" class="Oper-show">
+                    <li>
+                        <form method="post" asp-page-handler="Registrering">
+                            <div id="Registrering">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-stopwatch" viewBox="0 0 16 16">
+                                    <path d="M8.5 5.6a.5.5 0 1 0-1 0v2.9h-3a.5.5 0 0 0 0 1H8a.5.5 0 0 0 .5-.5V5.6z" />
+                                    <path d="M6.5 1A.5.5 0 0 1 7 .5h2a.5.5 0 0 1 0 1v.57c1.36.196 2.594.78 3.584 1.64a.715.715 0 0 1 .012-.013l.354-.354-.354-.353a.5.5 0 0 1 .707-.708l1.414 1.415a.5.5 0 1 1-.707.707l-.353-.354-.354.354a.512.512 0 0 1-.013.012A7 7 0 1 1 7 2.071V1.5a.5.5 0 0 1-.5-.5zM8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3z" />
+                                </svg> Opret registrering
+                            </div>
+                            <div id="RegiTooltip" class="tooltiptext">
+                                <p style="font-size: xx-large;">Register</p>
+                                <div id="TimeBox"></div>
+                                <input type="submit" class="btn btn-primary" id="CheckBTN" asp-page-handler="Registrering" />
+                            </div>
+                        </form>
+                    </li>
+                    <li>
+                        <div id="Fraværesanmodning" data-toggle="modal" data-target="#AbscenseRequest">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-x" viewBox="0 0 16 16">
+                                <path d="M6.146 7.146a.5.5 0 0 1 .708 0L8 8.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 9l1.147 1.146a.5.5 0 0 1-.708.708L8 9.707l-1.146 1.147a.5.5 0 0 1-.708-.708L7.293 9 6.146 7.854a.5.5 0 0 1 0-.708z" />
+                                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+                            </svg> Opret fraværsanmodning
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-check" viewBox="0 0 16 16">
+                                <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+                            </svg> Godkend periode
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            @*Opsætning sider*@
+            <li id="Ops-li">
+                <a href="#" class="Ops-btn">Opsætning<span class="fas fa-caret-down third"></span></a>
+                <ul id="Ops" class="Ops-show">
+                    <li>
+                        <a href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
+                                <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
+                                <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z" />
+                            </svg> Indstillinger
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock" viewBox="0 0 16 16">
+                                <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z" />
+                            </svg> Ændre kodeord
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            @{
+                //If logged user is admin they can see the admin tab
+                if (test != null && System.Text.Encoding.UTF8.GetString(test, 0, test.Length) == "Instructør")
+                {
+                    @*Admin sider*@
+                    <li id="Ad-li">
+                        <a href="/AdminPage/Opret-Bruger" class="Ad-btn">Admin Side</a>
+                    </li>
+                }
+            }
+
+            @*Log-Ud knap*@
+            <li id="bottom-li" class="nav-bottom">
+                <a>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z" />
+                        <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z" />
+                    </svg> Logud
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+
+    
+
+    @*JavaScript...*@
+    <script>
+
+        //Collaps and uncollaps nav
+        $('#collapsNavBTN').click(function() {
+            $('#sidebar').toggleClass("show")
+        });
+
+         //Dynamic clock for the check in/out div
+        function startTime() {
+           const today = new Date();
+           let h = today.getHours();
+           let m = today.getMinutes();
+           m = checkTime(m);
+           document.getElementById('TimeBox').innerHTML =  h + ":" + m;
+           setTimeout(startTime, 1000);
+         };
+
+         function checkTime(i) {
+           if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+           return i;
+         };
+
+
+
+         //Show the check in/out div
+         $('#Registrering').click(function() {
+             $('#RegiTooltip').toggleClass("show");
+         })
+
+
+         //On click rotate triangle and toggle class show to show sub menue
+         $('.Oper-btn').click(function() {
+
+             if (document.getElementById("Ops").classList.contains("show2")) {
+
+                 $('nav ul .Ops-show').toggleClass("show2");
+                 $('nav ul .third').toggleClass("rotate")
+
+                 $('nav ul .Oper-show').toggleClass("show");
+                 $('nav ul .first').toggleClass("rotate");
+             }
+             else {
+
+                 $('nav ul .Oper-show').toggleClass("show");
+                 $('nav ul .first').toggleClass("rotate");                 
+             }
+         });
+
+
+         $('.Ops-btn').click(function() {
+             if (document.getElementById("Oper").classList.contains("show")) {
+
+                 $('nav ul .Oper-show').toggleClass("show");
+                 $('nav ul .first').toggleClass("rotate");
+
+                 $('nav ul .Ops-show').toggleClass("show2");
+                 $('nav ul .third').toggleClass("rotate");
+             }
+             else {
+
+                 $('nav ul .Ops-show').toggleClass("show2");
+                 $('nav ul .third').toggleClass("rotate");
+             }
+         });
+
+
+         //Add active class and remove from others
+         $('nav ul .Oper-btn').click(function(){
+             if (document.getElementById("Oper-li").classList.contains("active")) {
+
+                 document.getElementById("Oper-li").classList.remove("active")
+                 document.getElementById("Ops-li").classList.remove("active")
+             }
+             else {
+                  document.getElementById("Oper-li").classList.add("active").removeClass("active");
+             }
+         });
+
+
+         $('nav ul .Ops-btn').click(function(){
+
+             if (document.getElementById("Ops-li").classList.contains("active")) {
+
+                 document.getElementById("Oper-li").classList.remove("active")
+                 document.getElementById("Ops-li").classList.remove("active")
+             }
+             else {
+                 document.getElementById("Ops-li").classList.add("active").siblings().removeClass("active");
+             }
+         });
+
+
+         //Pop up if sure wan't to loggout
+         $('nav ul .nav-bottom').click(function() {
+             if(confirm("Du er igang med at logge ud, er du sikker på det er hvad du vil?")) {
+
+                 location.href = '/Login';
+             }
+         });
+
+
+         //Mouse hover for Operationer
+         $('nav ul #Oper-li').mouseover(function() {
+              if (!document.getElementById("Oper-li").classList.contains("active")) {
+                 document.getElementById("Ops-li").classList.remove("active")
+              }
+         });
+
+         $('nav ul #Oper-li').mouseleave(function() {
+             if (document.getElementById('Ops').classList.contains("show2")) {
+                 document.getElementById("Ops-li").classList.add("active")
+             }
+         });
+
+
+
+         //Mouse hover for Opsætning
+         $('nav ul #Ops-li').mouseover(function() {
+
+               if (!document.getElementById("Ops-li").classList.contains("active")) {
+                 document.getElementById("Oper-li").classList.remove("active")
+              }
+         });
+
+         $('nav ul #Ops-li').mouseleave(function() {
+             if (document.getElementById('Oper').classList.contains("show")) {
+
+                 document.getElementById("Oper-li").classList.add("active")
+             }
+         });
+
+
+         //Mouse hover for logout
+         $('nav ul #bottom-li').mouseover(function() {
+
+             document.getElementById("Ops-li").classList.remove("active")
+             document.getElementById("Oper-li").classList.remove("active")
+         });
+
+         $('nav ul #bottom-li').mouseleave(function() {
+             if(document.getElementById('Oper').classList.contains("show")) {
+                 document.getElementById("Oper-li").classList.add("active")
+             }
+             else if (document.getElementById('Ops').classList.contains("show2")) {
+                 document.getElementById("Ops-li").classList.add("active")
+             }
+         });
+
+
+         //Mouse hover for Admin
+         $('nav ul #Ad-li').mouseover(function() {
+
+             document.getElementById("Ops-li").classList.remove("active")
+             document.getElementById("Oper-li").classList.remove("active")
+         });
+
+         $('nav ul #Ad-li').mouseleave(function() {
+             if(document.getElementById('Oper').classList.contains("show")) {
+                 document.getElementById("Oper-li").classList.add("active")
+             }
+             else if (document.getElementById('Ops').classList.contains("show2")) {
+                 document.getElementById("Ops-li").classList.add("active")
+             }
+         });
+    </script>
+
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - Astrow_2._0 - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
-    </footer>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

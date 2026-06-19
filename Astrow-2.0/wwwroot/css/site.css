@@ -1,71 +1,2107 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
-}
+/*#region Page*/
 
-/* Provide sufficient contrast against white background */
-a {
-  color: #0366d6;
-}
-
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
-}
-
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
-}
-
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  font-size: 14px;
-}
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.border-top {
-  border-top: 1px solid #e5e5e5;
-}
-.border-bottom {
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
-
-button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
-}
-
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  position: relative;
-  min-height: 100%;
+* {
+    list-style: none;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    background-image: linear-gradient( 133deg, rgb(35 140 202 / 14%) 25%, rgb(35 202 194 / 30%) 50%, rgb(35 202 202 / 32%) 75%), url(/Img/bg1.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+    overflow: hidden;
 }
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+
+.body {
+    background-image: linear-gradient( 35deg, rgb(45 115 251 / 50%) 25%, rgb(39 152 224 / 50%) 50%, rgb(35 183 202 / 50%) 75%), url(/Img/bigbackground.jpg) !important;
 }
+
+button {
+    outline: none !important;
+}
+
+a {
+    outline: none !important;
+}
+
+img {
+    -webkit-user-drag: none;
+}
+
+img::-moz-selection {
+    background-color: transparent;
+    color: #000;
+}
+
+img::selection {
+    background-color: transparent;
+    color: #000;
+}
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
+
+
+/*Selection highligter*/
+::selection {
+    background: #00c4ff2e;
+}
+
+::-moz-selection {
+    background: #00c4ff2e;
+}
+
+
+/*Scroll bar*/
+::-webkit-scrollbar {
+    display: none;
+}
+
+::-webkit-scrollbar-track {
+    display: none;
+}
+
+::-webkit-scrollbar-thumb {
+    display: none;
+}
+/*#endregion*/
+
+/*#region Login-Page*/
+
+/*Error*/
+.ErrorUsername {
+    color: #dd0707;
+    text-shadow: 0px 0px #ff0000;
+    font-size: 15px;
+    position: absolute;
+    margin-top: 2.5rem;
+    margin-left: 1rem;
+    transition: all 0.5s ease-in-out;
+}
+
+.Error {
+    color: #dd0707;
+    text-shadow: 0px 0px #ff0000;
+    position: absolute;
+    font-size: 15px;
+    margin-top: 0.5rem;
+    margin-left: 1rem;
+    transition: all 0.5s ease-in-out;
+}
+
+
+/*Decoration*/
+.Login-Page {
+    color: white;
+    margin: 0 auto;
+    width: 25rem;
+}
+
+.Login-Page .copy {
+    text-align: center;
+    margin: 0 auto;
+    float: right;
+    margin-top: 2rem;
+    width: -webkit-fill-available;
+    font-size: small;
+}
+
+.Login-Page .copy p {
+    width: 9rem;
+    float: left;
+}
+
+.Login-Page .copy .microBTN {
+    background: none;
+    border: none;
+    color: white;
+    width: 3rem;
+    text-decoration: none;
+    padding-right: 1rem;
+    float: left;
+}
+
+.Login-Page .container {
+    margin: 0 auto;
+    height: 28rem;
+    margin-top: 50%;
+    background: linear-gradient( 35deg, rgb(45 115 251 / 50%) 25%, rgb(39 152 224 / 50%) 50%, rgb(35 183 202 / 50%) 75%);
+    background-repeat: no-repeat;
+    padding: 1rem;
+    background-size: 28rem;
+    background-position: center;
+    border-radius: 10px;
+    box-shadow: 0px 0px 0px 6px #00ffff26;
+    transition: all 0.5s;
+}
+
+.Login-Page .top {
+    margin: 0 auto;
+    width: min-content;
+    margin-top: 1rem;
+}
+
+.Login-Page .top .login-logo {
+    background: url("../Img/LightlogoSBO2.png");
+    background-repeat:no-repeat;
+    background-size: contain;
+    width: 18rem;
+    border-radius: 5px;
+    height: 4.4rem;
+}
+
+.Login-Page .middle {
+    margin-top: 2rem;
+}
+
+.Login-Page .middle .form-control {
+    width: 80%;
+    margin: 0 auto;
+    background: #00c4ff2e;
+    border: 2px solid transparent;
+    color: white;
+    transition: all 0.3s ease-in-out;
+    margin-top: 2rem;
+}
+
+.Login-Page .middle .form-control::-webkit-input-placeholder {
+    color: #ffffffb8;
+    transition: all 0.5s ease-in-out;
+}
+
+.Login-Page .middle .form-control:hover::-webkit-input-placeholder,
+.Login-Page .middle .form-control:focus::-webkit-input-placeholder {
+    color: white;
+}
+
+.Login-Page .middle #username {
+    margin-bottom: 1rem;
+}
+
+.Login-Page .middle .CheckBox {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 1rem;
+    margin-top: 1rem;
+}
+
+.Login-Page .middle .form-control:focus {
+    box-shadow: 0px 0px 0px 4px #00ffff5c;
+}
+
+.Login-Page .middle .form-control:hover {
+    box-shadow: 0px 0px 0px 4px #00ffff5c;
+}
+
+.Login-Page .middle .form-check {
+    margin-right: 10px;
+    margin-top: 1px;
+    width: 15px;
+    outline: none !important;
+}
+
+.Login-Page .bottom {
+    margin: 0 auto;
+    margin-top: 3rem;
+    max-width: min-content;
+}
+
+.Login-Page .bottom .btn {
+    font-weight: 100;
+    background: #00adff70;
+    border: none;
+    width: 17rem;
+    border-radius: 0px;
+    font-size: 20px;
+    padding: 0;
+    transition: all 0.5s ease-in-out;
+}
+
+.Login-Page .bottom .btn:hover {
+    background: #00f3ff70;
+    box-shadow: 0px 0px 0px 4px #00ffff26;
+}
+
+.Login-Page .bottom .btn:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.Login-Page .bottom .bottom-link {
+    float: right;
+    text-decoration: none;
+    color: white;
+    margin-top: 0.5rem;
+}
+
+.Login-Page .bottom .bottom-link .tooltip {
+    position: relative;
+    display: inline-block;
+    opacity: 1;
+}
+
+.Login-Page .bottom .bottom-link .tooltip .tooltiptext {
+    visibility: hidden;
+    opacity: 0;
+    width: 130px;
+    margin-left: 1rem;
+    color: white;
+    text-align: center;
+    border: 3px solid transparent;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+    background: #00adff70;
+    z-index: 1;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 0px 0px 4px #00ffff26;
+}
+
+.Login-Page .bottom .bottom-link .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+/*#endregion*/
+
+/*#region Nav*/
+
+
+/*Nav bar*/
+.sidebar {
+    position: fixed;
+    width: 336px;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: #004f75;
+    padding: 1rem;
+    z-index: 2;
+}
+
+.sidebar .logo {
+    background: url("../Img/logoSBO.png");
+    background-size: contain;
+    height: 4.5rem;
+    width: 19rem;
+    background-repeat: no-repeat;
+    margin: 0 auto !important;
+}
+
+
+/*Collaps button*/
+.collapsNavBTN {
+    display:none;
+    background: #004f75;
+    position: absolute;
+    top: 0;
+    z-index: 3;
+    border: none;
+}
+
+.collapsNavBTN svg {
+    height: 2.5rem;
+    width: 2.5rem;
+    color: white;
+}
+
+.show {
+    display: block !important;
+    visibility:visible !important;
+}
+
+
+/*Registery*/
+.sidebar #Oper-li .Oper-show #Fraværesanmodning {
+    position: relative;
+    display: inline-block;
+    opacity: 1;
+    font-size: 17px;
+    height: 42px;
+    font-weight: 600;
+    line-height: inherit;
+    color: white;
+    border-left: solid #0588c9 3px;
+    text-decoration: none;
+    border-left-color: transparent;
+    transition: all 0.1s ease-in-out;
+    padding-left: 15px;
+    width: -webkit-fill-available;
+    cursor: pointer;
+    user-select: none;
+}
+
+.sidebar #Oper-li .Oper-show #Fraværesanmodning:hover {
+    background: #0870a3;
+    border-left: solid 3px #0588c9 !important;
+    color: white !important;
+    width:-webkit-fill-available;
+}
+
+.sidebar #Oper-li .Oper-show #Registrering {
+    position: relative;
+    display: inline-block;
+    opacity: 1;
+    font-size: 17px;
+    height: 42px;
+    font-weight: 600;
+    line-height: inherit;
+    color: white;
+    border-left: solid #0588c9 3px;
+    text-decoration: none;
+    border-left-color: transparent;
+    transition: all 0.1s ease-in-out;
+    padding-left: 15px;
+    width: -webkit-fill-available;
+    cursor: pointer;
+    user-select: none;
+}
+
+.sidebar #Oper-li .Oper-show #Registrering:hover {
+    background: #0870a3;
+    border-left: solid 3px #0588c9 !important;
+    color: white !important;
+    width:-webkit-fill-available;
+}
+
+.sidebar #Oper-li .Oper-show .tooltiptext #TimeBox {
+    background: #00405e;
+    width: max-content;
+    border-radius: 10px;
+    height: max-content;
+    font-size: 25px;
+    padding: 0.1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.sidebar #Oper-li .Oper-show .tooltiptext {
+    visibility: hidden;
+    opacity: 0;
+    width: 15rem;
+    height: 15rem;
+    margin: 0;
+    color: white;
+    position: absolute;
+    background: #004f75;
+    z-index: 1;
+    left: 4.5rem;
+    top: 34rem;
+    text-align: -webkit-center;
+    padding: 1rem;
+    border: 8px solid #00405e;
+}
+
+.sidebar #Oper-li .Oper-show .show {
+    visibility:visible !important;
+    display:block !important;
+    opacity: 1 !important;
+}
+
+.sidebar #Oper-li .Oper-show .tooltiptext input {
+    background: #00405e;
+    border: none;
+    color: white;
+    
+    margin-top: 3rem;
+    font-size: 18px;
+    border-radius: 10px;
+    padding: 0.3rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+
+/*Decoretion*/
+a:hover {
+    text-decoration: none;
+    color: white !important;
+}
+
+nav svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 1rem;
+}
+
+nav .mainUl {
+    margin-top: 1rem;
+}
+
+nav ul {
+    height: 90%;
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+nav .nav-bottom {
+    margin-top: auto;
+    text-align: center;
+    transition: all 0.1s ease-in-out;
+    border-left: solid transparent 3px;
+    cursor: pointer;
+}
+
+nav .nav-bottom a {
+    padding: 0;
+    font-size: 20px;
+    transition: all 0.1s ease-in-out;
+    color: white !important;
+}
+
+nav .nav-bottom a svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 0;
+}
+
+nav .nav-bottom a:hover {
+    color: #ff3838 !important;
+    border-left: solid transparent 3px !important;
+}
+
+nav .nav-bottom:hover {
+    border-left: solid #ff3838 3px !important;
+}
+
+nav ul .nav-bottom:hover a {
+    border-left: solid 3px transparent !important;
+    color: #ff3838 !important;
+}
+
+nav ul li {
+    line-height: 60px;
+    background: #00405e;
+    margin-top: 0.5rem;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    padding-left: 40px;
+    font-weight: 500;
+    display: block;
+    width: 100%;
+    border-left: solid transparent 3px;
+    transition: all 0.1s ease-in-out;
+}
+
+nav ul li:hover a {
+    border-left: solid #0588c9 3px;
+}
+
+nav ul li.active a {
+    color: white;
+    border-left: solid #0588c9 3px;
+    text-decoration: none;
+}
+
+nav ul ul {
+    position: static;
+    display: none;
+}
+
+nav ul .Oper-show.show {
+    display: block;
+}
+
+nav ul .Vis-show.show1 {
+    display: block;
+}
+
+nav ul .Ops-show.show2 {
+    display: block;
+}
+
+nav ul ul li {
+    line-height: 42px;
+    border-bottom: none;
+    background: #2676a585;
+    margin: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+nav ul ul li a {
+    font-size: 17px;
+    padding-left: 15px;
+    color: white !important;
+}
+
+nav ul li.active ul li a {
+    color: white;
+    border-left: solid #0588c9 3px;
+    text-decoration: none;
+    border-left-color: transparent;
+    transition: all 0.1s ease-in-out;
+}
+
+nav ul ul li a:hover {
+    background: #0870a3;
+    border-left: solid 3px #0588c9 !important;
+    color: white !important;
+}
+
+nav ul ul li a:focus {
+    background: #0870a3;
+    border-left: solid 3px #0588c9 !important;
+    color: white !important;
+}
+
+nav ul li a span {
+    position: absolute;
+    right: 30px;
+    transform: translateY(-50%);
+    font-size: 22px;
+    transition: all 0.3s ease-in-out;
+    margin-top: 2rem;
+}
+
+nav ul li a span.rotate {
+    transform: translateY(-50%) rotate(-180deg);
+}
+
+
+/*#endregion*/
+
+/*#region Home Page*/
+
+
+/*Decoration*/
+.TimeCard {
+    height: 100%;
+    width: 100%;
+}
+
+.TimeCard .outer {
+    width: max-content;
+    margin: 0 auto;
+    margin-top: 2rem;
+    margin-left: 15rem;
+    padding: 0;
+}
+
+.TimeCard .row {
+    flex-wrap: nowrap;
+    margin: 0 auto;
+}
+
+.TimeCard .row p {
+    width: max-content;
+    line-height: 2rem;
+    color: white;
+}
+
+.TimeCard form {
+    width:max-content;
+}
+
+
+/* Table
+---------------*/
+
+
+/*Decoration*/
+
+.TimeCard .outer table {
+    color:white;
+}
+
+.TimeCard .outer .Table-Head {
+    overflow: hidden;
+    position: sticky;
+}
+
+.TimeCard .outer .table {
+    border-top: 2px solid #00405e;
+    margin: 0;
+}
+
+.TimeCard .outer .Table-Gride {
+    overflow: overlay;
+    min-height: fit-content;
+    max-height: 41.5rem;
+    width: min-content;
+}
+
+.TimeCard .outer table thead {
+    border-top: 3px solid #00405e;
+    border-bottom: 3px solid #00405e;
+    background: #00405e;
+    text-align: center;
+    height:2.5rem;
+}
+
+.TimeCard .outer table tbody {
+    border-bottom: 1px solid #004f7500;
+    background: #004f75eb;
+}
+
+.TimeCard .outer table tbody tr th {
+    text-transform: capitalize;
+    text-align: center;
+    background: #00405e73;
+    border-bottom: solid 1px #004f7500;
+    border-top: 1px;
+    
+}
+
+.TimeCard .outer table tbody tr td {
+    text-align: center;
+}
+
+.TimeCard table tbody tr .ToDayClass {
+    background: #94e1ff9e !important;
+    color: black !important;
+    border-bottom: solid #ffffff00 2px !important;
+}
+
+.TimeCard .outer table .WeekdEnd {
+    background: #00405e73 !important;
+    border-bottom: solid #00405e00 2px;
+    border-top: solid #00405e00 2px;
+}
+
+/*Table Head Decoration*/
+.TimeCard .outer table .DayTh {
+    width: 90px;
+}
+
+.TimeCard .outer table .DatoTh {
+    width: 126px;
+}
+
+.TimeCard .outer table .FraværTh {
+    width: 160px;
+}
+
+.TimeCard .outer table .LoginTh {
+    width: 130px;
+}
+
+.TimeCard .outer table .LogudTh {
+    width: 145px;
+}
+
+.TimeCard .outer table .SaldoTh {
+    width: 130px;
+}
+
+.TimeCard .outer table .TotSaldoTh {
+    width: 164.93px;
+}
+
+/*Table Body Decoration*/
+.TimeCard .outer table .Dayth {
+    width: 80.22px;
+}
+
+.TimeCard .outer table .Datetr {
+    width: 124.56px;
+}
+
+.TimeCard .outer table .Fraværtr {
+    width: 141.96px;
+}
+
+.TimeCard .outer table .Logintr {
+    width: 115.4px;
+}
+
+.TimeCard .outer table .Logudtr {
+    width: 128.49px;
+}
+
+.TimeCard .outer table .Saldotr {
+    width: 115.38px
+}
+
+.TimeCard .outer table .TotSaldotr {
+    width:146.46px
+}
+
+
+/* Scrollbar for day grid*/
+.TimeCard .outer .Table-Gride::-webkit-scrollbar {
+    width:5px !important;
+    display: contents !important;
+}
+
+.TimeCard .outer .Table-Gride::-webkit-scrollbar-track {
+    background: #00405e !important;
+    border-radius: 15px !important;
+    display: contents !important;
+}
+
+.TimeCard .outer .Table-Gride::-webkit-scrollbar-thumb {
+    background: #0588c9 !important;
+    border-radius: 15px !important;
+    display: contents !important;
+}
+
+
+
+/* Date Picker
+---------------*/
+.TimeCard .outer .row #calendarBox {
+    display: none;
+}
+
+.TimeCard .outer .row #calendarBox input {
+    display:block;
+}
+
+.TimeCard .outer .row #calendarBox a {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    color: white;
+    text-decoration: none;
+    background: #004f75;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.TimeCard .outer .DatePicker {
+    width:max-content;
+}
+
+
+/* Date Picker Selector*/
+.TimeCard .row .form-control {
+    width:13rem;
+    margin-right:1rem;
+    background: white;
+    text-transform: capitalize;
+    background: #004f75;
+    border: 2px solid #00000000;
+    color: white;
+    transition: all 0.3s ease-in-out;
+    float:left;
+}
+
+.TimeCard .row .submitBTN {
+    height: 1.5rem !important;
+    border: none !important;
+    padding-left: 5px !important;
+    padding-right: 10px !important;
+    color: white !important;
+    background: #004f75 !important;
+    border-radius: 10px !important;
+}
+
+.TimeCard .row .form-control:hover {
+    box-shadow:none;
+    border: 2px solid #00000000;
+}
+
+.TimeCard .row .form-control:focus {
+    box-shadow:none;
+    border: 2px solid #00000000;
+}
+
+
+/*Date shortcuts*/
+.TimeCard .outer .row button {
+    border: none;
+    background: none;
+    padding-left: 5px;
+    padding-right: 5px;
+    vertical-align: -webkit-baseline-middle;
+    width: max-content;
+    height: 40px;
+}
+
+.TimeCard .outer .row button i {
+    color: #ffffff;
+}
+
+
+/*Hide and Show*/
+.TimeCard .outer .row .show {
+    display: block !important;
+    width: 13rem;
+    position: absolute;
+    height: max-content;
+    text-align: center;
+    background: white;
+    padding: 1rem;
+    box-shadow: 0px 0px 3px 2px #00000052;
+}
+
+.TimeCard .outer .row #calendarBox .HideShow {
+    display:none;
+}
+
+.TimeCard .outer .row #calendarBox .showDiv .row {
+    width: max-content;
+}
+
+.TimeCard .outer .row #calendarBox .showDiv{
+    display:block !important;
+    height:100%;
+}
+
+.TimeCard .outer .row #calendarBox .showDiv input {
+    text-transform: capitalize;
+    width: max-content;
+    background: white;
+    border: none;
+    padding: 0.5rem;
+}
+
+
+ /*#endregion*/
+
+/*#region Module*/
+
+.modal .modal-body {
+    place-self: unset !important;
+}
+
+.modal .modal-body .Hour {
+    align-self: center !important;
+}
+
+.modal .modal-body .Abscense {
+    margin: 0 auto !important;
+}
+
+.modal .modal-body .TextRow {
+    margin-top: 2rem !important;
+}
+
+.modal .modal-body .TextCol {
+    margin: 0 auto !important;
+}
+
+.modal .modal-body .Date {
+    padding-right: 1rem !important;
+    padding-left: 1rem !important;
+    margin-top: 2rem !important;
+
+    height: auto !important;
+    text-align: unset !important;
+    width: 100% !important;
+    justify-content: unset !important;
+}
+
+.modal .modal-body .Calendar {
+    margin:0 !important;
+    margin-left: 4.5rem !important;
+}
+
+.modal .modal-body .AbsenceText {
+    min-height: 110px !important;
+    max-height: 35rem !important;
+    width: 15rem !important;
+    height: 10rem;
+}
+
+
+.modal .modal-body .TwoDates {
+    display: none;
+    visibility: hidden;
+}
+
+.modal .modal-body .TwoDate {
+    margin: 0 auto !important;
+    width: max-content !important;
+}
+
+.modal .modal-body .Clock {
+    margin-top: 1rem !important;
+}
+
+.Hide {
+    display:none !important;
+    visibility:hidden !important;
+}
+
+/*#endregion*/
+
+/*#region Admin Page*/
+/*Admin page*/
+.AdminPage .row {
+    --bs-gutter-x: 0;
+}
+
+.AdminPage {
+    position: absolute;
+    top: 0%;
+    left: 34.5%;
+    height: 100%;
+    width: fit-content;
+}
+
+.AdminPage .container {
+   text-align: -webkit-center;
+   width: fit-content;
+}
+
+.AdminPage .container .AdminNav {
+    width: min-content;
+    margin: 0 auto;
+}
+
+
+/*Decoration*/
+.AdminPage .container .OpdateTimeCard {
+    min-height: 40rem !important;
+    position:relative;
+    padding-top: 1rem !important;
+}
+
+.AdminPage .container .OpdateTimeCard .OpdaterTimeCardRow {
+    place-content:center;
+
+}
+
+.AdminPage .container .OpdateTimeCard .OpdaterTimeCardRow p {
+    float: left;
+    line-height: 0px;
+    color: #ffffff42;
+    -webkit-text-stroke: medium;
+    font-size: 15px;
+    cursor: pointer;
+    user-select: none;
+}
+
+
+/*Abscense Decoration*/
+.AdminPage .container .OpdateTimeCard .Minnus{
+    font-size: 20px !important;
+    width: 14px;
+}
+
+.AdminPage .container .OpdateTimeCard .AbsHidden{
+    display:none;
+}
+
+.AdminPage .container .OpdateTimeCard .AbsHide{
+    position: absolute;
+    top: 5rem;
+    left: 0%;
+    right: 0%;
+}
+
+.AdminPage .container .OpdateTimeCard .AbsenceOptions {
+    border-bottom: #ffffff42 solid 3px;
+    float: left;
+    width: 40rem;
+    height: 44px;
+    margin-left: 1rem;
+}
+
+.AdminPage .container .OpdateTimeCard .form-control:disabled, .form-control[readonly] {
+    background-color: #a7c0cc;
+    opacity: 1;
+    border-color: #a7c0cc;
+}
+
+.AdminPage .container .OpdateTimeCard .row .HourClock {
+    width: 8vh;
+}
+
+.AdminPage .container .OpdateTimeCard #usernbtn {
+    float: left;
+    margin-right: 1rem;
+    transition:all 0.1s ease-in-out;
+}
+
+.AdminPage .container .OpdateTimeCard #usernbtn:hover {
+    background:#0e6efd;
+    color:white;
+}
+
+.AdminPage .container .OpdateTimeCard #Calendar {
+    float: left;
+    width: 10rem;
+    margin-right: 1rem;
+    margin-left: 1.4rem;
+}
+
+.AdminPage .container .OpdateTimeCard .submitBTN {
+    float:left;
+}
+
+.AdminPage .container .OpdateTimeCard .AbsenceText {
+    height: 90px;
+    width: 20rem !important;
+    min-height: 90px;
+    max-height: 157px;
+    float: left;
+    margin-left: 15rem;
+
+}
+
+.AdminPage .container .OpdateTimeCard .AbsenceOptions {
+    margin-bottom: 0.89rem;
+}
+
+.AdminPage .container .OpdateTimeCard .AbsenceOptions .AbscenseTypeDrop {
+    margin: 0;
+    float: left;
+    margin-left: 1rem;
+    width: 9rem;
+}
+
+
+/*Modal*/
+.AdminPage .container .DeleteUser .modal-header {
+    align-self: center;
+}
+
+.AdminPage .container .DeleteUser .modal-body {
+    place-self: center;
+}
+
+.AdminPage .container .DeleteUser .modal-body .AbsenceText {
+    min-height: 112px;
+    max-height: 331px;
+    width: inherit;
+}
+
+
+/*Container Decoration*/
+.AdminPage .container p {
+    text-align: center;
+    margin-top: 2.5rem;
+    width: fit-content;
+    color: white;
+    font-family: unset;
+}
+
+.AdminPage .container .upper-row {
+    width: max-content;
+    padding: 0.5rem;
+
+    background: #004f75;
+    border-radius: 10px;
+    
+}
+
+.AdminPage .container .row a {
+    font-family: sans-serif;
+
+    width: max-content;
+    height: 35px;
+    margin-right: 0.5rem;
+
+    line-height: 0px;
+    border-radius: 10px;
+
+    font-size: 18.5px;
+}
+
+.AdminPage .container .row .bottom {
+    margin: 0 !important;
+}
+
+.AdminPage .container .lower-container {
+    margin-top: 6.5rem;
+    text-align: center;
+    padding: 0;
+    background: #00405e73 !important;
+    border-radius: 10px;
+    box-shadow: 4px 3px 5px 1px #0000002e;
+    width: 51rem;
+    min-block-size: max-content;
+}
+
+
+/*Admin navbar*/
+.AdminPage .container .CreateUser {
+    min-height: 40rem !important;
+    position:relative;
+    position: absolute;
+}
+
+.AdminPage .container .UpdateUser {
+    min-height: 40rem !important;
+    position: relative;
+}
+
+.AdminPage .container .DeleteUser {
+    min-height: 40rem !important;
+    max-height: fit-content !important;
+    position:relative;
+}
+
+.AdminPage .AdminNavBTN {
+    display:none;
+    background: #004f75;
+    position: fixed;
+    top: 0;
+    right:0;
+    z-index: 3;
+    border: none;
+   cursor: pointer;
+}
+
+.AdminPage .container .AdminNav .show {
+    display: flex !important;
+    flex-flow: column;
+    position: fixed;
+    z-index: 1;
+    right: 0;
+    top: 0;
+    height: 40%;
+}
+
+.AdminNavBTN svg {
+    height: 2.5rem;
+    width: 2.5rem;
+    color: white;
+}
+
+.AdminPage .container .UpdateUser .col-12 {
+    padding:0 !important;
+}
+
+.AdminPage .container .UpdateUser .col-6 {
+    margin-bottom:0 !important;
+    margin-top:0 !important;
+}
+
+
+/*Submit Decoration*/
+.AdminPage .container .lower-container .submit-row {
+    background: #00405e;
+    width: 100%;
+    height: 4rem;
+    border-top: solid 3px #00405e;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    align-items: center;
+    place-content: center;
+    padding: 0.5rem;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.AdminPage .container .lower-container .submit-row button {
+    height: 40px;
+    width: 97%;
+    margin: 0;
+    line-height: 0;
+}
+
+.AdminPage .container .OpdateTimeCard {
+    padding: 0 !important;
+}
+
+
+/*Input columns*/
+.AdminPage .container .lower-container .col-row {
+    text-align: -webkit-center;
+    width:100%;
+    justify-content: center;
+}
+
+.AdminPage .container .lower-container .col-row .box {
+    background: #00405e;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.AdminPage .container .CreateUser .box {
+    color: white;
+    background: #00405e;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.AdminPage .container .OpdateTimeCard .box {
+    color: white;
+    background: #00405e;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.AdminPage .container .lower-container .col-row h3 {
+    color: white;
+}
+
+.AdminPage .container .lower-container .col-row .col-12 {
+    padding: 1rem;
+}
+
+.AdminPage .container .lower-container .row label {
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    width: max-content !important;
+    margin: 0;
+    max-width: max-content;
+    line-height: 3;
+}
+
+.AdminPage .container .lower-container .row .col-6 {
+    margin-bottom: 0.5rem;
+    margin-top: 1.5rem;
+}
+
+.AdminPage .container .lower-container .form-control {
+    width:max-content;
+}
+
+.AdminPage .container .OpdateTimeCard .DateTimeUpdate {
+        width: 20rem;
+        align-items: center;
+}
+    
+.AdminPage .container .OpdateTimeCard .DateTimeUpdate .btn {
+    height: 4vh;
+}
+
+.AdminPage .container .OpdateTimeCard .OpdaterTimeCardRow {
+    align-items:center;
+}
+
+.AdminPage .container .OpdateTimeCard .row .HourClock {
+    width: 8vh;
+    height: 3vh;
+}
+
+.AdminPage .container .OpdateTimeCard .OpdaterTimeCardRow label {
+    font-size: 17px;
+    margin-right: 1rem;
+}
+
+/*Request Page*/
+
+.AdminPage .container .AbscenseRequest {
+    min-height: 40rem !important;
+    max-height: fit-content !important;
+    position: relative;
+}
+
+.AdminPage .container .AbscenseRequest .Table-Gride .RequestTable {
+    background: #00405e73;
+    margin-bottom: 0.5rem;
+    height: 5rem;
+    margin-top: 1rem;
+}
+
+.AdminPage .container .AbscenseRequest .modal label {
+    color:black !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.AdminPage .container .AbscenseRequest .modal .AbsenceText {
+    cursor:auto;
+    resize: none;
+}
+
+.AdminPage .container .AbscenseRequest .modal .AbsenceText:hover {
+    box-shadow: none;
+    border-color: #a7c0cc;
+}
+
+.AdminPage .container .AbscenseRequest .modal .AbsenceText:focus {
+    box-shadow: none;
+    border-color: #a7c0cc;
+}
+
+.AdminPage .container .AbscenseRequest p {
+    color: #e5e5e5 !important;
+    text-align: unset !important;
+    margin: 0 !important;
+    width: unset !important;
+    font-family: unset !important;
+}
+
+.AdminPage .container .AbscenseRequest .col-btn {
+    margin-bottom: 1.5rem;
+}
+
+.AdminPage .container .AbscenseRequest .btn-Request {
+    border-radius: 8px;
+    height: 2rem;
+    line-height: 1;
+    width: min-content;
+    margin-right: 0.5rem;
+}
+
+.AdminPage .container .AbscenseRequest .Delete-Col {
+    padding: 1rem;
+    height: min-content;
+    margin: 0 !important;
+}
+
+.AdminPage .container .AbscenseRequest label {
+    line-height: unset !important;
+}
+
+
+.AdminPage .container .AbscenseRequest .row .Table-Gride {
+    overflow: overlay;
+    max-height: 40rem;
+}
+
+.AdminPage .container .AbscenseRequest ul {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.AdminPage .container .AbscenseRequest .box .col-2 {
+    float: left;
+    margin-left: 20rem !important;
+}
+
+.AdminPage .container .AbscenseRequest .box h3 {
+    float: right;
+}
+
+.AdminPage .container .AbscenseRequest .box .col-3 {
+    float: left;
+    margin-left: 6.3rem;
+    margin-top: 2px;
+}
+
+.AdminPage .container .AbscenseRequest .box input {
+    width: 13rem;
+    margin-right: 1rem;
+    background: white;
+    text-transform: capitalize;
+    background: #004f75;
+    border: 2px solid #00000000;
+    color: white;
+}
+
+.AdminPage .container .AbscenseRequest .box input::placeholder {
+    color: #c7c7c7;
+}
+
+.AdminPage .container .AbscenseRequest .box input:hover {
+    box-shadow: none;
+    border-color: transparent;
+}
+
+.AdminPage .container .AbscenseRequest .box input:focus {
+    box-shadow: none;
+    border-color: transparent;
+}
+
+.AdminPage .container .AbscenseRequest .modal p {
+    color:black !important;
+}
+
+/*Scroll Wheel*/
+.AdminPage .container .AbscenseRequest .Table-Gride::-webkit-scrollbar-thumb {
+    background: #0588c9 !important;
+    border-radius: 15px !important;
+    display: contents !important;
+}
+.AdminPage .container .AbscenseRequest .Table-Gride::-webkit-scrollbar-track {
+    background: #00405e !important;
+    border-radius: 15px !important;
+    display: contents !important;
+}
+.AdminPage .container .AbscenseRequest .Table-Gride::-webkit-scrollbar {
+    width: 5px !important;
+    display: contents !important;
+}
+
+
+/*Delete Page Decoration*/
+.AdminPage .container .DeleteUser .Table-Gride .col-row {
+    background: #00405e73;
+    margin-bottom: 0.5rem;
+    height: 4rem;
+    margin-top: 1rem;
+}
+
+.AdminPage .container .lower-container .col-row {
+    height: inherit;
+}
+
+.AdminPage .container .DeleteUser .Delete-Col {
+    padding: 1rem;
+    height: min-content;
+    margin:0 !important;
+}
+
+.AdminPage .container .DeleteUser label {
+    line-height:unset !important;
+}
+
+.AdminPage .container .DeleteUser .col-row .btn-brugere {
+    border-radius: 8px;
+    height: 2rem;
+    line-height: 1;
+    width: min-content;
+    margin-right: 0.5rem;
+}
+
+.AdminPage .container .lower-container .row .CreateUserError {
+    color: #c91325;
+    font-weight: 700;
+    font-size: 15px;
+    margin-left: 1.5rem;
+}
+
+.AdminPage .container .DeleteUser .row .Table-Gride {
+    overflow: overlay;
+    max-height: 40rem;
+}
+
+.AdminPage .container .DeleteUser ul {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.AdminPage .container .DeleteUser .box .col-2 {
+    float: left;
+    margin-left: 20rem !important;
+}
+
+.AdminPage .container .DeleteUser .box h3 {
+    float:right;
+}
+
+.AdminPage .container .DeleteUser .box .col-3 {
+    float: left;
+    margin-left: 6.3rem;
+    margin-top: 2px;
+}
+
+.AdminPage .container .DeleteUser .box input {
+    width: 13rem;
+    margin-right: 1rem;
+    background: white;
+    text-transform: capitalize;
+    background: #004f75;
+    border: 2px solid #00000000;
+    color: white;
+}
+
+.AdminPage .container .DeleteUser .box input::placeholder {
+    color:#c7c7c7;
+}
+
+.AdminPage .container .DeleteUser .box input:hover {
+    box-shadow:none;
+    border-color:transparent;
+}
+
+.AdminPage .container .DeleteUser .box input:focus {
+    box-shadow:none;
+    border-color:transparent;
+}
+
+
+
+/* Scrollbar for day grid*/
+.AdminPage .container .DeleteUser .row .Table-Gride::-webkit-scrollbar {
+    width: 5px !important;
+    display: contents !important;
+}
+
+.AdminPage .container .DeleteUser .row .Table-Gride::-webkit-scrollbar-track {
+    background: #00405e !important;
+    border-radius: 15px !important;
+    display: contents !important;
+}
+
+.AdminPage .container .DeleteUser .row .Table-Gride::-webkit-scrollbar-thumb {
+    background: #0588c9 !important;
+    border-radius: 15px !important;
+    display: contents !important;
+}
+
+
+/*Dropdwon Decoration*/
+.AdminPage .container .lower-container .col-row .col-12 .dropdown .dropdown-toggle {
+    background: white;
+}
+
+.AdminPage .container .lower-container .col-row .col-12 .dropdown .dropdown-toggle:hover {
+    border-color: transparent;
+    box-shadow: none;
+}
+
+.AdminPage .container .lower-container .col-row .col-12 .dropdown .dropdown-toggle:focus {
+    box-shadow: none;
+    border-color: transparent;
+}
+
+.AdminPage .container .lower-container .col-row .col-12 .dropdown .dropdown-menu {
+    width: auto !important;
+    min-width: 5.3rem !important;
+    border-radius: 0 !important;
+    padding: 0;
+}
+
+.AdminPage .container .lower-container .col-row .col-12 .dropdown .dropdown-item {
+    height: auto;
+    width: 100%;
+    line-height: normal;
+    border: none;
+    font-size: medium;
+    border-radius: 0;
+    background: white;
+}
+
+.AdminPage .container .lower-container .col-row .col-12 .dropdown .dropdown-item:hover {
+    color: white !important;
+    background: #247bfb;
+}
+
+.AdminPage .container .lower-container .col-row .col-12 .dropdown .dropdown-item:focus {
+    color: black !important;
+    background: transparent;
+}
+
+.AdminPage .UpdateUser .col-row .col-12 .dropdown .dropdown-menu.show {
+    overflow: overlay !important;
+    max-height: 39rem !important;
+}
+
+.AdminPage .OpdateTimeCard .col-row .dropdown .dropdown-menu.show {
+    overflow: overlay !important;
+    max-height: 39rem !important;
+}
+
+.AdminPage .OpdateTimeCard .col-row .dropdown .dropdown-toggle {
+    background: white;
+}
+
+
+/*#endregion*/
+
+/*#region Media Tags*/
+
+/*#region Home Page/Nav Bar*/
+
+/*Height*/
+@media only screen and (max-height: 882px) {
+    .TimeCard .row {
+        margin-bottom:0;
+    }
+}
+
+@media only screen and (max-height: 835px) {
+    .TimeCard .outer {
+        margin-top: 1rem !important;
+    }
+    .TimeCard .outer .Table-Head {
+        top:0 !important;
+    }
+}
+
+@media only screen and (max-height: 770px) {
+    .TimeCard .outer .Table-Gride {
+        max-height: 34.5rem !important;
+    }
+}
+
+@media only screen and (max-height: 658px) {
+    .TimeCard .outer .Table-Gride {
+        max-height: 20.5rem !important;
+    }
+}
+
+
+/*Width*/
+@media only screen and (min-width: 500px) {
+    .sidebar {
+        width: 280px;
+    }
+
+    .sidebar .logo {
+        width: 15rem;
+        margin-top: 1rem !important;
+    }
+
+    .sidebar #Oper-li .Oper-show #Fraværesanmodning {
+        font-size: 15px;
+    }
+
+    .sidebar #Oper-li .Oper-show .tooltiptext {
+        left: 1rem;
+    }
+
+    .sidebar ul {
+        height: 87%;
+    }
+
+    .TimeCard table {
+        width: 29.5rem;
+    }
+
+    .TimeCard .outer .Table-Head {
+        top: 17.2476%;
+    }
+
+    .TimeCard .outer {
+        margin-top: 8rem;
+        margin-left: 0;
+    }
+
+    .TimeCard .outer .DatePicker {
+        padding:0;
+    }
+}
+
+@media only screen and (min-width: 700px) {
+    .TimeCard table {
+        width: 33rem;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .TimeCard table {
+        width: 42rem;
+    }
+
+    .TimeCard .outer {
+        margin-top: 5rem;
+    }
+
+        .TimeCard .outer .Table-Head {
+            top: 14.2476%;
+        }
+}
+
+@media only screen and (max-width: 849px) {
+    .collapsNavBTN {
+        display:block;
+    }
+
+    .sidebar {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 850px) {
+    .TimeCard .outer {
+        margin-top: 5rem;
+        margin-left: 12.5rem;
+    }
+
+    .TimeCard table {
+        width: 34rem;
+    }
+
+    .sidebar {
+        width: 280px;
+    }
+
+    .sidebar ul {
+        height: 90%;
+    }
+
+    .sidebar .logo {
+        width: 15rem;
+        margin-top: 0 !important;
+    }
+
+    .sidebar #Oper-li .Oper-show #Fraværesanmodning {
+        font-size: 15px;
+    }
+
+    .sidebar #Oper-li .Oper-show .tooltiptext {
+        left: 1rem;
+    }
+
+    .TimeCard .outer .DatePicker {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    .TimeCard .outer {
+        margin-left: 16.5rem;
+    }
+
+    .TimeCard table {
+        width: 40rem;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .TimeCard .outer {
+        margin-left: 18.5rem;
+    }
+
+    .TimeCard table {
+        width: 52rem;
+    }
+
+    .sidebar {
+        width: 336px;
+    }
+
+        .sidebar .logo {
+            width: 19rem;
+        }
+
+        .sidebar #Oper-li .Oper-show #Fraværesanmodning {
+            font-size: 17px;
+        }
+
+        .sidebar #Oper-li .Oper-show .tooltiptext {
+            left: 3rem;
+        }
+}
+
+@media only screen and (min-width: 1400px) {
+    .TimeCard .outer {
+        margin-left: 21rem;
+    }
+
+    .TimeCard table {
+        width: 60rem;
+    }
+
+    .TimeCard .outer .Table-Head {
+        left: 657px;
+        top: 134px;
+    }
+
+}
+
+/*#endregion*/
+
+
+/*#region Admin Pages*/
+
+
+/*Width*/
+@media only screen and (min-width: 500px) {
+    .AdminPage {
+        left: 2% !important;
+    }
+
+    .AdminPage .container {
+        text-align:unset;
+    }
+
+
+    .AdminPage .container .CreateUser {
+        width: 30rem;
+        position: absolute;
+        left:0;
+    }
+
+    .AdminPage .container .UpdateUser {
+        width: 28rem;
+    }
+
+    .AdminPage .container .OpdateTimeCard {
+        width: 28rem;
+    }
+
+    .AdminPage .container .DeleteUser {
+        width:28rem;
+    }
+
+
+    .AdminPage .container .OpdateTimeCard .AbsenceOptions {
+        width:20rem;
+    }
+
+    .AdminPage .container .OpdateTimeCard .UserTimeUpdate {
+        width: 15rem;
+    }
+
+    .AdminPage .container .OpdateTimeCard .DateTimeUpdate {
+        width: 20rem;
+    }
+    
+    .AdminPage .container .lower-container .form-control {
+        width: 9rem;
+    }
+
+
+    .AdminPage .container .display-3 {
+        margin-left: 7rem;
+    }
+
+    .AdminPage .container .DeleteUser .col-row .btn-brugere {
+        width: 3rem !important;
+        font-size: 14px !important;
+        padding: 0 !important;
+    }
+
+    .AdminPage .container .box .col-2 {
+        margin-left: 4rem !important;
+    }
+}
+
+@media only screen and (min-width: 665px) {
+     .AdminPage {
+        left: 8% !important;
+    }
+
+    .AdminPage .container .CreateUser {
+        width: 34rem;
+    }
+    .AdminPage .container .UpdateUser {
+        width: 34rem;
+    }
+    .AdminPage .container .OpdateTimeCard {
+        width: 34rem;
+    }
+    .AdminPage .container .DeleteUser {
+        width: 34rem;
+    }
+
+    .AdminPage .container .DeleteUser .col-row .btn-brugere {
+        width: 4rem !important;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .AdminPage {
+        left: 8% !important;
+    }
+
+    .AdminPage .container .CreateUser {
+        width: 42rem;
+    }
+    .AdminPage .container .UpdateUser {
+        width: 42rem;
+    }
+    .AdminPage .container .OpdateTimeCard {
+        width: 42rem;
+    }
+    .AdminPage .container .DeleteUser {
+        width: 42rem;
+    }
+
+    .AdminPage .container .DeleteUser .col-row .btn-brugere {
+        width: 5rem !important;
+    }
+
+    .AdminPage .container .display-3 {
+        margin-left: 11rem;
+    }
+}
+
+@media only screen and (min-width: 849px) {
+    .AdminPage {
+        left: 39% !important;
+    }
+
+    .AdminPage .container .CreateUser {
+        width: 30rem;
+    }
+    .AdminPage .container .UpdateUser {
+        width: 30rem;
+    }
+    .AdminPage .container .OpdateTimeCard {
+         width: 30rem;
+    }
+    .AdminPage .container .DeleteUser {
+        width: 30rem;
+    }
+
+    .AdminPage .container .display-3{
+        margin-left: 6rem
+    }
+}
+
+@media only screen and (max-width:1100px) {
+    .AdminPage .AdminNavBTN {
+        display: flex;
+    }
+
+    .AdminPage .upper-row {
+        display: none;
+        border-radius: 0 !important;
+    }
+
+    .AdminPage .upper-row a {
+        font-size: 18.5px;
+        margin-top: 2rem;
+        border-radius: 0 !important;
+        margin-right: 0 !important;
+        width: auto !important;
+    }
+
+    .AdminPage .upper-row .btn-primary {
+        margin-top: 2rem !important;
+    }
+
+    .AdminPage .container .DeleteUser .col-row .btn-brugere {
+        width: 3rem !important;
+        font-size: 14px !important;
+        padding: 0 !important;
+    }
+}
+
+@media only screen and (min-width: 1100px) {
+    .AdminPage .container .display-3 {
+        margin: 0 auto;
+    }
+}
+
+@media only screen and (min-width:1080px) {
+    .AdminPage {
+        left: 30% !important;
+    }
+
+    .AdminPage .container .CreateUser {
+        width: 45rem;
+    }
+    .AdminPage .container .UpdateUser {
+        width: 45rem;
+    }
+    .AdminPage .container .OpdateTimeCard {
+         width: 45rem;
+    }
+    .AdminPage .container .DeleteUser {
+        width: 45rem;
+    }
+
+    .AdminPage .container .DeleteUser .col-row .btn-brugere {
+        width: 6rem !important;
+    }
+
+    .AdminPage .container .OpdateTimeCard .UserTimeUpdate {
+        width: 25%;
+    }
+
+    .AdminPage .container .OpdateTimeCard .DateTimeUpdate {
+        width: 50%;
+    }
+
+    .AdminPage .container .lower-container .form-control {
+        width:max-content;
+    }
+
+    .AdminPage .container .box .col-2 {
+        margin-left: 18.5rem !important;
+    }
+
+}
+
+@media only screen and (min-width:1315px) {
+    
+    .AdminPage {
+        left: 33% !important;
+    }
+
+    .AdminPage .container .CreateUser {
+        width: 49rem;
+    }
+    .AdminPage .container .UpdateUser {
+        width: 49rem;
+    }
+    .AdminPage .container .OpdateTimeCard {
+        width: 49rem;
+    }
+    .AdminPage .container .DeleteUser {
+        width: 49rem;
+    }
+
+    .AdminPage .container .OpdateTimeCard .AbsenceOptions {
+        width: 40rem;
+    }
+
+    .AdminPage .container .CreateUser {
+        left: unset;
+    }
+
+    .AdminPage .container .box .col-2 {
+        margin-left: 20rem;
+    }
+}
+
+@media only screen and (min-width:1665px) {
+
+    .AdminPage {
+        left: 35% !important;
+    }
+
+    .AdminPage .container .DeleteUser .col-row .btn-brugere {
+        width: min-content !important;
+        padding: 6px 19px !important;
+        font-size: 16px !important;
+    }
+}
+
+
+/*#endregion*/
+/*#endregion*/
+
+/*#region Feature*/
+/*Normal Decoration*/
+.NormalButton {
+    background: transparent;
+    border: none;
+    color: transparent;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    outline: none !important;
+}
+
+.NormalBody {
+    background-image: linear-gradient( 35deg, rgb(251 188 45 / 50%) 25%, rgb(224 39 39 / 50%) 50%, rgb(0 0 0 / 50%) 75%), url(/Img/NormanBackground.jpg);
+    background-position: bottom;
+}
+
+.NormalImg {
+    background: url(../Img/NormalLogo.png) !important;
+    background-size: contain !important;
+}
+
+.NormalContainer {
+    background: linear-gradient( 35deg, rgb(251 188 45 / 50%) 25%, rgb(224 39 39 / 50%) 50%, rgb(0 0 0 / 50%) 75%) !important;
+    box-shadow: 0px 0px 0px 6px #ff000026 !important;
+}
+
+.NormalBtn {
+    background: #ff000026 !important;
+}
+
+.NormalBtn:hover {
+    background: #ff000070 !important;
+    box-shadow: 0px 0px 0px 4px #ff000026 !important;
+}
+
+.NormalInput {
+    background: #ff00002e !important;
+}
+
+.NormalInput:hover {
+    background: #ff00002e !important;
+    box-shadow: 0px 0px 0px 4px #ff00005c !important;
+}
+
+.NormalInput:focus {
+    background: #ff00002e !important;
+    box-shadow: 0px 0px 0px 4px #ff00005c !important;
+}
+
+.NormalTooltip {
+    box-shadow: 0px 0px 0px 4px #ff000026 !important;
+    background: #ff000070 !important;
+}
+
+/*#endregion*/

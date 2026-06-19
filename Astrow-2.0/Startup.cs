@@ -8,6 +8,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Net;
+using Microsoft.AspNetCore.Http;
+using Astrow_2._0.Repository;
+using Astrow_2._0.DataLayer;
 
 namespace Astrow_2._0
 {
@@ -15,22 +20,43 @@ namespace Astrow_2._0
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            Configuration = (IConfigurationRoot)configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
+
+            StoredProcedure.SetConnectionString();
+
+            services.AddScoped<IUserRepository, UserRepository>();
+
+            services.AddRazorPages().AddRazorPagesOptions(options =>
+            {
+                options.Conventions.AddPageRoute("/Login", "");
+            });
+
+            services
+                .AddMvc()
+                .AddRazorPagesOptions(options =>
+                {
+                    options.Conventions.AddPageRoute("/Admin", "OpretBruger");
+                });
+
+            services.AddSession(option =>
+            {
+                option.IdleTimeout = TimeSpan.FromHours(1);
+                option.Cookie.IsEssential = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
-            {
+            { 
                 app.UseDeveloperExceptionPage();
             }
             else
@@ -40,10 +66,14 @@ namespace Astrow_2._0
                 app.UseHsts();
             }
 
+            app.UseAuthentication();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseSession();
 
             app.UseAuthorization();
 
